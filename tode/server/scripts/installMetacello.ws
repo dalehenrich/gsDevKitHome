@@ -1,7 +1,7 @@
 Transcript
   cr;
   show: '-----Upgrading Metacello to latest version on master branch'.
-false ifTrue: [ 
+true ifTrue: [ 
   "Only needed if you use a non-standard repo for Metacello"
   GsDeployer bulkMigrate: [
     Metacello new
