@@ -1,0 +1,18 @@
+TDSessionDescription {
+	#name : 'a_grace',
+	#stoneHost : 'grace',
+	#stoneName : 'a_gs64stone',
+	#gemHost : 'grace',
+	#netLDI : '65139',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : '',
+	#osPassword : '',
+	#dataDirectory : '',
+	#backupDirectory : '/export/grace3/users/dhenrich/2.0/a_gss64bit/backups/',
+	#gemstoneVersion : '2.4.5',
+	#gciLibraryName : 'libgcirpc32-245',
+        #serverGitRoot : '/export/grace3/users/dhenrich/2.0/a_gss64bit/git', 
+        #serverTodeRoot: '/export/grace3/users/dhenrich/2.0/a_gss64bit/git/todeHome/dev/tode'
+}

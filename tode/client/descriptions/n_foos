@@ -1,0 +1,18 @@
+TDSessionDescription {
+	#name : 'n_foos',
+	#stoneHost : 'foos',
+	#stoneName : 'n_gs64stone',
+	#gemHost : 'foos',
+	#netLDI : '55289',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : '',
+	#osPassword : '',
+	#dataDirectory : '',
+	#backupDirectory : '/export/foos2/users/dhenrich/3.0/n_gss64bit/backups/',
+	#gemstoneVersion : '3.2.0',
+	#gciLibraryName : 'libgcirpc-3.2.0-32',
+        #serverGitRoot : '/opt/git',
+        #serverTodeRoot: '/opt/git/todeHome/dev/tode'
+}
