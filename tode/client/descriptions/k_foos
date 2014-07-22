@@ -1,9 +1,9 @@
 TDSessionDescription {
 	#name : 'k_foos',
 	#stoneHost : 'foos',
-	#stoneName : 'k_gs64stone',
+	#stoneName : 'k_',
 	#gemHost : 'foos',
-	#netLDI : '34252',
+	#netLDI : '33236',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',

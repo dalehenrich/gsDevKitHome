@@ -1,9 +1,9 @@
 TDSessionDescription {
 	#name : 'j_foos',
 	#stoneHost : 'foos',
-	#stoneName : 'j_gs64stone',
+	#stoneName : 'j_',
 	#gemHost : 'foos',
-	#netLDI : '54810',
+	#netLDI : '44409',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
