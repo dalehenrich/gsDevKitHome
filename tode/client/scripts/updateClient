@@ -1,1 +1,1 @@
-updateClient --clientRepo=github://dalehenrich/tode:master/repository
+updateClient --clientRepo=filetree:///opt/git/tode/repository

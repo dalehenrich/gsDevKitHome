@@ -1,4 +1,4 @@
-updateClient --clientRepo=github://dalehenrich/tode:master/repository
+updateClient --clientRepo=filetree:///opt/git/tode/repository
 installServer --clientScriptPath=scripts
 bu backup tode.dbf
 mount --todeRoot home /
