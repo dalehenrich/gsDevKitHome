@@ -42,19 +42,18 @@ while getopts "h" OPT ; do
   esac
 done
 
-if [ "$1x" = "x" ] ; then
-  display_help
-  exit 1
-fi
-stoneName=$1
-
 if [ "${GS_HOME}x" = "x" ] ; then
   echo "the GS_HOME environment variable needs to be defined"
   exit 1
 fi
 
+if [ "$1x" = "x" ] ; then
+  stonePath=`pwd`
+else
+  stonePath=$GS_HOME/gemstone/stones/$1
+fi
+
 # set up stone environment
-stonePath=$GS_HOME/gemstone/stones/$stoneName
 pushd $stonePath >& /dev/null
 source $stonePath/stone.env
 popd $stonePath >& /dev/null

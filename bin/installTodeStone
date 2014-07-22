@@ -17,7 +17,7 @@
 function display_help() {
   echo ""
   echo "USAGE: $(basename $0) [-h] <stone-name>"
-  echo "Install tODE in the given stone."
+  echo "Install tODE in the given stone. The stone <stone-name> should already be started."
   echo ""
   echo "OPTIONS"
   echo "  -h display help"
