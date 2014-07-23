@@ -1,6 +1,6 @@
 # Open Source Development Kit for GemStone/S 64 Bit
 
-The Development Kit for GemStone/S provides a framework of scripts and directory structure for managing multiple GemStone stone instances across multiple machines.
+This Development Kit for GemStone/S provides a framework for managing multiple GemStone stone instances across multiple machines.
 
 The Development Kit provides a [set of scripts][5] for:
 * Downloading [GemStone/S][6] and [Pharo][7].
@@ -11,7 +11,7 @@ The Development Kit provides a [set of scripts][5] for:
 The [gemstone directory][10] has predefined locations for:
 * [Download files][10].
 * [GemStone/S product versions][11].
-* [stone instances][12].
+* [Stone instances][12].
 
 The [pharo directory][14] contains an installation of Pharo3.0 that is used for the tODE client as well as for implementing a number of the Development Kit scripts. 
 
