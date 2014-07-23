@@ -66,12 +66,22 @@ fi
 
 echo "creating todeClient${postFix} image"
 
-$pharo/Pharo.exe --headless $pharo/Pharo.image save todeClientTmp
-$pharo/Pharo.exe --headless $pharo/todeClientTmp.image eval --save "Gofer new package: 'ConfigurationOfTodeClient'; repository: (MCFileTreeRepository new directory: '$GS_HOME/repository' asFileReference); load"
-$pharo/Pharo.exe --headless $pharo/todeClientTmp.image config \
-	filetree://$GS_HOME/repository \
-	ConfigurationOfTodeClient \
-	--install=release
+$pharo/Pharo.exe --headless $pharo/Pharo3.0.image save todeClientTmp
+
+cat - > $pharo/todeLoad.s << EOF
+[ | metacello |
+  metacello := Metacello new
+    configuration: 'TodeClient';
+    version: #release;
+    repository: 'filetree://$GS_HOME/repository'.
+  metacello copy get.
+  metacello copy lock.
+  metacello load ]
+      on: Warning
+      do: [:ex | Transcript cr; show: ex description ].
+EOF
+
+$pharo/Pharo.exe --headless $pharo/todeClientTmp.image st --save $pharo/todeLoad.st
 if [[ $? != 0 ]] ; then
   echo "createTodeImage[Error]: failed loading tode client"
   exit 1
