@@ -1,0 +1,68 @@
+#! /bin/bash
+
+#=========================================================================
+# Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
+#
+# Name - installWindowsClient
+#
+# Purpose - Install GemStone (specified gs-version), Pharo, build tODE client
+#           image and launch the tODE client.
+#
+# Examples
+#   installWindowsClient -h
+#   installWindowsClient 3.2.1
+#
+#=========================================================================
+
+# help function
+function display_help() {
+  echo ""
+  echo "USAGE: $(basename $0) [-h] <gemstone-version>"
+  echo "Install GemStone (specified gs-version), Pharo, build tODE client"
+  echo "image and launch the tODE client."
+  echo ""
+  echo "OPTIONS"
+  echo "  -h display help"
+  echo ""
+  echo "EXAMPLES"
+  echo "   $(basename $0) -h"
+  echo "   $(basename $0) 3.2.1"
+  echo ""
+}
+
+while getopts "h" OPT ; do
+  case "$OPT" in
+    h) 
+      display_help
+      exit 1
+      ;;
+    *)
+      display_help
+      exit 1
+      ;;
+  esac
+done
+
+if [ "$1x" = "x" ] ; then
+  display_help
+  exit 1
+fi
+vers="$1"
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
+fi
+
+$GS_HOME/bin/windows/installWindowsGCI
+if [[ $? != 0 ]] ; then exit 1; fi
+
+$GS_HOME/bin/windows/installWindowsPharo
+if [[ $? != 0 ]] ; then exit 1; fi
+
+$GS_HOME/bin/windows/createWindowsTodeImage
+if [[ $? != 0 ]] ; then exit 1; fi
+
+$GS_HOME/bin/todeClient
+
+# End of script
+exit 0
