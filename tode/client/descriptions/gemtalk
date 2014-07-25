@@ -1,9 +1,9 @@
 TDSessionDescription {
 	#name : 'gemtalk',
-	#stoneHost : 'localhost',
+	#stoneHost : 'foos',
 	#stoneName : 'gemtalk',
-	#gemHost : 'localhost',
-	#netLDI : 'gemtalk_ldi',
+	#gemHost : 'foos',
+	#netLDI : '49481',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
