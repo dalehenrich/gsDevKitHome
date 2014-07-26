@@ -8,5 +8,5 @@ evaluate: script
 			response := shell evaluateSmalltalk: script.
 			Transcript
 				cr;
-				show: 'result --> ', response ].
+				show: 'serverDoIt result --> ', response printString].
 	Transcript cr
