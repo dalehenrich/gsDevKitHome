@@ -9,31 +9,31 @@ Currently only the *Core* and *Tests* packages have been ported to GsDevKit:
 * Zinc-Resource-Meta-Core
 * Zinc-Resource-Meta-Tests
 
-###Batch Install
-To install from the shell:
+## Register Project
+Register the project with tODE:
 
 ```Shell
 $GS_HOME/projects/zinc/createProjectEntry <stone-name>
+```
+
+###Batch Install/Update
+From the shell:
+
+```Shell
 $GS_HOME/projects/zinc/loadProject <stone-name>
 ```
 
-###Interactive Install
-1. Register project with tODE:
+###Interactive Install/Update
+Within tODE:
 
-   ```Shell
-   $GS_HOME/projects/zinc/createProjectEntry <stone-name>
-   ```
-
-2. From within tODE:
-
-   * Install from tODE command line:
+   * from tODE command line:
 
 
       ```Shell
       project load ZincHTTPComponents
       ```
 
-   * install from tODE project list:
+   * from tODE project list:
 
      ![install zinc](installZinc.png)
 
