@@ -1,4 +1,4 @@
-# Zinc 2.4.3 for GemStone 2.4 and 3.x [![Build Status](https://travis-ci.org/GsDevKit/zinc.png?branch=gs_master)](https://travis-ci.org/gs_master/zinc)
+# ZincHTTPComponents [![Build Status](https://travis-ci.org/GsDevKit/zinc.png?branch=gs_master)](https://travis-ci.org/gs_master/zinc)
 The [GsDevKit Zinc project][3] is a fork of [Sven Van Caekenberghe's Zinc project][4]. 
 Currently only the *Core* and *Tests* packages have been ported to GsDevKit:
 * Zinc-HTTP
@@ -10,7 +10,6 @@ Currently only the *Core* and *Tests* packages have been ported to GsDevKit:
 * Zinc-Resource-Meta-Tests
 
 ## Register Project
-Register the project with tODE:
 
 ```Shell
 $GS_HOME/projects/zinc/createProjectEntry <stone-name>
