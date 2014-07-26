@@ -4,4 +4,4 @@ helloWorld
 
 	| handler |
 	handler := self new stoneName: 'tode'.
-	^ handler evaluate: 'eval `Transcript cr; show: ''hello world''`'
+	^ handler evaluate: 'Transcript cr; show: ''hello world''. ''success'''

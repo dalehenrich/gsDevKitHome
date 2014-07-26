@@ -1,6 +1,6 @@
 #!/bin/bash
 
-helpOpts() {
+getOpts_help() {
 while getopts "h" OPT ; do
   case "$OPT" in
     h) usage; exit 0;;
