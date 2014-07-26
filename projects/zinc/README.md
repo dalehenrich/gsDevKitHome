@@ -18,11 +18,13 @@ $GS_HOME/projects/zinc/loadProject <stone-name>
 ```
 
 ###Interactive Install
-Register project with tODE:
+1. Register project with tODE:
 
-```Shell
-$GS_HOME/projects/zinc/createProjectEntry <stone-name>
-```
+   ```Shell
+   $GS_HOME/projects/zinc/createProjectEntry <stone-name>
+   ```
+
+2. From within tODE:
 
    * Install from tODE command line:
 
@@ -31,7 +33,7 @@ $GS_HOME/projects/zinc/createProjectEntry <stone-name>
       project load ZincHTTPComponents
       ```
 
-     or install from tODE project list:
+   * install from tODE project list:
 
      ![install zinc](installZinc.png)
 
