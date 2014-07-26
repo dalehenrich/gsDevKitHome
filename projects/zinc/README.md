@@ -1,6 +1,5 @@
-#GsDevKit Installation instructions for Zinc
+# Zinc 2.4.3 for GemStone 2.4 and 3.x [![Build Status](https://travis-ci.org/GsDevKit/zinc.png?branch=gs_master)](https://travis-ci.org/gs_master/zinc)
 The [GsDevKit Zinc project][3] is a fork of [Sven Van Caekenberghe's Zinc project][4]. 
-
 Currently only the *Core* and *Tests* packages have been ported to GsDevKit:
 * Zinc-HTTP
 * Zinc-Tests
@@ -10,25 +9,31 @@ Currently only the *Core* and *Tests* packages have been ported to GsDevKit:
 * Zinc-Resource-Meta-Core
 * Zinc-Resource-Meta-Tests
 
-## Zinc 2.4.3 for GemStone 2.4 and 3.x [![Build Status](https://travis-ci.org/GsDevKit/zinc.png?branch=gs_master)](https://travis-ci.org/gs_master/zinc)
-This is the version of Zinc that is currently recommended for use. 
-This version of Zinc depends upon GLASS1 for proper operation.
-
+###Batch Install
 To install from the shell:
 
 ```Shell
+$GS_HOME/projects/zinc/createProjectEntry <stone-name>
 $GS_HOME/projects/zinc/loadProject <stone-name>
 ```
 
-To install from tODE command line:
+###Interactive Install
+Register project with tODE:
 
 ```Shell
-project load ZincHttpComponents
+$GS_HOME/projects/zinc/createProjectEntry <stone-name>
 ```
 
-To install from tODE project list:
+   * Install from tODE command line:
 
-![install zinc](installZinc.png)
+
+      ```Shell
+      project load ZincHTTPComponents
+      ```
+
+     or install from tODE project list:
+
+     ![install zinc](installZinc.png)
 
 [3]: https://github.com/GsDevKit/zinc
 [4]: https://github.com/svenvc/zinc
