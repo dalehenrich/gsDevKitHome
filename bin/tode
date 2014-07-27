@@ -44,8 +44,6 @@ fi
 
 # Run script
 pharo=$GS_HOME/pharo
-unset GEMSTONE_NRS_ALL
+#unset GEMSTONE_NRS_ALL
 $pharo/pharo $pharo/todeClient.image $*
 ls -altr *
-ls -altr gemstone/stones/*/logs/*
-cat gemstone/stones/*/logs/gemnetobject*.log
