@@ -23,6 +23,7 @@
 #    Add shared memory setup to /etc/sysctl.conf
 #    Add GemStone netldi service port to /etc/services
 #    Download the GemStone product zipfile
+#    Create /opt/gemstone and required subdirectories
 #    Uncompress the GemStone zipfile into $GS_HOME/products
 #    Copy the initial GsDevKit repository to data directory
 #    Copy the gci libraries to the Pharo vm (install Pharo if necessary)
@@ -273,6 +274,18 @@ if [ ! -e $gss_file ]; then
     $cmd ${ftp_address}/pub/GemStone64/$bucket/$gss_file
 else
     echo "[Info] $gss_file already exists"
+    echo "to replace it, remove or rename it and rerun this script"
+fi
+
+# Create some directories that GemStone expects; make them writable
+echo "[Info] Creating /opt/gemstone directory"
+if [ ! -e /opt/gemstone ]
+    then
+    sudo mkdir -p /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+    sudo chown $USER:${GROUPS[0]} /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+    sudo chmod 770 /opt/gemstone /opt/gemstone/log /opt/gemstone/locks
+else
+    echo "[Warning] /opt/gemstone directory already exists"
     echo "to replace it, remove or rename it and rerun this script"
 fi
 
