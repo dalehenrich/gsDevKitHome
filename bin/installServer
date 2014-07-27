@@ -43,7 +43,12 @@ $GS_HOME/bin/startStone $stoneName
 
 $GS_HOME/bin/startNetldi $stoneName
 
-$GS_HOME/bin/startStatmonitor $stoneName
+if [ "${GS_TRAVIS}x" = "x" ] ; then
+  $GS_HOME/bin/startStatmonitor $stoneName
+else
+  # running on travis server - statmonitor fails on startup (bug #44491)
+fi
+
 
 $GS_HOME/bin/installTodeStone $stoneName
 
