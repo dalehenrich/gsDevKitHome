@@ -13,11 +13,12 @@
 |STON||
 
 ## Optional GsDevKit Projecs
+
 | Project | Description|
 |---------|------------|
 | Magritte| [Dynamic Meta-Description Framework][8]   |
 | Pier|[Content Management System][7] |
-|[Seaside31][2]| [Dynamic Web Framework][4] |
+|[Seaside31][2]| [Dynamic Web Development Framework][4] |
 |[ZincHTTPComponents][3]| [Web Server/Client][5] |
 
 [1]: glass
