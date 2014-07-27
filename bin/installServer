@@ -52,4 +52,9 @@ fi
 
 $GS_HOME/bin/installTodeStone $stoneName
 
-$GS_HOME/bin/todeClient
+if [ "${GS_TRAVIS}x" = "x" ] ; then
+  $GS_HOME/bin/todeClient
+else
+  # running on travis server - statmonitor fails on startup (bug #44491)
+  echo "skipping $GS_HOME/bin/todeClient"
+fi
