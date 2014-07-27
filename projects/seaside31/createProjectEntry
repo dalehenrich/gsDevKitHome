@@ -33,8 +33,13 @@ recommended that you choose one or more web adaptors:
   - FastCGI
   - Swazoo
 
-If you are just getting started, I recommend that you choose the Zinc web adaptor
-and the Examples group.
+If you are just getting started, I recommend that you choose the Zinc web
+adaptor and the Examples group.
+
+The tODE script 'webServer' is also created in the tODE /home/$projectDirName. 
+The 'webServer' script can be used to start and stop a separate vm for running
+the chose Seaside adaptor.  Use 'webServer -h' from within tODE for more 
+details.
 
 OPTIONS
   -h show usage
@@ -72,3 +77,6 @@ $GS_HOME/bin/tode serverDoIt $stoneName 1> $GS_HOME/gemstone/stones/$stoneName/l
   result := entry createProjectEntryNode: '/home/${projectDirectoryName}'.
   ^result printString
 EOF
+
+scriptDir=$(dirname $0)
+cp ${scriptDir}/webServer.ston $GS_HOME/tode/home/${projectDirectoryName}
