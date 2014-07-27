@@ -2,6 +2,8 @@ language: bash
 
 before_script:
   - export BASE_PATH="$(pwd)"
+  - ls -altr 
+  - ls -altr *
   - cd gsDevKitHome
   - git checkout -b dev
   - export GS_HOME="$(pwd)"
