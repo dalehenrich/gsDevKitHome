@@ -45,11 +45,13 @@ fi
 # Download Pharo
 
 cd $GS_HOME/pharo
-ls -altr *
-if [ "${GS_TRAVIS}x" != "x" ] ; then
+if [ "${GS_TRAVIS}x" = "x" ] ; then
+  wget -O- get.pharo.org/30+vmLatest | bash
+else
   # running on travis server
+  ls -altr *
   wget -O- get.pharo.org/travis+vmLatest | bash
   ls -altr *
+  wget -O- get.pharo.org/30 | bash
+  ls -altr *
 fi
-wget -O- get.pharo.org/30+vmLatest | bash
-ls -altr *
