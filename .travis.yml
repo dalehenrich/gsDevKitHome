@@ -3,6 +3,7 @@ language: erlang
 before_script:
   - export GS_HOME="$(pwd)"
   - export PATH=$GS_HOME/bin:$PATH
+  - export GS_TRAVIS=true
 
 script:
   - bash installServer travis 3.2.1
