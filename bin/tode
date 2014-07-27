@@ -47,4 +47,5 @@ pharo=$GS_HOME/pharo
 #unset GEMSTONE_NRS_ALL
 $pharo/pharo $pharo/todeClient.image $*
 ls -altr *
-cat logs/gemnetobject*
+gemnetFiles=(logs/gemnetobject*)
+if [ -e "${gemnetFiles[0]}" ];  then cat $gemnetFiles; fi
