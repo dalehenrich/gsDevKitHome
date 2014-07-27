@@ -11,5 +11,5 @@ before_script:
   - sudo ln -s /usr/lib/i386-linux-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
 
 script:
-  - bash installServer travis 3.2.1
+  - bash installServer travis 3.2.0
   

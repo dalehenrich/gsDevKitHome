@@ -38,3 +38,9 @@ echo "Creating stone $stoneName"
 pharo=$GS_HOME/pharo
 $pharo/pharo $pharo/todeClient.image createStone $stoneName $gsvers
 
+if [ "${GS_TRAVIS}x" != "x" ] ; then
+  # running on travis server - have to use a custome key file
+  chmod +w  /opt/gemstone/product/seaside/etc/gemstone.key
+  cp $GS_HOME/travis/GemStone64Bit${gsvers}-x86_64.Linux.key $GS_HOME/gemstone/stones/$stoneName/product/seaside/etc/gemstone.key
+fi
+

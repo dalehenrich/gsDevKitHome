@@ -49,4 +49,7 @@ ls -altr logs
 $pharo/pharo $pharo/todeClient.image $*
 ls -altr logs
 gemnetFiles=(logs/gemnetobject*)
-if [ -e "${gemnetFiles[0]}" ];  then cat $gemnetFiles; fi
+if [ -e "${gemnetFiles[0]}" ];  then 
+  cat $gemnetFiles 
+  cat logs/travis.log
+fi
