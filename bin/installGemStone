@@ -31,37 +31,32 @@
 #=========================================================================
 
 # help function
-function display_help() {
-  echo ""
-  echo "USAGE: $(basename $0) [-h] <gemstone-version>"
-  echo "Download and install the given GemStone version. Will make sure that"
-  echo "shared memory is correctly configuration on your server. Performs some"
-  echo "operations as `root` using sudo."
-  echo ""
-  echo "OPTIONS"
-  echo "  -h display help"
-  echo ""
-  echo "EXAMPLES"
-  echo "  $(basename $0) -h"
-  echo "  $(basename $0) 3.2.0"
-  echo ""
+usage() {
+ cat <<HELP
+USAGE: $(basename $0) [-h] <gemstone-version>
+Download and install the given GemStone version. Will make sure that
+shared memory is correctly configuration on your server. Performs some
+operations as `root` using sudo.
+
+OPTIONS
+  -h display help
+
+EXAMPLES
+  $(basename $0) -h
+  $(basename $0) 3.2.0
+
+HELP
 }
 
 while getopts "h" OPT ; do
   case "$OPT" in
-    h) 
-      display_help
-      exit 1
-      ;;
-    *)
-      display_help
-      exit 1
-      ;;
+    h) usage ; exit 0 ;;
+    *) usage ; exit 1 ;;
   esac
 done
 
 if [ "$1x" = "x" ] ; then
-  display_help
+  usage
   exit 1
 fi 
 vers="$1"

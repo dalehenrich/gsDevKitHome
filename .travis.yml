@@ -29,19 +29,21 @@ script:
   - bash installPharo -h
   - bash installServer -h
   - bash installTodeStone -h
-  - bash pharo -h
+  - bash $GS_HOME/bin/pharo -h  # apparently '.' is in the PATH
   - bash restoreFromBackup -h
   - bash startNetldi -h
   - bash startStatmonitor -h
   - bash startStone -h
-  - bash stoneExtents -h
+  - bash stoneExtent -h
   - bash stones -h
   - bash stopStone -h
-  - bash tode -h
+  - bash $GS_HOME/bin/tode -h   # apparently '.' is in the PATH
   - bash todeClient -h
   - bash updateTodeImage -h
     # functions
   - bash createTodeImage -p _small
+
+  - bash stones
 
   - bash backup travis travis.dbf
   - bash restoreFromBackup travis travis.dbf
@@ -50,10 +52,9 @@ script:
   - bash updateTodeImage travis
   - bash startStone travis
 
-  - bash pharo --list
-  - bash tode --list
+  - bash $GS_HOME/bin/pharo --list
+  - bash $GS_HOME/bin/tode --list
 
   - bash createStone travis_2 $GS_VERSION
-  - bash stoneExtents travis_2
+  - bash stoneExtent travis_2
 
-  - bash stones
