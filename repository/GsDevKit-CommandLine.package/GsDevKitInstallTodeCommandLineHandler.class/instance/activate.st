@@ -9,7 +9,10 @@ activate
 	Author
 		useAuthor: 'gsDevKit'
 		during: [ 
+			[ 
 			self
 				installTode;
-				installTode2 ].
+				installTode2 ]
+				on: Error
+				do: [ :ex | self exitFailure: ex description ] ].
 	self exitSuccess
