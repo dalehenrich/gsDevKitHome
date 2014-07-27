@@ -1,11 +1,6 @@
-language: bash
+language: erlang
 
 before_script:
-  - export BASE_PATH="$(pwd)"
-  - ls -altr 
-  - ls -altr *
-  - cd gsDevKitHome
-  - git checkout -b dev
   - export GS_HOME="$(pwd)"
   - export PATH=$GS_HOME/bin:$PATH
 
