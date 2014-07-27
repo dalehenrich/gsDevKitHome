@@ -43,7 +43,7 @@ source ${GS_HOME}/bin/shFunctions
 getOpts_help $@ #parse standard (-h) options
 
 if [ $# -ne 1 ]; then
-  usage; exit 0
+  usage; exit 1
 fi
 stoneName="$1"
 $GS_HOME/bin/tode todeIt $stoneName 1> $GS_HOME/gemstone/stones/$stoneName/logs/$logFile << EOF

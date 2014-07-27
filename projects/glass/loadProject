@@ -12,7 +12,7 @@
 #  
 #=========================================================================
 
-projectName="Seaside3"
+projectName="GLASS1"
 projectLoadCommand="project load $projectName"
 logFile="projectLoad_${projectName}.log"
 

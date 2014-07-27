@@ -3,26 +3,26 @@
 #=========================================================================
 # Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #
-# Project load template script.
+# Create project entry template script.
 # 
 #  1. Copy this file to the $GS_HOME/projects/<project=name> directory
 #  2. Edit the following three shell variables as needed
-#  3. Implement your own helpOpts for additional options
-#  4. Expand usage() as needed
+#  3. Edit the project entry creation script to match the load specs for
+#     your project
+#  4. Implement your own helpOpts for additional options
+#  5. Expand usage() as needed
 #  
 #=========================================================================
 
-projectName="Seaside3"
-projectLoadCommand="project load $projectName"
+projectName="GLASS1"
+projectDirectoryName="glass"
 logFile="projectLoad_${projectName}.log"
-
-projectLoadCommand="eval \`Transcript cr; show: 'hello'\`"
 
 usage() {
   cat <<HELP
 USAGE: $(basename $0) [-h] <stone-name>
 
-Load $projectName into named stone.
+Create project entry node for $projectName in tODE /home for named stone.
 
 OPTIONS
   -h show usage
@@ -46,6 +46,15 @@ if [ $# -ne 1 ]; then
   usage; exit 1
 fi
 stoneName="$1"
-$GS_HOME/bin/tode todeIt $stoneName 1> $GS_HOME/gemstone/stones/$stoneName/logs/$logFile << EOF
-$projectLoadCommand
+$GS_HOME/bin/tode serverDoIt $stoneName 1> $GS_HOME/gemstone/stones/$stoneName/logs/$logFile << EOF
+  | entry result |
+  entry := TDProjectSpecEntryDefinition new
+    baseline: '${projectName}'
+      repository: 'github://glassdb/glass:master/repository'
+      loads: 'default';
+    status: #(#'active');
+    locked: true;
+    yourself.
+  result := entry createProjectEntryNode: '/home/${projectDirectoryName}'.
+  ^result printString
 EOF

@@ -32,7 +32,7 @@ Within tODE:
 
    * from tODE project list:
 
-     ![install zinc](installSeaside31.png)
+     ![project list menu][2]
 
 ###webServer script
 Within tODE:
@@ -68,5 +68,7 @@ EXAMPLES
   NOTE - use the `tode it` menu item to run the examples directly from this window.
 ```
 
+[2]: ../../docs/images/projectListMenu.png
 [3]: https://github.com/GsDevKit/Seaside31
 [4]: http://seaside.st/
+

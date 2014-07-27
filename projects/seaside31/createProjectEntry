@@ -60,7 +60,7 @@ source ${GS_HOME}/bin/shFunctions
 getOpts_help $@ #parse standard (-h) options
 
 if [ $# -eq 0 ]; then
-  usage; exit 0
+  usage; exit 1
 fi
 stoneName="$1"
 shift

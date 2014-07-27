@@ -34,7 +34,8 @@ Within tODE:
 
    * from tODE project list:
 
-     ![install zinc](installZinc.png)
+     ![project list menu][2]
 
+[2]: ../../docs/images/projectListMenu.png
 [3]: https://github.com/GsDevKit/zinc
 [4]: https://github.com/svenvc/zinc
