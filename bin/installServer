@@ -59,7 +59,3 @@ else
   # running on travis server - statmonitor fails on startup (bug #44491)
   echo "skipping $GS_HOME/bin/todeClient"
 fi
-
-echo $GEMSTONE_KEYFILE
-cat $GEMSTONE_KEYFILE
-cat $GS_HOME/gemstone/stones/$stoneName/logs/${stoneName}.log

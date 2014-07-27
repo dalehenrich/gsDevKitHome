@@ -48,6 +48,7 @@ EXAMPLES
 HELP
 }
 
+set -e # exit on error
 while getopts "h" OPT ; do
   case "$OPT" in
     h) usage ; exit 0 ;;
@@ -360,7 +361,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
     3.2.*) keyName="GemStone64Bit3.2.0-x86_64.Linux.key" ;;
     *) echo "No travis license for GemStone $vers"; exit 1;;
   esac
-  chmod +w  $gs_product/product/seaside/etc/gemstone.key
+  chmod +w  $gs_product/seaside/etc/gemstone.key
   echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
   cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
 fi
