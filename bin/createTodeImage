@@ -49,7 +49,7 @@ echo "creating todeClient${postFix} image"
 
 $pharo/pharo $pharo/Pharo.image save todeClientTmp
 
-cat - > todeLoad.st << EOF
+cat - > $pharo/todeLoad.st << EOF
 [ 
   Metacello new
     configuration: 'TodeClient';
@@ -60,7 +60,7 @@ cat - > todeLoad.st << EOF
       do: [:ex | Transcript cr; show: ex description ].
 EOF
 
-$pharo/pharo $pharo/todeClientTmp.image st --quit --save todeLoad.st
+$pharo/pharo $pharo/todeClientTmp.image st --quit --save $pharo/todeLoad.st
 
 $pharo/pharo $pharo/todeClientTmp.image save todeClient${postFix}
 
