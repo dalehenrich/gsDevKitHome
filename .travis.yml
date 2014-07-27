@@ -9,3 +9,4 @@ before_script:
 
 script:
   - bash installServer travis 3.2.1
+  
