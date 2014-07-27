@@ -37,7 +37,7 @@ if [ "${GS_HOME}x" = "x" ] ; then
   exit 1
 fi
 
-set -e # exit on error
+#set -e # exit on error
 if [ ! -e "$GS_HOME/pharo/pharo" ]; then
   $GS_HOME/bin/installPharo
 fi
@@ -46,3 +46,5 @@ fi
 pharo=$GS_HOME/pharo
 unset GEMSTONE_NRS_ALL
 $pharo/pharo $pharo/todeClient.image $*
+ls -altr gemstone/stones/travis/logs/*
+cat gemstone/stones/travis/logs/gemnetobject*.log
