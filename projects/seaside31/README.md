@@ -7,7 +7,7 @@ The [GsDevKit Seaside31 project][3] is a fork of [Seaside][4].
 $GS_HOME/projects/zinc/createProjectEntry <stone-name> [ <group-name> .... ]
 ```
 
-Use the `-h` option for information about specifying the <group-name> list.
+Use the `-h` option for information about specifying the \<group-name\> list.
 
 ###Batch Install/Update
 From the shell:
