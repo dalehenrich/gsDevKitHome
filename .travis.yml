@@ -1,5 +1,10 @@
 language: erlang
 
+env:
+
+  - GS_VERSION=3.1.0.6
+  - GS_VERSION=3.2.1
+
 before_script:
   - export GS_HOME="$(pwd)"
   - export PATH=$GS_HOME/bin:$PATH
@@ -11,5 +16,5 @@ before_script:
   - sudo ln -s /usr/lib/i386-linux-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
 
 script:
-  - bash installServer travis 3.2.0
+  - bash installServer travis $GS_VERSION
   
