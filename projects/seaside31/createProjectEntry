@@ -16,8 +16,8 @@
 
 projectName="Seasid3"
 projectDirectoryName="seaside3"
-projectName="XXXHTTPComponents"
-projectDirectoryName="XXX"
+projectName="seas"
+projectDirectoryName="seas"
 logFile="projectLoad_${projectName}.log"
 
 usage() {
@@ -52,19 +52,21 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 source ${GS_HOME}/bin/shFunctions
 
-getOpts_help #parse standard (-h) options
+getOpts_help $@ #parse standard (-h) options
 
-if [ $# -ne 1 ]; then
+if [ $# -eq 0 ]; then
   usage; exit 0
 fi
 stoneName="$1"
+shift
 $GS_HOME/bin/tode serverDoIt $stoneName 1> $GS_HOME/gemstone/stones/$stoneName/logs/$logFile << EOF
-  | entry result |
+  | loads entry result |
+  loads := #( Development $@ ) collect: [:each | each asString].
   entry := TDProjectSpecEntryDefinition new
     configuration: '${projectName}'
       version: '3.1.2'
       repository: 'http://www.smalltalkhub.com/mc/Seaside/MetacelloConfigurations/main'
-      loads: #('Development' 'Examples' 'Zinc' 'FastCGI' 'Swazoo');
+      loads: loads;
     status: #(#'active');
     yourself.
   result := entry createProjectEntryNode: '/home/${projectDirectoryName}'.
