@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 #=========================================================================
 # Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
 #=========================================================================
@@ -46,12 +46,9 @@ fi
 
 cd $GS_HOME/pharo
 if [ "${GS_TRAVIS}x" = "x" ] ; then
-  wget -O- get.pharo.org/30+vmLatest | bash
+  wget -O- get.pharo.org/vmLatest | bash
 else
   # running on travis server
-  ls -altr *
   wget -O- get.pharo.org/travis+vmLatest | bash
-  ls -altr *
-  wget -O- get.pharo.org/30 | bash
-  ls -altr *
 fi
+wget -O- get.pharo.org/30 | bash
