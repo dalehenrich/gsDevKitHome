@@ -18,6 +18,9 @@ before_script:
 script:
     # install server
   - bash installServer travis $GS_VERSION
+
+  - bash stones
+
     # help
   - bash backup -h
   - bash createStone -h
@@ -51,6 +54,8 @@ script:
   - bash stopStone travis
   - bash updateTodeImage travis
   - bash startStone travis
+
+  - bash stones
 
   - bash $GS_HOME/bin/pharo --list
   - bash $GS_HOME/bin/tode --list
