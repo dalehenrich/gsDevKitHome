@@ -47,8 +47,9 @@ fi
 
 echo "creating todeClient${postFix} image"
 
-ls $pharo
 
+ls $pharo
+ls $pharo/pharo-vm
 $pharo/pharo $pharo/Pharo.image save todeClientTmp
 
 $pharo/todeLoad.st <<EOF
