@@ -16,13 +16,44 @@ before_script:
   - sudo ln -s /usr/lib/i386-linux-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
 
 script:
+    # install server
   - bash installServer travis $GS_VERSION
-  - bash installServer -h
-  - bash installGemStone -h
-  - bash createTodeImage -h
+    # help
+  - bash backup -h
   - bash createStone -h
-  - bash startStone -h
+  - bash createTodeImage -h
+  - bash createTodeStone -h
+  - bash installClient -h
+  - bash installGci -h
+  - bash installGemStone -h
+  - bash installPharo -h
+  - bash installServer -h
+  - bash installTodeStone -h
+  - bash pharo -h
+  - bash restoreFromBackup -h
   - bash startNetldi -h
   - bash startStatmonitor -h
-  - bash installTodeStone -h
+  - bash startStone -h
+  - bash stoneExtents -h
+  - bash stones -h
+  - bash stopStone -h
+  - bash tode -h
+  - bash todeClient -h
+  - bash updateTodeImage -h
+    # functions
   - bash createTodeImage -p _small
+
+  - bash backup travis travis.dbf
+  - bash restoreFromBackup travis travis.dbf
+
+  - bash stopStone travis
+  - bash updateTodeImage travis
+  - bash startStone travis
+
+  - bash pharo --list
+  - bash tode --list
+
+  - bash createStone travis_2 $GS_VERSION
+  - bash stoneExtents travis_2
+
+  - bash stones
