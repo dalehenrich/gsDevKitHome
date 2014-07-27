@@ -45,6 +45,6 @@ fi
 # Run script
 pharo=$GS_HOME/pharo
 unset GEMSTONE_NRS_ALL
-ls -altr $pharo/pharo
-ls -altr $pharo/pharo/pharo-vm
+ls -altr $pharo/*
+ls -altr $pharo/pharo-vm/*
 $pharo/pharo $pharo/todeClient.image $*
