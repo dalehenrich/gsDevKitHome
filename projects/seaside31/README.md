@@ -1,5 +1,5 @@
 # Seaside31 [![gs_master branch:](https://travis-ci.org/GsDevKit/Seaside31.png?branch=gs_master)](https://travis-ci.org/GsDevKit/Seaside31)
-The [GsDevKit Seaside31 project][3] is a fork of [Seaside][4].
+The [GsDevKit Seaside31 project][3] is a fork of the [Seaside project][4].
 
 
 ## Register Project
