@@ -17,4 +17,12 @@ before_script:
 
 script:
   - bash installServer travis $GS_VERSION
-  
+  - bash installServer -h
+  - bash installGemStone -h
+  - bash createTodeImage -h
+  - bash createStone -h
+  - bash startStone -h
+  - bash startNetldi -h
+  - bash startStatmonitor -h
+  - bash installTodeStone -h
+  - bash createTodeImage -p _small
