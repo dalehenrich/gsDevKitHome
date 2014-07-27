@@ -5,9 +5,10 @@ before_script:
   - export PATH=$GS_HOME/bin:$PATH
   - export GS_TRAVIS=true
   - sudo apt-get update -qq
-  - sudo apt-get install ia32-libs
-#  - sudo apt-get -y install libpam0g:i386
-# - sudo ln -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
+  - sudo apt-get -y install libpam0g:i386
+  - sudo ln -s /lib/i386-linux-gnu/libpam.so.0 /lib/libpam.so.0
+  - sudo apt-get install -qq gcc-multilib libcurl3:i386 libstdc++6:i386
+  - sudo ln -s /usr/lib/i386-linux-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
 
 script:
   - bash installServer travis 3.2.1
