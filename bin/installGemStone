@@ -361,6 +361,7 @@ if [ "${GS_TRAVIS}x" != "x" ] ; then
     *) echo "No travis license for GemStone $vers"; exit 1;;
   esac
   chmod +w  $gs_product/product/seaside/etc/gemstone.key
+  echo "Copying $GS_HOME/travis/$keyName to $gs_product/seaside/etc/gemstone.key"
   cp $GS_HOME/travis/$keyName $gs_product/seaside/etc/gemstone.key
 fi
 

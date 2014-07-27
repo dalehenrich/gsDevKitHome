@@ -60,4 +60,6 @@ else
   echo "skipping $GS_HOME/bin/todeClient"
 fi
 
+echo $GEMSTONE_KEYFILE
+cat $GEMSTONE_KEYFILE
 cat $GS_HOME/gemstone/stones/$stoneName/logs/${stoneName}.log
