@@ -14,7 +14,7 @@ Transcript
         baseline: 'Tode';
         repository: 'github://dalehenrich/tode:dev/repository';
         onConflict: [ :ex | ex allow ];
-        load: 'GemStone Dev' ] 
+        load: 'GemStone Dev' ] ] 
   ifFalse: [ 
     GsDeployer bulkMigrate: [ 
       "tODE install loads GLASS1"
@@ -26,5 +26,5 @@ Transcript
         baseline: 'Tode';
         repository: 'filetree:///opt/git/tode/repository';
         onConflict: [ :ex | ex allow ];
-        load: 'GemStone Dev' 
+        load: 'GemStone Dev' ] 
   ].
