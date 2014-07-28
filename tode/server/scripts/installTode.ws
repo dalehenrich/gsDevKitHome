@@ -4,6 +4,7 @@ Transcript
 ((System gemEnvironmentVariable: 'GS_TRAVIS') = 'true') 
   ifTrue: [
     "Running on travis"
+    Transcript cr; show: 'Loading tODE from github://dalehenrich/tode:dev/repository'.
     GsDeployer bulkMigrate: [ 
       "tODE install loads GLASS1"
       Metacello new
@@ -16,6 +17,7 @@ Transcript
         onConflict: [ :ex | ex allow ];
         load: 'GemStone Dev' ] ] 
   ifFalse: [ 
+    Transcript cr; show: 'Loading tODE from filetree:///opt/git/tode/repository'.
     GsDeployer bulkMigrate: [ 
       "tODE install loads GLASS1"
       Metacello new
