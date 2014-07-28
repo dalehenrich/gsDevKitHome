@@ -1,58 +1,38 @@
 #! /bin/bash
-
 #=========================================================================
 # Copyright (c) 2014 GemTalk Systems, LLC <dhenrich@gemtalksystems.com>.
-#
-# Name - updateGTImages
-#
-# Purpose - Update the todeClient images for my gemtalk branch.
-#
-# Examples
-#   updateGTImages -h
-#   updateGTImages
-#
 #=========================================================================
 
-# help function
-function display_help() {
-  echo ""
-  echo "USAGE: $(basename $0) [-h] <stone-name>"
-  echo "Update the todeClient images for my gemtalk branch."
-  echo ""
-  echo "OPTIONS"
-  echo "  -h display help"
-  echo ""
-  echo "EXAMPLES"
-  echo "  $(basename $0) -h"
-  echo ""
+usage() {
+  cat <<HELP
+USAGE: $(basename $0) [-h] <stone-name>
+Update the todeClient images for my gemtalk branch.
+
+OPTIONS
+  -h display help
+
+EXAMPLES
+  $(basename $0) -h
+
+HELP
 }
 
-while getopts "h" OPT ; do
-  case "$OPT" in
-    h) 
-      display_help
-      exit 1
-      ;;
-    *)
-      display_help
-      exit 1
-      ;;
-  esac
-done
+set -e # exit on error
+if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"; exit 1
+fi
+source ${GS_HOME}/bin/shFunctions
+
+if [ $# -ne 0 ]; then
+  usage; exit 1
+fi
 
 $GS_HOME/bin/updateTodeImage
-if [[ $? != 0 ]] ; then exit 1; fi
 
 $GS_HOME/bin/updateTodeImage -p _0
-if [[ $? != 0 ]] ; then exit 1; fi
 
 $GS_HOME/bin/updateTodeImage -p _1
-if [[ $? != 0 ]] ; then exit 1; fi
 
 $GS_HOME/bin/updateTodeImage -p _2
-if [[ $? != 0 ]] ; then exit 1; fi
 
 $GS_HOME/bin/updateTodeImage -p _small
-if [[ $? != 0 ]] ; then exit 1; fi
-
-exit 0
