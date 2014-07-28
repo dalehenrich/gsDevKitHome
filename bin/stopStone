@@ -19,8 +19,16 @@ EXAMPLES
 HELP
 }
 
+if [ "$1x" = "x" ] ; then
+  display_help
+  exit 1
+fi
+stoneName=$1
+
 set -e # exit on error
 if [ "${GS_HOME}x" = "x" ] ; then
+  echo "the GS_HOME environment variable needs to be defined"
+  exit 1
   echo "the GS_HOME environment variable needs to be defined"; exit 1
 fi
 source ${GS_HOME}/bin/shFunctions
