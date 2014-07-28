@@ -1,4 +1,4 @@
-# Open Source Development Kit for GemStone/S 64 Bit [![master branch:](https://travis-ci.org/GsDevKit/gsDevKitHome.png?branch=master)](https://travis-ci.org/GsDevKit/gsDevKitHome)
+# Open Source Development Kit for GemStone/S 64 Bit [![gemtalk branch:](https://travis-ci.org/dalehenrich/gsDevKitHome.png?branch=gemtalk)](https://travis-ci.org/dalehenrich/gsDevKitHome)
 
 The [GsDevKit Seaside31 project][3] is a fork of the [Seaside project][4]
 
