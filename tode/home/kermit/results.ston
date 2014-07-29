@@ -1,0 +1,19 @@
+TDStringLeafNode{#name:'results',#contents:'dkh 7/29/2014 11:52
+-------------------
+3.2.1 and 2G SPC (on foos)
+--------------------------
+\'1\' took 2937 ms and read 0 pages to perform queries.
+\texpected: 2.91 seconds and 17 page reads.
+\'2\' took 3427 ms and read 0 pages to perform queries.
+\texpected: 3.41 seconds and 607 page reads.
+\'3\' took 2891 ms and read 0 pages to perform queries.
+\texpected: 2.86 seconds and 17 page reads.
+\'4\' took 13292 ms and read 0 pages to perform queries.
+\texpected: 12.43 seconds and 623 page reads.
+\'5\' took 17820 ms and read 0 pages to perform queries.
+\texpected: 17.68 seconds and 1538 page reads.
+\'6\' took 6011 ms and read 0 pages to perform queries.
+\texpected: 3.77 seconds and 33 page reads.
+\'7\' took 10454 ms and read 0 pages to perform queries.
+\texpected: 38.70 seconds and 1660 page reads.
+',#creationTime:DateAndTime['2014-07-29T11:52:14.3256800174713-07:00'],#modificationTime:DateAndTime['2014-07-29T11:53:12.5154631137847-07:00']}

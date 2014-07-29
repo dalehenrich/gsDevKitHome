@@ -5,7 +5,8 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
       #(\'bench\' nil #\'required\').
-      #(\'flood\' nil #\'none\')}
+      #(\'flood\' nil #\'none\').
+      #(\'profile\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
@@ -122,9 +123,14 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
         at: \'bench\'
         ifPresent: [ :benchmarkId | 
           benchmarkId = \'all\'
-            ifTrue: [ benchmarks := benchmarkBlocks associations ]
+            ifTrue: [ 
+              benchmarks := benchmarkBlocks associations asArray
+                sorted: [ :a :b | a key < b key ] ]
             ifFalse: [ benchmarks add: (benchmarkBlocks associationAt: benchmarkId) ] ]
         ifAbsent: [ benchmarks add: \'1\' -> (benchmarkBlocks at: \'1\') ].
+      opts
+        at: \'profile\'
+        ifPresent: [ :arg | topez evaluateCommandString: \'pf start\' ].
       benchmarks
         do: [ :assoc | 
           | benchmarkName block expectedPageReads expectedElapsedSeconds strm |
@@ -157,6 +163,9 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
           stream
             nextPutAll: strm contents;
             cr ].
+      opts
+        at: \'profile\'
+        ifPresent: [ :arg | topez evaluateCommandString: \'pf stop\' ].
       stream contents ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -164,7 +173,7 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
           \'NAME
   bench - bench sript utility template
 SYNOPSIS
-  bench [-h|--help] [--flood] [--bench=[ all|<benchmark-id> ] ]
+  bench [-h|--help] [--flood] [--bench=[ all|<benchmark-id> ] ] --profile
 DESCRIPTION
   Run benchmarks against indexes in kermit.
 
@@ -174,6 +183,9 @@ OPTIONS
   bench=[all|<benchmark-id>]
     all - produce report for all benchmarks
     <benchmark-id> - produce report for given benchmark (1-7)
+  profile
+    run profiler during execution of benchmark block(`pf start` ... `pf stop`). Use
+    `pf view` to look at profiler results
 
 EXAMPLES
   ./bench -h
@@ -181,5 +193,6 @@ EXAMPLES
   ./bench
   ./bench --bench=1; edit
   ./bench --bench=all; edit
+  ./bench --bench=6 --profile; edit; pf view
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T11:47:11.9747729301452-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T12:08:32.3120880126953-07:00']}
