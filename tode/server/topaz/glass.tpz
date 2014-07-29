@@ -38,6 +38,8 @@ glass ~~ nil
   addNewUserWithId: 'glass'
   password: 'swordfish')
     addPrivilege: #'CodeModification';
+    addPrivilege: #'FileControl';
+    addPrivilege: #'SessionAccess';
     addPrivilege: #'UserPassword';
     addPrivilege: #'OtherPassword';
     yourself.
