@@ -50,7 +50,7 @@ $GS_HOME/bin/tode serverDoIt $stoneName 1> $GS_HOME/gemstone/stones/$stoneName/l
   | entry result |
   entry := TDProjectSpecEntryDefinition new
     baseline: '${projectName}'
-      repository: 'github://glassdb/glass:master/repository'
+      repository: 'filetree:///opt/git/glass/repository'
       loads: 'default';
     status: #(#'active');
     locked: true;
