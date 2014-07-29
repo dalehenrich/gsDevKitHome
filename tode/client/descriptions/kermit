@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'kermit',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'kermit_ldi',
+	#netLDI : '49910',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
