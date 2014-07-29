@@ -12,7 +12,7 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
   opts
     at: \'help\'
     ifAbsent: [ 
-      | kermit beforePages afterPages time stream bob |
+      | kermit beforePages afterPages time stream bob benchmarkBlocks benchmarks |
       kermit := ((TDSymbolDictionaryDefinition new
         symbolDictionaryName: #\'UserGlobals\';
         username: \'DataCurator\';
@@ -48,28 +48,123 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
             nextPutAll: \' seconds to flood cache.\';
             lf;
             yourself ].
+      benchmarkBlocks := Dictionary new
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        at: \'1\'
+          put:
+            {[ 
+              | a b c |
+              a := kermit current _bugs
+                select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ].
+              \'17\'.
+              \'2.91\'};
+        yourself.
+      benchmarks := {}.
       opts
         at: \'bench\'
         ifPresent: [ :benchmarkId |  ]
-        ifAbsent: [].
-      beforePages := System pageReads.
-      bob := kermit current userWithId: \'bretlb\'.
-      time := Time
-        millisecondsElapsedTime: [ 
-          | a b c |
-          10000
-            timesRepeat: [ 
-              a := kermit current _bugs select: { :each | each.submittedBy == bob }.\t\"512\"
-              b := kermit current _bugs
-                select: { :each | each.assignedTo == bob }.\t\"1923\"
-              c := a * b ] ].
-      afterPages := System pageReads.
-      stream
-        nextPutAll: \'Took \';
-        print: time;
-        nextPutAll: \' ms and read \';
-        print: afterPages - beforePages;
-        nextPutAll: \' pages to perform queries.\'.
+        ifAbsent: [ benchmarks add: \'1\' -> (benchmarkBlocks at: \'1\') ].
+      benchmarks
+        do: [ :assoc | 
+          | benchmarkName block expectedPageReads expectedElapsedSeconds |
+          benchmarkName := assoc key.
+          block := assoc value at: 1.
+          expectedPageReads := assoc value at: 2.
+          expectedElapsedSeconds := assoc value at: 3.
+          beforePages := System pageReads.
+          bob := kermit current userWithId: \'bretlb\'.
+          time := Time millisecondsElapsedTime: [ 10000 timesRepeat: block ].
+          afterPages := System pageReads.
+          stream
+            nextPutAll: benchmarkName , \' took \';
+            print: time;
+            nextPutAll: \' ms and read \';
+            print: afterPages - beforePages;
+            nextPutAll: \' pages to perform queries.\';
+            cr;
+            tab;
+            nextPutAll:
+                \'expected: \' , expectedElapsedSeconds , \' seconds and \' , expectedPageReads
+                    , \' page reads.\' ].
       stream contents ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -90,4 +185,4 @@ EXAMPLES
   ./bench --flood
   ./bench
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T11:04:17.4204409122467-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T11:25:38.9311780929565-07:00']}
