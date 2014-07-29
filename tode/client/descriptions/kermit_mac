@@ -5,7 +5,7 @@ TDSessionDescription {
 	#gemHost : 'localhost',
 	#netLDI : 'kermit_mac_ldi',
 	#gemTask : 'gemnetobject',
-	#userId : 'DataCurator',
+	#userId : 'glass',
 	#password : 'swordfish',
 	#osUserId : nil,
 	#osPassword : nil,
