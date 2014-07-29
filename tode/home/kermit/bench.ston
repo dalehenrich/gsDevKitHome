@@ -1,0 +1,93 @@
+TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bench -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'bench\' nil #\'required\').
+      #(\'flood\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | kermit beforePages afterPages time stream bob |
+      kermit := ((TDSymbolDictionaryDefinition new
+        symbolDictionaryName: #\'UserGlobals\';
+        username: \'DataCurator\';
+        yourself) symbolList at: 1) at: #\'Kermit\'.
+      stream := WriteStream on: String new.
+      opts
+        at: \'flood\'
+        ifPresent: [ :arg | 
+          | pagesToRead oop oopCount |
+          pagesToRead := (System stoneConfigurationAt: #\'SHR_PAGE_CACHE_SIZE_KB\')
+            // 10.
+          beforePages := System pageReads.
+          oop := 1.
+          oopCount := 0.
+          time := Time
+            millisecondsElapsedTime: [ 
+              [ 
+              afterPages := System pageReads.
+              afterPages - beforePages < pagesToRead
+                and: [ oop < System _oopHighWaterMark ] ]
+                whileTrue: [ 
+                  [ 
+                  (Object _objectForOop: oop) class.
+                  oopCount := oopCount + 1 ]
+                    on: Error
+                    do: [ :ex | ex return ].
+                  oop := oop + 8 ] ].
+          stream
+            nextPutAll: \'Read ~\';
+            print: oopCount // 1000000;
+            nextPutAll: \' million objects in ~\';
+            print: time // 1000;
+            nextPutAll: \' seconds to flood cache.\';
+            lf;
+            yourself ].
+      opts
+        at: \'bench\'
+        ifPresent: [ :benchmarkId |  ]
+        ifAbsent: [].
+      beforePages := System pageReads.
+      bob := kermit current userWithId: \'bretlb\'.
+      time := Time
+        millisecondsElapsedTime: [ 
+          | a b c |
+          10000
+            timesRepeat: [ 
+              a := kermit current _bugs select: { :each | each.submittedBy == bob }.\t\"512\"
+              b := kermit current _bugs
+                select: { :each | each.assignedTo == bob }.\t\"1923\"
+              c := a * b ] ].
+      afterPages := System pageReads.
+      stream
+        nextPutAll: \'Took \';
+        print: time;
+        nextPutAll: \' ms and read \';
+        print: afterPages - beforePages;
+        nextPutAll: \' pages to perform queries.\'.
+      stream contents ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bench - bench sript utility template
+SYNOPSIS
+  bench [-h|--help] [--flood]
+DESCRIPTION
+  Run benchmarks against indexes in kermit.
+
+OPTIONS
+  flood
+    flood the cache with random pages (only use with a relatively small SPC (500M))
+
+EXAMPLES
+  ./bench -h
+  ./bench --flood
+  ./bench
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T11:04:17.4204409122467-07:00']}
