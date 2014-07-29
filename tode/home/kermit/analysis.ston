@@ -15,4 +15,15 @@ tally     %  smpl%    ms class and method name
 ----
 
 with PathEvaluator on the stack it is clear that the query is not using the index for evaluation.....
-',#creationTime:DateAndTime['2014-07-29T11:58:04.8501930236816-07:00'],#modificationTime:DateAndTime['2014-07-29T12:11:04.7816400527954-07:00']}
+
+
+dkh 7/29/2014 12:14
+-------------------
+block \'6\':
+      preBuiltQuery1 := GsQuery
+        fromString: \'(each.submittedBy == bob) & (each.assignedTo == bob)\'
+        on: kermit current _bugs.
+      preBuiltQuery1 bind: \'bob\' to: (kermit current userWithId: \'bretlb\').
+      preBuiltQuery1 queryResult
+
+',#creationTime:DateAndTime['2014-07-29T11:58:04.8501930236816-07:00'],#modificationTime:DateAndTime['2014-07-29T12:15:14.1338350772857-07:00']}
