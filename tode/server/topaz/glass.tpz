@@ -1,0 +1,72 @@
+
+! run with topaz -l -T50000 or larger
+
+display resultcheck
+
+output pushnew glass.out only
+
+level 1
+iferr 1 stk
+iferr 2 stack
+
+set user SystemUser pass swordfish
+login
+run
+"GLASS is not yet ready for Portable streams, nor Legacy streams with ANSI polarity"
+Stream installLegacyStreamImplementation.
+(Globals at: #'PositionableStream_position') == #'ANSI'
+   ifTrue: [
+     Globals at: #'PositionableStream_position' put: #'Legacy'.
+     PositionableStream compilePositionMethods ].
+Globals at: #StringConfiguration put: Unicode16.
+true
+%
+commit
+logout
+
+set user DataCurator pass swordfish
+login
+run
+| glass |
+glass := AllUsers userWithId: 'glass' ifAbsent: [ nil ].
+glass ~~ nil
+  ifTrue: [ 
+    AllUsers removeAndCleanup: glass.
+    System commitTransaction.
+ ].
+(AllUsers 
+  addNewUserWithId: 'glass'
+  password: 'swordfish')
+    addPrivilege: #'CodeModification';
+    addPrivilege: #'FileControl';
+    addPrivilege: #'SessionAccess';
+    addPrivilege: #'SystemControl';
+    addPrivilege: #'UserPassword';
+    addPrivilege: #'GarbageCollection';
+    addPrivilege: #'OtherPassword';
+    yourself.
+System commitTransaction.
+%
+logout
+errorCount
+
+set user glass pass swordfish
+login
+
+!
+! Define which SymbolDictionary into which all classes are to be installed.
+!
+run
+System myUserProfile _createDictionary: #GLASS at: 1.
+UserGlobals at: #BootstrapSymbolDictionaryName put: #GLASS.
+true
+%
+commit
+errorCount
+
+input $GS_HOME/gemstone/stones/kermit_mac/product/upgrade/installMaster30.topaz
+
+commit
+errorCount
+
+output pop
