@@ -40,7 +40,9 @@ glass ~~ nil
     addPrivilege: #'CodeModification';
     addPrivilege: #'FileControl';
     addPrivilege: #'SessionAccess';
+    addPrivilege: #'SystemControl';
     addPrivilege: #'UserPassword';
+    addPrivilege: #'GarbageCollection';
     addPrivilege: #'OtherPassword';
     yourself.
 System commitTransaction.
