@@ -26,4 +26,11 @@ block \'6\':
       preBuiltQuery1 bind: \'bob\' to: (kermit current userWithId: \'bretlb\').
       preBuiltQuery1 queryResult
 
-',#creationTime:DateAndTime['2014-07-29T11:58:04.8501930236816-07:00'],#modificationTime:DateAndTime['2014-07-29T12:15:14.1338350772857-07:00']}
+dkh 7/29/2014 16:39
+-------------------
+GsCompoundClause>>executeClause does not apply clause2 to intermediate result.
+
+
+
+
+',#creationTime:DateAndTime['2014-07-29T11:58:04.8501930236816-07:00'],#modificationTime:DateAndTime['2014-07-29T16:40:37.5356800556182-07:00']}

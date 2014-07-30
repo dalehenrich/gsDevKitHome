@@ -13,7 +13,7 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
   opts
     at: \'help\'
     ifAbsent: [ 
-      | kermit beforePages afterPages time stream bob benchmarkBlocks benchmarks preBuiltQuery1 preBuiltQuery2 |
+      | kermit beforePages afterPages time stream bob benchmarkBlocks benchmarks preBuiltQuery1 preBuiltQuery2 preBuiltQuery3 |
       kermit := ((TDSymbolDictionaryDefinition new
         symbolDictionaryName: #\'UserGlobals\';
         username: \'DataCurator\';
@@ -53,6 +53,8 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
         fromString: \'(each.submittedBy == bob) & (each.assignedTo == bob)\'
         on: kermit current _bugs.
       preBuiltQuery1 bind: \'bob\' to: (kermit current userWithId: \'bretlb\').
+      preBuiltQuery3 := preBuiltQuery1 copy
+        queryOptions: GsQuery defaultQueryOptions - GsQueryOptions autoOptimize.
       preBuiltQuery2 := GsQuery
         fromString: \'(each.assignedTo == bob) & (each.submittedBy == bob)\'
         on: kermit current _bugs.
@@ -112,6 +114,11 @@ TDScriptLeafNode{#name:'bench',#contents:'[ :topez :objIn :tokens :command :comm
             {[ preBuiltQuery1 queryResult ].
               \'33\'.
               \'3.77\'};
+        at: \'6`\'
+          put:
+            {[ preBuiltQuery3 queryResult ].
+              \'??\'.
+              \'faster that 6?\'};
         at: \'7\'
           put:
             {[ preBuiltQuery2 queryResult ].
@@ -195,4 +202,4 @@ EXAMPLES
   ./bench --bench=all; edit
   ./bench --bench=6 --profile; edit; pf view
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T12:08:32.3120880126953-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T10:08:40.3795459270477-07:00'],#modificationTime:DateAndTime['2014-07-29T17:28:28.1884870529174-07:00']}
