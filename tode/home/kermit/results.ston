@@ -1,0 +1,60 @@
+TDStringLeafNode{#name:'results',#contents:'dkh 7/29/2014 11:52
+-------------------
+3.2.1 and 2G SPC (on foos)
+--------------------------
+\'1\' took 2937 ms and read 0 pages to perform queries.
+\texpected: 2.91 seconds and 17 page reads.
+\'2\' took 3427 ms and read 0 pages to perform queries.
+\texpected: 3.41 seconds and 607 page reads.
+\'3\' took 2891 ms and read 0 pages to perform queries.
+\texpected: 2.86 seconds and 17 page reads.
+\'4\' took 13292 ms and read 0 pages to perform queries.
+\texpected: 12.43 seconds and 623 page reads.
+\'5\' took 17820 ms and read 0 pages to perform queries.
+\texpected: 17.68 seconds and 1538 page reads.
+\'6\' took 6011 ms and read 0 pages to perform queries.
+\texpected: 3.77 seconds and 33 page reads.
+\'7\' took 10454 ms and read 0 pages to perform queries.
+\texpected: 38.70 seconds and 1660 page reads.
+
+dkh 7/29/2014 16:37
+-------------------
+\"Unconditional evaluate query using index in GsQuery\" I think:
+---
+\'1\' took 2948 ms and read 0 pages to perform queries.
+\texpected: 2.91 seconds and 17 page reads.
+\'2\' took 3502 ms and read 0 pages to perform queries.
+\texpected: 3.41 seconds and 607 page reads.
+\'3\' took 2892 ms and read 0 pages to perform queries.
+\texpected: 2.86 seconds and 17 page reads.
+\'4\' took 13375 ms and read 0 pages to perform queries.
+\texpected: 12.43 seconds and 623 page reads.
+\'5\' took 13357 ms and read 0 pages to perform queries.
+\texpected: 17.68 seconds and 1538 page reads.
+\'6\' took 6250 ms and read 0 pages to perform queries.
+\texpected: 3.77 seconds and 33 page reads.
+\'7\' took 6217 ms and read 0 pages to perform queries.
+\texpected: 38.70 seconds and 1660 page reads.
+
+dkh 7/29/2014 17:59
+-------------------
+6` turns off auto-optimization and combined with unconditional evaluation is \"best\" performer
+---
+\'1\' took 2954 ms and read 0 pages to perform queries.
+\texpected: 2.91 seconds and 17 page reads.
+\'2\' took 3570 ms and read 0 pages to perform queries.
+\texpected: 3.41 seconds and 607 page reads.
+\'3\' took 2884 ms and read 0 pages to perform queries.
+\texpected: 2.86 seconds and 17 page reads.
+\'4\' took 13404 ms and read 0 pages to perform queries.
+\texpected: 12.43 seconds and 623 page reads.
+\'5\' took 13472 ms and read 0 pages to perform queries.
+\texpected: 17.68 seconds and 1538 page reads.
+\'6\' took 6271 ms and read 0 pages to perform queries.
+\texpected: 3.77 seconds and 33 page reads.
+\'6`\' took 2843 ms and read 0 pages to perform queries.
+\texpected: faster that 6? seconds and ?? page reads.
+\'7\' took 6228 ms and read 0 pages to perform queries.
+\texpected: 38.70 seconds and 1660 page reads.
+
+',#creationTime:DateAndTime['2014-07-29T11:52:14.3256800174713-07:00'],#modificationTime:DateAndTime['2014-07-29T17:59:54.8233320713043-07:00']}

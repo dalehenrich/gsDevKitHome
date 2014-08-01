@@ -1,0 +1,49 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'a\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis bugs queryResult |
+      analysis := Dictionary new.
+      bugs := (((TDSymbolDictionaryDefinition new
+        symbolDictionaryName: #\'UserGlobals\';
+        username: \'DataCurator\';
+        yourself) symbolList at: 1) at: #\'Kermit\') current _bugs.
+      opts
+        at: \'a\'
+        ifPresent: [ :ignored | | a b bob|
+       
+          a := bugs select: {:each | each.submittedBy == bob}. \"512\"
+          b := bugs select: {:each | each.assignedTo == bob}. \"1923\"
+          queryResult := a * b.
+     
+           ].
+      analysis
+        
+at: \'result\' put: queryResult;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug 
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --a
+
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-07-29T07:21:48.6540420055389-07:00'],#modificationTime:DateAndTime['2014-07-29T07:30:47.2028579711914-07:00']}
