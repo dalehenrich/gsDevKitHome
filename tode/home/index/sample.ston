@@ -74,9 +74,9 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
               selectCpuTime := System
                 millisecondsToRun: [ 
                   selectResult := theColl
-                    select: [ :each | d1 < each.value.value & (each.value.value < d2) ] ].
+                    select: [ :each | d1 < each value value & (each value value < d2) ] ].
               nullTime := Time
-                millisecondsToRun: [ nullCpuTime := System millisecondsToRun: [ theColl select: [ :each |  false] ] ] ].
+                millisecondsToRun: [ nullCpuTime := System millisecondsToRun: [ theColl select: [ :each | false ] ] ] ].
           analysis
             at: \'startDate\' put: startDate;
             at: \'d1\' put: d1;
@@ -85,7 +85,6 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
             at: \'endDate\' put: endDate;
             yourself ].
       analysis
-        at: \'audit\' put: theColl auditIndexes;
         at: \'nsc\' put: theColl;
         at: \'query\' put: query;
         at: \'query result\' put: queryResult;
@@ -110,7 +109,8 @@ SYNOPSIS
   sample [-h|--help]
   sample [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]]
 DESCRIPTION
-  Reproduce sample.
+  The query window is 1/2 the number of elements returned by search.
+
 EXAMPLES
   ./sample --help
 
@@ -120,4 +120,4 @@ EXAMPLES
   ./sample --clean --create=1000 --query
   ./sample --clean --create=1000 --index --query=5
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T14:34:43.2612309455871-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T16:03:16.274039030075-07:00']}

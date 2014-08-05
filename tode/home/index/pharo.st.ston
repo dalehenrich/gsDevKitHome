@@ -1,0 +1,20 @@
+TDSmalltalkLeafNode{#name:'pharo.st',#contents:'| nsc base d1 d2 startDate endDate mid windowSize result time |
+  nsc := IdentityBag new.
+  base := DateAndTime now.
+  windowSize := 5.
+  1 to: 1000000 do: [ :index | 
+    | sample |
+    sample := index -> (index -> (base + (index - 1) days)).
+    nsc add: sample ].
+  Time millisecondsToRun: [ nsc select: [ :each | false ] ].
+  startDate := base.
+  endDate := startDate + (nsc size - 1) days.
+  mid := (endDate - startDate) / 2.
+  d1 := startDate + mid - windowSize days.
+  d2 := startDate + mid + windowSize days.
+  time := Time
+    millisecondsToRun: [ 
+      result := nsc
+        select: [ :each | d1 < each value value & (each value value < d2) ] ].
+  ^ {time.
+  (result size)}',#creationTime:DateAndTime['2014-08-05T15:23:20.9417760372161-07:00'],#modificationTime:DateAndTime['2014-08-05T15:48:03.809914112091-07:00']}
