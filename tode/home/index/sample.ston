@@ -36,7 +36,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
           samples := sampleCount
             ifNil: [ minCount ]
             ifNotNil: [ sampleCount asNumber max: minCount ].
-          nsc := IdentityBag new.
+          nsc := RcIdentityBag new:100.
           base := DateAndTime now.
           UserGlobals
             at: #\'coll\' put: nsc;
@@ -143,4 +143,4 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     ./sample --clean --create=1000 --query
     ./sample --clean --create=1000 --index --query=5
   \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T20:59:04.7819321155548-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T21:35:08.5863800048828-07:00']}
