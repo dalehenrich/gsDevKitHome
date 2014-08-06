@@ -1,0 +1,44 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 8/5/2014 15:07
+------------------
+1000000 element collection. Gemstone3.2.1 with a  5G TOC [50M TOC] and 2G SPC:
+
+1. it takes 90ms to simply traverse the 1000000 element collection with a false 
+   select block:
+   
+     nsc select: [:each | false]
+
+2. it takes 500ms [450ms] for the following select block to run (returning 10 elements 
+   from middle of collection):
+
+     nsc select: [:each | d1 < each.value.value & (each.value.value < d2)]
+
+3. it takes 380ms [2356ms] for the following select block to run (returning 10 elements 
+   from middle of collection):
+
+     nsc select: [:each | d1 < each value value & (each value value < d2)]
+
+3. it takes 1 ms to return the same result set using a GemStone index:
+
+     GsIndexSpec new
+       equalityIndex: \'value.value\' lastElementClass: DateAndTime;
+       createIndexesOn: nsc;
+       yourself 
+
+   and the following query:
+
+     ((\'d1 < each.value.value < d2\' asQueryOn: nsc)
+       bind: \'d1\' to: d1;
+       bind: \'d2\' to: d2;
+       yourself) queryResult
+
+dkh 8/5/2014 15:25
+------------------
+
+Pharo3.0 running on same machine as GemStone:
+
+1. On Pharo, traversing a 1000000 element IdentityBag takes 902 ms (GemStone 90ms).
+     nsc select: [:each | false]
+2. On Pharo, the select block takes 1027ms (GemStone 380ms [2356ms] or 1ms [0ms] with index).
+     nsc select: [:each | d1 < each value value & (each value value < d2)]
+
+   ',#creationTime:DateAndTime['2014-08-05T15:07:26.6661369800567-07:00'],#modificationTime:DateAndTime['2014-08-05T16:02:04.7892849445343-07:00']}

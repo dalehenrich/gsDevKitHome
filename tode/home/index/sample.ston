@@ -1,0 +1,146 @@
+TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./sample -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'optional\').
+      #(\'formula\' nil #\'none\').
+      #(\'index\' nil #\'optional\').
+      #(\'query\' nil #\'optional\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime names |
+      analysis := Dictionary new.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      names := {\'Dale\'.
+      \'Nic\'.
+      \'Brian\'.
+      \'Janet\'.
+      \'Heather\'}.
+      opts
+        at: \'create\'
+        ifPresent: [ :sampleCount | 
+          | nsc samples base minCount |
+          minCount := 15.
+          samples := sampleCount
+            ifNil: [ minCount ]
+            ifNotNil: [ sampleCount asNumber max: minCount ].
+          nsc := RcIdentityBag new:100.
+          base := DateAndTime now.
+          UserGlobals
+            at: #\'coll\' put: nsc;
+            at: #\'baseDate\' put: base;
+            yourself.
+          1 to: samples do: [ :index | 
+            | sample |
+            sample := index
+              -> ((names at: index \\\\ 5 + 1) -> (base + (index - 1) days)).
+            nsc add: sample.
+            index \\\\ 1000 = 0
+              ifTrue: [ System commitTransaction ] ] ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      opts
+        at: \'index\'
+        ifPresent: [ :ignored | 
+          IndexManager autoCommit: true.
+          GsIndexSpec new
+            identityIndex: \'key\';
+            equalityIndex: \'value.value\' lastElementClass: DateAndTime;
+            equalityIndex: \'value.key\' lastElementClass: String;
+            createIndexesOn: theColl;
+            yourself ].
+      opts
+        at: \'query\'
+        ifPresent: [ :window | 
+          | startDate endDate mid d1 d2 windowSize |
+          windowSize := window ifNil: [ 5 ] ifNotNil: [ window asNumber ].
+          startDate := UserGlobals at: #\'baseDate\' ifAbsent: [ DateAndTime now ].
+          endDate := startDate + (theColl size - 1) days.
+          mid := (endDate - startDate) / 2.
+          d1 := startDate + mid - windowSize days.
+          d2 := startDate + mid + windowSize days.
+          query := (\'(each.value.key = \'\'Heather\'\') & (d1 < each.value.value < d2)\'
+            asQueryOn: theColl)
+            bind: \'d1\' to: d1;
+            bind: \'d2\' to: d2;
+            queryOptions: GsQueryOptions default - GsQueryOptions autoOptimize;
+            optimize;
+            yourself.
+          queryTime := Time
+            millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ].
+          opts
+            at: \'formula\'
+            ifAbsent: [ 
+              selectTime := Time
+                millisecondsToRun: [ 
+                  selectCpuTime := System
+                    millisecondsToRun: [ 
+                      selectResult := theColl
+                        select: [ :each | d1 < each value value & (each value value < d2) & (each value key = \'Heather\') ] ] ] ].
+          analysis
+            at: \'startDate\' put: startDate;
+            at: \'d1\' put: d1;
+            at: \'mid\' put: startDate + mid;
+            at: \'d2\' put: d2;
+            at: \'endDate\' put: endDate;
+            yourself ].
+      analysis
+        at: \'nsc\' put: theColl;
+        at: \'query\' put: query;
+        at: \'query result\' put: queryResult;
+        at: \'select result\' put: selectResult;
+        at: \'CORRECT\' put: queryResult = selectResult;
+        at: \'time\'
+          put:
+            {queryTime.
+              queryCpuTime.
+              selectTime.
+              selectCpuTime};
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+    sample - sample sript utility template
+  SYNOPSIS
+    sample [-h|--help]
+    sample [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula]
+  DESCRIPTION
+  OPTIONS
+    clean
+      remove all indexes in system
+
+    create[=<num_samples>]
+      create a collection with <num_samples>. Default (and minimum samples) is 15.
+    
+    formula
+      only run the formula query ... skip the select block query.
+
+    index
+      create indexes on the collection
+
+    query[=<window>
+      default <window> is 5 ... a window of 5 results in 10 samples
+
+  EXAMPLES
+    ./sample --help
+  
+    ./sample --clean --create 
+    ./sample --clean --create=1000 --index
+    ./sample --clean --query=5
+    ./sample --clean --create=1000 --query
+    ./sample --clean --create=1000 --index --query=5
+  \'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T21:35:08.5863800048828-07:00']}

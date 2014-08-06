@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'virgin',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'virgin',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'virgin_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/virgin/backups/',
+	#gemstoneVersion : '3.2.1',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/virgin/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

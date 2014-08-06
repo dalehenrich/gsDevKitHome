@@ -1,0 +1,37 @@
+TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xx -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | query nsc |
+      nsc := IdentityBag new.
+      GsIndexSpec new
+        equalityIndex: \'value.value\' lastElementClass: DateAndTime;
+        createIndexesOn: nsc;
+        yourself.
+      query := (\'(each.value.key = \'\'Heather\'\') & (d1 < each.value.value < d2)\'
+        asQueryOn: nsc)
+        queryOptions: GsQueryOptions default - GsQueryOptions autoOptimize;
+
+optimize;
+        yourself.
+      query  ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xx - xx sript utility template
+SYNOPSIS
+  xx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xx --help
+  ./xx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T16:26:25.4093461036682-07:00'],#modificationTime:DateAndTime['2014-08-05T16:30:43.7994298934936-07:00']}
