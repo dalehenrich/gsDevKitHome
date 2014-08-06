@@ -2,7 +2,7 @@ TDSmalltalkLeafNode{#name:'pharo.st',#contents:'| count nsc base d1 d2 startDate
   count := 1000000.
   nsc := IdentityBag new.
   base := DateAndTime now.
-  windowSize := 100.
+  windowSize := 5.
   names := {\'Dale\'.
   \'Nic\'.
   \'Brian\'.
@@ -22,4 +22,4 @@ TDSmalltalkLeafNode{#name:'pharo.st',#contents:'| count nsc base d1 d2 startDate
       result := nsc
         select: [ :each | each value key = \'Heather\' & (d1 < each value value & (each value value < d2)) ] ].
   ^ {time.
-  (result size)}',#creationTime:DateAndTime['2014-08-05T15:23:20.9417760372161-07:00'],#modificationTime:DateAndTime['2014-08-05T16:51:23.4185140132904-07:00']}
+  (result size)}',#creationTime:DateAndTime['2014-08-05T15:23:20.9417760372161-07:00'],#modificationTime:DateAndTime['2014-08-05T20:44:19.7303590774536-07:00']}

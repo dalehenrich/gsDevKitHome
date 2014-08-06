@@ -14,7 +14,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime nullTime nullCpuTime names selectBlockResult selectBlockTime selectBlockCpuTime |
+      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime  names  |
       analysis := Dictionary new.
       opts
         at: \'clean\'
@@ -84,14 +84,6 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
                 millisecondsToRun: [ 
                   selectResult := theColl
                     select: [ :each | d1 < each value value & (each value value < d2) & (each value key = \'Heather\') ] ] ].
-          selectBlockTime := Time
-            millisecondsToRun: [ 
-              selectBlockCpuTime := System
-                millisecondsToRun: [ 
-                  selectBlockResult := theColl
-                    select: { :each | (each.value.key = \'Heather\') & (d1 < each.value.value) & (each.value.value < d2) } ] ].
-          nullTime := Time
-            millisecondsToRun: [ nullCpuTime := System millisecondsToRun: [ theColl select: [ :each | false ] ] ].
           analysis
             at: \'startDate\' put: startDate;
             at: \'d1\' put: d1;
@@ -99,25 +91,21 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
             at: \'d2\' put: d2;
             at: \'endDate\' put: endDate;
             yourself ].
-      analysis 
+      analysis
         at: \'nsc\' put: theColl;
         at: \'query\' put: query;
         at: \'query result\' put: queryResult;
         at: \'select result\' put: selectResult;
-        at: \'select block result\' put: selectResult;
         at: \'CORRECT\'
           put:
-            (queryResult = selectResult and: [ selectBlockResult = queryResult ]);
+            (queryResult = selectResult );
         at: \'time\'
           put:
             {queryTime.
               queryCpuTime.
               selectTime.
               selectCpuTime.
-              nullTime.
-              nullCpuTime.
-              selectBlockTime.
-              selectBlockCpuTime};
+              };
         yourself.
       analysis ]
     ifPresent: [ :ignored | 
@@ -140,4 +128,4 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     ./sample --clean --create=1000 --query
     ./sample --clean --create=1000 --index --query=5
   \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T20:39:29.6389589309692-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T20:42:18.1609320640564-07:00']}
