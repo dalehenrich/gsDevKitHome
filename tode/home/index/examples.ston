@@ -1,0 +1,40 @@
+TDScriptLeafNode{#name:'examples',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./examples -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'invoices\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | invoices |
+      opts
+        at: \'invoices\'
+        ifPresent: [ :ignored | 
+          \"open invoices not emailed\"
+          invoices := RcIdentityBag new: 100.
+          GsIndexSpec new
+            equalityIndex: \'each.emailed\' lastElementClass: Boolean;
+            equalityIndex: \'each.open\' lastElementClass: Boolean;
+            createIndexesOn: invoices;
+            yourself.
+          (\'(each.open) & (each.emailed == false)\' asQueryOn: invoices)
+            optimize;
+            yourself ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  examples - examples sript utility template
+SYNOPSIS
+  examples [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./examples --help
+  ./examples -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T22:04:50.9272270202636-07:00'],#modificationTime:DateAndTime['2014-08-05T22:22:50.3764219284057-07:00']}
