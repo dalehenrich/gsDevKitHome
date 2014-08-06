@@ -6,6 +6,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
       {#(\'help\' $h #\'none\').
       #(\'clean\' nil #\'none\').
       #(\'create\' nil #\'optional\').
+      #(\'formula\' nil #\'none\').
       #(\'index\' nil #\'optional\').
       #(\'query\' nil #\'optional\')}
     optionsAndArguments: [ :options :operands | 
@@ -14,7 +15,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime  names  |
+      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime names |
       analysis := Dictionary new.
       opts
         at: \'clean\'
@@ -78,12 +79,15 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
             yourself.
           queryTime := Time
             millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ].
-          selectTime := Time
-            millisecondsToRun: [ 
-              selectCpuTime := System
+          opts
+            at: \'formula\'
+            ifAbsent: [ 
+              selectTime := Time
                 millisecondsToRun: [ 
-                  selectResult := theColl
-                    select: [ :each | d1 < each value value & (each value value < d2) & (each value key = \'Heather\') ] ] ].
+                  selectCpuTime := System
+                    millisecondsToRun: [ 
+                      selectResult := theColl
+                        select: [ :each | d1 < each value value & (each value value < d2) & (each value key = \'Heather\') ] ] ] ].
           analysis
             at: \'startDate\' put: startDate;
             at: \'d1\' put: d1;
@@ -96,16 +100,13 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
         at: \'query\' put: query;
         at: \'query result\' put: queryResult;
         at: \'select result\' put: selectResult;
-        at: \'CORRECT\'
-          put:
-            (queryResult = selectResult );
+        at: \'CORRECT\' put: queryResult = selectResult;
         at: \'time\'
           put:
             {queryTime.
               queryCpuTime.
               selectTime.
-              selectCpuTime.
-              };
+              selectCpuTime};
         yourself.
       analysis ]
     ifPresent: [ :ignored | 
@@ -115,10 +116,24 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     sample - sample sript utility template
   SYNOPSIS
     sample [-h|--help]
-    sample [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]]
+    sample [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula]
   DESCRIPTION
-    The query window is 1/2 the number of elements returned by search.
-  
+  OPTIONS
+    clean
+      remove all indexes in system
+
+    create[=<num_samples>]
+      create a collection with <num_samples>. Default (and minimum samples) is 15.
+    
+    formula
+      only run the formula query ... skip the select block query.
+
+    index
+      create indexes on the collection
+
+    query[=<window>
+      default <window> is 5 ... a window of 5 results in 10 samples
+
   EXAMPLES
     ./sample --help
   
@@ -128,4 +143,4 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     ./sample --clean --create=1000 --query
     ./sample --clean --create=1000 --index --query=5
   \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T20:42:18.1609320640564-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T20:59:04.7819321155548-07:00']}
