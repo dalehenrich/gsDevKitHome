@@ -14,7 +14,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime nullTime nullCpuTime names selectBlockResult selectBlockTime selectBlockCpuTime |
+      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime names |
       analysis := Dictionary new.
       opts
         at: \'clean\'
@@ -42,9 +42,10 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
             at: #\'baseDate\' put: base;
             yourself.
           1 to: samples do: [ :index | 
-            | sample |
-            sample := index
-              -> ((names at: index \\\\ 5 + 1) -> (base + (index - 1) days)).
+            | sample children |
+            children := Set new.
+            1 to: 5 atRandom do: [ :index | children add: (names at: index) ].
+            sample := index -> (children -> (base + (index - 1) days)).
             nsc add: sample.
             index \\\\ 1000 = 0
               ifTrue: [ System commitTransaction ] ] ].
@@ -56,7 +57,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
           GsIndexSpec new
             identityIndex: \'key\';
             equalityIndex: \'value.value\' lastElementClass: DateAndTime;
-            equalityIndex: \'value.key\' lastElementClass: String;
+            equalityIndex: \'value.key.*\' lastElementClass: String;
             createIndexesOn: theColl;
             yourself ].
       opts
@@ -69,7 +70,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
           mid := (endDate - startDate) / 2.
           d1 := startDate + mid - windowSize days.
           d2 := startDate + mid + windowSize days.
-          query := (\'(each.value.key = \'\'Heather\'\') & (d1 < each.value.value < d2)\'
+          query := (\'(d1 < each.value.value ) & ( each.value.value < d2) & (each.value.key.* = \'\'Heather\'\')\'
             asQueryOn: theColl)
             bind: \'d1\' to: d1;
             bind: \'d2\' to: d2;
@@ -83,15 +84,9 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
               selectCpuTime := System
                 millisecondsToRun: [ 
                   selectResult := theColl
-                    select: [ :each | d1 < each value value & (each value value < d2) & (each value key = \'Heather\') ] ] ].
-          selectBlockTime := Time
-            millisecondsToRun: [ 
-              selectBlockCpuTime := System
-                millisecondsToRun: [ 
-                  selectBlockResult := theColl
-                    select: { :each | (each.value.key = \'Heather\') & (d1 < each.value.value) & (each.value.value < d2) } ] ].
-          nullTime := Time
-            millisecondsToRun: [ nullCpuTime := System millisecondsToRun: [ theColl select: [ :each | false ] ] ].
+                    select: [ :each | 
+                      d1 < each value value & (each value value < d2)
+                        and: [ each value key includes: \'Heather\' ] ] ] ].
           analysis
             at: \'startDate\' put: startDate;
             at: \'d1\' put: d1;
@@ -105,17 +100,13 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
         at: \'query result\' put: queryResult;
         at: \'select result\' put: selectResult;
         at: \'select block result\' put: selectResult;
-        at: \'CORRECT\' put: (queryResult = selectResult and: [selectBlockResult = queryResult]);
+        at: \'CORRECT\' put: queryResult = selectResult;
         at: \'time\'
           put:
             {queryTime.
               queryCpuTime.
               selectTime.
-              selectCpuTime.
-              nullTime.
-              nullCpuTime.
-              selectBlockTime.
-              selectBlockCpuTime};
+              selectCpuTime};
         yourself.
       analysis ]
     ifPresent: [ :ignored | 
@@ -138,4 +129,4 @@ EXAMPLES
   ./sample --clean --create=1000 --query
   ./sample --clean --create=1000 --index --query=5
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T17:19:44.2680780887603-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-05T17:46:34.139671087265-07:00']}
