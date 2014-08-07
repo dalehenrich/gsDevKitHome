@@ -3,17 +3,17 @@ TDSessionDescription {
 	#stoneHost : 'localhost',
 	#stoneName : 'esug',
 	#gemHost : 'localhost',
-	#netLDI : '51578',
+	#netLDI : 'esug_ldi',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
 	#osUserId : nil,
 	#osPassword : nil,
 	#dataDirectory : nil,
-	#backupDirectory : '/Users/dhenrich/gsDevKitHome/gemstone/stones/esug/backups/',
+	#backupDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/esug/backups/',
 	#gemstoneVersion : '3.2.1',
 	#gciLibraryName : nil,
 	#adornmentColor : nil,
-	#serverGitRoot : '/Users/dhenrich/gsDevKitHome/gemstone/stones/esug/git',
-	#serverTodeRoot : '/Users/dhenrich/gsDevKitHome/tode'
+	#serverGitRoot : '/Users/daleh/gsDevKitHome/gemstone/stones/esug/git',
+	#serverTodeRoot : '/Users/daleh/gsDevKitHome/tode'
 }
