@@ -23,64 +23,104 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
         ifAbsent: [ 
           | formulas queries population |
           population := (Smalltalk at: #\'INDEXING_TUTORIAL\') population.
-          formulas := {(\'each.isFemale\' -> (\'Identity query.\' -> #())).
+          formulas := {(\'each.isFemale\'
+            ->
+              {\'Identity query.\'.
+              #().
+              \'\'}).
           (\'each.numberOfChildren > 3\'
-            -> (\'SmallInteger equality query.\' -> #())).
-          (\'each.firstName = \'\'Eve\'\'\' -> (\'String equality query.\' -> #())).
+            ->
+              {\'SmallInteger equality query.\'.
+              #().
+              \'\'}).
+          (\'each.firstName = \'\'Eve\'\'\'
+            ->
+              {\'String equality query.\'.
+              #().
+              \'\'}).
           (\'(each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')\'
-            -> (\'Compound String equality query.\' -> #())).
+            ->
+              {\'Compound String equality query.\'.
+              #().
+              \'\'}).
           (\'((each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')) not\'
-            -> (\'Compound negated String equality query.\' -> #())).
+            ->
+              {\'Compound negated String equality query.\'.
+              #().
+              \'\'}).
           (\'each.father.numberOfChildren > 3\'
-            -> (\'Equality query - some father fields are nil.\' -> #())).
-          (\'2 <= each.numberOfChildren <= 3\' -> (\'Range Equality query.\' -> #())).
-          (\'each.gender == #female\' -> (\'Identity query.\' -> #())).
+            ->
+              {\'Equality query - some father fields are nil.\'.
+              #().
+              \'\'}).
+          (\'2 <= each.numberOfChildren <= 3\'
+            ->
+              {\'Range Equality query.\'.
+              #().
+              \'\'}).
+          (\'each.gender == #female\'
+            ->
+              {\'Identity query.\'.
+              #().
+              \'\'}).
           (\'each.sons.*.numberOfChildren = 2\'
-            -> (\'Set-valued Equality query.\' -> #())).
+            ->
+              {\'Set-valued Equality query.\'.
+              #().
+              \'\'}).
           (\'(each.tags.* = \'\'soccer\'\') & (each.tags.* = \'\'magic\'\')\'
-            -> (\'Compound Set-valued Equality query.\' -> #())).
+            ->
+              {\'Compound Set-valued Equality query.\'.
+              #().
+              \'\'}).
           (\'(each.firstName|lastName = \'\'Martin\'\')\'
-            -> (\'Enumerated Equality query.\' -> #())).
+            ->
+              {\'Enumerated Equality query.\'.
+              #().
+              \'\'}).
           (\'(each.unicodeField = \'\'\u00CE\u0094\u00CE\u00B5\u00CF\u0085\u00CF\u0084\u00CE\u00AD\u00CF\u0081\u00CE\u00B1\'\')\'
-            -> (\'Unicode Equality query.\' -> #())).
+            ->
+              {\'Unicode Equality query.\'.
+              #().
+              \'\'}).
           (\'y30 <= each.birthday <= y20\'
             ->
-              (\'Range Equality query with variables (20-30 year olds).\'
-                ->
-                  {\'y30\'.
-                  (Date today - (30 * 365) days).
-                  \'y20\'.
-                  (Date today - (20 * 365) days)})).
+              {\'Range Equality query with variables (20-30 year olds).\'.
+              {\'y30\'.
+              (Date today - (30 * 365) days).
+              \'y20\'.
+              (Date today - (20 * 365) days)}.
+              \'\'}).
           (\'y40 <= each.birthday <= y30\'
             ->
-              (\'Range Equality query with variables (30-40 year olds).\'
-                ->
-                  {\'y40\'.
-                  (Date today - (40 * 365) days).
-                  \'y30\'.
-                  (Date today - (30 * 365) days)})).
+              {\'Range Equality query with variables (30-40 year olds).\'.
+              {\'y40\'.
+              (Date today - (40 * 365) days).
+              \'y30\'.
+              (Date today - (30 * 365) days)}.
+              \'\'}).
           (\'y50 <= each.birthday <= y40\'
             ->
-              (\'Range Equality query with variables (40-50 year olds).\'
-                ->
-                  {\'y50\'.
-                  (Date today - (50 * 365) days).
-                  \'y40\'.
-                  (Date today - (40 * 365) days)})).
+              {\'Range Equality query with variables (40-50 year olds).\'.
+              {\'y50\'.
+              (Date today - (50 * 365) days).
+              \'y40\'.
+              (Date today - (40 * 365) days)}.
+              \'\'}).
           (\'each.birthday < y50\'
             ->
-              (\'Range Equality query with variables (50> year olds).\'
-                ->
-                  {\'y50\'.
-                  (Date today - (50 * 365) days)}))}.
+              {\'Range Equality query with variables (50> year olds).\'.
+              {\'y50\'.
+              (Date today - (50 * 365) days)}.
+              \'\'})}.
           queries := Dictionary new.
           1 to: formulas size do: [ :id | 
             | assoc query varSpec |
             assoc := formulas at: id.
             query := assoc key asQueryOn: population.
             query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"
-            queries at: id put: query -> assoc value key.
-            varSpec := assoc value value.
+            queries at: id put: query -> assoc value.
+            varSpec := assoc value at: 2.
             1 to: varSpec size by: 2 do: [ :index | query bind: (varSpec at: index) to: (varSpec at: index + 1) ] ].
           opts at: \'dict\' ifPresent: [ :ignored | result := queries ].
           opts
@@ -96,6 +136,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
                 | query |
                 query := queries at: id.
                 incDesc
+ifTrue: [ query := query value at: 1]
                   ifFalse: [ query := query key ].
                 result add: query ] ].
           opts
@@ -191,4 +232,4 @@ EXAMPLES
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T15:40:17.2287240028381-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T16:45:00.9173099994659-07:00']}

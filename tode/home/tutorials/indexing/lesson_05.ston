@@ -1,0 +1,133 @@
+TDScriptLeafNode{#name:'lesson_05',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_05 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'createIndex\' nil #\'required\').
+      #(\'edit\' $e #\'none\').
+      #(\'queries\' nil #\'none\').
+      #(\'run\' nil #\'required\').
+      #(\'view\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | result |
+      opts
+        at: \'edit\'
+        ifPresent: [ :ignored | commandNode edit: topez ]
+        ifAbsent: [ 
+          opts
+            at: \'queries\'
+            ifPresent: [ :ignored | topez evaluateCommandString: \'./lesson_03 --queries\' ]
+            ifAbsent: [ 
+              | queries |
+              queries := topez
+                evaluateCommandString: \'./lesson_03 --queries --no-inspect\'.
+              opts
+                at: \'view\'
+                ifPresent: [ :arg | 
+                  | id dict assoc queryString comment varSpec indexCreation stream node |
+                  id := arg asNumber.
+                  dict := topez
+                    evaluateCommandString: \'./lesson_03 --dict --no-inspect\'.
+                  assoc := dict at: id.
+                  queryString := assoc key.
+                  comment := assoc value at: 1.
+                  varSpec := assoc value at: 2.
+                  indexCreation := assoc value at: 3.
+                  stream := WriteStream on: String new.
+                  stream
+                    nextPut: $\";
+                    nextPutAll: comment;
+                    nextPut: $\";
+                    cr;
+                    nextPutAll: \'| query |\';
+                    cr;
+                    nextPutAll:
+                        \'query := \' , queryString printString printString
+                            ,
+                              \' asQueryOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\';
+                    cr;
+                    nextPutAll:
+                        \'query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"\';
+                    cr.
+                  varSpec size > 0
+                    ifTrue: [ 
+                      stream
+                        nextPutAll: \'query\';
+                        cr;
+                        yourself.
+                      1 to: varSpec size by: 2 do: [ :index | 
+                        stream
+                          nextPutAll:
+                              \'bind: \' , (varSpec at: index) printString , \' to: \'
+                                  , (varSpec at: index + 1) printString , \';\';
+                          cr;
+                          yourself ].
+                      stream
+                        nextPutAll: \'yourself.\';
+                        cr ].
+                  stream
+                    nextPutAll: indexCreation;
+                    yourself.
+                  node := TDSmalltalkLeafNode new
+                    name: \'query \' , arg;
+                    contents: stream contents;
+                    yourself.
+                  node edit: topez ]
+                ifAbsent: [ 
+                  opts
+                    at: \'run\'
+                    ifPresent: [ :arg | 
+                      | id query |
+                      id := arg asNumber.
+                      query := queries at: id.
+                      result := query queryResult.
+                      result edit: topez ] ] ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_05 - lesson_05 sript utility template
+SYNOPSIS
+  lesson_05 [-h|--help] [-e|--edit]
+            [--queries] 
+            [--run=<query-index>] 
+            [--createIndex=<query-index>]
+            [--view=<query-index>]
+
+DESCRIPTION
+  LESSON 5
+  --------
+  LESSON 6
+  --------
+  `./lesson_05 -h`
+
+OPTIONS
+  edit
+    Bring up an editor on the source for this lesson.
+
+  help
+    Produce this man page.
+
+  queries
+    Open inspector on dictionary of available queries.
+
+  run=<query-index>
+    Run the query with the given index. The index is obtained by using the --queries option.
+    
+  view=<query-index>
+    Open workspace on the specified query and index creation code.
+
+EXAMPLES
+  ./lesson_05 --help
+  ./lesson_05 --edit
+  ./lesson_05 --view=14
+  ./lesson_05 --createIndex=14
+  ./lesson_05 --run=14
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-08T16:48:06.3187420368194-07:00']}
