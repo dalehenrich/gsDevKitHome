@@ -71,7 +71,7 @@ DESCRIPTION
   For the remaining lessons, we want to have just a few more IXPerson instances, so use the 
   following to generate a family tree:
 
-    `./lesson_02 --create=3`
+    `./lesson_02 --create=4`
 
   LESSON 3
   --------
@@ -97,4 +97,4 @@ EXAMPLES
   ./lesson_02 -h
   ./lesson_02 --create=3 -i
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T16:14:15.9402339458465-07:00'],#modificationTime:DateAndTime['2014-08-07T17:50:27.6682040691375-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T16:14:15.9402339458465-07:00'],#modificationTime:DateAndTime['2014-08-07T19:10:56.4007019996643-07:00']}
