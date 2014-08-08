@@ -16,7 +16,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
   opts
     at: \'help\'
     ifAbsent: [ 
-      |  result |
+      | result |
       opts
         at: \'edit\'
         ifPresent: [ :ignored | commandNode edit: topez ]
@@ -67,7 +67,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
             at: \'run\'
             ifPresent: [ :arg | 
               | id query |
-              id :=  arg asNumber.
+              id := arg asNumber.
               query := (queries at: id) key.
               result := query queryResult ].
           opts at: \'no-inspect\' ifAbsent: [ result edit: topez ] ].
@@ -82,6 +82,8 @@ SYNOPSIS
             [--queries [--description]] 
             [--run=<query-index>]
 DESCRIPTION
+  LESSON 3
+  --------
   In this lesson we look at a sampling of queries that can be made against the population
   of IXPerson instances.
 
@@ -154,4 +156,4 @@ EXAMPLES
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T00:04:40.5683538913726-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T00:30:15.0791919231414-07:00']}
