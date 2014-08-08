@@ -44,25 +44,28 @@ DESCRIPTION
   Here is an example of the fields in an instance of IXPerson:
 
     (class)@           -> IXPerson
-    (oop)@             -> 179972097
-    antiqueCollection@ -> anIXAntiqueCollection[$56]
-    daughters@         -> aSet( Jessie Marion Addams, Janet Eloise Addams)
-    father@            -> nil
-    firstName@         -> \'\'Eve\'\'
-    gender@            -> #\'\'female\'\'
-    isFemale@          -> true
-    isMale@            -> false
+    (oop)@             -> 182938113
+    antiqueCollection@ -> anIXAntiqueCollection[$148]
+    birthday@          -> 09/28/1982
+    birthTime@         -> 16:55:16
+    daughters@         -> aSet( Jessie Elizabeth Partridge, Evelyn Marion Partridge)
+    father@            -> Martin Francis Partridge
+    firstName@         -> \'\'Brian\'\'
+    gender@            -> #male
+    isFemale@          -> false
+    isMale@            -> true
     isMarried@         -> true
-    lastName@          -> \'\'Addams\'\'
-    middleName@        -> \'\'Penny\'\'
-    mother@            -> nil
+    lastName@          -> \'\'Partridge\'\'
+    middleName@        -> \'\'Kentland\'\'
+    mother@            -> Eve Mary Addams
     nilField@          -> nil
-    numberOfChildren@  -> 3
-    sons@              -> aSet( Brian Charles Addams)
+    numberOfChildren@  -> 6
+    sons@              -> aSet( James Marion Partridge, James Charles Partridge, 
+                                Martin Marion Partridge, Charlie Kentland Partridge)
     spouses@           -> nil
-    stringField@       -> \'\'fl\u00C3\u00BC\u00C3\u009Fe\'\'
-    tags@              -> aSet( #\'\'eve\'\')
-    unicodeField@      -> \'\'fl\u00C3\u00BC\u00C3\u009Fe\'\'
+    stringField@       -> \'\'Fl\u00C3\u00BC\u00C3\u009Fe\'\'
+    tags@              -> aSet( \'\'bowling\'\', \'\'reading\'\', \'\'cooking\'\', \'\'chess\'\', \'\'knitting\'\')
+    unicodeField@      -> \'\'Fl\u00C3\u00BC\u00C3\u009Fe\'\'
 
   Use the following to create and inspect a small population of IXPersons:
 
@@ -97,4 +100,4 @@ EXAMPLES
   ./lesson_02 -h
   ./lesson_02 --create=3 -i
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T16:14:15.9402339458465-07:00'],#modificationTime:DateAndTime['2014-08-07T19:10:56.4007019996643-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T16:14:15.9402339458465-07:00'],#modificationTime:DateAndTime['2014-08-08T14:49:23.9867830276489-07:00']}

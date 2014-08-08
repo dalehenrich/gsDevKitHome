@@ -21,7 +21,9 @@
 		"tags",
 		"antiqueCollection",
 		"unicodeField",
-		"stringField" ],
+		"stringField",
+		"birthday",
+		"birthTime" ],
 	"name" : "IXAbstractPerson",
 	"pools" : [
 		 ],

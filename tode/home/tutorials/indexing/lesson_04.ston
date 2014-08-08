@@ -26,19 +26,19 @@ TDScriptLeafNode{#name:'lesson_04',#contents:'[ :topez :objIn :tokens :command :
             ifAbsent: [ 
               | queries profile |
               queries := topez
-                evaluateCommandString: \'./lesson_03 --dict --no-inspect\'.
+                evaluateCommandString: \'./lesson_03 --queries --no-inspect\'.
               opts
                 at: \'time\'
                 ifPresent: [ :arg | 
                   | ids |
                   ids := arg = \'all\'
-                    ifTrue: [ queries keys ]
+                    ifTrue: [ 1 to: queries size ]
                     ifFalse: [ {(arg asNumber)} ].
                   result := {}.
                   ids
                     do: [ :id | 
                       | ms query |
-                      query := (queries at: id) key.
+                      query := queries at: id.
                       ms := Time millisecondsToRun: [ query queryResult ].
                       result add: ms ].
                   result edit: topez ]
@@ -48,13 +48,13 @@ TDScriptLeafNode{#name:'lesson_04',#contents:'[ :topez :objIn :tokens :command :
                     ifPresent: [ :arg | 
                       | ids |
                       ids := arg = \'all\'
-                        ifTrue: [ queries keys ]
+                        ifTrue: [ 1 to: queries size ]
                         ifFalse: [ {(arg asNumber)} ].
                       topez evaluateCommandString: \'pf start\'.
                       ids
                         do: [ :id | 
                           | query |
-                          query := (queries at: id) key.
+                          query := queries at: id.
                           query queryResult ].
                       topez evaluateCommandString: \'pf view\' ]
                     ifAbsent: [ 
@@ -63,7 +63,7 @@ TDScriptLeafNode{#name:'lesson_04',#contents:'[ :topez :objIn :tokens :command :
                         ifPresent: [ :arg | 
                           | id query |
                           id := arg asNumber.
-                          query := (queries at: id) key.
+                          query := queries at: id.
                           result := query queryResult.
                           result edit: topez ] ] ] ] ].
       result ]
@@ -90,13 +90,13 @@ DESCRIPTION
   The --queries and --run options operate the same as in lesson 03:
 
     `./lesson_04 --queries`
-    `./lesson_04 --run=7`
+    `./lesson_04 --run=10`
 
   The result sets should be larger now that we\'\'re using 6 generations.
 
   With the --time option you can get the execution time (CPU ms) for a singel query:
 
-    `./lesson_04 --time=7`
+    `./lesson_04 --time=10`
 
   or all of the queries at once:
 
@@ -106,7 +106,7 @@ DESCRIPTION
 
   You can also run the profiler on a single query or all queries using the --profile option:
 
-    `./lesson_04 --profile=7`
+    `./lesson_04 --profile=10`
     `./lesson_04 --profile=all`
 
   LESSON 5
@@ -139,9 +139,9 @@ EXAMPLES
   ./lesson_04 -e
   ./lesson_04 --queries
   ./lesson_04 --time=all
-  ./lesson_04 --time=7
-  ./lesson_04 --run=7
+  ./lesson_04 --time=10
+  ./lesson_04 --run=10
   ./lesson_04 --profile=all
-  ./lesson_04 --profile=7
+  ./lesson_04 --profile=10
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T23:28:16.6984159946441-07:00'],#modificationTime:DateAndTime['2014-08-08T00:30:25.4893341064453-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T23:28:16.6984159946441-07:00'],#modificationTime:DateAndTime['2014-08-08T15:35:10.5872740745544-07:00']}

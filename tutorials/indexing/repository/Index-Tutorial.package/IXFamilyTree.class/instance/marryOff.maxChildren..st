@@ -1,6 +1,8 @@
 accessing
 marryOff: child maxChildren: maxChildren
-  | father mother eligible |
+  | father mother eligible birthday |
+  birthday := child birthday
+    + ((Collection randomForPicking integerBetween: -5 and: 5) * 365) days.
   child isMale
     ifTrue: [ 
       father := child.
@@ -9,6 +11,10 @@ marryOff: child maxChildren: maxChildren
       (eligible isEmpty or: [ 4 atRandom = 1 ])
         ifTrue: [ 
           mother := self createPerson: #'female'.
+          mother
+            birthday: birthday;
+            birthTime:
+                (Time hour: 24 atRandom minute: 60 atRandom second: 60 atRandom).
           self population add: mother ]
         ifFalse: [ mother := eligible atRandom ] ]
     ifFalse: [ 
@@ -18,6 +24,10 @@ marryOff: child maxChildren: maxChildren
       (eligible isEmpty or: [ 4 atRandom = 1 ])
         ifTrue: [ 
           father := self createPerson: #'male'.
+          father
+            birthday: birthday;
+            birthTime:
+                (Time hour: 24 atRandom minute: 60 atRandom second: 60 atRandom).
           self population add: father ]
         ifFalse: [ father := eligible atRandom ] ].
   mother isMarried: true.

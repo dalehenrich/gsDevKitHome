@@ -1,6 +1,6 @@
 TDObjectGatewayNode{#name:'project',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'IndexTutorial\'
-      repository: \'filetree:///Users/daleh/gsDevKitHome/tutorials/indexing/repository\'
+      repository: \'filetree://$GS_HOME/tutorials/indexing/repository\'
       loads: #( \'default\' );
     status: #( #\'active\' );
     locked: false;
