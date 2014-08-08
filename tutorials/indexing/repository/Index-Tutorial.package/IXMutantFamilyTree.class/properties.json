@@ -1,0 +1,14 @@
+{
+	"category" : "Index-Tutorial",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IXMutantFamilyTree",
+	"pools" : [
+		 ],
+	"super" : "IXFamilyTree",
+	"type" : "normal" }

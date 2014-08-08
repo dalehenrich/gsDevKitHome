@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfIndexTutorial",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfIndexTutorial",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

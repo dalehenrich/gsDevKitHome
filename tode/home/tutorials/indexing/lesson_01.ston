@@ -1,0 +1,77 @@
+TDScriptLeafNode{#name:'lesson_01',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_01 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'edit\' $e #\'none\').
+      #(\'inspect\' $i #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'inspect\'
+        ifPresent: [ :ignored | 
+          #(1 2 \'Click on the line items to visit an object ... use the \'\'..\'\' line to return to this point\' \'The \'\'Parents\'\' menu item can be used to navigate to specific levels\' \'Use the \'\'Object>>print\'\' and \'\'Window>>print Window\'\' menu items to see if they might be useful\')
+            inspect ].
+      opts at: \'edit\' ifPresent: [ :ignored | commandNode edit: topez ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_01 - Using the Indexing Tutorial
+SYNOPSIS
+  lesson_01 [-h|--help] [-i|--inspect] [-e|--edit]
+
+DESCRIPTION
+  LESSON 1
+  --------
+  This tutorial is written using a combination of man pages (what you are reading now) and tODE
+  expressions that can be executed in line by using the \'\'tode it\'\' menu item. 
+
+  Select the following command line between the $` characters and click on the \'\'tode it\'\' menu
+  item to execute the command:
+
+    `./lesson_01 -h`
+
+  You shouldn\'\'t see much happening since you are coming right back to this man page. 
+
+  Many of the lessons will route you off to the browser or some other window and when you are done
+  you should come back to the this window and move on to the next step or lesson.
+
+  If you get lost, you can always type the command \'\'./lesson_01 -h\'\' into the tODE shell window,
+  or use the \'\'Window >> list windows\'\' menu item (short cut: CMD-SHIFT-L).
+
+  Many of the lessons will take you to an inspector or a text editor using the \'\'--inspect\'\' and 
+  \'\'--edit\'\' options. \'\'-i\'\' and \'\'-e\'\' will work as well for those who don\'\'t want to type too much.
+
+  Let\'\'s take the \'\'--inspect\'\' option for a ride (come back to this window when you\'\'re done):
+
+    `./lesson_01 --inspect`
+
+  The inspector opens in the bottom left corner of the display. The \'\'--inspect\'\' option is used
+  to allow you to optionally peruse the result of some calculation.
+
+  The \'\'--edit\'\' option will always open an editor on the source code of the lesson itself.
+  The editor opens a window in the same location as the man page, so let\'\'s drag this window to a 
+  slightly different location to make it easier to find and then try the \'\'-e\'\' option:
+
+    `./lesson_01 -e`
+
+  When you\'\'re done with the lesson surce, you can close the window.
+
+  LESSON 2
+  --------
+  Let\'\'s get started with the real tutorial in lesson_02, by using the \'\'tode it\'\' menu item
+  on the following command:
+
+    `./lesson_02 -h`
+
+EXAMPLES
+  ./lesson_01 --help
+  ./lesson_01 -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T15:56:31.9619169235229-07:00'],#modificationTime:DateAndTime['2014-08-07T16:40:27.9363760948181-07:00']}

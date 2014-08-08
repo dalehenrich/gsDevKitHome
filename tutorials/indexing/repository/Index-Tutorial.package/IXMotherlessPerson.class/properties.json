@@ -1,0 +1,14 @@
+{
+	"category" : "Index-Tutorial",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"father" ],
+	"name" : "IXMotherlessPerson",
+	"pools" : [
+		 ],
+	"super" : "IXAbstractPerson",
+	"type" : "normal" }

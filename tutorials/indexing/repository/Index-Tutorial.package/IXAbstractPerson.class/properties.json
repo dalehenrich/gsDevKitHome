@@ -1,0 +1,29 @@
+{
+	"category" : "Index-Tutorial",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"gender",
+		"firstName",
+		"middleName",
+		"lastName",
+		"sons",
+		"daughters",
+		"spouses",
+		"numberOfChildren",
+		"isMale",
+		"isFemale",
+		"isMarried",
+		"nilField",
+		"tags",
+		"antiqueCollection",
+		"unicodeField",
+		"stringField" ],
+	"name" : "IXAbstractPerson",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
