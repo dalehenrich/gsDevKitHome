@@ -4,19 +4,19 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
+      #(\'dict\' nil #\'none\').
       #(\'edit\' $e #\'none\').
       #(\'description\' nil #\'none\').
+      #(\'no-inspect\' nil #\'none\').
       #(\'queries\' nil #\'none\').
-      #(\'run\' nil #\'optional\').
-      #(\'inspect\' $i #\'none\')}
+      #(\'run\' nil #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
   opts
     at: \'help\'
     ifAbsent: [ 
-      | queryIdBlock result |
-      queryIdBlock := [ :arg | arg ifNil: [ 1 ] ifNotNil: [ arg asNumber ] ].
+      |  result |
       opts
         at: \'edit\'
         ifPresent: [ :ignored | commandNode edit: topez ]
@@ -47,6 +47,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
             query := assoc key asQueryOn: population.
             query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"
             queries at: id put: query -> assoc value ].
+          opts at: \'dict\' ifPresent: [ :ignored | result := queries ].
           opts
             at: \'queries\'
             ifPresent: [ :ignored | 
@@ -66,10 +67,10 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
             at: \'run\'
             ifPresent: [ :arg | 
               | id query |
-              id := queryIdBlock value: arg.
+              id :=  arg asNumber.
               query := (queries at: id) key.
               result := query queryResult ].
-          result edit: topez ].
+          opts at: \'no-inspect\' ifAbsent: [ result edit: topez ] ].
       result ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -77,7 +78,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
           \'NAME
   lesson_03 - Family Tree Queries
 SYNOPSIS
-  lesson_03 [-h|--help] [-e|--edit] 
+  lesson_03 [-h|--help] [-e|--edit] [--no-inspect] [--dict]
             [--queries [--description]] 
             [--run=<query-index>]
 DESCRIPTION
@@ -126,11 +127,18 @@ OPTIONS
   description
     Used with the --queries option. When present, query and description are displayed.
 
+  dict
+    Returns the raw query dictionary.
+
   edit
     Bring up an editor on the source for this lesson.
 
   help
     Produce this man page.
+
+  no-inspect
+    Do not open an inspector on the results of the command (--queries or --run). Mainly used
+    by other scripts.
 
   queries
     Open inspector on dictionary of available queries.
@@ -140,9 +148,10 @@ OPTIONS
 
 EXAMPLES
   ./lesson_03 --help
-  ./lesson_03 -h
+  ./lesson_03 -e
   ./lesson_03 --queries
+  ./lesson_03 --dict --no-inspect
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-07T23:14:22.3960449695587-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T00:04:40.5683538913726-07:00']}

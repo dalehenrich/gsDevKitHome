@@ -1,0 +1,118 @@
+TDScriptLeafNode{#name:'lesson_04',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_04 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'edit\' $e #\'none\').
+      #(\'profile\' nil #\'required\').
+      #(\'queries\' nil #\'none\').
+      #(\'run\' nil #\'required\').
+      #(\'time\' nil #\'optional\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | result |
+      opts
+        at: \'edit\'
+        ifPresent: [ :ignored | commandNode edit: topez ]
+        ifAbsent: [ 
+          opts
+            at: \'queries\'
+            ifPresent: [ :ignored | topez evaluateCommandString: \'./lesson_03 --queries\' ]
+            ifAbsent: [ 
+              | queries profile |
+              queries := topez
+                evaluateCommandString: \'./lesson_03 --dict --no-inspect\'.
+              opts
+                at: \'time\'
+                ifPresent: [ :arg | 
+                  | ids |
+                  ids := arg = \'all\'
+                    ifTrue: [ queries keys ]
+                    ifFalse: [ {(arg asNumber)} ].
+                  result := {}.
+                  ids
+                    do: [ :id | 
+                      | ms query |
+                      query := (queries at: id) key.
+                      ms := Time millisecondsToRun: [ query queryResult ].
+                      result add: ms ] ]
+                ifAbsent: [ 
+                  opts
+                    at: \'profile\'
+                    ifPresent: [ :arg | 
+                      | ids |
+                      ids := arg = \'all\'
+                        ifTrue: [ queries keys ]
+                        ifFalse: [ {(arg asNumber)} ].
+topez
+                evaluateCommandString: \'pf start\'.
+                      ids
+                        do: [ :id | 
+                          | query |
+                          query := (queries at: id) key.
+                          query queryResult ].
+topez
+                evaluateCommandString: \'pf view\'.
+ ]
+                    ifAbsent: [ 
+                      opts
+                        at: \'run\'
+                        ifPresent: [ :arg | 
+                          | id query |
+                          id := arg asNumber.
+                          query := (queries at: id) key.
+                          result := query queryResult.
+                          result edit: topez ] ] ] ] ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_04 - Query timing and profiling
+SYNOPSIS
+  lesson_04 [-h|--help] [-e|--edit] 
+            [--queries] 
+            [--run=<query-index>] 
+            [--time=<query-index>|all]
+            [--profile=<query-index>|all]
+
+DESCRIPTION
+    `./lesson_02 --create=6`
+
+OPTIONS
+  edit
+    Bring up an editor on the source for this lesson.
+
+  help
+    Produce this man page.
+
+  profile=<query-index>
+    View profiling results for running the given query or queries.
+
+  queries
+    Open inspector on dictionary of available queries.
+
+  run=<query-index>
+    Run the query with the given index. The index is obtained by using the --queries option.
+    
+  time=<query-index>|all
+    Run the query with the given index and return the number of ms of CPU taken to run the 
+    query. The index is obtained by using the --queries option. If `all` is specified all
+    of the queries will be run and an Array of timings will be returned.
+
+EXAMPLES
+  ./lesson_04 --help
+  ./lesson_04 -e
+  ./lesson_04 --queries
+  ./lesson_04 --time=all
+  ./lesson_04 --time=7
+  ./lesson_04 --run=7
+  ./lesson_04 --profile=all
+  ./lesson_04 --profile=7
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T23:28:16.6984159946441-07:00'],#modificationTime:DateAndTime['2014-08-08T00:12:50.9079620838165-07:00']}
