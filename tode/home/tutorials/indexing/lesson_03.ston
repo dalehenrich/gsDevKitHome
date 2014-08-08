@@ -1,0 +1,40 @@
+TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_03 -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\').
+      #(\'edit\' $e #\'none\').
+      #(\'inspect\' $i #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      \"WRITE SCRIPT HERE\"
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_03 - Family Tree Queries
+SYNOPSIS
+  lesson_03 [-h|--help] [-e|--edit]
+DESCRIPTION
+  LESSON 4
+  --------
+  `./lesson_04 -h`
+
+OPTIONS
+  edit
+    Bring up an editor on the source for this lesson.
+
+  help
+    Produce this man page.
+
+
+EXAMPLES
+  ./lesson_03 --help
+  ./lesson_03 -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-07T18:14:16.8859961032867-07:00']}
