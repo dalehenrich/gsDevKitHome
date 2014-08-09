@@ -70,7 +70,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
               \'equalityIndex: \'\'each.sons.*.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
           (\'(each.tags.* = \'\'soccer\'\') & (each.tags.* = \'\'magic\'\')\'
             ->
-              {\'Compound Set-valued Equality query.\'.
+              {\'Compound Set-valued Equality query (see bug 44493 performance issue for compound queries).\'.
               #().
               \'equalityIndex: \'\'each.tags.*\'\' lastElementClass: String\'}).
           (\'(each.firstName|lastName = \'\'Martin\'\')\'
@@ -246,4 +246,4 @@ EXAMPLES
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-09T09:18:42.0141599178314-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-09T11:28:03.6732900142669-07:00']}

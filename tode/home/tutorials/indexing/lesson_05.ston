@@ -114,7 +114,8 @@ TDScriptLeafNode{#name:'lesson_05',#contents:'[ :topez :objIn :tokens :command :
                               | id query |
                               id := arg asNumber.
                               query := queries at: id.
-                              result := query queryResult ] ]
+                              result := query queryResult.
+result edit: topez ] ]
                         ifAbsent: [ 
                           opts
                             at: \'createIndex\'
@@ -316,4 +317,4 @@ EXAMPLES
   ./lesson_05 --coll
   ./lesson_05 --removeIndex=14
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-09T10:35:44.0024979114532-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-09T11:22:10.9271481037139-07:00']}
