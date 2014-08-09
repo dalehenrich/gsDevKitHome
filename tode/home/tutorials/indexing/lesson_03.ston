@@ -27,62 +27,62 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
             ->
               {\'Identity query.\'.
               #().
-              \'\'}).
+              \'identityIndex: \'\'each.isFemale\'\'\'}).
           (\'each.numberOfChildren > 3\'
             ->
               {\'SmallInteger equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
           (\'each.firstName = \'\'Eve\'\'\'
             ->
               {\'String equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.firstName\'\' lastElementClass: String\'}).
           (\'(each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')\'
             ->
               {\'Compound String equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.firstName\'\' lastElementClass: String\'}).
           (\'((each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')) not\'
             ->
               {\'Compound negated String equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.firstName\'\' lastElementClass: String\'}).
           (\'each.father.numberOfChildren > 3\'
             ->
               {\'Equality query - some father fields are nil.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.father.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
           (\'2 <= each.numberOfChildren <= 3\'
             ->
               {\'Range Equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
           (\'each.gender == #female\'
             ->
               {\'Identity query.\'.
               #().
-              \'\'}).
+              \'identityIndex: \'\'each.gender\'\'\'}).
           (\'each.sons.*.numberOfChildren = 2\'
             ->
               {\'Set-valued Equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.sons.*.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
           (\'(each.tags.* = \'\'soccer\'\') & (each.tags.* = \'\'magic\'\')\'
             ->
               {\'Compound Set-valued Equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.tags.*\'\' lastElementClass: String\'}).
           (\'(each.firstName|lastName = \'\'Martin\'\')\'
             ->
               {\'Enumerated Equality query.\'.
               #().
-              \'\'}).
+              \'equalityIndex: \'\'each.firstName|lastName\'\' lastElementClass: String\'}).
           (\'(each.unicodeField = \'\'\u00CE\u0094\u00CE\u00B5\u00CF\u0085\u00CF\u0084\u00CE\u00AD\u00CF\u0081\u00CE\u00B1\'\')\'
             ->
               {\'Unicode Equality query.\'.
               #().
-              \'\'}).
+              \'unicodeIndex: \'\'each.unicodeField\'\' collator: (IcuCollator forLocaleNamed: \'\'en_GB\'\')\'}).
           (\'y30 <= each.birthday <= y20\'
             ->
               {\'Range Equality query with variables (20-30 year olds).\'.
@@ -90,7 +90,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
               \'(Date today - (30 * 365) days)\'.
               \'y20\'.
               \'(Date today - (20 * 365) days)\'}.
-              \'\'}).
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'}).
           (\'y40 <= each.birthday <= y30\'
             ->
               {\'Range Equality query with variables (30-40 year olds).\'.
@@ -98,7 +98,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
               \'(Date today - (40 * 365) days)\'.
               \'y30\'.
               \'(Date today - (30 * 365) days)\'}.
-              \'\'}).
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'}).
           (\'y50 <= each.birthday <= y40\'
             ->
               {\'Range Equality query with variables (40-50 year olds).\'.
@@ -106,13 +106,13 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
               \'(Date today - (50 * 365) days)\'.
               \'y40\'.
               \'(Date today - (40 * 365) days)\'}.
-              \'\'}).
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'}).
           (\'each.birthday < y50\'
             ->
               {\'Range Equality query with variables (50> year olds).\'.
               {\'y50\'.
               \'(Date today - (50 * 365) days)\'}.
-              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date;\'})}.
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'})}.
           queries := Dictionary new.
           1 to: formulas size do: [ :id | 
             | assoc query varSpec |
@@ -142,10 +142,13 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
           opts
             at: \'run\'
             ifPresent: [ :arg | 
-              | id query |
-              id := arg asNumber.
-              query := (queries at: id) key.
-              result := query queryResult ].
+              arg = \'all\'
+                ifTrue: [ queries keysDo: [ :query | result := query queryResult ] ]
+                ifFalse: [ 
+                  | id query |
+                  id := arg asNumber.
+                  query := (queries at: id) key.
+                  result := query queryResult ] ].
           opts at: \'no-inspect\' ifAbsent: [ result edit: topez ] ].
       result ]
     ifPresent: [ :ignored | 
@@ -156,7 +159,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
 SYNOPSIS
   lesson_03 [-h|--help] [-e|--edit] [--no-inspect] [--dict]
             [--queries [--description]] 
-            [--run=<query-index>]
+            [--run=<query-index>|all]
 DESCRIPTION
   LESSON 3
   --------
@@ -201,6 +204,15 @@ DESCRIPTION
   --------
   `./lesson_04 -h`
 
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
 OPTIONS
   description
     Used with the --queries option. When present, query and description are displayed.
@@ -221,8 +233,9 @@ OPTIONS
   queries
     Open inspector on dictionary of available queries.
 
-  run=<query-index>
+  run=<query-index>|all
     Run the query with the given index. The index is obtained by using the --queries option.
+    `all` is used for testing purposes ... only the last query result is returned.
 
 EXAMPLES
   ./lesson_03 --help
@@ -232,4 +245,4 @@ EXAMPLES
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T17:27:25.4453859329223-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-09T08:48:26.6101419925689-07:00']}

@@ -1,0 +1,45 @@
+TDTopezLeafNode{#name:'lesson_test',#contents:'# Collect commands used in tutorial in one place for testing
+#  the answers can be wrong, but errors shouldn\'t happen:)
+#
+./lesson_01 -h
+./lesson_02 -h
+./lesson_03 -h
+./lesson_04 -h
+./lesson_05 -h
+./lesson_01 -e
+./lesson_02 -e
+./lesson_03 -e
+./lesson_04 -e
+./lesson_05 -e
+
+# LESSON 1
+./lesson_01 --inspect
+
+# LESSON 2
+./lesson_02 --create=1 --inspect
+./lesson_02 --create=4
+
+# LESSON 3
+./lesson_03 --queries
+./lesson_03 --queries --description
+./lesson_03 --run=4
+./lesson_03 --run=all
+
+# LESSON 4
+./lesson_02 --create=6
+./lesson_04 --queries
+./lesson_04 --run=10
+./lesson_04 --time=10
+./lesson_04 --time=all
+./lesson_04 --profile=10
+./lesson_04 --profile=all
+
+# LESSON 5
+./lesson_05 --queries
+./lesson_05 --run=15
+./lesson_05 --view=15
+./lesson_05 --createIndex=12
+./lesson_05 --view=all
+./lesson_05 --createIndex=all
+./lesson_05 --run=all
+',#creationTime:DateAndTime['2014-08-09T07:20:00.1269969940185-07:00'],#modificationTime:DateAndTime['2014-08-09T08:47:40.7474029064178-07:00']}

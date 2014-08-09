@@ -73,8 +73,17 @@ DESCRIPTION
 
     `./lesson_02 -h`
 
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
 EXAMPLES
   ./lesson_01 --help
   ./lesson_01 -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T15:56:31.9619169235229-07:00'],#modificationTime:DateAndTime['2014-08-07T23:30:22.2806520462036-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T15:56:31.9619169235229-07:00'],#modificationTime:DateAndTime['2014-08-09T07:04:15.0610558986663-07:00']}

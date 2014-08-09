@@ -24,94 +24,141 @@ TDScriptLeafNode{#name:'lesson_05',#contents:'[ :topez :objIn :tokens :command :
             at: \'queries\'
             ifPresent: [ :ignored | topez evaluateCommandString: \'./lesson_03 --queries\' ]
             ifAbsent: [ 
-              | queries |
+              | queries dict createIndexExpressionBlock |
+              createIndexExpressionBlock := [ :assoc :stream | 
+              | indexCreation |
+              indexCreation := assoc value at: 3.
+              indexCreation isEmpty
+                ifFalse: [ 
+                  stream
+                    nextPutAll: \'GsIndexSpec new\';
+                    cr;
+                    nextPutAll: indexCreation , \';\';
+                    cr;
+                    nextPutAll:
+                        \'createIndexesOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\' ] ].
               queries := topez
                 evaluateCommandString: \'./lesson_03 --queries --no-inspect\'.
+              dict := topez
+                evaluateCommandString: \'./lesson_03 --dict --no-inspect\'.
               opts
                 at: \'view\'
                 ifPresent: [ :arg | 
-                  | id dict assoc queryString comment varSpec indexCreation stream node |
-                  id := arg asNumber.
-                  dict := topez
-                    evaluateCommandString: \'./lesson_03 --dict --no-inspect\'.
-                  assoc := dict at: id.
-                  queryString := assoc key.
-                  comment := assoc value at: 1.
-                  varSpec := assoc value at: 2.
-                  indexCreation := assoc value at: 3.
-                  stream := WriteStream on: String new.
-                  stream
-                    nextPut: $\";
-                    nextPutAll: comment;
-                    nextPut: $\";
-                    cr;
-                    nextPutAll: \'| query |\';
-                    cr;
-                    nextPutAll:
-                        \'query := \' , queryString printString printString
-                            ,
-                              \' asQueryOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\';
-                    cr;
-                    nextPutAll:
-                        \'query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"\';
-                    cr.
-                  varSpec size > 0
-                    ifTrue: [ 
+                  | ids assoc queryString comment varSpec stream node |
+                  ids := arg = \'all\'
+                    ifTrue: [ dict keys ]
+                    ifFalse: [ {(arg asNumber)} ].
+                  ids
+                    do: [ :id | 
+                      assoc := dict at: id.
+                      queryString := assoc key.
+                      comment := assoc value at: 1.
+                      varSpec := assoc value at: 2.
+                      stream := WriteStream on: String new.
                       stream
-                        nextPutAll: \'query\';
+                        nextPut: $\";
+                        nextPutAll: comment;
+                        nextPut: $\";
                         cr;
-                        yourself.
-                      1 to: varSpec size by: 2 do: [ :index | 
-                        stream
-                          nextPutAll:
-                              \'bind: \' , (varSpec at: index) printString , \' to: \' , (varSpec at: index + 1)
-                                  , \';\';
-                          cr;
-                          yourself ].
-                      stream
-                        nextPutAll: \'yourself.\';
-                        cr ].
-                  indexCreation isEmpty
-                    ifFalse: [ 
-                      stream
-                        nextPutAll: \'GsIndexSpec new\';
-                        cr;
-                        nextPutAll: indexCreation;
+                        nextPutAll: \'| query |\';
                         cr;
                         nextPutAll:
-                            \'createIndexesOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\' ].
-                  node := TDSmalltalkLeafNode new
-                    name: \'query \' , arg;
-                    contents: stream contents;
-                    yourself.
-                  node edit: topez ]
+                            \'query := \' , queryString printString printString
+                                ,
+                                  \' asQueryOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\';
+                        cr;
+                        nextPutAll:
+                            \'query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"\';
+                        cr.
+                      varSpec size > 0
+                        ifTrue: [ 
+                          stream
+                            nextPutAll: \'query\';
+                            cr;
+                            yourself.
+                          1 to: varSpec size by: 2 do: [ :index | 
+                            stream
+                              nextPutAll:
+                                  \'bind: \' , (varSpec at: index) printString , \' to: \' , (varSpec at: index + 1)
+                                      , \';\';
+                              cr;
+                              yourself ].
+                          stream
+                            nextPutAll: \'yourself.\';
+                            cr ].
+                      createIndexExpressionBlock value: assoc value: stream.
+                      node := TDSmalltalkLeafNode new
+                        name: \'query \' , arg;
+                        contents: stream contents;
+                        yourself.
+                      node edit: topez ] ]
                 ifAbsent: [ 
                   opts
                     at: \'run\'
                     ifPresent: [ :arg | 
-                      | id query |
-                      id := arg asNumber.
-                      query := queries at: id.
-                      result := query queryResult.
-                      result edit: topez ] ] ] ] ]
+                      arg = \'all\'
+                        ifTrue: [ queries do: [ :query | result := query queryResult ] ]
+                        ifFalse: [ 
+                          | id query |
+                          id := arg asNumber.
+                          query := (queries at: id) .
+                          result := query queryResult ] ]
+                    ifAbsent: [ 
+                      opts
+                        at: \'createIndex\'
+                        ifPresent: [ :arg | 
+                          arg = \'all\'
+                            ifTrue: [ 
+                              dict
+                                valuesDo: [ :assoc | 
+                                  | expressionStream |
+                                  expressionStream := WriteStream on: String new.
+                                  createIndexExpressionBlock
+                                    value: assoc
+                                    value: expressionStream.
+                                  result := expressionStream contents evaluate ] ]
+                            ifFalse: [ 
+                              | id assoc expressionStream |
+                              id := arg asNumber.
+                              assoc := (dict at: id) value.
+                              expressionStream := WriteStream on: String new.
+                              createIndexExpressionBlock
+                                value: assoc
+                                value: expressionStream.
+                              result := expressionStream contents evaluate ] ] ] ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
-  lesson_05 - lesson_05 sript utility template
+  lesson_05 - Family Tree Indexes
 SYNOPSIS
   lesson_05 [-h|--help] [-e|--edit]
             [--queries] 
-            [--run=<query-index>] 
-            [--createIndex=<query-index>]
-            [--view=<query-index>]
+            [--run=<query-index>|all] 
+            [--createIndex=<query-index>|all]
+            [--view=<query-index>|all]
 
+OPTIONS
 DESCRIPTION
   LESSON 5
   --------
+    `./lesson_05 --queries`
+    `./lesson_05 --run=15`
+    `./lesson_05 --view=15`
+    `./lesson_05 --createIndex=15`
+
   LESSON 6
   --------
-  `./lesson_05 -h`
+    `./lesson_05 -h`
+
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
 
 OPTIONS
   edit
@@ -123,8 +170,9 @@ OPTIONS
   queries
     Open inspector on dictionary of available queries.
 
-  run=<query-index>
+  run=<query-index>|all
     Run the query with the given index. The index is obtained by using the --queries option.
+    `all` is used for testing purposes ... only the last query result is returned.
     
   view=<query-index>
     Open workspace on the specified query and index creation code.
@@ -136,4 +184,4 @@ EXAMPLES
   ./lesson_05 --createIndex=14
   ./lesson_05 --run=14
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-08T17:30:54.5302400588989-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-09T08:50:09.5223970413208-07:00']}
