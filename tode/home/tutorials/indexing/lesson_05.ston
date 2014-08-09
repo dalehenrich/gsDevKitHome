@@ -64,16 +64,22 @@ TDScriptLeafNode{#name:'lesson_05',#contents:'[ :topez :objIn :tokens :command :
                       1 to: varSpec size by: 2 do: [ :index | 
                         stream
                           nextPutAll:
-                              \'bind: \' , (varSpec at: index) printString , \' to: \'
-                                  , (varSpec at: index + 1) printString , \';\';
+                              \'bind: \' , (varSpec at: index) printString , \' to: \' , (varSpec at: index + 1)
+                                  , \';\';
                           cr;
                           yourself ].
                       stream
                         nextPutAll: \'yourself.\';
                         cr ].
-                  stream
-                    nextPutAll: indexCreation;
-                    yourself.
+                  indexCreation isEmpty
+                    ifFalse: [ 
+                      stream
+                        nextPutAll: \'GsIndexSpec new\';
+                        cr;
+                        nextPutAll: indexCreation;
+                        cr;
+                        nextPutAll:
+                            \'createIndexesOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\' ].
                   node := TDSmalltalkLeafNode new
                     name: \'query \' , arg;
                     contents: stream contents;
@@ -130,4 +136,4 @@ EXAMPLES
   ./lesson_05 --createIndex=14
   ./lesson_05 --run=14
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-08T16:48:06.3187420368194-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-08T17:30:54.5302400588989-07:00']}

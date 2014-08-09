@@ -87,32 +87,32 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
             ->
               {\'Range Equality query with variables (20-30 year olds).\'.
               {\'y30\'.
-              (Date today - (30 * 365) days).
+              \'(Date today - (30 * 365) days)\'.
               \'y20\'.
-              (Date today - (20 * 365) days)}.
+              \'(Date today - (20 * 365) days)\'}.
               \'\'}).
           (\'y40 <= each.birthday <= y30\'
             ->
               {\'Range Equality query with variables (30-40 year olds).\'.
               {\'y40\'.
-              (Date today - (40 * 365) days).
+              \'(Date today - (40 * 365) days)\'.
               \'y30\'.
-              (Date today - (30 * 365) days)}.
+              \'(Date today - (30 * 365) days)\'}.
               \'\'}).
           (\'y50 <= each.birthday <= y40\'
             ->
               {\'Range Equality query with variables (40-50 year olds).\'.
               {\'y50\'.
-              (Date today - (50 * 365) days).
+              \'(Date today - (50 * 365) days)\'.
               \'y40\'.
-              (Date today - (40 * 365) days)}.
+              \'(Date today - (40 * 365) days)\'}.
               \'\'}).
           (\'each.birthday < y50\'
             ->
               {\'Range Equality query with variables (50> year olds).\'.
               {\'y50\'.
-              (Date today - (50 * 365) days)}.
-              \'\'})}.
+              \'(Date today - (50 * 365) days)\'}.
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date;\'})}.
           queries := Dictionary new.
           1 to: formulas size do: [ :id | 
             | assoc query varSpec |
@@ -121,7 +121,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
             query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"
             queries at: id put: query -> assoc value.
             varSpec := assoc value at: 2.
-            1 to: varSpec size by: 2 do: [ :index | query bind: (varSpec at: index) to: (varSpec at: index + 1) ] ].
+            1 to: varSpec size by: 2 do: [ :index | query bind: (varSpec at: index) to: (varSpec at: index + 1) evaluate ] ].
           opts at: \'dict\' ifPresent: [ :ignored | result := queries ].
           opts
             at: \'queries\'
@@ -136,7 +136,7 @@ TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :
                 | query |
                 query := queries at: id.
                 incDesc
-ifTrue: [ query := query value at: 1]
+                  ifTrue: [ query := query value at: 1 ]
                   ifFalse: [ query := query key ].
                 result add: query ] ].
           opts
@@ -232,4 +232,4 @@ EXAMPLES
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T16:45:00.9173099994659-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-08T17:27:25.4453859329223-07:00']}
