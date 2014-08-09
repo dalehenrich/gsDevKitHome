@@ -39,7 +39,11 @@ TDTopezLeafNode{#name:'lesson_test',#contents:'# Collect commands used in tutori
 ./lesson_05 --run=15
 ./lesson_05 --view=15
 ./lesson_05 --createIndex=12
+./lesson_05 --removeIndex=12
+./lesson_05 --removeIndex=12  # yes do it twice
+./lesson_05 --coll
 ./lesson_05 --view=all
 ./lesson_05 --createIndex=all
+./lesson_05 --removeIndex=all
 ./lesson_05 --run=all
-',#creationTime:DateAndTime['2014-08-09T07:20:00.1269969940185-07:00'],#modificationTime:DateAndTime['2014-08-09T08:47:40.7474029064178-07:00']}
+',#creationTime:DateAndTime['2014-08-09T07:20:00.1269969940185-07:00'],#modificationTime:DateAndTime['2014-08-09T10:30:51.2734279632568-07:00']}

@@ -235,6 +235,7 @@ OPTIONS
 
   run=<query-index>|all
     Run the query with the given index. The index is obtained by using the --queries option.
+
     `all` is used for testing purposes ... only the last query result is returned.
 
 EXAMPLES
@@ -245,4 +246,4 @@ EXAMPLES
   ./lesson_03 --queries --description
   ./lesson_03 --run=4
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-09T08:48:26.6101419925689-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-09T09:18:42.0141599178314-07:00']}
