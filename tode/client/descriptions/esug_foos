@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'esug',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'esug_ldi',
+	#netLDI : '57334',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
