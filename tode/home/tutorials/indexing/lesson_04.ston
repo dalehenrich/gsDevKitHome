@@ -113,6 +113,15 @@ DESCRIPTION
   --------
   `./lesson_05 -h`
 
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
 OPTIONS
   edit
     Bring up an editor on the source for this lesson.
@@ -144,4 +153,4 @@ EXAMPLES
   ./lesson_04 --profile=all
   ./lesson_04 --profile=10
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T23:28:16.6984159946441-07:00'],#modificationTime:DateAndTime['2014-08-08T15:35:10.5872740745544-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T23:28:16.6984159946441-07:00'],#modificationTime:DateAndTime['2014-08-09T09:18:26.7145800590515-07:00']}

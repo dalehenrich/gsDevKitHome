@@ -80,6 +80,15 @@ DESCRIPTION
   --------
   `./lesson_03 -h`
 
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
 OPTIONS
   create[=<generations>]
     Create a family tree with <generations> generations of IXPersons. The default is 3 generations.
@@ -100,4 +109,4 @@ EXAMPLES
   ./lesson_02 -h
   ./lesson_02 --create=3 -i
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T16:14:15.9402339458465-07:00'],#modificationTime:DateAndTime['2014-08-08T14:49:23.9867830276489-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T16:14:15.9402339458465-07:00'],#modificationTime:DateAndTime['2014-08-09T09:18:49.9691870212554-07:00']}
