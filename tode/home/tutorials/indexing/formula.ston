@@ -1,0 +1,16 @@
+TDSmalltalkLeafNode{#name:'formula',#contents:'| today twentyYearsAgo thirtyYearsAgo predicate1 predicate2 population |
+  today := Date today.
+  twentyYearsAgo := today - (20 * 365) days.
+  thirtyYearsAgo := today - (30 * 365) days.
+  predicate1 := GsQueryPredicate
+    variable: \'thirtyYearsAgo\'
+    operator: #\'<=\'
+    path: \'each.birthday\'.
+  predicate2 := GsQueryPredicate
+    path: \'each.birthday\'
+    operator: #\'<=\'
+    variable: \'twentyYearsAgo\'.
+  ^ (GsQuery fromFormula: predicate1 & predicate2 on: population)
+    bind: \'twentyYearsAgo\' to: twentyYearsAgo;
+    bind: \'thirtyYearsAgo\' to: thirtyYearsAgo;
+    queryResult',#creationTime:DateAndTime['2014-08-11T16:30:57.4582729339599-07:00'],#modificationTime:DateAndTime['2014-08-11T17:19:35.7594330310821-07:00']}

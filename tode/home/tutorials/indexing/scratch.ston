@@ -1,0 +1,4 @@
+TDSmalltalkLeafNode{#name:'scratch',#contents:'| population today twentyYearsAgo thirtyYearsAgo each |
+  thirtyYearsAgo <= each birthday & (each birthday <= twentyYearsAgo).
+  thirtyYearsAgo <= each.birthday & (each.birthday <= twentyYearsAgo).
+  thirtyYearsAgo <= each.birthday <= twentyYearsAgo',#creationTime:DateAndTime['2014-08-11T15:03:50.6220219135284-07:00'],#modificationTime:DateAndTime['2014-08-11T17:35:01.165911912918-07:00']}

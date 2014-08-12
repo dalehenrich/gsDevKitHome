@@ -1,0 +1,20 @@
+TDStringLeafNode{#name:'stuff',#contents:'  | population today twentyYearsAgo thirtyYearsAgo each|
+
+
+
+  twentyYearsAgo <= each birthday & 
+  (each birthday <= thirtyYearsAgo)
+
+.
+
+  (twentyYearsAgo <= each.birthday) & 
+  (each.birthday <= thirtyYearsAgo)
+
+.
+
+  (thirtyYearsAgo <= each.birthday <= twentyYearsAgo)
+
+
+
+
+',#creationTime:DateAndTime['2014-08-11T15:47:42.0740358829498-07:00'],#modificationTime:DateAndTime['2014-08-11T15:47:46.9674150943756-07:00']}

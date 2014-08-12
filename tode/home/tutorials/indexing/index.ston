@@ -1,0 +1,4 @@
+TDSmalltalkLeafNode{#name:'index',#contents:'| population |
+  GsIndexSpec new
+    equalityIndex: \'each.birthday\' lastElementClass: Date;
+    createIndexesOn: population',#creationTime:DateAndTime['2014-08-11T16:18:42.637363910675-07:00'],#modificationTime:DateAndTime['2014-08-11T17:34:58.7346079349517-07:00']}
