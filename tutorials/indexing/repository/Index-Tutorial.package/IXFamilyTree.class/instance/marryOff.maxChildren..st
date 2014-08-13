@@ -1,14 +1,12 @@
 accessing
 marryOff: child maxChildren: maxChildren
-  | father mother eligible birthday |
+  | father mother birthday |
   birthday := child birthday
     + ((Collection randomForPicking integerBetween: -5 and: 5) * 365) days.
   child isMale
     ifTrue: [ 
       father := child.
-      eligible := population
-        select: { :person | (person.isFemale == true) & (person.isMarried == true) }.
-      (eligible isEmpty or: [ 4 atRandom = 1 ])
+      (self unmarriedFemales isEmpty or: [ 4 atRandom = 1 ])
         ifTrue: [ 
           mother := self createPerson: #'female'.
           mother
@@ -16,12 +14,10 @@ marryOff: child maxChildren: maxChildren
             birthTime:
                 (Time hour: 24 atRandom minute: 60 atRandom second: 60 atRandom).
           self population add: mother ]
-        ifFalse: [ mother := eligible atRandom ] ]
+        ifFalse: [ mother := unmarriedFemales anyOne ] ]
     ifFalse: [ 
       mother := child.
-      eligible := population
-        select: { :person | (person.isMale == true) & (person.isMarried == true) }.
-      (eligible isEmpty or: [ 4 atRandom = 1 ])
+      (self unmarriedMales isEmpty or: [ 4 atRandom = 1 ])
         ifTrue: [ 
           father := self createPerson: #'male'.
           father
@@ -29,7 +25,9 @@ marryOff: child maxChildren: maxChildren
             birthTime:
                 (Time hour: 24 atRandom minute: 60 atRandom second: 60 atRandom).
           self population add: father ]
-        ifFalse: [ father := eligible atRandom ] ].
+        ifFalse: [ father := unmarriedMales anyOne ] ].
   mother isMarried: true.
   father isMarried: true.
+  unmarriedFemales remove: mother ifAbsent: [  ].
+  unmarriedMales remove: father ifAbsent: [  ].
   ^ self createGeneration: father mother: mother maxChildren: maxChildren

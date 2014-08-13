@@ -10,15 +10,15 @@ createGenerations: generations
     createGeneration: adam
     mother: eve
     maxChildren: generations + 2.
-  self population addAll: siblings.
+  self addSiblingsToPopulation: siblings.
   count := generations.
   [ 
   count := count - 1.
   count > 0 ]
     whileTrue: [ 
       | offSpring |
-      offSpring := Array new.
+      offSpring := IdentitySet new.
       siblings
-        do: [ :child | offSpring := offSpring , (self marryOff: child maxChildren: count + 2) ].
+        do: [ :child | offSpring addAll: (self marryOff: child maxChildren: count + 2) ].
       siblings := offSpring.
-      self population addAll: siblings ]
+      self addSiblingsToPopulation: siblings ]
