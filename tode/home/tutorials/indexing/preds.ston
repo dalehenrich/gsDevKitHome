@@ -1,0 +1,2 @@
+TDSmalltalkLeafNode{#name:'preds',#contents:'| population each |
+  population select: { :each | each.sons.numberOfChildren }',#creationTime:DateAndTime['2014-08-12T15:49:06.3379530906677-07:00'],#modificationTime:DateAndTime['2014-08-12T15:51:39.4844839572906-07:00']}

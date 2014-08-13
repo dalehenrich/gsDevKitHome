@@ -1,4 +1,6 @@
-TDSmalltalkLeafNode{#name:'formula',#contents:'| today twentyYearsAgo thirtyYearsAgo predicate1 predicate2 population |
+TDSmalltalkLeafNode{#name:'formula',#contents:'\"Find people born between 20 and 30 years ago\"
+
+  | today twentyYearsAgo thirtyYearsAgo predicate1 predicate2 population |
   today := Date today.
   twentyYearsAgo := today - (20 * 365) days.
   thirtyYearsAgo := today - (30 * 365) days.
@@ -13,4 +15,4 @@ TDSmalltalkLeafNode{#name:'formula',#contents:'| today twentyYearsAgo thirtyYear
   ^ (GsQuery fromFormula: predicate1 & predicate2 on: population)
     bind: \'twentyYearsAgo\' to: twentyYearsAgo;
     bind: \'thirtyYearsAgo\' to: thirtyYearsAgo;
-    queryResult',#creationTime:DateAndTime['2014-08-11T16:30:57.4582729339599-07:00'],#modificationTime:DateAndTime['2014-08-11T17:19:35.7594330310821-07:00']}
+    queryResult',#creationTime:DateAndTime['2014-08-11T16:30:57.4582729339599-07:00'],#modificationTime:DateAndTime['2014-08-12T16:45:56.8556458950042-07:00']}
