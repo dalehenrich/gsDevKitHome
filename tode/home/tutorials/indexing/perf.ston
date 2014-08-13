@@ -1,0 +1,102 @@
+TDScriptLeafNode{#name:'perf',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./perf -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'audit\' nil #\'none\').
+      #(\'create\' nil #\'required\').
+      #(\'index\' nil #\'none\').
+      #(\'profile\' nil #\'none\').
+      #(\'select\' nil #\'none\').
+      #(\'query\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | result tree profile |
+      result := tree := Smalltalk at: #\'INDEXING_TUTORIAL\' ifAbsent: [ Set new ].
+      opts
+        at: \'audit\'
+        ifPresent: [ :ignored | result := tree population auditIndexes ]
+        ifAbsent: [ profile := false ].
+      opts
+        at: \'profile\'
+        ifPresent: [ :ignored | profile := true ]
+        ifAbsent: [ profile := false ].
+      profile
+        ifTrue: [ topez evaluateCommandString: \'pf start\' ].
+      opts
+        at: \'create\'
+        ifPresent: [ :arg | 
+          | adam eve |
+          tree := IXFamilyTree createAdamAndEve.
+          Smalltalk at: #\'INDEXING_TUTORIAL\' put: tree.
+          GsDeployer deploy: [ tree createGenerations: arg asNumber ] ].
+      opts
+        at: \'index\'
+        ifPresent: [ :ignored | 
+          IndexManager autoCommit: true.
+          [ 
+          GsIndexSpec new
+            equalityIndex: \'each.birthday\' lastElementClass: Date;
+            createIndexesOn: tree population.
+System commitTransaction ]
+            ensure: [ IndexManager autoCommit: false ] ].
+      opts
+        at: \'select\'
+        ifPresent: [ :ignored | 
+          | query today twentyYearsAgo thirtyYearsAgo ans timeMs |
+          today := Date today.
+          twentyYearsAgo := today - (20 * 365) days.
+          thirtyYearsAgo := today - (30 * 365) days.
+          timeMs := System
+            millisecondsToRun: [ 
+              ans := tree population
+                select: [ :each | thirtyYearsAgo <= each.birthday & (each.birthday <= twentyYearsAgo) ] ].
+          result := {ans.
+          (ans size).
+          timeMs} ].
+      opts
+        at: \'query\'
+        ifPresent: [ :ignored | 
+          | query today twentyYearsAgo thirtyYearsAgo ans timeMs |
+          today := Date today.
+          twentyYearsAgo := today - (20 * 365) days.
+          thirtyYearsAgo := today - (30 * 365) days.
+          timeMs := System
+            millisecondsToRun: [ 
+              ans := (\'thirtyYearsAgo <= each.birthday <= twentyYearsAgo\'
+                asQueryOn: tree population)
+                bind: \'twentyYearsAgo\' to: twentyYearsAgo;
+                bind: \'thirtyYearsAgo\' to: thirtyYearsAgo;
+                queryResult ].
+          result := {ans.
+          (ans size).
+          timeMs} ].
+      profile
+        ifTrue: [ topez evaluateCommandString: \'pf view\' ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  perf - perf sript utility template
+SYNOPSIS
+  perf [-h|--help]
+       [--create=<generations>] [--profile]
+       [--query] [--profile]
+       [--index] [--profile]
+       [--audit] [--profile]
+DESCRIPTION
+EXAMPLES
+  ./perf --help
+  ./perf --create=6
+  ./perf --query
+  ./perf --create=6 --profile
+  ./perf --index
+  ./perf --audit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-12T17:42:30.1437039375305-07:00'],#modificationTime:DateAndTime['2014-08-12T22:44:18.2481780052185-07:00']}
