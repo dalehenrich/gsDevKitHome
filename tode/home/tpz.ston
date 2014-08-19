@@ -1,0 +1,2 @@
+TDTopezLeafNode{#name:'tpz',#contents:'browse --select=`[:meth | meth className includesSubstring: \'Dictionary\']` \\
+       method at:put:',#creationTime:DateAndTime['2014-08-16T20:10:47.4394359588623-07:00'],#modificationTime:DateAndTime['2014-08-16T20:11:05.2913401126861-07:00']}
