@@ -13,13 +13,15 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
       must := {(\'GLASS\'
         ->
           {(\'glass readme update.
-  - revise install for Mariano.\' -> 1).
-          (\'tode readme update.
-  - GemStone-specific\' -> 2).
+  - revise install for Mariano.
+  === travis tests in progress\'
+            -> 1).
           (\'MetacelloPreview dependency in GLASS1 baseline\' -> 3)}).
       (\'Metacello\'
         ->
-          {(\'Metacello: symbolic versions registered as resolved version\' -> 4)})}.
+          {(\'metacello readme install script update.
+  - GemStone-specific\' -> 2).
+          (\'Metacello: symbolic versions registered as resolved version\' -> 4)})}.
       projects := Dictionary new
         at: \'GLASS\'
           put:
@@ -28,6 +30,7 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
   - phase 1.5: Seaside, Zinc tODE dependency changes
   - phase 2: eliminate GLASS\'
                 -> 20).
+              (\'include travis tests for Seaside and Zinc\' -> 54).
               (\'Magritte\' -> 54).
               (\'Pier\' -> 56)};
         at: \'3.2.3\'
@@ -38,7 +41,7 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
         at: \'tode\'
           put:
             {(\'bugfixes\' -> 16).
-              \'finish indexing tutorial\' -> 25.
+              (\'finish indexing tutorial\' -> 25).
               (\'project dir structure\' -> 17).
               (\'tutorial window?\' -> 26)};
         yourself.
@@ -61,4 +64,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-26T13:23:35.0611939430236-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-26T14:04:50.5223779678344-07:00']}
