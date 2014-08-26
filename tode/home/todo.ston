@@ -12,16 +12,18 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
       | must projects list count |
       must := {(\'GLASS\'
         ->
-          {(\'glass readme update.
-  - revise install for Mariano.
-  === travis tests in progress\'
-            -> 1).
-          (\'MetacelloPreview dependency in GLASS1 baseline\' -> 3)}).
+          {(\'MetacelloPreview dependency in GLASS1 baseline
+>>  - travis tests\' -> -3)}).
       (\'Metacello\'
         ->
           {(\'metacello readme install script update.
-  - GemStone-specific\' -> 2).
-          (\'Metacello: symbolic versions registered as resolved version\' -> 4)})}.
+[]  - GemStone-specific install in readme
+[]  - GemStone-specific load in travis test
+fail>>  - Pharo3.0 added to lineup
+  - remove Phar3.0 from lineup
+  - rerun travis tests\'
+            -> -2).
+          (\'Metacello: symbolic versions registered as resolved version: issue #260\' -> 4)})}.
       projects := Dictionary new
         at: \'GLASS\'
           put:
@@ -30,26 +32,47 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
   - phase 1.5: Seaside, Zinc tODE dependency changes
   - phase 2: eliminate GLASS\'
                 -> 20).
+              (\'bugfixes [?]\' -> 21).
               (\'include travis tests for Seaside and Zinc\' -> 54).
               (\'Magritte\' -> 54).
               (\'Pier\' -> 56)};
-        at: \'3.2.3\'
+        at: \'3_2_2_dale-dev\'
           put:
-            {(\'bugfixes [19]\' -> 15).
+            {(\'q_checkout https://svn.gemtalksystems.com/repos/smalltalk/server/64bit/branches/gss64_3_2_2_dale-dev_branch
+[]  - build
+>>  - link into gsDevKit product tree
+  - create a stone dkh_322\'
+                -> -14).
+              (\'bugfixes [19]\' -> 15).
               (\'filter set\' -> 55).
               (\'performance?\' -> 75)};
         at: \'tode\'
           put:
-            {(\'bugfixes\' -> 16).
+            {(\'bugfixes [?]\' -> 24).
               (\'finish indexing tutorial\' -> 25).
               (\'project dir structure\' -> 17).
               (\'tutorial window?\' -> 26)};
+        at: \'Metacello\' put: {(\'bugfixes [?]\' -> 23)};
         yourself.
       list := Array new.
       must
-        do: [ :assoc | assoc value do: [ :each | list add: assoc key -> each ] ].
+        do: [ :assoc | 
+          assoc value
+            do: [ :each | 
+              | prefix |
+              prefix := each value value < 0
+                ifTrue: [ \'___\' ]
+                ifFalse: [ \'\' ].
+              list add: (prefix , assoc key) -> each ] ].
       projects
-        keysAndValuesDo: [ :project :ar | ar do: [ :each | list add: project -> each ] ].
+        keysAndValuesDo: [ :project :ar | 
+          ar
+            do: [ :each | 
+              | prefix |
+              prefix := each value value < 0
+                ifTrue: [ \'___\' ]
+                ifFalse: [ \'\' ].
+              list add: (prefix , project) -> each ] ].
       list := list sort: [ :a :b | a value value <= b value value ].
       list ]
     ifPresent: [ :ignored | 
@@ -64,4 +87,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-26T14:04:50.5223779678344-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-26T16:35:12.179974079132-07:00']}
