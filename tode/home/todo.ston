@@ -1,0 +1,64 @@
+TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./todo -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | must projects list count |
+      must := {(\'GLASS\'
+        ->
+          {(\'glass readme update.
+  - revise install for Mariano.\' -> 1).
+          (\'tode readme update.
+  - GemStone-specific\' -> 2).
+          (\'MetacelloPreview dependency in GLASS1 baseline\' -> 3)}).
+      (\'Metacello\'
+        ->
+          {(\'Metacello: symbolic versions registered as resolved version\' -> 4)})}.
+      projects := Dictionary new
+        at: \'GLASS\'
+          put:
+            {(\'rename glass to GsDevKit
+  - phase 1: simple rename
+  - phase 1.5: Seaside, Zinc tODE dependency changes
+  - phase 2: eliminate GLASS\'
+                -> 20).
+              (\'Magritte\' -> 54).
+              (\'Pier\' -> 56)};
+        at: \'3.2.3\'
+          put:
+            {(\'bugfixes [19]\' -> 15).
+              (\'filter set\' -> 55).
+              (\'performance?\' -> 75)};
+        at: \'tode\'
+          put:
+            {(\'bugfixes\' -> 16).
+              \'finish indexing tutorial\' -> 25.
+              (\'project dir structure\' -> 17).
+              (\'tutorial window?\' -> 26)};
+        yourself.
+      list := Array new.
+      must
+        do: [ :assoc | assoc value do: [ :each | list add: assoc key -> each ] ].
+      projects
+        keysAndValuesDo: [ :project :ar | ar do: [ :each | list add: project -> each ] ].
+      list := list sort: [ :a :b | a value value <= b value value ].
+      list ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  todo - todo sript utility template
+SYNOPSIS
+  todo [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./todo --help
+  ./todo -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-26T13:23:35.0611939430236-07:00']}
