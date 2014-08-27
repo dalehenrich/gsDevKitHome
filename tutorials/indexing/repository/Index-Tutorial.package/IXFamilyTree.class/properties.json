@@ -1,0 +1,18 @@
+{
+	"category" : "Index-Tutorial",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"adam",
+		"eve",
+		"population",
+		"unmarriedMales",
+		"unmarriedFemales" ],
+	"name" : "IXFamilyTree",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

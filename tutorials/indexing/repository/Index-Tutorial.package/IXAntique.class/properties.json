@@ -1,0 +1,15 @@
+{
+	"category" : "Index-Tutorial",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"askingPrice",
+		"label" ],
+	"name" : "IXAntique",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
