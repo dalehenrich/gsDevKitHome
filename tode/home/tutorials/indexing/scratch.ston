@@ -1,0 +1,10 @@
+TDSmalltalkLeafNode{#name:'scratch',#contents:'| population query |
+  query := \'each.firstName = \'\'Eve\'\'\' asQueryOn: population.
+  query queryResult.
+  query
+    do: [ :each | 
+      each lastName = \'Addams\'
+        ifTrue: [ ^ each ] ].
+  query detect: [ :each | each lastName = \'Addams\' ] ifNone: [ nil ].
+  query select: [ :each | each numberOfChildren = 3 ].
+  query reject: [ :each | each numberOfChildren = 3 ]',#creationTime:DateAndTime['2014-08-11T15:03:50.6220219135284-07:00'],#modificationTime:DateAndTime['2014-08-12T14:53:08.5302209854126-07:00']}

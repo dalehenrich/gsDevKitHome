@@ -1,0 +1,320 @@
+TDScriptLeafNode{#name:'lesson_05',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_05 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'coll\' nil #\'none\').
+      #(\'createIndex\' nil #\'required\').
+      #(\'edit\' $e #\'none\').
+      #(\'queries\' nil #\'none\').
+      #(\'removeIndex\' nil #\'required\').
+      #(\'run\' nil #\'required\').
+      #(\'view\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | result |
+      opts
+        at: \'edit\'
+        ifPresent: [ :ignored | commandNode edit: topez ]
+        ifAbsent: [ 
+          opts
+            at: \'coll\'
+            ifPresent: [ :ignored | (Smalltalk at: #\'INDEXING_TUTORIAL\') population edit: topez ]
+            ifAbsent: [ 
+              opts
+                at: \'queries\'
+                ifPresent: [ :ignored | topez evaluateCommandString: \'./lesson_03 --queries\' ]
+                ifAbsent: [ 
+                  | queries dict createIndexExpressionBlock |
+                  createIndexExpressionBlock := [ :assoc :stream :create | 
+                  | indexCreation actionMessage |
+                  actionMessage := create
+                    ifTrue: [ \'createIndexesOn:\' ]
+                    ifFalse: [ \'removeIndexesFrom:\' ].
+                  indexCreation := assoc value at: 3.
+                  indexCreation isEmpty
+                    ifFalse: [ 
+                      stream
+                        nextPutAll: \'GsIndexSpec new\';
+                        cr;
+                        nextPutAll: indexCreation , \';\';
+                        cr;
+                        nextPutAll:
+                            actionMessage , \' (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\' ] ].
+                  queries := topez
+                    evaluateCommandString: \'./lesson_03 --queries --no-inspect\'.
+                  dict := topez
+                    evaluateCommandString: \'./lesson_03 --dict --no-inspect\'.
+                  opts
+                    at: \'view\'
+                    ifPresent: [ :arg | 
+                      | ids assoc queryString comment varSpec stream node |
+                      ids := arg = \'all\'
+                        ifTrue: [ dict keys ]
+                        ifFalse: [ {(arg asNumber)} ].
+                      ids
+                        do: [ :id | 
+                          assoc := dict at: id.
+                          queryString := assoc key.
+                          comment := assoc value at: 1.
+                          varSpec := assoc value at: 2.
+                          stream := WriteStream on: String new.
+                          stream
+                            nextPut: $\";
+                            nextPutAll: comment;
+                            nextPut: $\";
+                            cr;
+                            nextPutAll: \'| query |\';
+                            cr;
+                            nextPutAll:
+                                \'query := \' , queryString printString printString
+                                    ,
+                                      \' asQueryOn: (Smalltalk at: #\'\'INDEXING_TUTORIAL\'\') population.\';
+                            cr;
+                            nextPutAll:
+                                \'query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"\';
+                            cr.
+                          varSpec size > 0
+                            ifTrue: [ 
+                              stream
+                                nextPutAll: \'query\';
+                                cr;
+                                yourself.
+                              1 to: varSpec size by: 2 do: [ :index | 
+                                stream
+                                  nextPutAll:
+                                      \'bind: \' , (varSpec at: index) printString , \' to: \' , (varSpec at: index + 1)
+                                          , \';\';
+                                  cr;
+                                  yourself ].
+                              stream
+                                nextPutAll: \'yourself.\';
+                                cr ].
+                          createIndexExpressionBlock
+                            value: assoc
+                            value: stream
+                            value: true.
+                          node := TDSmalltalkLeafNode new
+                            name: \'query \' , arg;
+                            contents: stream contents;
+                            yourself.
+                          node edit: topez ] ]
+                    ifAbsent: [ 
+                      opts
+                        at: \'run\'
+                        ifPresent: [ :arg | 
+                          arg = \'all\'
+                            ifTrue: [ queries do: [ :query | result := query queryResult ] ]
+                            ifFalse: [ 
+                              | id query |
+                              id := arg asNumber.
+                              query := queries at: id.
+                              result := query queryResult.
+result edit: topez ] ]
+                        ifAbsent: [ 
+                          opts
+                            at: \'createIndex\'
+                            ifPresent: [ :arg | 
+                              arg = \'all\'
+                                ifTrue: [ 
+                                  dict
+                                    valuesDo: [ :assoc | 
+                                      | expressionStream |
+                                      expressionStream := WriteStream
+                                        on: String new.
+                                      createIndexExpressionBlock
+                                        value: assoc
+                                        value: expressionStream
+                                        value: true.
+                                      result := expressionStream contents
+                                        evaluate ] ]
+                                ifFalse: [ 
+                                  | id assoc expressionStream |
+                                  id := arg asNumber.
+                                  assoc := (dict at: id) value.
+                                  expressionStream := WriteStream on: String new.
+                                  createIndexExpressionBlock
+                                    value: assoc
+                                    value: expressionStream
+                                    value: true.
+                                  result := expressionStream contents evaluate ] ]
+                            ifAbsent: [ 
+                              opts
+                                at: \'removeIndex\'
+                                ifPresent: [ :arg | 
+                                  arg = \'all\'
+                                    ifTrue: [ 
+                                      dict
+                                        valuesDo: [ :assoc | 
+                                          | expressionStream |
+                                          expressionStream := WriteStream
+                                            on: String new.
+                                          createIndexExpressionBlock
+                                            value: assoc
+                                            value: expressionStream
+                                            value: false.
+                                          result := expressionStream contents
+                                            evaluate ] ]
+                                    ifFalse: [ 
+                                      | id assoc expressionStream |
+                                      id := arg asNumber.
+                                      assoc := (dict at: id) value.
+                                      expressionStream := WriteStream
+                                        on: String new.
+                                      createIndexExpressionBlock
+                                        value: assoc
+                                        value: expressionStream
+                                        value: false.
+                                      result := expressionStream contents
+                                        evaluate ] ] ] ] ] ] ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_05 - Family Tree Indexes
+SYNOPSIS
+  lesson_05 [-h|--help] [-e|--edit]
+            [--queries] 
+            [--run=<query-index>|all] 
+            [--createIndex=<query-index>|all]
+            [--view=<query-index>|all]
+            [--coll]
+
+OPTIONS
+DESCRIPTION
+  LESSON 5
+  --------
+  In this lesson we look at creating indexes for specific queries. As in lesson 04, you
+  can list and execute queries with the following commands:
+
+    `./lesson_05 --queries`
+    `./lesson_05 --run=15`
+
+  Equality Indexes
+  ----------------
+  Given the following equality query:
+
+    (each.firstName = \'\'Eve\'\')
+
+  To create in index for this query, you extract the path term from the query, in this case 
+  `each.firstName`, and use it in the equalityIndex creation message:
+
+    GsIndexSpec new
+      equalityIndex: \'\'each.firstName\'\' lastElementClass: String;
+      createIndexesOn: collection.
+
+  The lastElementClass argument should be chosen to closely match the class of the instances
+  that will be found in the last instance variable in the pathTerm (firstName). In general 
+  the only requirement is that the instances found in the instance variable be comparable 
+  (i.e., messages using these messages: =, ~=, <, >, <=, and >= run without error. However, 
+  when you use a Basic Class (specials and subclasses of Character, Date, DateAndTime, 
+  DateTime or Number), the instances must be a kind of the given class.
+
+  Unicode mode and CharacterCollections
+  -------------------------------------
+  CharacterCollections are handled differently depending upon whether or not you are using
+  Unicode comparison mode (browse method --spec `Unicode16 class>>usingUnicodeCompares`). 
+
+  If you are using Unicode comparison mode (required for GLASS and tODE), then 
+  all CharacterCollection instances may be used interchangably and the default collator 
+  will be associated with the index as if you had created a Unicode index:
+
+    GsIndexSpec new
+      unicodeIndex: \'\'each.firstName\'\';
+      createIndexesOn: collection.
+
+  If you are not using Unicode comparison mode, then you are not allowed to mix instances
+  of the *String and Unicode* classes.
+
+  Identity Indexes
+  ----------------
+  Given the following identity query:
+
+    (each.gender == #female)
+
+  Use the identityIndex: creation message and the path term from the query to create an
+  index:
+
+    GsIndexSpec new
+      identityIndex: \'\'each.gender\'\';
+      createIndexesOn: collection.
+
+  A GsIndexSpec may be used to create multiple indexes on the same collection:
+
+    GsIndexSpec new
+      identityIndex: \'\'each.gender\'\';
+      unicodeIndex: \'\'each.firstName\'\';
+      createIndexesOn: collection.
+
+  You can use the --view option to bring up a workspace that contains the query and index 
+  creation code for a given query:
+
+    `./lesson_05 --view=3`
+
+  or you can execute index creation code using the --createIndex option:
+
+    `./lesson_05 --createIndex=15`
+
+  If you want to explore the index structure associated with a collection, use the --coll 
+  option to inspect the collection:
+
+    `./lesson_05 --coll`
+
+  Click on the \"(index list)\" item to follow the index structure trail. The \"(index list)\" 
+  item is only present if the collection has one or more indexes.
+
+  LESSON 6
+  --------
+    `./lesson_06 -h`
+
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
+OPTIONS
+  coll
+    Bring up an inspector on the tutorial collection
+
+  createIndex=<query-index>|all
+    Create the index for the query with the given index. The index is obtained by using the 
+    --queries option.
+
+    `all` is used for testing purposes ... only the last query result is returned.
+
+  edit
+    Bring up an editor on the source for this lesson.
+
+  help
+    Produce this man page.
+
+  queries
+    Open inspector on dictionary of available queries.
+
+  run=<query-index>|all
+    Run the query with the given index. The index is obtained by using the --queries option.
+
+    `all` is used for testing purposes ... only the last query result is returned.
+    
+  view=<query-index>
+    Open workspace on the specified query and index creation code.
+
+EXAMPLES
+  ./lesson_05 --help
+  ./lesson_05 --edit
+  ./lesson_05 --view=14
+  ./lesson_05 --createIndex=14
+  ./lesson_05 --run=14
+  ./lesson_05 --coll
+  ./lesson_05 --removeIndex=14
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-08T15:58:21.6940898895263-07:00'],#modificationTime:DateAndTime['2014-08-09T11:22:10.9271481037139-07:00']}

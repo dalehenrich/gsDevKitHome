@@ -1,0 +1,32 @@
+TDStringLeafNode{#name:'notes',#contents:'[]1. intro
+[]2. model
+[]3. queries
+[]4. timings & profiling
+[]5. index creation
+6. timings & profiling
+
+------
+
+review how talk would change....
+
+dkh 8/12/2014 21:37
+-------------------
+No index
+----
+1@       -> anIdentitySet( Evelyn Marion Addams, Brian Charles Addams, Jessie Mary Addams, Martin Henry Addams, Charlie Charles Addams, Nic Henry Addams...
+2@       -> 8371
+3@       -> 3812
+---
+with index
+1@       -> anIdentitySet( Evelyn Marion Addams, Brian Charles Addams, Jessie Mary Addams, Martin Henry Addams, Charlie Charles Addams, Nic Henry Addams...
+2@       -> 8371
+3@       -> 10
+---
+Collection info
+---
+..            -> anIXFamilyTree
+(class)@      -> IdentitySet
+(oop)@        -> 3892521217
+(size)@       -> 1616776
+(index list)@ -> anIndexList( aRangeEqualityIndex(birthday)( aPathTerm on \'birthday\'( aRangeEqualityIndex(birthday))), 1)
+',#creationTime:DateAndTime['2014-08-07T22:26:08.0095279216766-07:00'],#modificationTime:DateAndTime['2014-08-12T22:12:31.1537320613861-07:00']}

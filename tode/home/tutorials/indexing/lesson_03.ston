@@ -1,0 +1,249 @@
+TDScriptLeafNode{#name:'lesson_03',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_03 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'dict\' nil #\'none\').
+      #(\'edit\' $e #\'none\').
+      #(\'description\' nil #\'none\').
+      #(\'no-inspect\' nil #\'none\').
+      #(\'queries\' nil #\'none\').
+      #(\'run\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | result |
+      opts
+        at: \'edit\'
+        ifPresent: [ :ignored | commandNode edit: topez ]
+        ifAbsent: [ 
+          | formulas queries population |
+          population := (Smalltalk at: #\'INDEXING_TUTORIAL\') population.
+          formulas := {(\'each.isFemale\'
+            ->
+              {\'Identity query.\'.
+              #().
+              \'identityIndex: \'\'each.isFemale\'\'\'}).
+          (\'each.numberOfChildren > 3\'
+            ->
+              {\'SmallInteger equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
+          (\'each.firstName = \'\'Eve\'\'\'
+            ->
+              {\'String equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.firstName\'\' lastElementClass: String\'}).
+          (\'(each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')\'
+            ->
+              {\'Compound String equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.firstName\'\' lastElementClass: String\'}).
+          (\'((each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')) not\'
+            ->
+              {\'Compound negated String equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.firstName\'\' lastElementClass: String\'}).
+          (\'each.father.numberOfChildren > 3\'
+            ->
+              {\'Equality query - some father fields are nil.\'.
+              #().
+              \'equalityIndex: \'\'each.father.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
+          (\'2 <= each.numberOfChildren <= 3\'
+            ->
+              {\'Range Equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
+          (\'each.gender == #female\'
+            ->
+              {\'Identity query.\'.
+              #().
+              \'identityIndex: \'\'each.gender\'\'\'}).
+          (\'each.sons.*.numberOfChildren = 2\'
+            ->
+              {\'Set-valued Equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.sons.*.numberOfChildren\'\' lastElementClass: SmallInteger\'}).
+          (\'(each.tags.* = \'\'soccer\'\') & (each.tags.* = \'\'magic\'\')\'
+            ->
+              {\'Compound Set-valued Equality query (see bug 44493 performance issue for compound queries).\'.
+              #().
+              \'equalityIndex: \'\'each.tags.*\'\' lastElementClass: String\'}).
+          (\'(each.firstName|lastName = \'\'Martin\'\')\'
+            ->
+              {\'Enumerated Equality query.\'.
+              #().
+              \'equalityIndex: \'\'each.firstName|lastName\'\' lastElementClass: String\'}).
+          (\'(each.unicodeField = \'\'\u00CE\u0094\u00CE\u00B5\u00CF\u0085\u00CF\u0084\u00CE\u00AD\u00CF\u0081\u00CE\u00B1\'\')\'
+            ->
+              {\'Unicode Equality query.\'.
+              #().
+              \'unicodeIndex: \'\'each.unicodeField\'\' collator: (IcuCollator forLocaleNamed: \'\'en_GB\'\')\'}).
+          (\'y30 <= each.birthday <= y20\'
+            ->
+              {\'Range Equality query with variables (20-30 year olds).\'.
+              {\'y30\'.
+              \'(Date today - (30 * 365) days)\'.
+              \'y20\'.
+              \'(Date today - (20 * 365) days)\'}.
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'}).
+          (\'y40 <= each.birthday <= y30\'
+            ->
+              {\'Range Equality query with variables (30-40 year olds).\'.
+              {\'y40\'.
+              \'(Date today - (40 * 365) days)\'.
+              \'y30\'.
+              \'(Date today - (30 * 365) days)\'}.
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'}).
+          (\'y50 <= each.birthday <= y40\'
+            ->
+              {\'Range Equality query with variables (40-50 year olds).\'.
+              {\'y50\'.
+              \'(Date today - (50 * 365) days)\'.
+              \'y40\'.
+              \'(Date today - (40 * 365) days)\'}.
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'}).
+          (\'each.birthday < y50\'
+            ->
+              {\'Range Equality query with variables (50> year olds).\'.
+              {\'y50\'.
+              \'(Date today - (50 * 365) days)\'}.
+              \'equalityIndex: \'\'each.birthday\'\' lastElementClass: Date\'})}.
+          queries := Dictionary new.
+          1 to: formulas size do: [ :id | 
+            | assoc query varSpec |
+            assoc := formulas at: id.
+            query := assoc key asQueryOn: population.
+            query queryOptions: query queryOptions - GsQueryOptions autoOptimize.\t\"bug 44529: optimizer problem involving compound queries on same term\"
+            queries at: id put: query -> assoc value.
+            varSpec := assoc value at: 2.
+            1 to: varSpec size by: 2 do: [ :index | query bind: (varSpec at: index) to: (varSpec at: index + 1) evaluate ] ].
+          opts at: \'dict\' ifPresent: [ :ignored | result := queries ].
+          opts
+            at: \'queries\'
+            ifPresent: [ :ignored | 
+              | incDesc |
+              result := {}.
+              opts
+                at: \'description\'
+                ifPresent: [ :ignored | incDesc := true ]
+                ifAbsent: [ incDesc := false ].
+              1 to: queries size do: [ :id | 
+                | query |
+                query := queries at: id.
+                incDesc
+                  ifTrue: [ query := query value at: 1 ]
+                  ifFalse: [ query := query key ].
+                result add: query ] ].
+          opts
+            at: \'run\'
+            ifPresent: [ :arg | 
+              arg = \'all\'
+                ifTrue: [ queries keysDo: [ :query | result := query queryResult ] ]
+                ifFalse: [ 
+                  | id query |
+                  id := arg asNumber.
+                  query := (queries at: id) key.
+                  result := query queryResult ] ].
+          opts at: \'no-inspect\' ifAbsent: [ result edit: topez ] ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_03 - Family Tree Queries
+SYNOPSIS
+  lesson_03 [-h|--help] [-e|--edit] [--no-inspect] [--dict]
+            [--queries [--description]] 
+            [--run=<query-index>|all]
+DESCRIPTION
+  LESSON 3
+  --------
+  In this lesson we look at a sampling of queries that can be made against the population
+  of IXPerson instances.
+
+  To inspect the list of raw queries:
+
+    `./lesson_03 --queries`
+
+  If you want a little more information you can look at a listing that includes a short
+  description of the query:
+
+    `./lesson_03 --queries --description`
+
+  Click on the query to get a better view of the description.
+
+  To run the query against the IXFamily population created in lesson 2 (`./lesson_02 -h`) use
+  the list index of query obtained from the --queries inspector. For example here\'\'s a partial
+  list of queries:
+
+    1@       -> ( each.isFemale )
+    2@       -> (each.numberOfChildren > 3)
+    3@       -> (each.firstName = \'\'Eve\'\')
+    4@       -> (each.firstName = \'\'Eve\'\') | (each.firstName = \'\'Brian\'\')
+
+
+  If you use index 4 and the --run option:
+
+    `./lesson_03 --run=4`
+
+  An inspector will be brought up on the result of the query and a with a quick scan through
+  the results you should be able to verify that all of the IXPerson instances have a firstName
+  that is either Eve or Brian. Click on a line to dive into the object.
+
+  If you want to see how the queries are created and/or run, use the --edit option to view
+  the source of this lesson:
+
+    `./lesson_03 --edit`
+
+  LESSON 4
+  --------
+  `./lesson_04 -h`
+
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
+OPTIONS
+  description
+    Used with the --queries option. When present, query and description are displayed.
+
+  dict
+    Returns the raw query dictionary.
+
+  edit
+    Bring up an editor on the source for this lesson.
+
+  help
+    Produce this man page.
+
+  no-inspect
+    Do not open an inspector on the results of the command (--queries or --run). Mainly used
+    by other scripts.
+
+  queries
+    Open inspector on dictionary of available queries.
+
+  run=<query-index>|all
+    Run the query with the given index. The index is obtained by using the --queries option.
+
+    `all` is used for testing purposes ... only the last query result is returned.
+
+EXAMPLES
+  ./lesson_03 --help
+  ./lesson_03 -e
+  ./lesson_03 --queries
+  ./lesson_03 --dict --no-inspect
+  ./lesson_03 --queries --description
+  ./lesson_03 --run=4
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-07T18:12:02.5276119709014-07:00'],#modificationTime:DateAndTime['2014-08-09T11:28:03.6732900142669-07:00']}

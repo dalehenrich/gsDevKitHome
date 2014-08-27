@@ -1,0 +1,72 @@
+TDScriptLeafNode{#name:'lesson_06',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./lesson_06 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'edit\' $e #\'none\').
+      #(\'profile\' nil #\'required\').
+      #(\'queries\' nil #\'none\').
+      #(\'run\' nil #\'required\').
+      #(\'time\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | result |
+      opts
+        at: \'edit\'
+        ifPresent: [ :ignored | commandNode edit: topez ]
+        ifAbsent: [ 
+          opts
+            at: \'queries\'
+            ifPresent: [ :ignored | topez evaluateCommandString: \'./lesson_04 --queries\' ]
+            ifAbsent: [ 
+             opts
+                at: \'time\'
+                ifPresent: [ :arg | 
+                  topez evaluateCommandString: \'./lesson_04 --time=\', arg.
+                  ]
+                ifAbsent: [ 
+                  opts
+                    at: \'profile\'
+                    ifPresent: [ :arg | 
+topez evaluateCommandString: \'./lesson_04 --profile=\', arg.
+                      ]
+                    ifAbsent: [ 
+                      opts
+                        at: \'run\'
+                        ifPresent: [ :arg | 
+topez evaluateCommandString: \'./lesson_04 --run=\', arg.
+                      ] ] ] ] ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  lesson_06 - Indexed Query timing and profiling
+SYNOPSIS
+  lesson_06 [-h|--help] [-e|--edit]
+            [--queries] 
+            [--run=<query-index>] 
+            [--time=<query-index>|all]
+            [--profile=<query-index>|all]
+
+DESCRIPTION
+
+  Table of Contents
+  -----------------
+  Using the Indexing Tutorial         - `./lesson_01 -h`
+  Introducing the Family Tree         - `./lesson_02 -h`
+  Family Tree Queries                 - `./lesson_03 -h`
+  Query timing and profiling          - `./lesson_04 -h`
+  Family Tree Indexes                 - `./lesson_05 -h`
+  Indexed Query timing and profiling  - `./lesson_06 -h`
+
+EXAMPLES
+  ./lesson_06 --help
+  ./lesson_06 --edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-09T11:07:52.8057749271392-07:00'],#modificationTime:DateAndTime['2014-08-09T11:15:32.1842770576477-07:00']}

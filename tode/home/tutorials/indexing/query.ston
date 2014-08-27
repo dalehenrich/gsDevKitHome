@@ -1,0 +1,10 @@
+TDSmalltalkLeafNode{#name:'query',#contents:'\"Find people born between 20 and thirty years ago\"
+
+  | population today twentyYearsAgo thirtyYearsAgo query |
+  today := Date today.
+  twentyYearsAgo := today - (20 * 365) days.
+  thirtyYearsAgo := today - (30 * 365) days.
+  ^ (\'thirtyYearsAgo <= each.birthday <= twentyYearsAgo\' asQueryOn: population)
+    bind: \'twentyYearsAgo\' to: twentyYearsAgo;
+    bind: \'thirtyYearsAgo\' to: thirtyYearsAgo;
+    queryResult',#creationTime:DateAndTime['2014-08-11T16:12:20.9401130676269-07:00'],#modificationTime:DateAndTime['2014-08-12T16:24:30.3388650417327-07:00']}
