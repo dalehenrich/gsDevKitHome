@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'esug_foos',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'esug',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : '57334',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/esug/backups/',
+	#gemstoneVersion : '3.2.1',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/esug/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

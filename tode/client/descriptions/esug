@@ -1,8 +1,8 @@
 TDSessionDescription {
 	#name : 'esug',
-	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneHost : 'localhost',
 	#stoneName : 'esug',
-	#gemHost : 'foos.gemtalksystems.com',
+	#gemHost : 'localhost',
 	#netLDI : 'esug_ldi',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
@@ -10,10 +10,10 @@ TDSessionDescription {
 	#osUserId : nil,
 	#osPassword : nil,
 	#dataDirectory : nil,
-	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/esug/backups/',
+	#backupDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/esug/backups/',
 	#gemstoneVersion : '3.2.1',
 	#gciLibraryName : nil,
 	#adornmentColor : nil,
-	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/esug/git',
-	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+	#serverGitRoot : '/Users/daleh/gsDevKitHome/gemstone/stones/esug/git',
+	#serverTodeRoot : '/Users/daleh/gsDevKitHome/tode'
 }
