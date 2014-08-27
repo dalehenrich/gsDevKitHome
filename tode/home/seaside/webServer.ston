@@ -6,6 +6,7 @@ TDScriptLeafNode{#name:'webServer',#contents:'[ :topez :objIn :tokens :command :
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
       #(\'debug\' nil #\'required\').
+      #(\'breakpoints\' nil #\'required\').
       #(\'errorHandler\' nil #\'required\').
       #(\'register\' nil #\'required\').
       #(\'port\' nil #\'required\').
@@ -18,15 +19,43 @@ TDScriptLeafNode{#name:'webServer',#contents:'[ :topez :objIn :tokens :command :
   opts
     at: \'help\'
     ifAbsent: [ 
-      | registered errorHandler |
-      registered := errorHandler := false.
+      | handled |
+      handled := false.
+      opts
+        at: \'breakpoints\'
+        ifPresent: [ :breakOption | 
+          breakOption = \'set\'
+            ifTrue: [ WABasicDevelopment setBreakPoints ]
+            ifFalse: [ 
+              breakOption = \'clear\'
+                ifTrue: [ WABasicDevelopment clearBreakPoints ]
+                ifFalse: [ self error: \'Unknown breakpoints option \' , breakOption printString ] ].
+          handled := true ].
       opts
         at: \'errorHandler\'
         ifPresent: [ :handler | 
+          | errorHandlerClass dps |
+          errorHandlerClass := Smalltalk at: handler asSymbol.
           WAAdmin applicationExceptionHandlingDefaults
             at: #\'exceptionHandler\'
-            put: (Smalltalk at: handler asSymbol).
-          errorHandler := true ].
+            put: errorHandlerClass.
+          dps := OrderedCollection with: WADispatcher default.
+          [ dps isEmpty ]
+            whileFalse: [ 
+              | dp |
+              dp := dps removeFirst.
+              dp isApplication
+                ifTrue: [ 
+                  | exceptionFilter |
+                  exceptionFilter := dp filters
+                    detect: [ :each | each isExceptionFilter ]
+                    ifNone: [ nil ].
+                  exceptionFilter ifNotNil: [ | attribute |attribute := exceptionFilter configuration attributeAt: #\'exceptionHandler\'.
+exceptionFilter configuration takeValue: errorHandlerClass forAttribute: attribute ] ]
+                ifFalse: [ 
+                  dp isDispatcher
+                    ifTrue: [ dps addAll: dp handlers ] ] ].
+          handled := true ].
       opts
         at: \'register\'
         ifPresent: [ :serverType | 
@@ -49,7 +78,7 @@ TDScriptLeafNode{#name:'webServer',#contents:'[ :topez :objIn :tokens :command :
             name: serverType;
             adaptorClass: serverClass;
             ports: ports.
-          registered := true ].
+          handled := true ].
       opts
         at: \'start\'
         ifPresent: [ :ignored | WAGemStoneRunSeasideGems startGems ]
@@ -69,7 +98,7 @@ TDScriptLeafNode{#name:'webServer',#contents:'[ :topez :objIn :tokens :command :
                         stop;
                         startOn: debugPort asNumber ]
                     ifAbsent: [ 
-                      (registered or: [ errorHandler ])
+                      handled
                         ifFalse: [ nil error: \'No action (start/stop/restart) specified\' ] ] ] ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -80,7 +109,8 @@ SYNOPSIS
   webServer [-h|--help] [--register=zinc|fastcgi|swazoo] [--port=<port-number>]
   webServer [--start] [--stop] [--restart]
   webServer [--debug=<port-number>]
-  webServer [--errorHandler=WARemoteDebuggingWalkbackErrorHandler|WAGemStoneWalkbackErrorHandler|WAGemStoneProductionErrorHandler]
+  webServer [--errorHandler=WARemoteDebuggingWalkbackErrorHandler|WAGemStoneProductionErrorHandler]
+  webServer [--breakpoints=set|clear]
 
 
 DESCRIPTION
@@ -102,8 +132,10 @@ EXAMPLES
 
   ./webServer --debug=8181
 
+  ./webServer --breakpoints=set
+  ./webServer --breakpoints=clear
+
   ./webServer --errorHandler=WARemoteDebuggingWalkbackErrorHandler
-  ./webServer --errorHandler=WAGemStoneWalkbackErrorHandler
   ./webServer --errorHandler=WAGemStoneProductionErrorHandler
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-06-19T10:09:47.03463697433472-07:00'],#modificationTime:DateAndTime['2014-08-27T09:11:03.4113430976867-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-06-19T10:09:47.03463697433472-07:00'],#modificationTime:DateAndTime['2014-08-27T11:32:52.9857139587402-07:00']}
