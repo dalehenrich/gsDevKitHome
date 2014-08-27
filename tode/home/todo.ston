@@ -58,7 +58,13 @@ fail>>  - Pharo3.0 added to lineup
               (\'project dir structure\' -> 17).
               (\'tutorial window?\' -> 26)};
         at: \'Metacello\' put: {(\'bugfixes [?]\' -> 23)};
-        at: \'Seaside\' put: {(\'NotTranlogged support\' -> 11)}; yourself.
+        at: \'Seaside\'
+          put:
+            {(\'NotTranlogged support
+- exploration\' -> 14).
+              (\'webServer script updates
+- error handler swap\' -> 13)};
+        yourself.
       list := Array new.
       must
         do: [ :assoc | 
@@ -92,4 +98,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-27T08:50:15.5294380187988-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-27T09:43:56.8225409984588-07:00']}
