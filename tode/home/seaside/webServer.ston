@@ -50,8 +50,14 @@ TDScriptLeafNode{#name:'webServer',#contents:'[ :topez :objIn :tokens :command :
                   exceptionFilter := dp filters
                     detect: [ :each | each isExceptionFilter ]
                     ifNone: [ nil ].
-                  exceptionFilter ifNotNil: [ | attribute |attribute := exceptionFilter configuration attributeAt: #\'exceptionHandler\'.
-exceptionFilter configuration takeValue: errorHandlerClass forAttribute: attribute ] ]
+                  exceptionFilter
+                    ifNotNil: [ 
+                      | attribute |
+                      attribute := exceptionFilter configuration
+                        attributeAt: #\'exceptionHandler\'.
+                      exceptionFilter configuration
+                        takeValue: errorHandlerClass
+                        forAttribute: attribute ] ]
                 ifFalse: [ 
                   dp isDispatcher
                     ifTrue: [ dps addAll: dp handlers ] ] ].
@@ -122,6 +128,11 @@ DESCRIPTION
   --debug starts the web server on the given port in the current gem instead of 
   a separate gem.
 
+  --errorHandler resets the class of default error handler and changes handler for
+  all installed applications
+
+  --breakpoints sets or clears useful seaside breakpoints.
+
 EXAMPLES
   ./webServer --help
   ./webServer --register=zinc --port=8383 --start
@@ -138,4 +149,4 @@ EXAMPLES
   ./webServer --errorHandler=WARemoteDebuggingWalkbackErrorHandler
   ./webServer --errorHandler=WAGemStoneProductionErrorHandler
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-06-19T10:09:47.03463697433472-07:00'],#modificationTime:DateAndTime['2014-08-27T11:32:52.9857139587402-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-06-19T10:09:47.03463697433472-07:00'],#modificationTime:DateAndTime['2014-08-27T12:02:16.509927034378-07:00']}
