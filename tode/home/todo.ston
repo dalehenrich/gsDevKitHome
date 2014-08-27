@@ -1,0 +1,98 @@
+TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./todo -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | must projects list count |
+      must := {(\'GLASS\'
+        ->
+          {(\'MetacelloPreview dependency in GLASS1 baseline
+[]  - travis tests
+>>  - merge to master
+  - mail to list about continuous deployment\'
+            -> -3)}).
+      (\'Metacello\'
+        ->
+          {(\'metacello readme install script update.
+[]  - GemStone-specific install in readme
+[]  - GemStone-specific load in travis test
+fail>>  - Pharo3.0 added to lineup
+[]  - remove Phar3.0 from lineup
+[]  - rerun travis tests
+>>  - readme/.travis.yml tweaks\'
+            -> -2).
+          (\'Metacello: symbolic versions registered as resolved version: issue #260\'
+            -> 4)}).
+      (\'indexing\' -> {\'Index tutorial
+- move off of esug2014 branch\' ->5})}.
+      projects := Dictionary new
+        at: \'GLASS\'
+          put:
+            {(\'rename glass to GsDevKit
+  - phase 1: simple rename
+  - phase 1.5: Seaside, Zinc tODE dependency changes
+  - phase 2: eliminate GLASS\'
+                -> 20).
+              (\'bugfixes [?]\' -> 21).
+              (\'include travis tests for Seaside and Zinc\' -> 54).
+              (\'Magritte\' -> 54).
+              (\'Pier\' -> 56)};
+        at: \'indexing\'
+          put:
+            {(\'bugfixes [19]\' -> 15).
+              (\'filter set\' -> 55).
+              (\'performance?\' -> 75)};
+        at: \'tode\'
+          put:
+            {(\'bugfixes [?]\' -> 24).
+              (\'finish indexing tutorial\' -> 25).
+              (\'project dir structure\' -> 17).
+              (\'tutorial window?\' -> 26)};
+        at: \'Metacello\' put: {(\'bugfixes [?]\' -> 23)};
+        at: \'Seaside\'
+          put:
+            {(\'NotTranlogged support
+- exploration\' -> 14).
+              (\'webServer script updates
+- error handler swap\' -> 13)};
+        yourself.
+      list := Array new.
+      must
+        do: [ :assoc | 
+          assoc value
+            do: [ :each | 
+              | prefix |
+              prefix := each value value < 0
+                ifTrue: [ \'___\' ]
+                ifFalse: [ \'\' ].
+              list add: (prefix , assoc key) -> each ] ].
+      projects
+        keysAndValuesDo: [ :project :ar | 
+          ar
+            do: [ :each | 
+              | prefix |
+              prefix := each value value < 0
+                ifTrue: [ \'___\' ]
+                ifFalse: [ \'\' ].
+              list add: (prefix , project) -> each ] ].
+      list := list sort: [ :a :b | a value value <= b value value ].
+      list ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  todo - todo sript utility template
+SYNOPSIS
+  todo [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./todo --help
+  ./todo -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-27T10:13:24.6323208808898-07:00']}
