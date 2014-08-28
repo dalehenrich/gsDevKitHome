@@ -15,7 +15,7 @@ opts
       at: \'path\'
       ifPresent: [ :filepath | 
         | looseChanges directory |
-        looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+        looseChanges := topez evaluateCommandString: \'/home/gs/looseChanges\'.
         ServerFileDirectory
           splitName: filepath
           to: [ :directoryPath :filename | 

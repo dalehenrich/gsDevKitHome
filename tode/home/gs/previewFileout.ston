@@ -11,8 +11,8 @@ opts
   ifAbsent: [ 
     | classToFilenameMap looseChanges preview warnings |
     classToFilenameMap := topez
-      evaluateCommandString: \'/home/index/classToFilenameMap/\'.
-    looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+      evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
+    looseChanges := topez evaluateCommandString: \'/home/gs/looseChanges\'.
     preview := Set new.
     warnings := Set new.
     looseChanges

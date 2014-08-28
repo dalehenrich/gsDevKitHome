@@ -1,7 +1,7 @@
 TDScriptLeafNode{#name:'installLooseChanges',#contents:'[ :topez :objIn :tokens :windowId | 
 | looseChanges systemSession gemNRS stoneNRS netldiName ernieSession systemUser ernieUser |
 netldiName := System gemEnvironmentVariable: \'gs64ldi\'.
-looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+looseChanges := topez evaluateCommandString: \'/home/gs/looseChanges\'.
 gemNRS := GsNetworkResourceString gemNRSForNetLDI: netldiName onHost: \'foos\'.
 stoneNRS := GsNetworkResourceString defaultStoneNRSFromCurrent.
 systemUser := AllUsers detect: [ :user | user userId = \'SystemUser\' ].

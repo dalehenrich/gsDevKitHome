@@ -19,9 +19,9 @@ opts
       ifPresent: [ :optVal | optVal ]
       ifAbsent: [ nil error: \'must specify --path\' ].
     classToFilenameMap := topez
-      evaluateCommandString: \'/home/index/classToFilenameMap/\'.
+      evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
     externalMethodMap := IdentityDictionary new.
-    looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+    looseChanges := topez evaluateCommandString: \'/home/gs/looseChanges\'.
     looseChanges
       do: [ :ar | 
         | beh cat meth set selector actualClassName cls |

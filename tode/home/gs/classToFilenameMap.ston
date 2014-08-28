@@ -11,7 +11,7 @@ opts
   ifAbsent: [ 
     | classToFilenameMap classToImageFilenameMap |
     classToFilenameMap := topez
-      evaluateCommandString: \'/home/index/classToErnieFilenameMap/\'.
+      evaluateCommandString: \'/home/gs/classToErnieFilenameMap/\'.
     classToFilenameMap keys
       do: [ :key | 
         classToFilenameMap
@@ -19,7 +19,7 @@ opts
           put:
             ((classToFilenameMap at: key) collect: [ :each | \'tests/ernie/\' , each ]) ].
     classToImageFilenameMap := topez
-      evaluateCommandString: \'/home/index/classToImageFilenameMap/\'.
+      evaluateCommandString: \'/home/gs/classToImageFilenameMap/\'.
     classToImageFilenameMap keys
       do: [ :key | | erniefiles|
         erniefiles := classToFilenameMap
