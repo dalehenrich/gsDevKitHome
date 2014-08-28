@@ -1,0 +1,82 @@
+TDScriptLeafNode{#name:'bugTemplate',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./bug -h\"
+command
+  getOptsMixedLongShort:
+    {#(\'help\' $h #\'none\').
+    #(\'boom\' nil #\'none\').
+    #(\'clean\' nil #\'none\').
+    #(\'create\' nil #\'none\').
+    #(\'install\' nil #\'none\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    | analysis theColl query |
+    analysis := Dictionary new.
+    Smalltalk at: #\'SampleIndexObject\' ifAbsent: [ opts at: \'install\' put: nil ].
+    opts
+      at: \'install\'
+      ifPresent: [ :ignored | 
+        \"install supporting code here\"
+        topez evaluateCommandString: \'/home/bug/installSampleIndexObject\' ].
+    opts
+      at: \'clean\'
+      ifPresent: [ :ignored | 
+        \"clean up indexes here\"
+        UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+        IndexManager removeAllIndexes ].
+    opts
+      at: \'create\'
+      ifPresent: [ :ignored | 
+        | nsc cls |
+        nsc := IdentityBag new.
+        UserGlobals at: #\'coll\' put: nsc.
+        cls := Smalltalk at: #\'SampleIndexObject\'.
+        1 to: 2 do: [ :index | 
+          | sample |
+          sample := cls new.
+          sample
+            value1: index;
+            yourself.
+          nsc add: sample ].
+        nsc
+          createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
+          yourself ].
+    opts
+      at: \'boom\'
+      ifPresent: [ :ignored | 
+        \"recreate bug here\"
+         ].
+    theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+    query := \'each.value1 <= 1\' asQueryOn: theColl.
+    analysis
+      at: \'audit\' put: theColl auditIndexes;
+      at: \'depMap keys\' put: DependencyList depMapKeys;
+      at: \'depMap values\' put: DependencyList depMapValues;
+      at: \'nsc\' put: theColl;
+      at: \'query\' put: query;
+      at: \'query result\' put: query queryResult;
+      at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
+      at: \'shared dependency lists\'
+        put: SharedDependencyLists allEntries asArray;
+      yourself.
+    analysis ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --clean --create --boom
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:01:12.4875309467315-07:00'],#modificationTime:@2}

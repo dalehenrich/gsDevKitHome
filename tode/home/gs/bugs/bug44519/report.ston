@@ -1,0 +1,13 @@
+TDStringLeafNode{#name:'report',#contents:'44519  P2  \'(d1 < each.value.value < d2) & (each.value.key = \'\'Heather\'\')\' asQuery signals error
+------------
+
+Here\'e the error:
+
+  a Error occurred (error 2008), reason:rtErrSubclassResponsibility, A method has been invoked in the abstract superclass (d1 < each.value.value < d2) that was designed to have been overridden in a concrete subclass. Selector: #\'asFormulaWithSelectorParts:arguments:\'.
+
+Proposed fix is to add GsRangeQueryPredicate>>asFormulaWithSelectorParts:arguments:
+
+asFormulaWithSelectorParts: selectorParts arguments: arguments
+  | selector |
+  selector := selectorParts first value asSymbol.
+  ^ self perform: selector with: arguments first',#creationTime:DateAndTime['2014-08-28T07:01:47.0579419136047-07:00'],#modificationTime:DateAndTime['2014-08-28T07:02:28.2723870277404-07:00']}

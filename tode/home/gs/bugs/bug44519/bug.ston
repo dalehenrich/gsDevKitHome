@@ -1,0 +1,26 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      \'(d1 < each.value.value < d2) & (each.value.key = \'\'Heather\'\')\' asQuery
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:03:18.9297471046447-07:00'],#modificationTime:DateAndTime['2014-08-28T07:03:42.3352279663085-07:00']}
