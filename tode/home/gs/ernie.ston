@@ -1,0 +1,47 @@
+TDScriptLeafNode{#name:'ernie',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./ernie -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'prep\' $p #\'none\').
+      }
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          | ernieUserGlobals tool myProfile |
+          \"Install Ernie UserGlobals right after my UserGlobals, so that UserGlobals
+           lookup preserved while making Ernie UserGlobal classes available for 
+           compilation\"
+          tool := topez toolInstanceFor: \'find\'.
+          ernieUserGlobals := tool
+            findSymbolDictionary: #\'UserGlobals\'
+            username: \'Ernie\'.
+          GsPackagePolicy current externalSymbolList: {ernieUserGlobals}.
+          (GsSession currentSession symbolList includes: ernieUserGlobals)
+            ifFalse: [ 
+              GsSession currentSession symbolList
+                add: ernieUserGlobals
+                after: GsSession currentSession symbolList first.
+              ClassOrganizer clearCachedOrganizer ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  ernie - ernie sript utility template
+SYNOPSIS
+  ernie [-h|--help]
+DESCRIPTION
+  --prep set up for recording changes made in ernie space.
+
+EXAMPLES
+  ./ernie --help
+  ./ernie --prep
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2014-08-28T07:38:29.3285360336303-07:00']}
