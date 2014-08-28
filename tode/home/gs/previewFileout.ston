@@ -1,0 +1,49 @@
+TDScriptLeafNode{#name:'previewFileout',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./previewFileout -h\"
+command
+  getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    | classToFilenameMap looseChanges preview warnings |
+    classToFilenameMap := topez
+      evaluateCommandString: \'/home/index/classToFilenameMap/\'.
+    looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+    preview := Set new.
+    warnings := Set new.
+    looseChanges
+      do: [ :ar | 
+        | beh filenames actualClassName |
+        beh := ar at: 1.
+        actualClassName := beh theNonMetaClass name.
+        (#(#\'ReadStreamLegacy\' #\'ReadStreamPortable\') includes: actualClassName)
+          ifTrue: [ 
+            \"have to hand edit fileouts to fix up the class names and replace duplicate methods\"
+            warnings add: actualClassName ].
+        filenames := classToFilenameMap
+          at: beh theNonMetaClass name
+          ifAbsent: [ nil error: \'file not found for \' , beh asString ].
+        preview addAll: filenames ].
+    warnings isEmpty not
+      ifTrue: [ 
+        nil
+          inform:
+            \'You must had edit the methods produced for: \' , warnings printString ].
+    preview asArray ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  previewFileout - previewFileout sript utility template
+SYNOPSIS
+  previewFileout [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./previewFileout --help
+  ./previewFileout
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:28:59.5787060260772-07:00'],#modificationTime:@2}

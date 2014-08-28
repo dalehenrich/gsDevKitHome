@@ -1,0 +1,48 @@
+TDScriptLeafNode{#name:'writeLooseChanges',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./writeLooseChanges -h\"
+command
+  getOptsMixedLongShort:
+    {#(\'help\' $h #\'none\').
+    #(\'path\' $p #\'required\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    opts
+      at: \'path\'
+      ifPresent: [ :filepath | 
+        | looseChanges directory |
+        looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+        ServerFileDirectory
+          splitName: filepath
+          to: [ :directoryPath :filename | 
+            directory := ServerFileDirectory on: directoryPath.
+            directory
+              forceNewFileNamed: filename
+              do: [ :fileStream | 
+                looseChanges
+                  do: [ :ar | 
+                    | beh cat meth selector |
+                    beh := ar at: 1.
+                    cat := ar at: 2.
+                    selector := ar at: 3.
+                    beh fileOutMethod: selector environmentId: 0 on: fileStream ] ] ] ]
+      ifAbsent: [ self error: \'Must specify --path\' ] ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  writeLooseChanges - writeLooseChanges sript utility template
+SYNOPSIS
+  writeLooseChanges [-h|--help]
+  writeLooseChanges [-p|--path=<filename-path>]
+
+DESCRIPTION
+EXAMPLES
+  ./writeLooseChanges --help
+  ./writeLooseChanges --path=/opt/git/todeHome/changes.tpz
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:28:59.6698529720306-07:00'],#modificationTime:@2}

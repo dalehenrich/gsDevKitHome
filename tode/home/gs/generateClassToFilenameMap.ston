@@ -1,0 +1,108 @@
+TDScriptLeafNode{#name:'generateClassToFilenameMap',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./generateClassToFilenameMap -h\"
+command
+  getOptsMixedLongShort:
+    {#(\'help\' $h #\'none\').
+    #(\'create\' $c #\'required\').
+    #(\'flush\' $f #\'none\').
+    #(\'path\' $p #\'required\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    | path string stream line map code blanks |
+    path := opts
+      at: \'path\'
+      ifPresent: [ :optVal | optVal ]
+      ifAbsent: [ self errror: \'must specify path\' ].
+    opts
+      at: \'flush\'
+      ifPresent: [ :ignored | UserGlobals removeKey: #\'filenameMap\' ifAbsent: [  ] ].
+    string := UserGlobals
+      at: #\'filenameMap\'
+      ifAbsent: [ 
+        string := System
+          performOnServer:
+            \'grep \"^method\\:\\|^classmethod\\:\" \' asString , path , \'/*.gs\' asString.
+        UserGlobals at: #\'filenameMap\' put: string ].
+    stream := ReadStream on: string.
+    map := Dictionary new.
+    blanks := Set new.
+    [ stream atEnd ]
+      whileFalse: [ 
+        | parts files |
+        line := stream nextLine.
+        parts := line findTokens: \':\'.
+        parts size = 3
+          ifTrue: [ 
+            | className fileName |
+            className := (parts at: 3) trimBoth.
+            fileName := ((parts at: 1) findTokens: \'/\') last.
+            className isEmpty
+              ifTrue: [ blanks add: fileName ]
+              ifFalse: [ 
+                files := map at: className ifAbsent: [ map at: className put: Set new ].
+                files add: fileName ] ] ].
+    code := WriteStream on: String new.
+    code
+      nextPutAll: \'Dictionary new\';
+      cr.
+    (map keys asArray sort: [ :a :b | a <= b ])
+      do: [ :className | 
+        | fileArray |
+        fileArray := map at: className.
+        code
+          tab;
+          nextPutAll:
+              \'at: \' asString , className asSymbol printString , \' put: #(\' asString.
+        fileArray
+          do: [ :filename | 
+            (#(\'goodies.gs\' \'goodiesIndexing.gs\') includes: filename)
+              ifFalse: [ 
+                \"exclude goodies code\"
+                code
+                  nextPutAll: filename printString;
+                  space ] ].
+        code
+          nextPutAll: \');\';
+          cr ].
+    code
+      tab;
+      nextPutAll: \'yourself\';
+      cr.
+    opts
+      at: \'create\'
+      ifPresent: [ :nodeName | 
+        | stNode |
+        stNode := topez
+          lookup: nodeName
+          ifAbsent: [ 
+\t\t\t\ttopez currentNode addChildNode: (TDSmalltalkLeafNode new
+              name: nodeName;
+              yourself)].
+        stNode elementSource: code contents ].
+    Dictionary new
+      at: \'map\' put: map;
+      at: \'code\' put: code contents;
+      at: \'blanks\' put: blanks;
+      yourself ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  generateClassToFilenameMap - generateClassToFilenameMap sript utility template
+SYNOPSIS
+  generateClassToFilenameMap [-h|--help]
+  generateClassToFilenameMap [-f|--flush][--create=<st-node-name>] \\
+\t\t                      --path=<image-directory>
+DESCRIPTION
+EXAMPLES
+  ./generateClassToFilenameMap --help
+  ./generateClassToFilenameMap --path=/export/foos2/users/dhenrich/3.0/l_gss64bit/image
+  ./generateClassToFilenameMap --path=/export/foos2/users/dhenrich/3.0/l_gss64bit/image --create=classToImageFilenameMap
+  ./generateClassToFilenameMap --path=/export/foos2/users/dhenrich/3.0/l_gss64bit/tests/ernie --create=classToErnieFilenameMap
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:28:59.5157499313354-07:00'],#modificationTime:@2}

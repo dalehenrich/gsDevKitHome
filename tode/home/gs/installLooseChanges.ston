@@ -1,0 +1,52 @@
+TDScriptLeafNode{#name:'installLooseChanges',#contents:'[ :topez :objIn :tokens :windowId | 
+| looseChanges systemSession gemNRS stoneNRS netldiName ernieSession systemUser ernieUser |
+netldiName := System gemEnvironmentVariable: \'gs64ldi\'.
+looseChanges := topez evaluateCommandString: \'/home/index/looseChanges\'.
+gemNRS := GsNetworkResourceString gemNRSForNetLDI: netldiName onHost: \'foos\'.
+stoneNRS := GsNetworkResourceString defaultStoneNRSFromCurrent.
+systemUser := AllUsers detect: [ :user | user userId = \'SystemUser\' ].
+systemSession := GsExternalSession
+  gemNRS: gemNRS
+  stoneNRS: stoneNRS
+  username: \'SystemUser\'
+  password: \'swordfish\'.
+ernieUser := AllUsers detect: [ :user | user userId = \'Ernie\' ] ifNone: [  ].
+ernieUser notNil
+  ifTrue: [ 
+    ernieSession := GsExternalSession
+      gemNRS: gemNRS
+      stoneNRS: stoneNRS
+      username: \'Ernie\'
+      password: \'swordfish\' ].
+[ 
+systemSession login.
+ernieSession ifNotNil: [ ernieSession login ].
+looseChanges
+  do: [ :ar | 
+    | beh compileString theUser obj |
+    beh := ar at: 1.
+    (obj := systemUser objectNamed: beh theNonMetaClass name)
+      ifNotNil: [ theUser := systemSession ]
+      ifNil: [ 
+        ernieUser
+          ifNotNil: [ 
+            (obj := ernieUser objectNamed: beh theNonMetaClass name)
+              ifNotNil: [ theUser := ernieSession ] ].
+        theUser
+          ifNil: [ self error: \'cannot find owner of class \' , beh printString ] ].
+    compileString := beh name asString , \' compileMethod: \'
+      ,
+        (beh compiledMethodAt: (ar at: 3)) sourceString withGemstoneLineEndings
+          printString
+      , \' dictionaries: System myUserProfile symbolList \' , \' category: \'
+      , (ar at: 2) printString , \' environmentId: 0. true\'.
+    (theUser executeString: compileString)
+      ifFalse: [ nil error: \'Cannot compile the method as \' , theUser id printString ].
+    (theUser executeString: \'System commitTransaction\')
+      ifFalse: [ nil error: \'Cannot commit as \' , theUser id printString ] ] ]
+  ensure: [ 
+    systemSession
+      ifNotNil: [ 
+        ernieSession ifNotNil: [ ernieSession logout ].
+        systemSession logout ] ].
+true ]',#creationTime:DateAndTime['2014-08-28T05:28:59.5327110290527-07:00'],#modificationTime:@2}

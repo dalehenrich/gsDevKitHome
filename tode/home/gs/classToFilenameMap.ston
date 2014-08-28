@@ -1,0 +1,47 @@
+TDScriptLeafNode{#name:'classToFilenameMap',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./classToFilenameMap -h\"
+command
+  getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    | classToFilenameMap classToImageFilenameMap |
+    classToFilenameMap := topez
+      evaluateCommandString: \'/home/index/classToErnieFilenameMap/\'.
+    classToFilenameMap keys
+      do: [ :key | 
+        classToFilenameMap
+          at: key
+          put:
+            ((classToFilenameMap at: key) collect: [ :each | \'tests/ernie/\' , each ]) ].
+    classToImageFilenameMap := topez
+      evaluateCommandString: \'/home/index/classToImageFilenameMap/\'.
+    classToImageFilenameMap keys
+      do: [ :key | | erniefiles|
+        erniefiles := classToFilenameMap
+          at: key
+          ifAbsent: [ #() ].
+        classToFilenameMap
+          at: key
+          put:
+            (erniefiles, ((classToImageFilenameMap at: key) collect: [ :each | \'image/\' , each ])) ].
+    classToFilenameMap ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  classToFilenameMap - classToFilenameMap sript utility template
+SYNOPSIS
+  classToFilenameMap [-h|--help]
+DESCRIPTION
+  Generate a classToFilenameMap that combines tests/ernie and image classes.
+
+EXAMPLES
+  ./classToFilenameMap --help
+  ./classToFilenameMap -h
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:28:59.3847219944-07:00'],#modificationTime:@2}

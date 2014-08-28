@@ -1,0 +1,87 @@
+TDScriptLeafNode{#name:'looseChanges',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./looseChanges -h\"
+command
+  getOptsMixedLongShort:
+    {#(\'help\' $h #\'none\').
+    #(\'raw\' $r #\'none\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    | current packages package loose packagePrefixes uncondtionalOverrides |
+    opts
+      at: \'raw\'
+      ifAbsent: [ uncondtionalOverrides := false ]
+      ifPresent: [ :ignored | uncondtionalOverrides := true ].
+    current := GsPackagePolicy current.
+    packages := {}.
+    current packages_Do: [ :pkg | packages add: pkg ].
+    package := packages
+      detect: [ :pkg | #(#\'UserGlobals\' #\'GLASS\') includes: pkg symbolDict name ].
+    loose := {}.
+    packagePrefixes := MCWorkingCopy allManagers
+      collect: [ :wc | \'*\' , wc packageName asLowercase ].
+    package
+      behaviorAndMethodDictDo: [ :beh :methodDict | 
+        ((package sessionInfoFor: beh) at: 2)
+          keysAndValuesDo: [ :cat :selectors | 
+            selectors
+              do: [ :sel | 
+                | add |
+                (beh == Behavior
+                  and: [ sel == #\'_compileMethod:category:using:\' ]) not
+                  ifTrue: [ 
+                    add := false.
+                    (cat beginsWith: \'*\')
+                      ifTrue: [ 
+                        packagePrefixes
+                          detect: [ :prefix | cat asLowercase beginsWith: prefix ]
+                          ifNone: [ add := true ] ]
+                      ifFalse: [ add := true ].
+                    add
+                      ifTrue: [ 
+                        | ar persistentMethodDict sessionMethod |
+                        ar := {beh.
+                        cat.
+                        sel}.
+                        persistentMethodDict := beh
+                          persistentMethodDictForEnv: 0.
+                        (persistentMethodDict at: sel ifAbsent: [  ])
+                          ifNil: [ loose add: ar ]
+                          ifNotNil: [ :baseMethod | 
+                            sessionMethod := beh compiledMethodAt: sel.
+                            (uncondtionalOverrides
+                              or: [ sessionMethod sourceString ~= baseMethod sourceString ])
+                              ifTrue: [ loose add: ar ]
+                              ifFalse: [ 
+                                sessionMethod == baseMethod
+                                  ifTrue: [ 
+                                    (((beh _baseCategorys: 0) at: cat ifAbsent: [ #() ]) includes: sel)
+                                      ifFalse: [ loose add: ar ] ] ] ] ] ] ] ] ].
+    loose ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  looseChanges - identify changes made to Globals stored in session methods
+SYNOPSIS
+  looseChanges [-h|--help]
+  looseChanges [-r|--raw]
+
+DESCRIPTION
+  With no arguments returns a collection of tuples (behavior, category selectors) where
+  each tuple represents a loose method extension or method override for classes in Globals. 
+  Method overrides where the source is the same are ignored.
+
+  With the --raw option set, method overrides are included in the list whether or not the source
+  is the same.
+
+EXAMPLES
+  ./looseChanges --help
+  ./looseChanges
+  ./looseChanges --raw
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:33:33.8748700618743-07:00'],#modificationTime:@2}
