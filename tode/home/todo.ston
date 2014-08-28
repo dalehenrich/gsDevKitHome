@@ -14,11 +14,14 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
         ->
           {(\'MetacelloPreview dependency in GLASS1 baseline (change Grease to github ref)
 []  - travis tests
->>  - Grease configuration (discuss with Johan)
+>>  - Grease configuration - update the ConfigurationOfGrease with the right stuff
   - merge to master
   - mail to list about continuous deployment\'
             -> -3)}).
-      (\'email\' -> {(\'read email since beginning of ESUG\' -> 1)}).
+      (\'email\'
+        ->
+          {(\'read email since beginning of ESUG\' -> 8).
+          (\'sebastion STON mail\' -> 5)}).
       (\'filetree\' -> {(\'gemstone2.4_dev merged to master\' -> 2)}).
       (\'Metacello\'
         ->
@@ -31,7 +34,8 @@ fail>>  - Pharo3.0 added to lineup
 >>  - readme/.travis.yml tweaks\'
             -> -2).
           (\'Metacello: symbolic versions registered as resolved version: issue #260\'
-            -> 4)})}.
+            -> 4).
+          (\'github://owner/project:X.X.X/repository support\' -> 1)})}.
       projects := Dictionary new
         at: \'GLASS\'
           put:
@@ -67,9 +71,16 @@ fail>>  - Pharo3.0 added to lineup
           put:
             {(\'322_dkh (q_): index bugfixes\' -> 40).
               (\'323_dkh (j_): bug44561: language
->>  - building\' -> -41).
+  - building\' -> 41).
               (\'330_dkh (k_): : merge 323 and 322 work
->>  - building\' -> -42)};
+  - building\' -> 42)};
+        at: \'GsDevKit\'
+          put:
+            {(\'Mariano\'\'s scripts
+  - email response
+  - review structure
+  - review scripts\'
+                -> 6)};
         yourself.
       list := Array new.
       must
@@ -104,4 +115,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-27T16:30:54.7842268943786-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-27T17:45:43.6573240756988-07:00']}

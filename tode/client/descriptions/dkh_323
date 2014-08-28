@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'dkh_323',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'dkh_323',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'dkh_323_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/dkh_323/backups/',
+	#gemstoneVersion : '3.2.3',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/dkh_323/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}
