@@ -62,18 +62,30 @@ fail>>  - Pharo3.0 added to lineup
         at: \'Metacello\'
           put:
             {(\'bugfixes [?]\' -> 23).
-              (\'Issue #247: random test failures\' -> 22)};
+              (\'Issue #247: random test failures
+  - record test case sequence on travis and dump on failure
+  - reproduce in friendly confines of local image
+  - rinse, repeat\'
+                -> 22)};
         at: \'Seaside\'
           put:
             {(\'NotTranlogged support
   - exploration\' -> -14)};
         at: \'stones\'
           put:
-            {(\'322_dkh (q_): index bugfixes\' -> 40).
-              (\'323_dkh (j_): bug44561: language
-  - building\' -> 41).
-              (\'330_dkh (k_): : merge 323 and 322 work
-  - building\' -> 42)};
+            {(\'q_322
+  - rename q_322 from 322_dkh
+  - rebuild with gsldi env var\' -> -9).
+              (\'j_323
+  - rename j_323 from 323_dkh
+  - rebuild with gsldi env var\'
+                -> -9).
+              (\'m_323
+  - build with gsldi env var\' -> -9).
+              (\'k_330 : merge 323 and 322 work
+  - rename k_330 from 330_dkh
+  - rebuild with gsldi env var\'
+                -> -9)};
         at: \'GsDevKit\'
           put:
             {(\'Mariano\'\'s scripts
@@ -115,4 +127,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-27T17:45:43.6573240756988-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-28T08:53:00.0604410171508-07:00']}
