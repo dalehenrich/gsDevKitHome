@@ -10,4 +10,4 @@ Proposed fix is to add GsRangeQueryPredicate>>asFormulaWithSelectorParts:argumen
 asFormulaWithSelectorParts: selectorParts arguments: arguments
   | selector |
   selector := selectorParts first value asSymbol.
-  ^ self perform: selector with: arguments first',#creationTime:DateAndTime['2014-08-28T07:01:47.0579419136047-07:00'],#modificationTime:DateAndTime['2014-08-28T07:02:28.2723870277404-07:00']}
+  ^ self perform: selector with: arguments first',#creationTime:DateAndTime['2014-08-28T11:42:32.0928230285644-07:00'],#modificationTime:@2}
