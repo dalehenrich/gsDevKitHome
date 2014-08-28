@@ -1,0 +1,31 @@
+TDScriptLeafNode{#name:'stoneRoot',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./stoneRoot -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | desc stoneName stoneRoot gsHome|
+      desc := topez sessionDescription.
+      stoneName := desc stoneName.
+gsHome := System gemEnvironmentVariable: \'GS_HOME\'.
+      stoneRoot := ServerFileDirectory
+        on: gsHome, \'/gemstone/stones/\' , stoneName ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  stoneRoot - return ServerFileDirectory on the root directory of the stone
+SYNOPSIS
+  stoneRoot [-h|--help]
+DESCRIPTION
+  The session descript for this session is used to extract the stoneRoot
+EXAMPLES
+  ./stoneRoot --help
+  ./stoneRoot 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:54:03.3425180912017-07:00'],#modificationTime:DateAndTime['2014-08-28T06:13:18.3715419769287-07:00']}

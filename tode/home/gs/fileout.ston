@@ -17,7 +17,13 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
       path := opts
         at: \'path\'
         ifPresent: [ :optVal | optVal ]
-        ifAbsent: [ nil error: \'must specify --path\' ].
+        ifAbsent: [ 
+          | stoneRoot checkoutDir ans |
+          stoneRoot := topez evaluateCommandString: \'/home/gs/stoneRoot\'.
+          path := (System
+            performOnServer:
+              \'cd -P \' , stoneRoot fullName , \'/product/../../..; pwd\') trimBoth.
+          ].
       classToFilenameMap := topez
         evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
       externalMethodMap := IdentityDictionary new.
@@ -64,9 +70,12 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
 SYNOPSIS
   fileout [-h|--help]--path=<image-directory>
 DESCRIPTION
+  If the --path is not specified, then the checkout directory is assumed to be 
+  the product directory for the stone.
+
 EXAMPLES
   ./fileout --help
   ./fileout --path=/export/grace3/users/dhenrich/2.0/a_gss64bit
   ./fileout --path=/export/foos2/users/dhenrich/3.0/j_gss64bit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2014-08-28T05:45:58.120038986206-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2014-08-28T06:42:32.7895319461822-07:00']}
