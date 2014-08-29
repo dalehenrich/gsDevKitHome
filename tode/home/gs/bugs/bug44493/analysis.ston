@@ -1,0 +1,97 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 8/28/2014 15:24
+-------------------
+in QueryExecuter>>_boundQuerySelect: the #bruteThreshold is used to determine when the remaining predicates should be evaluated against the resultSet from previous queries rather than evaluating a predicate against the full collection
+---
+....
+  2 to: ordering size do: [ :i | 
+    resultSet size < self bruteThreshold
+      ifTrue: [ 
+        resultSet := self findAllThatSatisfyPredicatesStartingAt: i ordering: ordering.
+        resultSet class = origNsc speciesForSelect
+          ifFalse: [ 
+            | tmpResult |
+            tmpResult := origNsc speciesForSelect new.
+            tmpResult addAll: resultSet.
+            resultSet := tmpResult ].
+        ^ resultSet ].
+    offset := ordering at: i.\t\" if the next predicate will be done by brute force,
+      use the result set rather than the entire NSC \"\t\" if it is path-constant or path-path \"
+    (self isConstantConstantAt: offset)
+      ifFalse: [ 
+        \" if first operand is not an index \"
+        (self firstOperandAt: offset) isPathEvaluator
+          ifTrue: [ (self firstOperandAt: offset) nsc: resultSet ].\t\" if it is path-path and second operand is not an index \"
+        ((self isPathPathAt: offset)
+          and: [ (self secondOperandAt: offset) isPathEvaluator ])
+          ifTrue: [ (self secondOperandAt: offset) nsc: resultSet ] ].
+    partialSet := self _executeSelectionAt: offset.\t\" if any intermediate result is empty, exit immediately \"
+    partialSet isEmpty
+      ifTrue: [ ^ partialSet ]
+      ifFalse: [ resultSet := resultSet _asIdentityBag * partialSet _asIdentityBag ].\t\" otherwise, perform a set intersection \"
+    nsc := resultSet ].
+....
+------------------------------
+It\'s fairly clear that if subsequent predicates are evaluated using and index (and assuming that the index is comparatively selective) that the brute force can be more expensive ... however if there are no indexes on the remaining predicates, it is also clear that one should always use brute force evaluate ...
+
+dkh 8/28/2014 15:29
+-------------------
+| predicate1 result size | predicate2 result size | predicate2 has index |
+| ---------------------- | ---------------------- | -------------------- |
+|         < 1000         |        < 1000          |          true        |
+|         < 1000         |        < 1000          |          false       |
+|         < 1000         |        > 1000          |          true        |
+|         < 1000         |        > 1000          |          false       |
+|         > 1000         |        < 1000          |          true        |
+|         > 1000         |        < 1000          |          false       |
+|         > 1000         |        > 1000          |          true        |
+|         > 1000         |        > 1000          |          false       |
+| ---------------------- | ---------------------- | -------------------- |
+
+dkh 8/28/2014 15:59
+-------------------
+          nsc
+            createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
+            createEqualityIndexOn: \'object1\' withLastElementClass: SmallInteger;
+            yourself.
+---------------------
+2@       -> \'block time\'->2422
+4@       -> \'query\'->(each.value1 < 1001) & (each.path1 < 2000)
+6@       -> \'query time\'->2502
+8@       -> \'select time\'->2226
+---
+2@       -> \'block time\'->463
+4@       -> \'query\'->(each.value1 < 1050) & (each.path1 < 50)
+6@       -> \'query time\'->510
+8@       -> \'select time\'->435
+---
+2@       -> \'block time\'->718
+4@       -> \'query\'->(each.value1 < 1050) & (each.path1 < 2000)
+6@       -> \'query time\'->578
+8@       -> \'select time\'->497
+---
+2@       -> \'block time\'->66
+4@       -> \'query\'->(each.value1 < 50) & (each.path1 < 2000)
+6@       -> \'query time\'->72
+8@       -> \'select time\'->399
+---------------------
+---------------------
+1@       -> \'block time\'->562
+2@       -> \'query\'->(each.value1 < 1001) & (each.object1 < 2000)
+3@       -> \'query time\'->562
+4@       -> \'select time\'->578
+---
+1@       -> \'block time\'->183
+2@       -> \'query\'->(each.value1 < 1050) & (each.object1 < 50)
+3@       -> \'query time\'->218
+4@       -> \'select time\'->473
+---
+1@       -> \'block time\'->550
+2@       -> \'query\'->(each.value1 < 1050) & (each.object1 < 2000)
+3@       -> \'query time\'->549
+4@       -> \'select time\'->531
+---
+1@       -> \'block time\'->66
+2@       -> \'query\'->(each.value1 < 50) & (each.object1 < 2000)
+3@       -> \'query time\'->72
+4@       -> \'select time\'->464
+',#creationTime:DateAndTime['2014-08-28T15:24:17.9342250823974-07:00'],#modificationTime:DateAndTime['2014-08-28T16:11:45.5281429290771-07:00']}

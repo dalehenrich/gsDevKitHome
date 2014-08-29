@@ -1,0 +1,16 @@
+TDStringLeafNode{#name:'report',#contents:'44493  P3  bruteThreshold (1000) from QueryExecuter>>_boundQuerySelect: not used in new Query api
+----------------------
+
+During discussion with James, I realized that I had left the bruteThreshold limit out of the new Query API.
+
+The effect is that \"brute force\" evaluation is performed after an index is used in the evaluation of the first predicate in a formula.
+
+In the SelectBlock queries a full index evaluation is performed for each predicate until the result is smaller than 1000 elements.
+
+I\'m not inclined to blindly add the bruteThreshold limit back in as it isn\'t clear that 1000 is necessarily a good number: skipping brute force query evaluation when 1001 elements in the result set against a million element collection isn\'t necessarily a \"good thing\" especially if the query is written with the most selective predicates first ... in this case a percentage cutoff would be give better results. 
+
+My preference would be to give the user control. if the user wants to avoid brute force evaluation after the first predicate is evaluated, then I would suggest that they break their query into two (or more) predicates and then can make the decision programatically whether or not brute force or index should be used in the evaluation of subsequent predicates ...
+
+OTOH I am interested in hearing what other folks think...
+
+It is, however, probably worth bugnoting this fact until we come to a conclusion...',#creationTime:DateAndTime['2014-08-28T15:23:15.3831460475921-07:00'],#modificationTime:DateAndTime['2014-08-28T15:24:07.284008026123-07:00']}

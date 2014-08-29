@@ -73,19 +73,15 @@ fail>>  - Pharo3.0 added to lineup
   - exploration\' -> -14)};
         at: \'stones\'
           put:
-            {(\'q_322
-  - rename q_322 from 322_dkh
-  - rebuild with gsldi env var\' -> -9).
-              (\'j_323
-  - rename j_323 from 323_dkh
-  - rebuild with gsldi env var\'
+            {(\'dkh_322 (q_)
+  > 44493  P3  bruteThreshold (1000) from QueryExecuter>>_boundQuerySelect: not used in new Query api
+    - implmentation complete
+   >> test coverage needed\'
                 -> -9).
-              (\'m_323
-  - build with gsldi env var\' -> -9).
-              (\'k_330 : merge 323 and 322 work
-  - rename k_330 from 330_dkh
-  - rebuild with gsldi env var\'
-                -> -9)};
+              (\'j_323\'
+                -> -9).
+              (\'m_323\' -> -9).
+              (\'k_330 : merge 323 and 322 work\' -> -9)};
         at: \'GsDevKit\'
           put:
             {(\'Mariano\'\'s scripts
@@ -127,4 +123,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-28T08:53:00.0604410171508-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-28T16:57:58.4543290138244-07:00']}

@@ -1,0 +1,61 @@
+TDScriptLeafNode{#name:'installSampleIndexObject',#contents:'[ :topez :objIn :tokens :command | 
+| opts args |
+\"for help: ./install -h\"
+command
+  getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+  optionsAndArguments: [ :options :operands | 
+    opts := options.
+    args := operands ].
+opts
+  at: \'help\'
+  ifAbsent: [ 
+    | cls1 |
+    cls1 := Object
+      subclass: \'SampleIndexObject\'
+      instVarNames: #(\'path1\' \'path2\' \'value1\' \'object1\')
+      inDictionary: UserGlobals.
+    cls1 compileMissingAccessingMethods.
+    cls1
+      compile:
+          \'= aSample 
+(aSample isKindOf: self class) ifFalse: [ ^false ]. 
+^self value1 = aSample value1 \';
+      compile:
+          \'hash 
+^self value1 hash \';
+      compile:
+          \'<= aSample 
+(aSample isKindOf: self class) ifFalse: [ ^false ]. 
+^self value1 <= aSample value1 \';
+      compile:
+          \'< aSample 
+(aSample isKindOf: self class) ifFalse: [ ^false ]. 
+^self value1 < aSample value1 \';
+      compile:
+          \'> aSample 
+(aSample isKindOf: self class) ifFalse: [ ^false ]. 
+^self value1 > aSample value1 
+\';
+      compile:
+          \'>= aSample 
+(aSample isKindOf: self class) ifFalse: [ ^false ]. 
+^self value1 >= aSample value1 \';
+\t\tcompile: \'printOn: aStream
+  aStream
+    nextPutAll:
+      \'\'SampleIndexObject(\'\' , value1 printString , \'\' [\'\' , self asOop printString , \'\'])\'\'\';
+      yourself.
+    (Smalltalk at: #\'SampleIndexObject\') category: \'Sample-Index\' ]
+  ifPresent: [ :ignored | 
+    TDManPage
+      viewManPage:
+        \'NAME
+  install - install sript utility template
+SYNOPSIS
+  install [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./install --help
+  ./install -h
+\'
+      topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T15:37:37.3114728927612-07:00'],#modificationTime:@2}

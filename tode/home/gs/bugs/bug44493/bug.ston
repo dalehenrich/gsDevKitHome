@@ -1,4 +1,4 @@
-TDScriptLeafNode{#name:'bugTemplate',#contents:'[ :topez :objIn :tokens :command | 
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
   | opts args |
   \"for help: ./bug -h\"
   command
@@ -14,7 +14,7 @@ TDScriptLeafNode{#name:'bugTemplate',#contents:'[ :topez :objIn :tokens :command
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis theColl query |
+      | analysis theColl query queryTime selectTime queryResult selectResult blockResult blockTime |
       analysis := Dictionary new.
       Smalltalk
         at: #\'SampleIndexObject\'
@@ -37,15 +37,19 @@ TDScriptLeafNode{#name:'bugTemplate',#contents:'[ :topez :objIn :tokens :command
           nsc := IdentityBag new.
           UserGlobals at: #\'coll\' put: nsc.
           cls := Smalltalk at: #\'SampleIndexObject\'.
-          1 to: 2 do: [ :index | 
+          1 to: 2000 do: [ :index | 
             | sample |
             sample := cls new.
             sample
               value1: index;
+              object1: index;
+              path1: index;
+              path2: index;
               yourself.
             nsc add: sample ].
           nsc
             createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
+            createEqualityIndexOn: \'object1\' withLastElementClass: SmallInteger;
             yourself ].
       opts
         at: \'boom\'
@@ -53,17 +57,27 @@ TDScriptLeafNode{#name:'bugTemplate',#contents:'[ :topez :objIn :tokens :command
           \"recreate bug here\"
            ].
       theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
-      query := \'each.value1 <= 1\' asQueryOn: theColl.
+      query := \'(each.value1 < 50) & (each.object1 < 2000)\' asQueryOn: theColl.
+      query queryOptions: query queryOptions - GsQueryOptions autoOptimize.
+      queryTime := Time
+        millisecondsToRun: [ 1000 timesRepeat: [ queryResult := query queryResult ] ].
+      selectTime := Time
+        millisecondsToRun: [ 
+          1000
+            timesRepeat: [ 
+              selectResult := theColl
+                select: [ :each | each.value1 < 50 & (each.object1 < 2000) ] ] ].
+      blockTime := Time
+        millisecondsToRun: [ 
+          1000
+            timesRepeat: [ 
+              blockResult := theColl
+                select: { :each | (each.value1 < 50) & (each.object1 < 2000) } ] ].
       analysis
-        at: \'audit\' put: theColl auditIndexes;
-        at: \'depMap keys\' put: DependencyList depMapKeys;
-        at: \'depMap values\' put: DependencyList depMapValues;
-        at: \'nsc\' put: theColl;
         at: \'query\' put: query;
-        at: \'query result\' put: query queryResult;
-        at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
-        at: \'shared dependency lists\'
-          put: SharedDependencyLists allEntries asArray;
+        at: \'query time\' put: queryTime;
+        at: \'select time\' put: selectTime;
+        at: \'block time\' put: blockTime;
         yourself.
       analysis ]
     ifPresent: [ :ignored | 
@@ -81,4 +95,4 @@ EXAMPLES
   ./bug --install
   ./bug --clean --create --boom
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:01:12.4875309467315-07:00'],#modificationTime:DateAndTime['2014-08-28T15:37:48.1012780666351-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T15:23:07.818687915802-07:00'],#modificationTime:DateAndTime['2014-08-28T16:11:25.8234028816223-07:00']}
