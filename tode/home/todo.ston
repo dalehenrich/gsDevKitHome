@@ -18,10 +18,7 @@ TDScriptLeafNode{#name:'todo',#contents:'[ :topez :objIn :tokens :command :comma
   - merge to master
   - mail to list about continuous deployment\'
             -> -3)}).
-      (\'email\'
-        ->
-          {(\'read email since beginning of ESUG\' -> 8).
-          (\'sebastion STON mail\' -> 5)}).
+      (\'email\' -> {(\'read email since beginning of ESUG\' -> 8)}).
       (\'filetree\' -> {(\'gemstone2.4_dev merged to master\' -> 2)}).
       (\'Metacello\'
         ->
@@ -78,14 +75,12 @@ fail>>  - Pharo3.0 added to lineup
     - implmentation complete
    >> test coverage needed\'
                 -> -9).
-              (\'j_323\'
-                -> -9).
+              (\'j_323\' -> -9).
               (\'m_323\' -> -9).
               (\'k_330 : merge 323 and 322 work\' -> -9)};
         at: \'GsDevKit\'
           put:
             {(\'Mariano\'\'s scripts
-  - email response
   - review structure
   - review scripts\'
                 -> 6)};
@@ -123,4 +118,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-28T16:57:58.4543290138244-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-29T08:42:31.3965339660644-07:00']}
