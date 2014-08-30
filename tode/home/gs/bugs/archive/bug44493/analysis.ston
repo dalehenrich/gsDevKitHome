@@ -94,4 +94,4 @@ dkh 8/28/2014 15:59
 2@       -> \'query\'->(each.value1 < 50) & (each.object1 < 2000)
 3@       -> \'query time\'->72
 4@       -> \'select time\'->464
-',#creationTime:DateAndTime['2014-08-28T15:24:17.9342250823974-07:00'],#modificationTime:DateAndTime['2014-08-28T16:11:45.5281429290771-07:00']}
+',#creationTime:DateAndTime['2014-08-29T17:09:53.646260023117-07:00'],#modificationTime:@2}

@@ -58,32 +58,34 @@ fail>>  - Pharo3.0 added to lineup
               (\'tutorial window?\' -> 26)};
         at: \'Metacello\'
           put:
-            {(\'bugfixes [?]\' -> 23).
+            {(\'bugfixes [?]\' -> 26).
               (\'Issue #247: random test failures
+  - build Metacello stone
   - record test case sequence on travis and dump on failure
-  - reproduce in friendly confines of local image
+>>  - reproduce in friendly confines of local image
   - rinse, repeat\'
-                -> 22)};
+                -> -1)};
         at: \'Seaside\'
           put:
             {(\'NotTranlogged support
   - exploration\' -> -14)};
         at: \'stones\'
           put:
-            {(\'dkh_322 (q_)
-  > 44493  P3  bruteThreshold (1000) from QueryExecuter>>_boundQuerySelect: not used in new Query api
-    - implmentation complete
-   >> test coverage needed\'
+            {(\'dkh_322 (q_)\' -> 9).
+              (\'j_323
+  > 44529  P2  \'\'(each.name = \'\'Eve\'\') | (each.name = \'\'Brian\'\')\'\' incorrectly optimized to (false)
+   >> build
+    - smoke
+    - checkin\'
                 -> -9).
-              (\'j_323\' -> -9).
-              (\'m_323\' -> -9).
-              (\'k_330 : merge 323 and 322 work\' -> -9)};
+              (\'m_323\' -> 9).
+              (\'k_330 : merge 323 and 322 work\' -> 9)};
         at: \'GsDevKit\'
           put:
             {(\'Mariano\'\'s scripts
   - review structure
-  - review scripts\'
-                -> 6)};
+  - review scripts\' -> 6)};
+        at: \'XML\' put: {(\'pull parser in 3.x and Pharo3.0\' -> 5)};
         yourself.
       list := Array new.
       must
@@ -118,4 +120,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-29T08:42:31.3965339660644-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-08-29T17:18:32.9240651130676-07:00']}

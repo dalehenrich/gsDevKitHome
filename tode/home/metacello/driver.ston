@@ -1,0 +1,80 @@
+TDScriptLeafNode{#name:'driver',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./driver -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'master\' nil #\'none\').
+      #(\'random\' nil #\'none\').
+      #(\'status\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | suite masterGlobalName suiteGlobalName blockGlobalName testCaseCountName testRunCountName dict |
+      masterGlobalName := #\'MetacelloMasterTestSuite\'.
+      suiteGlobalName := #\'MetacelloRandomTestSuite\'.
+      blockGlobalName := #\'MetacelloRandomSuiteBlock\'.
+      testCaseCountName := #\'MetacelloTestCaseCount\'.
+      testRunCountName := #\'MetacelloTestRunCount\'.
+dict := Dictionary new.
+      opts
+        at: \'master\'
+        ifPresent: [ :ignored | 
+          | className |
+          suite := TestCase suiteClass named: \'Master Test Suite\'.
+          className := \'BaselineOfMetacello\'.
+          ((MetacelloProjectRegistration
+            registrationForClassNamed: className
+            ifAbsent: [ self error: className printString , \' not registered (loaded)\' ])
+            currentlyLoadedClassesInProject
+            select: [ :cl | cl inheritsFrom: TestCase ])
+            do: [ :cl | 
+              cl isAbstract
+                ifFalse: [ 
+                  | clSuite |
+                  clSuite := cl buildSuiteFromSelectors.
+                  suite addTests: clSuite tests ] ].
+          Smalltalk at: masterGlobalName put: suite.
+          Smalltalk at: suiteGlobalName put: suite ].
+      opts
+        at: \'random\'
+        ifPresent: [ :ignored | 
+          | master tests |
+          master := Smalltalk at: masterGlobalName.
+          suite := TestCase suiteClass named: \'Random Test Suite\'.
+          Smalltalk at: suiteGlobalName put: suite.
+          tests := master tests copy.
+          [ tests isEmpty ]
+            whileFalse: [ 
+              | test |
+              test := tests atRandom.
+              tests remove: test.
+              suite addTest: test ] ].
+      opts
+        at: \'status\'
+        ifPresent: [ :ignored | dict at: \'test run count\' put: (Smalltalk at: testRunCountName ifAbsent: [0]); at: \'test case count\' put: (Smalltalk at: testCaseCountName ifAbsent: [0]); yourself
+].
+      dict
+        at: \'random\' put: (Smalltalk at: suiteGlobalName);
+        at: \'master\' put: (Smalltalk at: masterGlobalName);
+        yourself ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  driver - driver sript utility template
+SYNOPSIS
+  driver [-h|--help] [--random] [--master]
+DESCRIPTION
+  --master generates a new master suite
+  --random generates a suite based on randomizing the order of master tests
+
+EXAMPLES
+  ./driver --help
+
+  ./driver --master --random
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-29T16:17:22.1523549556732-07:00'],#modificationTime:DateAndTime['2014-08-29T17:07:15.3419559001922-07:00']}
