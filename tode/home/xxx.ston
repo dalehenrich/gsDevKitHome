@@ -1,0 +1,35 @@
+TDScriptLeafNode{#name:'xxx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xxx -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'config\' nil #\'required\').
+      #(\'version\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | configurationClass versionString |
+      opts
+        at: \'config\'
+        ifPresent: [ :className | configurationClass := Smalltalk at: className ].
+      opts at: \'version\' ifPresent: [ :version | versionString := version ].
+      OnePassExtraction new
+        createMethodSectionMapFor: configurationClass
+        version: versionString ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xxx - xxx sript utility template
+SYNOPSIS
+  xxx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xxx --help
+  ./xxx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-02T11:04:54.1297268867492-07:00'],#modificationTime:DateAndTime['2014-09-02T11:23:55.8757710456848-07:00']}

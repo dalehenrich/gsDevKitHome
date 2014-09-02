@@ -4,4 +4,4 @@ If the query were using the & operator, it would be correct to reduce the query 
 ----
 The previously mentioned optimization does not apply queries involving set-value path terms. This query is valid:
 
-  \'(each.tags.* = \'\'soccer\'\') & (each.tags.* = \'\'magic\'\')\'',#creationTime:DateAndTime['2014-08-29T09:33:37.2384059429168-07:00'],#modificationTime:DateAndTime['2014-08-29T09:34:32.9038069248199-07:00']}
+  \'(each.tags.* = \'\'soccer\'\') & (each.tags.* = \'\'magic\'\')\'',#creationTime:DateAndTime['2014-08-30T09:46:52.8060059547424-07:00'],#modificationTime:@2}
