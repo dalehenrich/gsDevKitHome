@@ -4,13 +4,9 @@ loadMetacelloPreview
 
   self metacelloPreviewLoaded
     ifTrue: [ 
-      Transcript
-        cr;
-        show: '-----Metacello Preview already loaded'.
+      self log: 'Metacello Preview already loaded'.
       ^ self ].
-  Transcript
-    cr;
-    show: '-----Loading Metacello Preview'.
+  self log: 'Loading Metacello Preview'.
   Gofer new
     gemsource: 'metacello';
     package: 'ConfigurationOfMetacello';

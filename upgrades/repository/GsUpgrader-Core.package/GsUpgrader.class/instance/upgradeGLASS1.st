@@ -28,9 +28,7 @@ upgradeGLASS1
         yourself ].
   GsDeployer
     deploy: [ 
-      Transcript
-        cr;
-        show: '-----Upgrading GLASS1'.
+      self log: 'Upgrading GLASS1'.
       metacello copy get.
       metacello copy load.
       self lockGrease ]

@@ -8,8 +8,6 @@ loadGLASS1
     yourself.
   GsDeployer
     deploy: [ 
-      Transcript
-        cr;
-        show: '-----Installing GLASS1'.
+      self log: 'Installing GLASS1'.
       metacello copy get.
       metacello copy load ]

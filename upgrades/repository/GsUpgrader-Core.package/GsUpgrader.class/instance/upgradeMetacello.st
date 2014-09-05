@@ -23,8 +23,6 @@ upgradeMetacello
         yourself ].
   GsDeployer
     deploy: [ 
-      Transcript
-        cr;
-        show: '-----Upgrading Metacello'.
+      self log: 'Upgrading Metacello'.
       metacello copy get.
       metacello copy load ]
