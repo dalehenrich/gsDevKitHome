@@ -19,7 +19,7 @@ upgradeMetacello
     ifFalse: [ 
       metacello := Metacello new
         baseline: 'Metacello';
-        repostiroy: self metacelloRepositoryDescription;
+        repository: self metacelloRepositoryDescription;
         yourself ].
   GsDeployer
     deploy: [ 
