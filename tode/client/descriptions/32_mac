@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : '32_mac',
+	#stoneHost : 'localhost',
+	#stoneName : '32_mac',
+	#gemHost : 'localhost',
+	#netLDI : '32_mac_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/32_mac/backups/',
+	#gemstoneVersion : '3.2.0',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/Users/daleh/gsDevKitHome/gemstone/stones/32_mac/git',
+	#serverTodeRoot : '/Users/daleh/gsDevKitHome/tode'
+}
