@@ -1,0 +1,9 @@
+{
+	"class" : {
+		"commandName" : "dkh 9/5/2014 14:51",
+		"description" : "dkh 9/5/2014 14:51" },
+	"instance" : {
+		"activate" : "dkh 9/5/2014 15:00",
+		"option" : "dkh 9/5/2014 15:01",
+		"runUpgrader" : "dkh 9/5/2014 15:13",
+		"stoneName" : "dkh 9/5/2014 14:50" } }
