@@ -88,14 +88,14 @@ script:
   - bash stopStone travis_2
   - bash stoneExtent travis_2
   - bash startStone travis_2
-  - bash $GS_HOME/bin/pharo upgrader -h
-  - bash $GS_HOME/bin/pharo upgrader travis_2 GLASS
-  - bash $GS_HOME/bin/pharo upgrader travis_2 GLASS
-  - bash $GS_HOME/bin/pharo upgrader travis_2 Metacello
-  - bash $GS_HOME/bin/pharo upgrader travis_2 Metacello
-  - bash $GS_HOME/bin/pharo upgrader travis_2 GLASS1
-  - bash $GS_HOME/bin/pharo upgrader travis_2 GLASS1
-  - bash $GS_HOME/bin/pharo upgrader travis_2 GLASS
-  - bash $GS_HOME/bin/pharo upgrader travis_2 Metacello
-  - bash $GS_HOME/bin/pharo upgrader travis_2 GLASS1
+  - bash $GS_HOME/bin/tode upgrader -h
+  - bash $GS_HOME/bin/tode upgrader travis_2 GLASS
+  - bash $GS_HOME/bin/tode upgrader travis_2 GLASS
+  - bash $GS_HOME/bin/tode upgrader travis_2 Metacello
+  - bash $GS_HOME/bin/tode upgrader travis_2 Metacello
+  - bash $GS_HOME/bin/tode upgrader travis_2 GLASS1
+  - bash $GS_HOME/bin/tode upgrader travis_2 GLASS1
+  - bash $GS_HOME/bin/tode upgrader travis_2 GLASS
+  - bash $GS_HOME/bin/tode upgrader travis_2 Metacello
+  - bash $GS_HOME/bin/tode upgrader travis_2 GLASS1
 
