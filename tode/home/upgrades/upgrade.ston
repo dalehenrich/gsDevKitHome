@@ -1,0 +1,26 @@
+TDScriptLeafNode{#name:'upgrade',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./upgrade -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      GsUpgrader upgradeMetacello
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  upgrade - upgrade sript utility template
+SYNOPSIS
+  upgrade [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./upgrade --help
+  ./upgrade -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-05T12:14:44.0881359577179-07:00'],#modificationTime:DateAndTime['2014-09-05T12:15:38.0863120555877-07:00']}
