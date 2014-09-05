@@ -12,6 +12,9 @@ cd ${GS_HOME}/gemstone/stones/travis_2
 . defStone.env
 
 topaz -l -q <<EOF
+iferr 1 stk
+iferr 2 stack
+iferr 3 exit 1
 login
 run
 Metacello new

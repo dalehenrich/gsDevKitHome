@@ -3,7 +3,7 @@ upgradeMetacello
   | metacello projectSpec |
   self loadMetacelloPreview.
   projectSpec := (Metacello image
-    baseline: [ :spec | spec name = 'BaselineOfMetacello' ];
+    baseline: [ :spec | spec name = 'Metacello' ];
     list) first.
   projectSpec repositorySpecs
     detect: [ :repoSpec | repoSpec description = self metacelloRepositoryDescription ]

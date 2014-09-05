@@ -8,7 +8,7 @@ upgradeGLASS1
         ifFalse: [ ^ self loadGLASS1 ] ].
   self upgradeMetacello.
   projectSpec := (Metacello image
-    baseline: [ :spec | spec name = 'BaselineOfGLASS1' ];
+    baseline: [ :spec | spec name = 'GLASS1' ];
     list) first.
   projectSpec repositorySpecs
     detect: [ :repoSpec | repoSpec description = self glass1RepositoryDescription ]
