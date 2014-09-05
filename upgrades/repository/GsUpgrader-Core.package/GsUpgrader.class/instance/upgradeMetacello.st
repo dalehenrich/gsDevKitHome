@@ -5,19 +5,26 @@ upgradeMetacello
   projectSpec := (Metacello image
     baseline: [ :spec | spec name = 'Metacello' ];
     list) first.
-  projectSpec repositorySpecs
-    detect: [ :repoSpec | repoSpec description = self metacelloRepositoryDescription ]
-    ifNone: [ 
-      self
-        notify:
-          'Metacello project repository is not in standard location ('
-            , self metacelloRepositoryDescription
-            , '). The upgrade of Metacello may not be complete.' ].
+  projectSpec isLocked
+    ifTrue: [ 
+      projectSpec repositorySpecs
+        detect: [ :repoSpec | repoSpec description = self metacelloRepositoryDescription ]
+        ifNone: [ 
+          self
+            notify:
+              'Metacello project repository is not in standard location ('
+                , self metacelloRepositoryDescription
+                , '). The upgrade of Metacello may not be complete.' ].
+      metacello := Metacello image baseline: 'Metacello' ]
+    ifFalse: [ 
+      metacello := Metacello new
+        baseline: 'Metacello';
+        repostiroy: self metacelloRepositoryDescription;
+        yourself ].
   GsDeployer
     deploy: [ 
       Transcript
         cr;
         show: '-----Upgrading Metacello'.
-      metacello := Metacello image baseline: 'Metacello'.
       metacello copy get.
       metacello copy load ]
