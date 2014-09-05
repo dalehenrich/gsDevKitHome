@@ -7,8 +7,9 @@ upgradeGLASS1
       self glass1Present
         ifFalse: [ ^ self loadGLASS1 ] ].
   self upgradeMetacello.
-  metacello := Metacello image baseline: 'GLASS1'.
-  projectSpec := metacello copy list first.
+  projectSpec := (Metacello image
+    baseline: [ :spec | spec name = 'BaselineOfGLASS1' ];
+    list) first.
   projectSpec repositorySpecs
     detect: [ :repoSpec | repoSpec description = self glass1RepositoryDescription ]
     ifNone: [ 
@@ -22,6 +23,7 @@ upgradeGLASS1
       Transcript
         cr;
         show: '-----Upgrading GLASS1'.
+      metacello := Metacello image baseline: 'GLASS1'.
       metacello copy get.
       metacello copy load.
       self lockGrease ]

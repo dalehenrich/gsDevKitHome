@@ -2,8 +2,9 @@ upgrading
 upgradeMetacello
   | metacello projectSpec |
   self loadMetacelloPreview.
-  metacello := Metacello image baseline: 'Metacello'.
-  projectSpec := metacello copy list first.
+  projectSpec := (Metacello image
+    baseline: [ :spec | spec name = 'BaselineOfMetacello' ];
+    list) first.
   projectSpec repositorySpecs
     detect: [ :repoSpec | repoSpec description = self metacelloRepositoryDescription ]
     ifNone: [ 
@@ -17,5 +18,6 @@ upgradeMetacello
       Transcript
         cr;
         show: '-----Upgrading Metacello'.
+      metacello := Metacello image baseline: 'Metacello'.
       metacello copy get.
       metacello copy load ]
