@@ -26,11 +26,6 @@ Metacello new
   repository: 'filetree://${GS_HOME}/upgrades/repository';
   load.
 (Smalltalk at: #GsUpgrader) upgradeGLASS.
-(Smalltalk at: #GsUpgrader) upgradeGLASS.
-(Smalltalk at: #GsUpgrader) upgradeMetacello.
-(Smalltalk at: #GsUpgrader) upgradeMetacello.
-(Smalltalk at: #GsUpgrader) upgradeGLASS1.
-(Smalltalk at: #GsUpgrader) upgradeGLASS1.
 (Smalltalk at: #GsUpgrader) upgradeMetacello.
 (Smalltalk at: #GsUpgrader) upgradeGLASS1.
 %
