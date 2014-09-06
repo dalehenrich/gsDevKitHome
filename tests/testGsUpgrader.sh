@@ -11,6 +11,10 @@ cd ${GS_HOME}/gemstone/stones/travis_2
 
 . defStone.env
 
+echo "=================================="
+echo "TESTING: upgradeGLASS, upgradeMetacello, upgradeGLASS1"
+echo "=================================="
+
 topaz -l -q -T50000 <<EOF
 iferr 1 stk
 iferr 2 stack
@@ -38,6 +42,10 @@ stopStone travis_2
 stoneExtent travis_2
 startStone travis_2
 
+echo "=================================="
+echo "TESTING: upgradeMetacello"
+echo "=================================="
+
 topaz -l -q -T50000 <<EOF
 iferr 1 stk
 iferr 2 stack
@@ -57,6 +65,10 @@ EOF
 stopStone travis_2
 stoneExtent travis_2
 startStone travis_2
+
+echo "=================================="
+echo "TESTING: upgradeGLASS1"
+echo "=================================="
 
 topaz -l -q -T50000 <<EOF
 iferr 1 stk
