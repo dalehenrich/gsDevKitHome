@@ -88,4 +88,5 @@ script:
   - bash stopStone travis_2
   - bash stoneExtent travis_2
   - bash startStone travis_2
+  - bash $GS_HOME/tests/testGsUpgrader.sh
 
