@@ -1,0 +1,20 @@
+sudo apt-get install git
+sudo apt-get instal curl
+sudo apt-get -y install libpam0g:i386
+sudo apt-get libssl1.0.0:386
+sudo apt-get libssl1.0.0:i386
+sudo apt-get install -qq gcc-multilib libstdc++6:i386
+sudo ln -s /usr/lib/i386-lin-gnu/libstdc++.so.6 /usr/lib/i386-linux-gnu/libstdc++.so
+
+sudo apt-get install libx11-6:i386
+sudo apt-get install libgl1-mesa-dev:i386
+sudo apt-get install libxcb-dri2-0:i386
+
+git clone https://github.com/GsDevKit/gsDevKitHome.git
+cd gsDevKitHome
+git checkout -b  12.04
+export GS_HOME=`pwd`
+export PATH=$GS_HOME/bin:$PATH
+installServer devKit 3.2.2
+
+
