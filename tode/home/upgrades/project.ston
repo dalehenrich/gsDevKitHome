@@ -1,8 +1,0 @@
-TDObjectGatewayNode{#name:'project',#contents:'^ TDProjectSpecEntryDefinition new
-    baseline: \'GsUpgrader\'
-      repository: \'filetree://$GS_HOME/upgrades/repository\'
-      loads: #( \'default\' );
-    status: #( #\'active\' );
-    locked: false;
-    yourself.
-'}
