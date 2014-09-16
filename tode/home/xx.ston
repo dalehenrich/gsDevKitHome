@@ -1,0 +1,28 @@
+TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xx -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [Gofer new
+    package: \'GsUpgrader-Core\';
+    url: \'http://ss3.gemtalksystems.com/ss/gsUpgrader\';
+    load.
+  (Smalltalk at: #\'GsUpgrader\') upgradeGLASS1]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xx - xx sript utility template
+SYNOPSIS
+  xx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xx --help
+  ./xx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-13T13:03:30.35750102996826-07:00'],#modificationTime:DateAndTime['2014-09-13T13:03:40.77759003639221-07:00']}

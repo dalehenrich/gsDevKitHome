@@ -12,20 +12,15 @@ TDScriptLeafNode{#name:'xxx',#contents:'[ :topez :objIn :tokens :command :comman
   opts
     at: \'help\'
     ifAbsent: [ 
-      | lockMap loadDirective |
-      lockMap := Dictionary new.
-      loadDirective := Metacello new
-        baseline: \'GLASS1\';
-        ignoreImage;
-        repository: \'filetree:///opt/git/glass/repository\';
-        onLock: [ :ex :existing :new | 
-              lockMap
-                at: existing baseName
-                put:
-                  existing versionInfo versionString -> new currentVersionString.
-              ex honor ];
-        record.
-      {lockMap. loadDirective } ]
+      | x y a b |
+      x := DateAndTime fromString: \'2014-09-12T19:24:01-07:00\'.
+      y := DateAndTime fromString: \'2014-09-12T12:24:02.60849404335022-07:00\'.
+  a  := Time now asDateAndTime.
+  b := DateAndTime now + 1 seconds.
+      {{(x <= y).
+      x.
+      y}.
+{(a <= b). a. b.}} ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -38,4 +33,4 @@ EXAMPLES
   ./xxx --help
   ./xxx -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-02T11:04:54.1297268867492-07:00'],#modificationTime:DateAndTime['2014-09-09T15:19:50.5801150798797-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-02T11:04:54.1297268867492-07:00'],#modificationTime:DateAndTime['2014-09-13T12:52:07.2070140838623-07:00']}
