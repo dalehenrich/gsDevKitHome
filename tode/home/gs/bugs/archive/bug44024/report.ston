@@ -1,0 +1,41 @@
+TDStringLeafNode{#name:'report',#contents:'44024  P2  auditIndexes fails for non-homogenous indexes
+-----------------
+The default is to create indexes that allow non-homogenous entries (i.e., the default is that requirePathTerms is false). This is a little bit of a worry for me, since if you get the path typed wrong, it doesn\'t complain when you create the index. You just won\'t get the index used in a query. There should be some way to detect if your collection\'s index is non-homogenous. 
+
+Turns out you can find out. Running auditIndexes returns audit failures for non-homogeneous collections. I don\'t think auditIndexes should error, if noh-homogeneous collections are so OK as to be the default. 
+
+While I think index audit needs to be fixed, an alternative might be to make homogenous indexes the default (as they are when using legacy protocol). If so, customers could deliberately allow them, but then they should be a little more braced for index audit errors.
+
+run
+coll auditIndexes
+%
+No indexes are present.
+topaz 1> 
+topaz 1> run
+GsIndexSpec new
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0identityIndex: \'each.age\' options: GsIndexOptions requirePathTerms;
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0identityIndex: \'each.Name\';
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0createIndexesOn: coll. 
+%
+a GsIndexSpec
+\u00C2\u00A0\u00C2\u00A0specs a Array
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0#1 a IdentityIndexSpecification
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0#2 a IdentityIndexSpecification
+\u00C2\u00A0\u00C2\u00A0defaultOptions a GsIndexOptions
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0reducedConflict false
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0requirePathTerms false
+topaz 1> run
+coll auditIndexes
+%
+object [20] of class UndefinedObject, path term <Name> [38049537]
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0-- Index Dictionary has no entry for object [32043521] of class Person
+object [20] of class UndefinedObject, path term <Name> [38049537]
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0-- Index Dictionary has no entry for object [32043777] of class Person
+object [20] of class UndefinedObject, path term <Name> [38049537]
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0-- Index Dictionary has no entry for object [32044289] of class Person
+object [20] of class UndefinedObject, path term <Name> [38049537]
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0-- Index Dictionary has no entry for object [32043521] of class Person
+object [20] of class UndefinedObject, path term <Name> [38049537]
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0-- Index Dictionary has no entry for object [32043777] of class Person
+object [20] of class UndefinedObject, path term <Name> [38049537]
+\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0\u00C2\u00A0-- Index Dictionary has no entry for object [32044289] of class Person',#creationTime:DateAndTime['2014-09-16T14:23:15.2789409160614-07:00'],#modificationTime:DateAndTime['2014-09-16T14:23:53.8033471107482-07:00']}

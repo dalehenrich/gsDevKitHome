@@ -1,0 +1,39 @@
+TDStringLeafNode{#name:'report',#contents:'44079  P2  GsQuery>> readStream produces diffrent result from queryResult for some special Objects
+------------------
+run
+| aBag aQuery |
+aBag := IdentityBag with: QuadByteString new with: DoubleByteString new with: (QuadByteSymbol withAll: String new).
+
+aBag createEqualityIndexOn: \'\' withLastElementClass: QuadByteString.
+
+aQuery := (GsQuery fromString: \'each = aKP\' on: aBag) bind: \'aKP\' to: QuadByteString new.
+{aQuery queryResult size . aQuery readStream makeNsc size }
+%
+anArray( 2, 3)
+
+run
+| aBag aQuery |
+aBag := IdentityBag with: -1.0 with: 1.0 with: 0.0 with: MinusSignalingNaN.
+
+aBag createEqualityIndexOn: \'\' withLastElementClass: Float.
+
+aQuery := (GsQuery fromString: \'each >= aKP\' on: aBag) bind: \'aKP\' to: 0.
+{aQuery queryResult size . aQuery readStream makeNsc size } 
+
+%
+
+ anArray( 2, 3) 
+-----------------------------------------------
+Looks like it\'s an existing bug
+run
+| aBag aStream count |
+aBag := IdentityBag with: -1.0 with: 1.0 with: 0.0 with: MinusSignalingNaN.
+count := 0.
+aBag createEqualityIndexOn: \'\' withLastElementClass: Float.
+
+aStream := aBag selectAsStream: {:e | e >= 0}.
+[aStream atEnd] whileFalse: [aStream next . count := count + 1].
+count
+%
+3
+',#creationTime:DateAndTime['2014-09-16T14:18:32.2775449752807-07:00'],#modificationTime:DateAndTime['2014-09-16T14:20:45.4632608890533-07:00']}
