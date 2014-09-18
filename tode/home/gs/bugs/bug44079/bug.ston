@@ -1,4 +1,4 @@
-TDScriptLeafNode{#name:'bugTemplate',#contents:'[ :topez :objIn :tokens :command | 
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
   | opts args |
   \"for help: ./bug -h\"
   command
@@ -81,4 +81,4 @@ EXAMPLES
   ./bug --install
   ./bug --clean --create --boom
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:18:27.5396449565887-07:00'],#modificationTime:@2}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-18T11:18:58.6124770641326-07:00'],#modificationTime:@2}

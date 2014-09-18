@@ -4,10 +4,11 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
+      #(\'bang\' nil #\'none\').
+      #(\'bing\' nil #\'none\').
       #(\'boom\' nil #\'none\').
       #(\'clean\' nil #\'none\').
-      #(\'create\' nil #\'none\').
-      #(\'install\' nil #\'none\')}
+      #(\'create\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
@@ -16,14 +17,6 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
     ifAbsent: [ 
       | analysis theColl query |
       analysis := Dictionary new.
-      Smalltalk
-        at: #\'SampleIndexObject\'
-        ifAbsent: [ opts at: \'install\' put: nil ].
-      opts
-        at: \'install\'
-        ifPresent: [ :ignored | 
-          \"install supporting code here\"
-          topez evaluateCommandString: \'/home/gs/bugs/installSampleIndexObject\' ].
       opts
         at: \'clean\'
         ifPresent: [ :ignored | 
@@ -33,37 +26,82 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'create\'
         ifPresent: [ :ignored | 
-          | nsc cls |
-          nsc := IdentityBag new.
-          UserGlobals at: #\'coll\' put: nsc.
-          cls := Smalltalk at: #\'SampleIndexObject\'.
-          1 to: 2 do: [ :index | 
-            | sample |
-            sample := cls new.
-            sample
-              value1: index;
-              yourself.
-            nsc add: sample ].
-          nsc
-            createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
-            yourself ].
+          | coll |
+          coll := IdentitySet new.
+          UserGlobals at: #\'coll\' put: coll.
+          coll add: (Association newWithKey: \'aa\' value: 11).
+          coll add: (Association newWithKey: \'bb\' value: 22).
+          coll add: (Association newWithKey: \'cc\' value: 33).
+          coll add: (Association newWithKey: \'dd\' value: 44) ].
       opts
         at: \'boom\'
         ifPresent: [ :ignored | 
-          \"recreate bug here\"
-           ].
+          | coll spec1 spec2 res |
+          coll := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+          spec1 := GsIndexSpec new
+            equalityIndex: \'each.key\'
+            lastElementClass: String.
+          spec2 := GsIndexSpec new
+            equalityIndex: \'each.key\'
+            lastElementClass: String
+            options: GsIndexOptions optionalPathTerms.
+          spec1 createIndexesOn: coll.
+          spec2 createIndexesOn: coll ].
+      opts
+        at: \'bing\'
+        ifPresent: [ :ignored | 
+          | coll spec1 spec2 res |
+          coll := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+          spec1 := GsIndexSpec new
+            equalityIndex: \'each.key\'
+            lastElementClass: String.
+          spec2 := GsIndexSpec new
+            equalityIndex: \'each.key\'
+            lastElementClass: String
+            options: GsIndexOptions optionalPathTerms.
+          spec1 createIndexesOn: coll.
+          spec1 createIndexesOn: coll ].
+      opts
+        at: \'bang\'
+        ifPresent: [ :ignored | 
+          | coll spec1 spec2 res |
+          coll := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+          spec1 := GsIndexSpec new
+            equalityIndex: \'each.key\'
+            lastElementClass: String.
+          spec2 := GsIndexSpec new
+            equalityIndex: \'each.key\'
+            lastElementClass: String
+            options: GsIndexOptions optionalPathTerms.
+          res := String new.
+          res
+            add: \'create spec1\';
+            lf.
+          spec1 createIndexesOn: coll.
+          res
+            add: coll indexSpec printString;
+            lf;
+            lf.
+          res
+            add: \'create spec2\';
+            lf.
+          spec2 createIndexesOn: coll.
+          res
+            add: coll indexSpec printString;
+            lf;
+            lf.
+          coll removeAllIndexes.
+          res
+            add: \'remove indexes and create spec2\';
+            lf.
+          spec2 createIndexesOn: coll.
+          res add: coll indexSpec printString.
+          analysis
+            at: \'result\' put: res;
+            yourself ].
       theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
-      query := \'each.value1 <= 1\' asQueryOn: theColl.
       analysis
-        at: \'audit\' put: theColl auditIndexes;
-        at: \'depMap keys\' put: DependencyList depMapKeys;
-        at: \'depMap values\' put: DependencyList depMapValues;
         at: \'nsc\' put: theColl;
-        at: \'query\' put: query;
-        at: \'query result\' put: query queryResult;
-        at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
-        at: \'shared dependency lists\'
-          put: SharedDependencyLists allEntries asArray;
         yourself.
       analysis ]
     ifPresent: [ :ignored | 
@@ -73,12 +111,11 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
   bug - bug sript utility template
 SYNOPSIS
   bug [-h|--help]
-  bug [--install][--clean][--create][--boom]
+  bug [--clean][--create][--boom][--bang][--bing]
 DESCRIPTION
   Reproduce bug.
 EXAMPLES
   ./bug --help
-  ./bug --install
-  ./bug --clean --create --boom
+  ./bug --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:22:00.2602939605712-07:00'],#modificationTime:@2}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:22:00.2602939605712-07:00'],#modificationTime:DateAndTime['2014-09-17T13:27:30.6256589889526-07:00']}
