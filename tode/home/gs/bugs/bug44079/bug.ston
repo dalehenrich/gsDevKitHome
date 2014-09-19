@@ -6,8 +6,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       {#(\'help\' $h #\'none\').
       #(\'boom\' nil #\'none\').
       #(\'clean\' nil #\'none\').
-      #(\'create\' nil #\'none\').
-      #(\'install\' nil #\'none\')}
+      #(\'create\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
@@ -16,14 +15,6 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
     ifAbsent: [ 
       | analysis theColl query |
       analysis := Dictionary new.
-      Smalltalk
-        at: #\'SampleIndexObject\'
-        ifAbsent: [ opts at: \'install\' put: nil ].
-      opts
-        at: \'install\'
-        ifPresent: [ :ignored | 
-          \"install supporting code here\"
-          topez evaluateCommandString: \'/home/gs/bugs/installSampleIndexObject\' ].
       opts
         at: \'clean\'
         ifPresent: [ :ignored | 
@@ -33,37 +24,40 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'create\'
         ifPresent: [ :ignored | 
-          | nsc cls |
-          nsc := IdentityBag new.
+          | nsc |
+          nsc := IdentityBag
+            with: QuadByteString new
+            with: DoubleByteString new
+            with: (QuadByteSymbol withAll: String new).
           UserGlobals at: #\'coll\' put: nsc.
-          cls := Smalltalk at: #\'SampleIndexObject\'.
-          1 to: 2 do: [ :index | 
-            | sample |
-            sample := cls new.
-            sample
-              value1: index;
-              yourself.
-            nsc add: sample ].
-          nsc
-            createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
-            yourself ].
+          true
+            ifTrue: [ nsc createEqualityIndexOn: \'\' withLastElementClass: QuadByteString ] ].
       opts
         at: \'boom\'
         ifPresent: [ :ignored | 
-          \"recreate bug here\"
-           ].
+          | nsc stream readStreamResult selectResult aKP doResult |
+          nsc := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+          aKP := QuadByteString new.
+          query := (GsQuery fromString: \'each = aKP\' on: nsc)
+            bind: \'aKP\'
+            to: aKP.
+          readStreamResult := IdentityBag new.
+          stream := query readStream.
+          [ stream atEnd ] whileFalse: [ readStreamResult add: stream next ].
+          doResult := IdentityBag new.
+query do: [:each | doResult add: each].
+          selectResult := nsc select: [ :each | each = aKP ].
+          analysis
+            at: \'query\' put: query;
+            at: \'query result\' put: query queryResult;
+            at: \'query readStream\' put: readStreamResult;
+            at: \'query do\' put: doResult;
+            at: \'select\' put: selectResult;
+            yourself ].
       theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
-      query := \'each.value1 <= 1\' asQueryOn: theColl.
       analysis
         at: \'audit\' put: theColl auditIndexes;
-        at: \'depMap keys\' put: DependencyList depMapKeys;
-        at: \'depMap values\' put: DependencyList depMapValues;
         at: \'nsc\' put: theColl;
-        at: \'query\' put: query;
-        at: \'query result\' put: query queryResult;
-        at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
-        at: \'shared dependency lists\'
-          put: SharedDependencyLists allEntries asArray;
         yourself.
       analysis ]
     ifPresent: [ :ignored | 
@@ -78,7 +72,6 @@ DESCRIPTION
   Reproduce bug.
 EXAMPLES
   ./bug --help
-  ./bug --install
-  ./bug --clean --create --boom
+  ./bug --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-18T11:18:58.6124770641326-07:00'],#modificationTime:@2}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-18T11:18:58.6124770641326-07:00'],#modificationTime:DateAndTime['2014-09-18T16:27:25.6304318904876-07:00']}
