@@ -1,0 +1,66 @@
+TDScriptLeafNode{#name:'xxx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xxx -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'btree\' nil #\'none\').
+      #(\'bug\' nil #\'none\').
+      #(\'find\' nil #\'none\').
+      #(\'index\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | bug index result |
+      opts
+        at: \'bug\'
+        ifPresent: [ :ignored | 
+          System abort.
+          result := bug := Bug allInstances
+            detect: [ :each | each number = 44654 ] ].
+      opts
+        at: \'btree\'
+        ifPresent: [ :ignored | 
+          | btree |
+          btree := Object _objectForOop: 1227999489.
+          btree
+            _leafKeysAndValuesDo: [ :key :value | 
+              value == bug
+                ifTrue: [ self halt ] ] ].
+      opts
+        at: \'index\'
+        ifPresent: [ :ignored | index := Object _objectForOop: 1228000513 ].
+      opts
+        at: \'find\'
+        ifPresent: [ :ignored | 
+          | stream vals key |
+          key := nil.
+          stream := index asQueryEvaluator
+            _findAllValuesGreaterThanKey: key
+            andEquals: true.
+          vals := {}.
+          [ stream _btreeAtEnd not and: [ stream _peekKey _idxForSortEqualTo: key ] ]
+            whileTrue: [ 
+              key == stream _peekKey
+                ifTrue: [ vals add: stream _peekValue ].
+              stream _btreeNext ].
+          result := {vals. vals includes: bug} ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xxx - xxx sript utility template
+SYNOPSIS
+  xxx [-h|--help] [--bug] [--btree][--index][--find]
+DESCRIPTION
+EXAMPLES
+  ./xxx --help
+  ./xxx -h
+  ./xxx --bug --btree
+  ./xxx --bug --index --find
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-25T12:27:45.9596669673919-07:00'],#modificationTime:DateAndTime['2014-09-25T13:26:33.3994009494781-07:00']}

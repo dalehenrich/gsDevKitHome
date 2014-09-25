@@ -1,0 +1,86 @@
+TDStringLeafNode{#name:'report',#contents:'As described in bug #44489 there are some query optimization issues in Kermit and Dale has suggested reviewing the new query API. This will document some of that investigation.
+
+The current Kermit search uses indexes to get results for each filter applied. For example, the following code reads 17 pages and takes 2.91 seconds:
+
+     10000 timesRepeat: [
+          a := Kermit current _bugs select: {:each | each.submittedBy == bob}. \"512\"
+          b := Kermit current _bugs select: {:each | each.assignedTo == bob}. \"1923\"
+          c := a * b.
+     ].
+
+By using one query it seems that we should get better performance but the following code reads 607 pages and takes 3.41 seconds:
+
+     10000 timesRepeat: [
+          Kermit current _bugs select: {:each | 
+               (each.submittedBy == bob) & (each.assignedTo == bob)}.
+     ].
+
+It turns out that if a partial result set is less than 1000 then the remaining queries are done on a brute-force basis. Switching the order of the clauses improves performance, and the following code reads 17 pages and takes 2.86 seconds:
+
+     10000 timesRepeat: [
+          Kermit current _bugs select: {:each | 
+               (each.assignedTo == bob) & (each.submittedBy == bob)}.
+     ].
+
+Moving to the new indexing API we find that it takes a significant amount of time to build and execute a query. The following code reads 623 pages and takes 12.43 seconds:
+
+     10000 timesRepeat: [
+          query := GsQuery 
+               fromString: \'(each.submittedBy == bob) & (each.assignedTo == bob)\'
+               on: Kermit current _bugs.
+          query bind: \'bob\' to: bob.
+          query queryResult.
+     ].
+
+Changing the order of the query makes performance even worse. The following code reads 1538 pages and takes 17.68 seconds:
+
+     10000 timesRepeat: [
+          query := GsQuery 
+               fromString: \'(each.assignedTo == bob) & (each.submittedBy == bob)\'
+               on: Kermit current _bugs.
+          query bind: \'bob\' to: bob.
+          query queryResult.
+     ].
+
+If the query can be pre-built then we might or might not save time. The following code reads only 33 pages but still takes 3.77 seconds:
+
+     query := GsQuery 
+          fromString: \'(each.submittedBy == bob) & (each.assignedTo == bob)\'
+          on: Kermit current _bugs.
+     query bind: \'bob\' to: (Kermit current userWithId: \'bretlb\').
+     Time millisecondsElapsedTime: [
+          10000 timesRepeat: [
+               query queryResult.
+          ].
+     ].
+
+Most surprisingly, changing the order of the query makes things much worse. The following code reads 1660 pages and takes 38.70 seconds:
+
+     query := GsQuery 
+          fromString: \'(each.assignedTo == bob) & (each.submittedBy == bob)\'
+          on: Kermit current _bugs.
+     query bind: \'bob\' to: (Kermit current userWithId: \'bretlb\').
+     Time millisecondsElapsedTime: [
+          10000 timesRepeat: [
+               query queryResult.
+          ].
+     ].
+
+In order to get an estimate of page reads I\'m sending a message to each object in the repository until I\'ve read as many pages as there are in my cache (this takes about 10 seconds on portugal with a 500 MB SPC):
+
+
+     | before after |
+     before := System pageReads.
+     1 to: System _oopHighWaterMark by: 8 do: [:i | 
+          [
+               (Object _objectForOop: i) class.
+          ] on: Error do: [:ex | 
+               ex return.
+          ].
+          after := System pageReads.
+          50000 < (after - before) ifTrue: [^true].
+     ].
+     after := System pageReads.
+     after - before.
+
+Backups of Kermit are available at /export/kermit/backup/ for local testing. ',#creationTime:DateAndTime['2014-09-25T11:56:41.7171161174774-07:00'],#modificationTime:@2}
