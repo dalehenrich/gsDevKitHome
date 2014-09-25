@@ -1,11 +1,11 @@
 TDSessionDescription {
-	#name : 'xxx',
+	#name : 'xxx_kermit',
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'xxx',
 	#gemHost : 'foos.gemtalksystems.com',
 	#netLDI : '51499',
 	#gemTask : 'gemnetobject',
-	#userId : 'DataCurator',
+	#userId : 'tode',
 	#password : 'swordfish',
 	#osUserId : nil,
 	#osPassword : nil,
