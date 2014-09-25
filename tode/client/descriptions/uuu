@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'uuu',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'uuu_ldi',
+	#netLDI : '46948',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
