@@ -8,11 +8,7 @@ TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :command
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [Gofer new
-    package: \'GsUpgrader-Core\';
-    url: \'http://ss3.gemtalksystems.com/ss/gsUpgrader\';
-    load.
-  (Smalltalk at: #\'GsUpgrader\') upgradeGLASS1]
+    ifAbsent: [Metacello image baseline: \'Grease\'; get]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -25,4 +21,4 @@ EXAMPLES
   ./xx --help
   ./xx -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-13T13:03:30.35750102996826-07:00'],#modificationTime:DateAndTime['2014-09-13T13:03:40.77759003639221-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-13T13:03:30.35750102996826-07:00'],#modificationTime:DateAndTime['2014-09-26T09:10:27.2026920318603-07:00']}
