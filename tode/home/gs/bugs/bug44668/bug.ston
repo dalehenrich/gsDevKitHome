@@ -1,0 +1,63 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'sample\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | ans collator |
+      collator := IcuCollator default.
+      opts
+        at: \'sample\'
+        ifPresent: [ :ignored | ans := String new _idxForCompareEqualTo: nil collator: collator ]
+        ifAbsent: [ 
+          | vals xx |
+          vals := {nil.
+          (Unicode7 new).
+          (Unicode16 new).
+          (Unicode32 new).
+          (String new).
+          (DoubleByteString new).
+          (QuadByteString new).
+          (String new asSymbol).
+          (DoubleByteString new asSymbol).
+          (QuadByteString new asSymbol).
+          (Object new)}.
+          ans := {}.
+          xx := #().
+          #(#\'_idxForCompareLessThan:collator:\' #\'_idxForCompareEqualTo:collator:\' #\'_idxForCompareNotEqualTo:collator:\' #\'_idxForCompareGreaterThan:collator:\' #\'_idxForCompareGreaterThanOrEqualTo:collator:\' #\'_idxForCompareLessThanOrEqualTo:collator:\' #\'_idxForSortLessThan:collator:\' #\'_idxForSortEqualTo:collator:\' #\'_idxForSortNotEqualTo:collator:\' #\'_idxForSortGreaterThan:collator:\' #\'_idxForSortGreaterThanOrEqualTo:collator:\' #\'_idxForSortLessThanOrEqualTo:collator:\')
+            do: [ :sel | 
+              1 to: vals size do: [ :aIndex | 
+                1 to: vals size do: [ :bIndex | 
+                  | a b result |
+                  a := vals at: aIndex.
+                  b := vals at: bIndex.
+                  result := (a class printString , \' \' , sel , \' \'
+                    , b class printString)
+                    ->
+                      ([ a perform: sel with: b with: collator ]
+                        on: Error
+                        do: [ :ex | ex return: \'-----------------------Error: \' , ex description ]).
+                  ans add: result ] ] ] ].
+      ans ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help] [--sample]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --sample; edit
+  ./bug; edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-08T12:44:35.9624900817871-07:00'],#modificationTime:DateAndTime['2014-10-08T15:47:23.7129790782928-07:00']}
