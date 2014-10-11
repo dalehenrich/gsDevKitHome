@@ -11,20 +11,7 @@ TDScriptLeafNode{#name:'xxx',#contents:'[ :topez :objIn :tokens :command :comman
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [ 
-      | suite |
-      suite := Array new.
-      #(#\'BaselineOfSeaside3\')
-        do: [ :className | 
-          (((Smalltalk at: #\'MetacelloProjectRegistration\')
-            registrationForClassNamed: className
-            ifAbsent: [ self error: className printString , \' not registered (loaded)\' ])
-            currentlyLoadedClassesInProject
-            select: [ :cl | cl inheritsFrom: TestCase ])
-            do: [ :cl | 
-              cl isAbstract
-                ifFalse: [ suite add: cl buildSuiteFromSelectors ] ] ].
-      suite sorted: [:a :b | a name <= b name]]
+    ifAbsent: [ MetacelloMCVersionValidator validateBaseline: BaselineOfSeaside3 ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -37,4 +24,4 @@ EXAMPLES
   ./xxx --help
   ./xxx -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-02T11:04:54.1297268867492-07:00'],#modificationTime:DateAndTime['2014-10-07T16:03:14.0509910583496-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-02T11:04:54.1297268867492-07:00'],#modificationTime:DateAndTime['2014-10-09T16:06:43.4274559020996-07:00']}
