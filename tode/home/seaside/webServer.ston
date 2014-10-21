@@ -29,7 +29,10 @@ TDScriptLeafNode{#name:'webServer',#contents:'[ :topez :objIn :tokens :command :
             ifFalse: [ 
               breakOption = \'clear\'
                 ifTrue: [ WABasicDevelopment clearBreakPoints ]
-                ifFalse: [ self error: \'Unknown breakpoints option \' , breakOption printString ] ].
+                ifFalse: [ 
+                  breakOption = \'remote\'
+                    ifTrue: [ topez evaluateCommandString: \'break remote --enable\' ]
+                    ifFalse: [ self error: \'Unknown breakpoints option \' , breakOption printString ] ] ].
           handled := true ].
       opts
         at: \'errorHandler\'
@@ -116,7 +119,7 @@ SYNOPSIS
   webServer [--start] [--stop] [--restart]
   webServer [--debug=<port-number>]
   webServer [--errorHandler=WARemoteDebuggingWalkbackErrorHandler|WAGemStoneProductionErrorHandler]
-  webServer [--breakpoints=set|clear]
+  webServer [--breakpoints=set|clear|remote]
 
 
 DESCRIPTION
@@ -131,7 +134,7 @@ DESCRIPTION
   --errorHandler resets the class of default error handler and changes handler for
   all installed applications
 
-  --breakpoints sets or clears useful seaside breakpoints.
+  --breakpoints sets or clears useful seaside breakpoints. Using `remote` enables remote breakpoints.
 
 EXAMPLES
   ./webServer --help
@@ -149,4 +152,4 @@ EXAMPLES
   ./webServer --errorHandler=WARemoteDebuggingWalkbackErrorHandler
   ./webServer --errorHandler=WAGemStoneProductionErrorHandler
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-06-19T10:09:47.03463697433472-07:00'],#modificationTime:DateAndTime['2014-08-27T12:02:16.509927034378-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-06-19T10:09:47.03463697433472-07:00'],#modificationTime:DateAndTime['2014-10-15T14:01:40.3185279369354-07:00']}
