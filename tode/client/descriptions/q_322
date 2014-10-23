@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'q_322',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'q_322_ldi',
+	#netLDI : '34052',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
