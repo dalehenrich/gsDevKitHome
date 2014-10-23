@@ -13,14 +13,16 @@ TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :comman
   opts
     at: \'help\'
     ifAbsent: [ 
-      opts at: \'on\' ifPresent: [ :ignored |  topez serverStatus autoCommit: true].
-      opts at: \'off\' ifPresent: [ :ignored |  topez serverStatus autoCommit: false].
+      opts at: \'on\' ifPresent: [ :ignored | topez serverStatus autoCommit: true ].
+      opts
+        at: \'off\'
+        ifPresent: [ :ignored | topez serverStatus autoCommit: false ].
       opts
         at: \'prep\'
         ifPresent: [ :ignored | 
           | kermitGlobals tool myProfile |
-          \"Install Ernie UserGlobals right after my UserGlobals, so that UserGlobals
-           lookup preserved while making Ernie UserGlobal classes available for 
+          \"Install kermitGlobals right after my UserGlobals, so that UserGlobals
+           lookup preserved while making kermitGlobals classes available for 
            compilation\"
           tool := topez toolInstanceFor: \'find\'.
           kermitGlobals := tool
@@ -47,4 +49,4 @@ EXAMPLES
   ./dev --off
   ./dev --on
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-25T12:30:45.1296589374542-07:00'],#modificationTime:DateAndTime['2014-09-25T15:05:33.7792890071868-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-25T12:30:45.1296589374542-07:00'],#modificationTime:DateAndTime['2014-10-21T17:04:32.4622030258178-07:00']}

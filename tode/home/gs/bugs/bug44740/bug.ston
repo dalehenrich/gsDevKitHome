@@ -1,0 +1,40 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'query\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | [
+          | oldBugClass |
+          System abortTransaction.
+          oldBugClass := Bug classHistory first.
+          oldBugClass migrateInstances: oldBugClass allInstances to: Bug] on: AlmostOutOfMemory  do: [:ex | ex halt]].
+      opts
+        at: \'query\'
+        ifPresent: [ :ignored | 
+          \"find bug 17776 and 17777 by date submitted for quick check\"
+           ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help] [--boom] [--query]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug --boom
+  ./bug --query
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-23T15:41:00.2026860713958-07:00']}

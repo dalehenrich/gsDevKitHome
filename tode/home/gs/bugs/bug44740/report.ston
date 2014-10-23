@@ -1,0 +1,24 @@
+TDStringLeafNode{#name:'report',#contents:'44740  P2  Corrupt object migrating instances in Kermit: \'Bad size in fullyInstantiateDateTime\'
+--------
+topaz 2> run
+| oldBugClass |
+oldBugClass := Bug classHistory first.
+oldBugClass migrateInstances: oldBugClass allInstances to: Bug.
+%
+ERROR 2261 , a InternalError occurred (error 2261), The object with object ID 2504193 is corrupt. Reason: \'Bad size in fullyInstantiateDateTime\' (InternalError)
+topaz 2> stk
+==> 1 InternalError (AbstractException) >> _signalFromPrimitive: @5 line 15
+2 BtreeBasicInteriorNode >> _binarySearchCoveringKey:totalOrder: @1 line 1
+3 BtreeBasicInteriorNode (BtreeNode) >> _findCoveringIndexForKey:totalOrder: @5 line 10
+4 BtreeBasicInteriorNode (BtreeInteriorNode) >> _findAllValuesForIdenticalKey:into:using: @2 line 10
+5 BtreeBasicInteriorNode (BtreeNode) >> _findAllValuesForIdenticalKey:into: @4 line 7
+6 Bug (Object) >> _getIndexReferencesInto: @36 line 47
+7 [] in ExecBlock0 (Object) >> become: @31 line 67
+8 ExecBlock0 (ExecBlock) >> ensure: @2 line 12
+9 Bug (Object) >> become: @4 line 112
+10 [] in ExecBlock0 (Module) >> migrateInstances:to: @30 line 33
+11 ExecBlock0 (ExecBlock) >> onSynchronous:do: @2 line 14
+12 Bug class (Module) >> migrateInstances:to: @19 line 38
+13 Executed Code @6 line 3
+14 UndefinedObject (GsNMethod class) >> _gsReturnToC @1 line 1
+topaz 2> ',#creationTime:DateAndTime['2014-10-21T17:07:46.6410210132598-07:00'],#modificationTime:DateAndTime['2014-10-21T17:08:40.0469920635223-07:00']}

@@ -1,0 +1,214 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 10/21/2014 17:14
+--------------------
+a InternalError occurred (error 2261), The object with object ID 1403649 is corrupt. Reason: \'Bad size in fullyInstantiateDateTime\'
+---
+tode 1 > gs objectFor 1403649
+[1403649 sz:29 Bug] 17776: NT Installer: change name of \'topaz.ico\'
+---
+topaz 2> run
+| oldBugClass |
+oldBugClass := Bug classHistory first.
+oldBugClass migrateInstances: oldBugClass allInstances to: Bug.
+%
+ERROR 2261 , a InternalError occurred (error 2261), The object with object ID 2504193 is corrupt. Reason: \'Bad size in fullyInstantiateDateTime\' (InternalError)
+---
+tode 1 > gs objectFor 2504193
+[2504193 sz:29 Bug] 17777: CuDictionary using objects as keys & hashCode(), equals() overridden
+--------------------
+--------------------
+--------------------
+Now why are we getting complaints about \'Bad size....\' when the object being reported is an instance of Bug, not DateTime...
+--------------------
+--------------------
+The bug does happen to be the key ....
+--------------------
+--------------------
+pathterm associated with the \"corrupted Btree\"
+--------------------
+.                 -> aPathTerm on \'dateSubmitted\'( aRangeEqualityIndex(dateSubmitted)( aPathTerm on \'dateSubmitted\'))
+..                -> 17776: NT Installer: change name of \'topaz.ico\'
+(class)@          -> PathTerm
+(oop)@            -> 2425542145
+(size)@           -> 1
+children@         -> anArray( )
+name@             -> #\'dateSubmitted\'
+needsDepList@     -> true
+offset@           -> 1
+securityPolicies@ -> aGsObjectSecurityPolicySet( )
+updateBtree@      -> aRangeEqualityIndex(dateSubmitted)
+updateDict@       -> nil
+1@                -> aRangeEqualityIndex(dateSubmitted)
+--------------------
+.                    -> 17776: NT Installer: change name of \'topaz.ico\'
+(class)@             -> Bug
+(oop)@               -> 1403649
+(dependents)@        -> aDependencyList( aPathTerm on \'assignedTo\'( anIdentityIndex(assignedTo)( aPathTerm on \'assignedTo\')), 2, aPathTerm on \'product\'( anIdentityI...
+assessment@          -> nil
+assignedTo@          -> robg
+bugNoteRequired@     -> nil
+build@               -> nil
+customer@            -> nil
+dateFixed@           -> 20/11/1997 09:46:00
+====>dateSubmitted@       -> 10/10/1997 13:53:00
+deferredVersion@     -> nil
+fixBuild@            -> nil
+fixedBy@             -> robg
+fixModule@           -> \'topaz.ico, gsj.ico, PACKING.be, setup.rul\'
+fixVersion@          -> \'1.1\'
+handling@            -> nil
+keywords@            -> nil
+module@              -> \'setup.rul, topaz.ico\'
+number@              -> 17776
+priority@            -> 4
+product@             -> GemStone/J
+relationships@       -> nil
+releaseNoteRequired@ -> nil
+sameAs@              -> nil
+status@              -> #\'fixed\'
+submittedBy@         -> robg
+test@                -> nil
+text@                -> \'\'\'topaz.ico\'\' is used for the GemShell and the Guided Tour icons. If the same icon is used, it should get a different name.\'
+title@               -> \'NT Installer: change name of \'\'topaz.ico\'\'\'
+type@                -> $F
+version@             -> \'1.0.1\'
+workaround@          -> nil
+---------------------
+Looks like the date submitted for bug 17776 is missing[NOT CORRECT >>> I WAS LOOKING IN THE WRONG SPOT]:
+---------------------
+553@         -> 17373: NullPointerException from GsDictionary.put
+554@         -> 10/09/1997 18:40:00
+555@         -> 864691161959235838
+556@         -> 6000000
+557@         -> 17374: Application user messages need review
+558@         -> 11/09/1997 06:59:00
+559@         -> 864691161959235838
+560@         -> 50340000
+---
+dkh 10/22/2014 09:58
+--------------------
+oop of the nsc: 4402409217.
+
+eval `(Object _objectForOop: 4402409217) auditIndexes`
+[2491111937 sz:14 String] \'Indexes are OK\'
+--------------------
+--------------------
+[1403649 sz:29 Bug] 17776: NT Installer: change name of \'topaz.ico\'
+[2504193 sz:29 Bug] 17777: CuDictionary using objects as keys & hashCode(), equals() overridden
+--------------------
+--------------------
+177@         -> 17774: NT Installer: change /DGUIDED_TOUR to be default
+178@         -> 10/10/1997 11:23:00
+179@         -> 864691161959235867
+180@         -> 66180000
+181@         -> 17775: Release notes should state support policy for old versions
+182@         -> 10/10/1997 12:51:00
+183@         -> 864691161959235867
+184@         -> 71460000
+185@         -> 17776: NT Installer: change name of \'topaz.ico\'
+186@         -> 10/10/1997 13:53:00
+187@         -> 864691161959235867
+188@         -> 75180000
+189@         -> 17777: CuDictionary using objects as keys & hashCode(), equals() overridden
+190@         -> 10/10/1997 14:15:00
+191@         -> 864691161959235867
+192@         -> 76500000
+193@         -> 17778: NT Installer: change from floppy-size image to one .Z file
+194@         -> 10/10/1997 15:13:00
+195@         -> 864691161959235867
+196@         -> 79980000
+197@         -> 17779: NT Installer: need file browser for perm key file
+198@         -> 10/10/1997 15:21:00
+199@         -> 864691161959235867
+200@         -> 80460000
+--------------------
+--------------------
+.             -> 10/10/1997 13:53:00
+..            -> aBtreeBasicLeafNode
+(class)@      -> DateTime
+(oop)@        -> 2419201
+(invariant)@  -> true
+dayOfYear@    -> 283
+milliseconds@ -> 75180000
+timeZone@     -> PST
+year@         -> 1997
+--------------------
+.             -> 10/10/1997 14:15:00
+..            -> aBtreeBasicLeafNode
+(class)@      -> DateTime
+(oop)@        -> 2421761
+(invariant)@  -> true
+dayOfYear@    -> 283
+milliseconds@ -> 76500000
+timeZone@     -> PST
+year@         -> 1997
+--------------------
+--------------------
+.            -> aBtreeBasicInteriorNode
+..           -> aRangeEqualityIndex(dateSubmitted)
+(class)@     -> BtreeBasicInteriorNode
+(oop)@       -> 2425542401
+(size)@      -> 2000
+collator@    -> nil
+lastValue@   -> 44729: GsProcess>>terminate not raising non-current\'s priority enough
+numElements@ -> 84
+.....
+109@         -> aBtreeBasicLeafNode
+110@         -> 29/08/1997 13:05:00
+111@         -> 864691161959235825
+112@         -> 72300000
+113@         -> aBtreeBasicLeafNode
+114@         -> 07/10/1997 17:03:00
+115@         -> 864691161959235865
+116@         -> 180000
+----->117@         -> aBtreeBasicLeafNode
+118@         -> 06/01/1998 14:42:00
+119@         -> 864691161976012806
+120@         -> 81720000
+121@         -> aBtreeBasicLeafNode
+122@         -> 09/03/1998 12:05:00
+123@         -> 864691161976012868
+124@         -> 68700000
+--------------------
+--------------------
+.            -> aBtreeBasicLeafNode
+..           -> aBtreeBasicInteriorNode
+(class)@     -> BtreeBasicLeafNode
+(oop)@       -> 2425533697
+(size)@      -> 2000
+collator@    -> nil
+numElements@ -> 495
+...
+177@         -> 17774: NT Installer: change /DGUIDED_TOUR to be default
+178@         -> 10/10/1997 11:23:00
+179@         -> 864691161959235867
+180@         -> 66180000
+181@         -> 17775: Release notes should state support policy for old versions
+182@         -> 10/10/1997 12:51:00
+183@         -> 864691161959235867
+184@         -> 71460000
+----->185@         -> 17776: NT Installer: change name of \'topaz.ico\'
+186@         -> 10/10/1997 13:53:00
+187@         -> 864691161959235867
+188@         -> 75180000
+189@         -> 17777: CuDictionary using objects as keys & hashCode(), equals() overridden
+190@         -> 10/10/1997 14:15:00
+191@         -> 864691161959235867
+192@         -> 76500000
+193@         -> 17778: NT Installer: change from floppy-size image to one .Z file
+194@         -> 10/10/1997 15:13:00
+195@         -> 864691161959235867
+196@         -> 79980000
+197@         -> 17779: NT Installer: need file browser for perm key file
+198@         -> 10/10/1997 15:21:00
+199@         -> 864691161959235867
+200@         -> 80460000
+--------------------
+--------------------
+dkh 10/23/2014 13:20
+--------------------
+Object>>_getIndexReferencesInto: patch
+
+               (pathTerm indicatesIndexOnNscElements or: [ nil == self ])
+                  ifTrue: [ key := self ]
+                  ifFalse: [ key := pathTerm _nextObjectFor: self ].
+',#creationTime:DateAndTime['2014-10-21T17:10:00.7092928886413-07:00'],#modificationTime:DateAndTime['2014-10-23T13:21:06.0941190719604-07:00']}
