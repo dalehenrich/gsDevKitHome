@@ -36,18 +36,27 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
           Smalltalk at: #\'Becomer\' ifPresent: [ :cl | cl removeFromSystem ].
           cls := Object
             subclass: \'Becomer\'
-            instVarNames: #(\'slot1\')
+            instVarNames: #(\'number\' \'slot1\')
             inDictionary: UserGlobals.
-          cls compile: \'slot1: anObject slot1 := anObject\'.
+          cls
+            compile: \'slot1: anObject slot1 := anObject\';
+            compile: \'number: aNumber number := aNumber\';
+            compile: \'number ^number\';
+            compile: \'<= aBecomer ^aBecomer number <= self number\';
+            compile: \'< aBecomer ^aBecomer number < self number\';
+            compile: \'> aBecomer ^aBecomer number > self number\';
+            yourself.
           caseId = \'1\'
             ifTrue: [ 
               | sample oldClass |
               \"basic test reproduction\"
               sample := cls new.
-              sample slot1: DateTime now.
+              sample
+                number: 1;
+                slot1: DateTime now.
               nsc add: sample.
               nsc
-                createEqualityIndexOn: \'slot1\' withLastElementClass: DateTime;
+                createEqualityIndexOn: \'\' withLastElementClass: cls;
                 yourself.
               System commit.
               cls := Object
@@ -56,7 +65,6 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
                 inDictionary: UserGlobals.
               oldClass := cls classHistory first.
               System commit.
-self halt.
               oldClass migrateInstances: oldClass allInstances to: cls ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -72,4 +80,4 @@ EXAMPLES
   ./bug --case=1 # basic test reproduction
   ./bug --case=2
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-23T17:15:51.7264659404754-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-24T14:34:52.6766839027404-07:00']}

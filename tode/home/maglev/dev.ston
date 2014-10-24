@@ -4,9 +4,12 @@ TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :comman
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
+      #(\'browse\' nil #\'required\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\').
       #(\'off\' nil #\'none\').
       #(\'on\' nil #\'none\').
-      #(\'browse\' nil #\'required\').
+      #(\'run\' nil #\'none\').
       #(\'prep\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -14,21 +17,65 @@ TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :comman
   opts
     at: \'help\'
     ifAbsent: [ 
-      opts at: \'on\' ifPresent: [ :ignored | topez serverStatus autoCommit: true ].
+      | maglevGlobals |
+      maglevGlobals := (topez toolInstanceFor: \'find\')
+        findSymbolDictionary: #\'UserGlobals\'
+        username: \'DataCurator\'.
+      opts
+        at: \'on\'
+        ifPresent: [ :ignored | topez serverStatus autoCommit: true ].
       opts
         at: \'off\'
         ifPresent: [ :ignored | topez serverStatus autoCommit: false ].
+      opts at: \'clean\' ifPresent: [ :ignored | IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          (maglevGlobals at: #\'StarSchema\') current lines
+            createEqualityIndexOn: \'orderDate\' withLastElementClass: Date;
+            createEqualityIndexOn: \'discount\'
+              withLastElementClass: SmallInteger;
+            createEqualityIndexOn: \'quantity\'
+              withLastElementClass: SmallInteger;
+            yourself ].
+      opts
+        at: \'run\'
+        ifPresent: [ :ignored | 
+          | lines startDate endDate |
+          lines := (maglevGlobals at: #\'StarSchema\') current lines.
+          startDate := Date newDay: 1 year: 1993.
+          endDate := Date newDay: 1 year: 1994.
+          {(\'indexes\'
+            ->
+              (Time
+                millisecondsToRun: [ 
+                  100
+                    timesRepeat: [ 
+                      (lines
+                        select: { :each | 
+                          (each.quantity < 25) & (each.orderDate >= startDate)
+                            & (each.orderDate < endDate) & (each.discount >= 1)
+                            & (each.discount <= 3) })
+                        size ] ])).
+          (\'brute\'
+            ->
+              (Time
+                millisecondsToRun: [ 
+                  100
+                    timesRepeat: [ 
+                      (lines
+                        select: [ :each | 
+                          each.quantity < 25 & (each.orderDate >= startDate) & (each.orderDate < endDate)
+                            & (each.discount >= 1) & (each.discount <= 3) ])
+                        size ] ]))}
+            inspect ].
       opts
         at: \'browse\'
         ifPresent: [ :className | 
-          | maglevGlobals tool |
+          | tool |
           \"Install kermitGlobals right after my UserGlobals, so that UserGlobals
            lookup preserved while making kermitGlobals classes available for 
            compilation\"
-          tool := topez toolInstanceFor: \'find\'.
-          maglevGlobals := tool
-            findSymbolDictionary: #\'UserGlobals\'
-            username: \'DataCurator\'.
           tool := topez toolInstanceFor: \'browse\'.
           tool
             browseClasses: {(TDClassDefinition className: className asSymbol)}
@@ -36,11 +83,6 @@ TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :comman
       opts
         at: \'prep\'
         ifPresent: [ :ignored | 
-          | maglevGlobals tool |
-          tool := topez toolInstanceFor: \'find\'.
-          maglevGlobals := tool
-            findSymbolDictionary: #\'UserGlobals\'
-            username: \'DataCurator\'.
           GsSession currentSession symbolList
             add: maglevGlobals
             after: GsSession currentSession symbolList first.
@@ -52,6 +94,7 @@ TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :comman
   dev - dev sript utility template
 SYNOPSIS
   dev [-h|--help] [--prep][--on][--off] [--browse=<classname>]
+      [--create] [--clean] [--run]
 DESCRIPTION
 EXAMPLES
   ./dev -h
@@ -59,5 +102,6 @@ EXAMPLES
   ./dev --off
   ./dev --on
   ./dev --browse=StartSchema
+  ./dev --clean --create --run
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-24T12:21:32.47595000267029-07:00'],#modificationTime:DateAndTime['2014-10-24T13:55:36.74066805839539-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-24T12:21:32.47595000267029-07:00'],#modificationTime:DateAndTime['2014-10-24T14:10:10.75821495056152-07:00']}
