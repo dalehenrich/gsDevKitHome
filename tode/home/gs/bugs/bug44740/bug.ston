@@ -5,7 +5,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
       #(\'boom\' nil #\'none\').
-      #(\'query\' nil #\'none\')}
+      #(\'case\' nil #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
@@ -14,27 +14,62 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
     ifAbsent: [ 
       opts
         at: \'boom\'
-        ifPresent: [ :ignored | [
+        ifPresent: [ :ignored | 
+          [ 
           | oldBugClass |
           System abortTransaction.
-          oldBugClass := Bug classHistory first.
-          oldBugClass migrateInstances: oldBugClass allInstances to: Bug] on: AlmostOutOfMemory  do: [:ex | ex halt]].
+          oldBugClass := (Smalltalk at: #\'Bug\') classHistory first.
+          oldBugClass
+            migrateInstances: oldBugClass allInstances
+            to: (Smalltalk at: #\'Bug\') ]
+            on: AlmostOutOfMemory
+            do: [ :ex | ex halt ] ].
       opts
-        at: \'query\'
-        ifPresent: [ :ignored | 
-          \"find bug 17776 and 17777 by date submitted for quick check\"
-           ] ]
+        at: \'case\'
+        ifPresent: [ :caseId | 
+          | nsc cls |
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes.
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          Smalltalk at: #\'Becomer\' ifPresent: [ :cl | cl removeFromSystem ].
+          cls := Object
+            subclass: \'Becomer\'
+            instVarNames: #(\'slot1\')
+            inDictionary: UserGlobals.
+          cls compile: \'slot1: anObject slot1 := anObject\'.
+          caseId = \'1\'
+            ifTrue: [ 
+              | sample oldClass |
+              \"basic test reproduction\"
+              sample := cls new.
+              sample slot1: DateTime now.
+              nsc add: sample.
+              nsc
+                createEqualityIndexOn: \'slot1\' withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+self halt.
+              oldClass migrateInstances: oldClass allInstances to: cls ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
   bug - bug sript utility template
 SYNOPSIS
-  bug [-h|--help] [--boom] [--query]
+  bug [-h|--help] [--boom] [--case=1|2]
 DESCRIPTION
 EXAMPLES
   ./bug --help
   ./bug --boom
-  ./bug --query
+  ./bug --case=1 # basic test reproduction
+  ./bug --case=2
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-23T15:41:00.2026860713958-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-23T17:15:51.7264659404754-07:00']}

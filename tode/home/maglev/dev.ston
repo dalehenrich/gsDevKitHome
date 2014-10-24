@@ -1,0 +1,63 @@
+TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./dev -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'off\' nil #\'none\').
+      #(\'on\' nil #\'none\').
+      #(\'browse\' nil #\'required\').
+      #(\'prep\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts at: \'on\' ifPresent: [ :ignored | topez serverStatus autoCommit: true ].
+      opts
+        at: \'off\'
+        ifPresent: [ :ignored | topez serverStatus autoCommit: false ].
+      opts
+        at: \'browse\'
+        ifPresent: [ :className | 
+          | maglevGlobals tool |
+          \"Install kermitGlobals right after my UserGlobals, so that UserGlobals
+           lookup preserved while making kermitGlobals classes available for 
+           compilation\"
+          tool := topez toolInstanceFor: \'find\'.
+          maglevGlobals := tool
+            findSymbolDictionary: #\'UserGlobals\'
+            username: \'DataCurator\'.
+          tool := topez toolInstanceFor: \'browse\'.
+          tool
+            browseClasses: {(TDClassDefinition className: className asSymbol)}
+            label: \'Maglev: \' , className ].
+      opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          | maglevGlobals tool |
+          tool := topez toolInstanceFor: \'find\'.
+          maglevGlobals := tool
+            findSymbolDictionary: #\'UserGlobals\'
+            username: \'DataCurator\'.
+          GsSession currentSession symbolList
+            add: maglevGlobals
+            after: GsSession currentSession symbolList first.
+          ClassOrganizer clearCachedOrganizer ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  dev - dev sript utility template
+SYNOPSIS
+  dev [-h|--help] [--prep][--on][--off] [--browse=<classname>]
+DESCRIPTION
+EXAMPLES
+  ./dev -h
+  ./dev --prep
+  ./dev --off
+  ./dev --on
+  ./dev --browse=StartSchema
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-24T12:21:32.47595000267029-07:00'],#modificationTime:DateAndTime['2014-10-24T13:55:36.74066805839539-07:00']}
