@@ -49,7 +49,6 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
           caseId = \'1\'
             ifTrue: [ 
               | sample oldClass |
-              \"basic test reproduction\"
               sample := cls new.
               sample
                 number: 1;
@@ -65,6 +64,168 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
                 inDictionary: UserGlobals.
               oldClass := cls classHistory first.
               System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'2\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: DateTime now.
+              nsc add: sample.
+              nsc
+                createEqualityIndexOn: \'slot1\' withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'3\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: DateTime now.
+              nsc add: \'assoc\' -> sample.
+              nsc
+                createEqualityIndexOn: \'value.slot1\'
+                  withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'4\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: DateTime now.
+              nsc add: \'assoc\' -> sample.
+              nsc add: \'bssoc\' -> sample.
+              nsc
+                createEqualityIndexOn: \'value.slot1\'
+                  withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'5\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: \'slot1\' -> DateTime now.
+              nsc add: \'assoc\' -> sample.
+              nsc
+                createEqualityIndexOn: \'value.slot1.value\'
+                  withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'6\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: true.
+              nsc add: \'assoc\' -> sample.
+              nsc
+                createEqualityIndexOn: \'value.slot1\'
+                  withLastElementClass: Boolean;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'7\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: true.
+              nsc add: \'assoc\' -> sample.
+              nsc add: \'bssoc\' -> sample.
+              nsc
+                createEqualityIndexOn: \'value.slot1\'
+                  withLastElementClass: Boolean;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'8\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: DateTime now.
+              nsc add: \'assoc\' -> (Set with: sample).
+              nsc
+                createEqualityIndexOn: \'value.*.slot1\'
+                  withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
+              oldClass migrateInstances: oldClass allInstances to: cls ].
+          caseId = \'9\'
+            ifTrue: [ 
+              | sample oldClass |
+              sample := cls new.
+              sample
+                number: 1;
+                slot1: DateTime now.
+              nsc add: \'assoc\' -> (Set with: sample).
+              nsc add: \'assoc\' -> (Set with: sample).
+              nsc
+                createEqualityIndexOn: \'value.*.slot1\'
+                  withLastElementClass: DateTime;
+                yourself.
+              System commit.
+              cls := Object
+                subclass: \'Becomer\'
+                instVarNames: #(\'newSlot\' \'slot1\')
+                inDictionary: UserGlobals.
+              oldClass := cls classHistory first.
+              System commit.
               oldClass migrateInstances: oldClass allInstances to: cls ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -72,12 +233,19 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
           \'NAME
   bug - bug sript utility template
 SYNOPSIS
-  bug [-h|--help] [--boom] [--case=1|2]
+  bug [-h|--help] [--boom] [--case=1|2|3|4|5|6|7|8|9]
 DESCRIPTION
 EXAMPLES
   ./bug --help
   ./bug --boom
-  ./bug --case=1 # basic test reproduction
-  ./bug --case=2
+  ./bug --case=1 # equality index on becomer itself and becomer in nsc 
+  ./bug --case=2 # equality index on DateTime in slot1 of becomer and becomer in nsc
+  ./bug --case=3 # equality index on DateTime in slot1 of becomer, but becomer is not in nsc (last path term)
+  ./bug --case=4 # case #3 with multiple instances of same object
+  ./bug --case=5 # equality index on DateTime in slot1.value of becomer, but becomer is not in nsc (not last path term)
+  ./bug --case=6 # equality index on Boolean (needsDepList == false) in slot1 of becomer, but becomer is not in nsc (last path term)
+  ./bug --case=7 # case #6 with multiple instanes of same object
+  ./bug --case=8 # equality index on DateTime in slot1 of becomer, becomer is in set valued term along the path 
+  ./bug --case=9 # case #8 with multiple instances of same object
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-24T14:34:52.6766839027404-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-21T17:09:06.9408819675445-07:00'],#modificationTime:DateAndTime['2014-10-27T09:32:03.341360092163-07:00']}
