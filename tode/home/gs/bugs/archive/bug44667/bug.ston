@@ -1,0 +1,86 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl query |
+      analysis := Dictionary new.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc cls |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          700 to: 1000 do: [ :each | nsc add: each -> nil ].
+          500 to: 600 do: [ :each | nsc add: each -> nil ].
+          1 to: 200 do: [ :each | nsc add: each -> nil ].
+          300 to: 400 do: [ :each | nsc add: each -> nil ].
+          nsc
+            createEqualityIndexOn: \'value\' withLastElementClass: String;
+            yourself ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | nsc |
+          nsc := UserGlobals at: #\'coll\'.
+          700 to: 1000 do: [ :idx | 
+            | assoc |
+            assoc := nsc detect: [ :ass | ass key = idx ].
+            assoc value: (idx * 10) asString ].
+          1 to: 200 do: [ :idx | 
+            | assoc |
+            assoc := nsc detect: [ :ass | ass key = idx ].
+            assoc value: nil ].
+          300 to: 400 do: [ :idx | 
+            | assoc |
+            assoc := nsc detect: [ :ass | ass key = idx ].
+            assoc value: nil ].
+          500 to: 600 do: [ :idx | 
+            | assoc |
+            assoc := nsc detect: [ :ass | ass key = idx ].
+            assoc value: nil ].
+          700 to: 1000 do: [ :idx | 
+            | assoc |
+            assoc := nsc detect: [ :ass | ass key = idx ].
+            assoc value: (idx * 10) asString ] ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'nsc\' put: theColl;
+        at: \'oop order\'
+          put: (theColl asArray sort: [ :a :b | a asOop < b asOop ]);
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --clean --create
+  ./bug --clean --create --boom
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-28T11:47:49.3779909610748-07:00'],#modificationTime:@2}
