@@ -1,0 +1,107 @@
+TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./dev -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'browse\' nil #\'required\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\').
+      #(\'off\' nil #\'none\').
+      #(\'on\' nil #\'none\').
+      #(\'run\' nil #\'none\').
+      #(\'prep\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | maglevGlobals |
+      maglevGlobals := (topez toolInstanceFor: \'find\')
+        findSymbolDictionary: #\'UserGlobals\'
+        username: \'DataCurator\'.
+      opts
+        at: \'on\'
+        ifPresent: [ :ignored | topez serverStatus autoCommit: true ].
+      opts
+        at: \'off\'
+        ifPresent: [ :ignored | topez serverStatus autoCommit: false ].
+      opts at: \'clean\' ifPresent: [ :ignored | IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          (maglevGlobals at: #\'StarSchema\') current lines
+            createEqualityIndexOn: \'orderDate\' withLastElementClass: Date;
+            createEqualityIndexOn: \'discount\'
+              withLastElementClass: SmallInteger;
+            createEqualityIndexOn: \'quantity\'
+              withLastElementClass: SmallInteger;
+            yourself ].
+      opts
+        at: \'run\'
+        ifPresent: [ :ignored | 
+          | lines startDate endDate |
+          lines := (maglevGlobals at: #\'StarSchema\') current lines.
+          startDate := Date newDay: 1 year: 1993.
+          endDate := Date newDay: 1 year: 1994.
+          {(\'indexes\'
+            ->
+              (Time
+                millisecondsToRun: [ 
+                  100
+                    timesRepeat: [ 
+                      (lines
+                        select: { :each | 
+                          (each.quantity < 25) & (each.orderDate >= startDate)
+                            & (each.orderDate < endDate) & (each.discount >= 1)
+                            & (each.discount <= 3) })
+                        size ] ])).
+          (\'brute\'
+            ->
+              (Time
+                millisecondsToRun: [ 
+                  100
+                    timesRepeat: [ 
+                      (lines
+                        select: [ :each | 
+                          each.quantity < 25 & (each.orderDate >= startDate) & (each.orderDate < endDate)
+                            & (each.discount >= 1) & (each.discount <= 3) ])
+                        size ] ]))}
+            inspect ].
+      opts
+        at: \'browse\'
+        ifPresent: [ :className | 
+          | tool |
+          \"Install kermitGlobals right after my UserGlobals, so that UserGlobals
+           lookup preserved while making kermitGlobals classes available for 
+           compilation\"
+          tool := topez toolInstanceFor: \'browse\'.
+          tool
+            browseClasses: {(TDClassDefinition className: className asSymbol)}
+            label: \'Maglev: \' , className ].
+      opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          GsSession currentSession symbolList
+            add: maglevGlobals
+            after: GsSession currentSession symbolList first.
+          ClassOrganizer clearCachedOrganizer ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  dev - dev sript utility template
+SYNOPSIS
+  dev [-h|--help] [--prep][--on][--off] [--browse=<classname>]
+      [--create] [--clean] [--run]
+DESCRIPTION
+EXAMPLES
+  ./dev -h
+  ./dev --prep
+  ./dev --off
+  ./dev --on
+  ./dev --browse=StartSchema
+  ./dev --clean --create --run
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-24T12:21:32.47595000267029-07:00'],#modificationTime:DateAndTime['2014-10-24T14:10:10.75821495056152-07:00']}

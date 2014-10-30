@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'qqq',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'qqq',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'qqq_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/qqq/backups/',
+	#gemstoneVersion : '2.4.4.7',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/qqq/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

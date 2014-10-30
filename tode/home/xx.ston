@@ -1,0 +1,11 @@
+TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | senderFrame senderArgs ms |
+  senderFrame := GsProcess _frameContentsAt: 1.
+  senderArgs := senderFrame size = 10
+    ifTrue: [ #() ]
+    ifFalse: [ senderFrame copyFrom: 11 to: senderFrame size ].
+  ms := MessageSend
+    receiver: (senderFrame at: 10)
+    selector: (senderFrame at: 1) selector
+    arguments: senderArgs.
+  ms ]',#creationTime:DateAndTime['2014-09-13T13:03:30.35750102996826-07:00'],#modificationTime:DateAndTime['2014-10-12T11:38:50.5425500869751-07:00']}

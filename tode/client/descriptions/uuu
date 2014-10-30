@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'uuu',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'uuu',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : '46948',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/uuu/backups/',
+	#gemstoneVersion : '2.4.5.2',
+	#gciLibraryName : 'libgcirpc64-245',
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/uuu/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

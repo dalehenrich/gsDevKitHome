@@ -1,0 +1,36 @@
+TDScriptLeafNode{#name:'issue',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./issue -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | kermit bugs bug |
+      kermit := (((TDSymbolDictionaryDefinition new
+        symbolDictionaryName: #\'UserGlobals\';
+        username: \'DataCurator\';
+        yourself) symbolList at: 1) at: #\'Kermit\') current.
+      bugs := kermit _bugs.
+      bug := kermit bugWithNumber: 44654.
+      bug fixVersion: \'34310\' ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  issue - issue sript utility template
+SYNOPSIS
+  issue [-h|--help] 
+DESCRIPTION
+  
+
+OPTIONS
+  
+
+EXAMPLES
+  ./issue -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-25T11:53:55.8140749931335-07:00'],#modificationTime:DateAndTime['2014-09-25T11:59:33.4743599891662-07:00']}

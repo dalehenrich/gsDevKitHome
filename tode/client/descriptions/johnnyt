@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'johnnyt',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'johnnyt',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'johnnyt_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'tode',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/johnnyt/backups/',
+	#gemstoneVersion : '3.1.0.2',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/johnnyt/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

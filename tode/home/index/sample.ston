@@ -8,6 +8,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
       #(\'create\' nil #\'optional\').
       #(\'formula\' nil #\'none\').
       #(\'index\' nil #\'optional\').
+      #(\'profile\' nil #\'none\').
       #(\'query\' nil #\'optional\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -63,7 +64,9 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'query\'
         ifPresent: [ :window | 
-          | startDate endDate mid d1 d2 windowSize |
+          | startDate endDate mid d1 d2 windowSize profileTool |
+          profileTool := topez toolInstanceFor: \'pf\'.
+          opts at: \'profile\' ifPresent: [ :ignored | profileTool pfstart ].
           windowSize := window ifNil: [ 5 ] ifNotNil: [ window asNumber ].
           startDate := UserGlobals at: #\'baseDate\' ifAbsent: [ DateAndTime now ].
           endDate := startDate + (theColl size - 1) days.
@@ -92,10 +95,10 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
                 millisecondsToRun: [ 
                   selectBlockCpuTime := System
                     millisecondsToRun: [ 
-                      
                       selectBlockResult := theColl
-                        select: { :each | (d1 < each.value.value) & (each.value.value < d2) & (each.value.key = \'Heather\') }.
-                       ] ] ].
+                        select: { :each | (d1 < each.value.value) & (each.value.value < d2) & (each.value.key = \'Heather\') } ] ].
+               ].
+opts at: \'profile\' ifPresent: [ :ignored | profileTool pfview ].
           analysis
             at: \'startDate\' put: startDate;
             at: \'d1\' put: d1;
@@ -126,7 +129,7 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     sample - sample sript utility template
   SYNOPSIS
     sample [-h|--help]
-    sample [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula]
+    sample [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula] [--profile]
   DESCRIPTION
   OPTIONS
     clean
@@ -141,6 +144,9 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     index
       create indexes on the collection
 
+    profile
+      run profile during query and bring up the `pf view`
+
     query[=<window>
       default <window> is 5 ... a window of 5 results in 10 samples
 
@@ -152,5 +158,6 @@ TDScriptLeafNode{#name:'sample',#contents:'[ :topez :objIn :tokens :command |
     ./sample --clean --query=5
     ./sample --clean --create=1000 --query
     ./sample --clean --create=1000 --index --query=5
+    ./sample --clean --create=100000 --index --query=50000 --formula --profile; edit
   \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-08-06T10:28:18.5653750896453-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-05T10:28:36.1586060523986-07:00'],#modificationTime:DateAndTime['2014-10-28T12:57:31.1304950714111-07:00']}

@@ -83,10 +83,3 @@ script:
   - cd $GS_HOME/gemstone/stones/travis
   - . defStone.env
 
-    # GsUpdater
-  - bash stopStone travis
-  - bash stopStone travis_2
-  - bash stoneExtent travis_2
-  - bash startStone travis_2
-  - bash $GS_HOME/tests/testGsUpgrader.sh
-

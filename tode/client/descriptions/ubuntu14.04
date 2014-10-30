@@ -1,0 +1,15 @@
+TDSessionDescription {
+	#name : 'ubuntu14.04',
+	#stoneHost : '192.168.100.131',
+	#stoneName : 'seaside3.1.2',
+	#gemHost : '192.168.100.131',
+	#netLDI : '52344',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '',
+	#gemstoneVersion : '3.2.2'
+}

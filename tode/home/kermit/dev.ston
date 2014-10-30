@@ -1,0 +1,52 @@
+TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./dev -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'off\' nil #\'none\').
+      #(\'on\' nil #\'none\').
+      #(\'prep\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts at: \'on\' ifPresent: [ :ignored | topez serverStatus autoCommit: true ].
+      opts
+        at: \'off\'
+        ifPresent: [ :ignored | topez serverStatus autoCommit: false ].
+      opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          | kermitGlobals tool myProfile |
+          \"Install kermitGlobals right after my UserGlobals, so that UserGlobals
+           lookup preserved while making kermitGlobals classes available for 
+           compilation\"
+          tool := topez toolInstanceFor: \'find\'.
+          kermitGlobals := tool
+            findSymbolDictionary: #\'KermitGlobals\'
+            username: \'DataCurator\'.
+          GsPackagePolicy current externalSymbolList: {kermitGlobals}.
+          (GsSession currentSession symbolList includes: kermitGlobals)
+            ifFalse: [ 
+              GsSession currentSession symbolList
+                add: kermitGlobals
+                after: GsSession currentSession symbolList first.
+              ClassOrganizer clearCachedOrganizer ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  dev - dev sript utility template
+SYNOPSIS
+  dev [-h|--help] [--prep][--on][--off]
+DESCRIPTION
+EXAMPLES
+  ./dev -h
+  ./dev --prep
+  ./dev --off
+  ./dev --on
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-25T12:30:45.1296589374542-07:00'],#modificationTime:DateAndTime['2014-10-21T17:04:32.4622030258178-07:00']}

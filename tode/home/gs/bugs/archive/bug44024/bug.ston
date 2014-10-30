@@ -1,0 +1,93 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\').
+      #(\'install\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl query |
+      analysis := Dictionary new.
+      Smalltalk
+        at: #\'SampleIndexObject\'
+        ifAbsent: [ opts at: \'install\' put: nil ].
+      opts
+        at: \'install\'
+        ifPresent: [ :ignored | 
+          \"install supporting code here\"
+          topez evaluateCommandString: \'/home/gs/bugs/installSampleIndexObject\' ].
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc cls |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          cls := Smalltalk at: #\'SampleIndexObject\'.
+          1 to: 2 do: [ :index | 
+            | sample |
+            sample := cls new.
+            sample
+              value1: index;
+              yourself.
+            nsc add: sample ].
+          1 to: 2 do: [ :index | 
+            | sample |
+            sample := cls new.
+            sample
+              value1: nil;
+              yourself.
+            nsc add: sample ].
+           
+              GsIndexSpec new
+                identityIndex: \'each.value1\';
+                createIndexesOn: nsc  ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | nsc |
+          nsc := UserGlobals at: #\'coll\'.
+          GsIndexSpec new
+            identityIndex: \'each.Name\'
+              options: GsIndexOptions optionalPathTerms;
+            equalityIndex: \'each.NonexistentField\'
+              lastElementClass: String
+              options: GsIndexOptions optionalPathTerms;
+            
+            createIndexesOn: nsc ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'nsc\' put: theColl;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --clean --create; edit
+  ./bug --clean --create --boom; edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-08T12:42:57.6753289699554-07:00'],#modificationTime:@2}

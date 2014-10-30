@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'vvv',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'vvv',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'vvv_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/vvv/backups/',
+	#gemstoneVersion : '3.2.0',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/vvv/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

@@ -65,8 +65,11 @@ fail>>  - Pharo3.0 added to lineup
           put:
             {(\'dkh_322 (q_)\' -> 9).
               (\'j_323\' -> 9).
+(\'k_330 : merge 323 and 322 work\' -> 9).
+              (\'l_330
+- indexing failure during bug1465 in ernie0 and indexUnitText in smkbuildtst\' -> 9).
               (\'m_323\' -> 9).
-              (\'k_330 : merge 323 and 322 work\' -> 9)};
+              };
         at: \'GsDevKit\'
           put:
             {(\'Mariano\'\'s scripts
@@ -107,4 +110,4 @@ EXAMPLES
   ./todo --help
   ./todo -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-09-05T10:24:20.3212890625-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-26T12:00:16.6129810810089-07:00'],#modificationTime:DateAndTime['2014-09-11T11:13:08.3126709461212-07:00']}

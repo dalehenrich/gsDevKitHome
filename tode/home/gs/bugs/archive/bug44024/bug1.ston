@@ -1,0 +1,57 @@
+TDScriptLeafNode{#name:'bug1',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug1 -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | nsc |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          nsc
+            add:
+              (Association newWithKey: 1 value: (Association newWithKey: 2 value: 3)).
+          nsc
+            add:
+              (Association newWithKey: 4 value: (Association newWithKey: 5 value: 6)).
+          nsc add: (Association newWithKey: 7 value: nil).
+          GsIndexSpec new
+            identityIndex: \'each.key\';
+            identityIndex: \'each.value.abc\'
+              options: GsIndexOptions optionalPathTerms;
+            equalityIndex: \'each.key\' lastElementClass: SmallInteger;
+            equalityIndex: \'each.value.abc\'
+              lastElementClass: SmallInteger
+              options: GsIndexOptions optionalPathTerms;
+            createIndexesOn: nsc.
+          nsc auditIndexes ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug1 - bug1 sript utility template
+SYNOPSIS
+  bug1 [-h|--help] [--clean] [--boom]
+DESCRIPTION
+  Additional test case pointed out by Lisa: http://kermit.gemtalksystems.com/bug?bug=44024#event6
+EXAMPLES
+  ./bug1 --help
+  ./bug1 --clean --boom; edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-08T12:42:57.6858410835266-07:00'],#modificationTime:@2}

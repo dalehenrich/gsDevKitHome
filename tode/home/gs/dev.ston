@@ -1,0 +1,165 @@
+TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args stoneNRS netldiName expression verbose codeGenBlock |
+  \"for help: ./dev -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'ernie\' nil #\'none\').
+      #(\'legacyCompareMode\' $p #\'none\').
+      #(\'netldi\' nil #\'required\').
+      #(\'prep\' $p #\'none\').
+      #(\'remove\' $r #\'none\').
+      #(\'unicodeCompareMode\' $p #\'none\').
+      #(\'verbose\' $v #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  stoneNRS := (Smalltalk at: #\'GsNetworkResourceString\')
+    defaultStoneNRSFromCurrent.
+  netldiName := System gemEnvironmentVariable: \'gs64ldi\'.
+  opts
+    at: \'verbose\'
+    ifAbsent: [ verbose := false ]
+    ifPresent: [ :ignored | verbose := true ].
+  opts
+    at: \'unicodeCompareMode\'
+    ifPresent: [ :ignored | 
+      expression := \'Globals at: #StringConfiguration put: Unicode16.
+System commit\' ].
+  opts
+    at: \'legacyCompareMode\'
+    ifPresent: [ :ignored | 
+      expression := \'Globals at: #StringConfiguration put: String.
+System commit\' ].
+  opts
+    at: \'ernie\'
+    ifPresent: [ :ignored | 
+      topez evaluateCommandString: \'/home/ernie/dev --prep\'.
+      expression := \'GsQuery defaultQueryOptions: (GsQueryOptions new
+    setApplyDeMorgansLaws;
+    setConsolidateEnumerablePredicates;
+    setConsolidateRangePredicates;
+    setConsolidateUnaryConstantPredicates;
+    setNormalizePredicates;
+    setRemoveRedundantPredicates;
+    setReorderPredicates;
+    setTransformCommonPaths)\' ].
+  opts at: \'netldi\' ifPresent: [ :optValue | netldiName := optValue ].
+  verbose
+    ifTrue: [ 
+      Transcript
+        cr;
+        show: \'netldi=\' , netldiName printString ].
+  codeGenBlock := [ :className :list :selectorString | 
+  | stream |
+  stream := WriteStream on: String new.
+  stream
+    nextPutAll: className;
+    cr.
+  list
+    do: [ :item | 
+      stream
+        tab;
+        nextPutAll: \' \' , selectorString , \' \' , item asSymbol printString , \';\';
+        cr ].
+  stream
+    nextPutAll: \'yourself.\';
+    cr;
+    nextPutAll: \'System commit\';
+    cr;
+    yourself.
+  stream ].
+  opts
+    at: \'remove\'
+    ifPresent: [ :optValue | 
+      | className selectors stream |
+      className := args at: 1.
+      selectors := args copyFrom: 2 to: args size.
+      stream := codeGenBlock
+        value: className
+        value: selectors
+        value: \'removeSelector:\'.
+      expression := stream contents ].
+  opts
+    at: \'prep\'
+    ifPresent: [ :optValue | 
+      \"GemStone 2.4 patch:
+classmethod: GsPackagePolicy
+restrictedClasses
+^#()
+%
+\"
+      expression := \'| cls index set |
+cls := GsPackagePolicy.
+index := cls class allInstVarNames indexOfIdentical: #\'\'restrictedClasses\'\'.
+set := cls instVarAt: index.
+set removeAll: set.
+System commit\' ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | systemUser gemNRS |
+      expression
+        ifNil: [ 
+          Transcript
+            cr;
+            show: \'Nothing to do!\'.
+          nil ]
+        ifNotNil: [ 
+          | sessionDescription |
+          verbose
+            ifTrue: [ 
+              Transcript
+                cr;
+                show: \'expression=\' , expression printString ].
+          sessionDescription := topez sessionDescription.
+          gemNRS := (Smalltalk at: #\'GsNetworkResourceString\') new
+            protocol: \'tcp\';
+            node: sessionDescription stoneHost;
+            netldi: netldiName;
+            resource: \'task\';
+            body: \'gemnetobject\';
+            yourself.
+          systemUser := (Smalltalk at: #\'GsExternalSession\') new
+            stoneNRS: stoneNRS;
+            gemNRS: gemNRS;
+            username: \'SystemUser\';
+            password: \'swordfish\';
+            yourself.
+          [ 
+          systemUser login.
+          systemUser executeString: expression ]
+            ensure: [ systemUser ifNotNil: [ systemUser logout ] ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  dev - dev sript utility template
+SYNOPSIS
+  dev [-h|--help][--netldi=<netldi-name>][-v|--verbose]
+  dev --prep
+  dev --remove <class-name> <selector>...
+  dev --ernie
+  dev --legacyCompareMode
+  dev --unicodeCompareMode
+
+DESCRIPTION
+  Perform operations against SystemUser using external session.
+
+  With --remove option, remove the <selector> from the given <class-name>
+
+  with --ernie option, evaluate `/home/ernie/dev --prep`
+\t\t
+  With --prep option, the restricted classes set for session
+  methods is cleared, allowing free editting of all methods and classes
+  in the system.
+
+EXAMPLES
+  ./dev --help
+  ./dev --ernie
+  ./dev --prep
+  ./dev --remove IndexManager _createIndex:for:on:withLastElementClass:
+  ./dev --legacyCompareMode
+  ./dev --unicodeCompareMode
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2014-09-25T16:53:37.5040159225463-07:00']}

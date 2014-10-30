@@ -1,0 +1,13 @@
+TDStringLeafNode{#name:'report',#contents:'44667  P2  Indexing problem when updating Kermit
+------------------------
+| kermit bug bugs |
+kermit := Kermit current.
+bugs := kermit _bugs.
+bug := kermit bugWithNumber: 44654.
+bugs equalityIndexedPaths. \"anArray( \'dateFixed\', \'dateSubmitted\', \'number\', \'fixVersion\', \'deferredVersion\', \'version\')\"
+bugs includes: bug.\t\"true\"
+bugs _auditIndexes. \"Indexes are OK\"
+bug fixVersion: \'34310\'.
+\"a ImproperOperation occurred (error 2301), An entry for the key/value pair 
+(44654: Adding a comment to previously fixed bug does not preselect the status/nil) 
+was not present in the index.\"',#creationTime:DateAndTime['2014-10-28T11:47:49.3911619186401-07:00'],#modificationTime:@2}
