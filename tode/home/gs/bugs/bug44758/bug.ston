@@ -122,8 +122,9 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             queryOptions: GsQueryOptions default - GsQueryOptions autoOptimize;
             optimize;
             yourself.
+false ifTrue: [
           queryTime := Time
-            millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ].
+            millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ] ].
           opts
             at: \'formula\'
             ifAbsent: [ 
@@ -146,19 +147,21 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
                       (each.quantity < 25) & (startDate <= each.orderDate)
                         & (each.orderDate < endDate) & (1 <= each.discount)
                         & (each.discount <= 3) } ].
-              selectBlockTime := Time
+              false ifTrue: [ selectBlockTime := Time
                 millisecondsToRun: [ 
                   selectBlockCpuTime := System
                     millisecondsToRun: [ 
                       selectBlockResult := theColl
-                        select: { :each | (startDate <= each.orderDate) & (each.orderDate < endDate) } ] ] ].
+                        select: { :each | (startDate <= each.orderDate) & (each.orderDate < endDate) } ] ]] ].
           opts at: \'profile\' ifPresent: [ :ignored | profileTool pfview ] ].
       analysis
         at: \'nsc\' put: theColl;
+        at: \'nsc size\' put: theColl size;
         at: \'sorted\'
           put: (theColl asArray sorted: [ :a :b | a index <= b index ]);
         at: \'query\' put: query;
         at: \'query result\' put: queryResult;
+        at: \'query result size\' put: queryResult size;
         at: \'select result\' put: selectResult;
         at: \'select block result\' put: selectBlockResult;
         at: \'CORRECT\' put: queryResult = selectResult;
@@ -248,4 +251,4 @@ EXAMPLES
   ./bug --clean --create=300 --index --query=600; edit
   ./bug --query=100000; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T12:47:39.8382949829101-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T13:03:20.6790549755096-08:00']}
