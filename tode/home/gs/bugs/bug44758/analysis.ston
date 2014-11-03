@@ -1,1 +1,30 @@
-TDStringLeafNode{#name:'analysis',#contents:nil,#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:@2}
+TDStringLeafNode{#name:'analysis',#contents:'dkh 11/3/2014 12:47
+-------------------
+  ./bug --clean --create=300 --index --query=600; edit
+  ./bug --query=100000; edit
+
+          queryString := \'(startDate <= each.orderDate < endDate)\'.
+
+                      selectResult := theColl
+                        select: [ :each | startDate <= each.orderDate & (each.orderDate < endDate) ].
+
+                      selectBlockResult := theColl
+                        select: { :each | (startDate <= each.orderDate) & (each.orderDate < endDate) } .
+
+
+1@       -> \'base endDate\'->12/31/1993
+2@       -> \'base startDate\'->01/01/1993
+3@       -> \'CORRECT\'->true
+4@       -> \'endDate\'->05/31/1994
+5@       -> \'mid\'->182:00:00:00
+6@       -> \'nsc\'->aRcIdentityBag( index = 40727 orderDate = 05/16/1993 discount = 0 quantity = 136, index = 3986 orderDate = 01/14/1993 discount = 4 qu...
+7@       -> \'query\'->(startDate <= each.orderDate < endDate)
+8@       -> \'query result\'->anIdentityBag( index = 40727 orderDate = 05/16/1993 discount = 0 quantity = 136, index = 3986 orderDate = 01/14/1993 discoun...
+9@       -> \'samples per day\'->300
+10@      -> \'select block result\'->anIdentityBag( index = 40727 orderDate = 05/16/1993 discount = 0 quantity = 136, index = 3986 orderDate = 01/14/1993 ...
+11@      -> \'select result\'->anIdentityBag( index = 40727 orderDate = 05/16/1993 discount = 0 quantity = 136, index = 3986 orderDate = 01/14/1993 discou...
+12@      -> \'sorted\'->anArray( index = 1 orderDate = 01/01/1993 discount = 3 quantity = 1, index = 2 orderDate = 01/01/1993 discount = 5 quantity = 1, i...
+13@      -> \'startDate\'->08/03/1992
+14@      -> \'time\'->anArray( 21, 21, 93, 93, 26, 27)
+15@      -> \'window size\'->333
+',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T12:50:18.7894909381866-08:00']}

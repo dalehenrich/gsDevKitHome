@@ -90,18 +90,28 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'query\'
         ifPresent: [ :window | 
-          | startDate endDate mid d1 d2 windowSize profileTool queryString samplesPerDay |
+          | startDate endDate baseStartDate baseEndDate mid d1 d2 windowSize profileTool queryString samplesPerDay |
           profileTool := topez toolInstanceFor: \'pf\'.
           opts at: \'profile\' ifPresent: [ :ignored | profileTool pfstart ].
-          windowSize := window ifNil: [ 5 ] ifNotNil: [ window asNumber ].
-          samplesPerDay := UserGlobals at: #\'samples\' ifAbsent: [ 5 ].
-          startDate := UserGlobals at: #\'baseStartDate\' ifAbsent: [ Date now ].
-          endDate := UserGlobals at: #\'lastStartDate\' ifAbsent: [ Date now ].
-          mid := (endDate - startDate) / 2.
-          startDate := startDate + mid - windowSize days.
-          endDate := startDate + mid + windowSize days.
-          UserGlobals at: #\'theStartDate\' put: startDate.
-          UserGlobals at: #\'theEndDate\' put: endDate.
+          samplesPerDay := UserGlobals at: #\'samples\' ifAbsent: [ 15 ].
+          windowSize := (window ifNil: [ 5 ] ifNotNil: [ window asNumber ])
+            // samplesPerDay.
+          baseStartDate := UserGlobals
+            at: #\'baseStartDate\'
+            ifAbsent: [ Date now ].
+          baseEndDate := UserGlobals at: #\'lastStartDate\' ifAbsent: [ Date now ].
+          mid := (baseEndDate - baseStartDate) / 2.
+          startDate := baseStartDate + mid - windowSize days.
+          endDate := baseStartDate + mid + windowSize days.
+          analysis
+            at: \'window size\' put: windowSize;
+            at: \'samples per day\' put: samplesPerDay;
+            at: \'startDate\' put: startDate;
+            at: \'endDate\' put: endDate;
+            at: \'mid\' put: mid;
+            at: \'base startDate\' put: baseStartDate;
+            at: \'base endDate\' put: baseEndDate;
+            yourself.
           queryString := \'(each.quantity < 25)\'.
           queryString := \'(1 <= each.discount <= 3)\'.
           queryString := \'(each.quantity < 25) & (startDate <= each.orderDate < endDate) & (1 <= each.discount <= 3)\'.
@@ -117,33 +127,32 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
           opts
             at: \'formula\'
             ifAbsent: [ 
+              false
+                ifTrue: [ 
+                  selectResult := theColl
+                    select: [ :each | 
+                      each.quantity < 25 & (startDate <= each.orderDate) & (each.orderDate < endDate)
+                        & (1 <= each.discount) & (each.discount <= 3) ] ].
               selectTime := Time
                 millisecondsToRun: [ 
                   selectCpuTime := System
                     millisecondsToRun: [ 
                       selectResult := theColl
-                        select: [ :each | 
-                          each.quantity < 25 & (startDate <= each.orderDate) & (each.orderDate < endDate)
-                            & (1 <= each.discount) & (each.discount <= 3) ].
-                      selectResult := theColl
                         select: [ :each | startDate <= each.orderDate & (each.orderDate < endDate) ] ] ].
+              false
+                ifTrue: [ 
+                  selectBlockResult := theColl
+                    select: { :each | 
+                      (each.quantity < 25) & (startDate <= each.orderDate)
+                        & (each.orderDate < endDate) & (1 <= each.discount)
+                        & (each.discount <= 3) } ].
               selectBlockTime := Time
                 millisecondsToRun: [ 
                   selectBlockCpuTime := System
                     millisecondsToRun: [ 
                       selectBlockResult := theColl
-                        select: { :each | 
-                          (each.quantity < 25) & (startDate <= each.orderDate)
-                            & (each.orderDate < endDate) & (1 <= each.discount)
-                            & (each.discount <= 3) }.
-                      selectBlockResult := theColl
                         select: { :each | (startDate <= each.orderDate) & (each.orderDate < endDate) } ] ] ].
-          opts at: \'profile\' ifPresent: [ :ignored | profileTool pfview ].
-          analysis
-            at: \'base startDate\' put: startDate;
-            at: \'startDate\' put: (UserGlobals at: #\'theStartDate\');
-            at: \'endDate\' put: (UserGlobals at: #\'theEndDate\');
-            yourself ].
+          opts at: \'profile\' ifPresent: [ :ignored | profileTool pfview ] ].
       analysis
         at: \'nsc\' put: theColl;
         at: \'sorted\'
@@ -167,12 +176,12 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       TDManPage
         viewManPage:
           \'NAME
-    bug - bug sript utility template
-  SYNOPSIS
-    bug [-h|--help]
-    bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula] [--profile]
-  DESCRIPTION
-    Attempt to characterize the performance issues seen in 3.1.0.2 MagLev runs involving these indexes:
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula] [--profile]
+DESCRIPTION
+  Attempt to characterize the performance issues seen in 3.1.0.2 MagLev runs involving these indexes:
           nsc
             createEqualityIndexOn: \'\'orderDate\'\' withLastElementClass: Date;
             createEqualityIndexOn: \'\'discount\'\'
@@ -181,7 +190,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
               withLastElementClass: SmallInteger;
             yourself 
 
-    and this queries:
+  and this queries:
 
                 (lines select: {:each |
                         (each.quantity < 25)
@@ -189,7 +198,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
                         & (each.discount >= 1) & (each.discount <= 3)
                 })
 
-    giving these profile results:
+  giving these profile results:
 
 ================
 STATISTICAL SAMPLING RESULTS
@@ -208,41 +217,35 @@ monitoring interval: 1.0 ms
   2497    2.83   IdentityBag               >> _at:
   2262    2.56   Object                    >> _idxGreaterThanAndLessThanValues:
 
-    The theory at the time was that we were seeing at: and PathEvaluator calls on the stack because 
-    the result set size was such that we were doing brute force queries on a large result set ... 
-    But ... later runs and rebuilt indexes resulted in better performance profiles ... 
+  The theory at the time was that we were seeing at: and PathEvaluator calls on the stack because 
+  the result set size was such that we were doing brute force queries on a large result set ... 
+  But ... later runs and rebuilt indexes resulted in better performance profiles ... 
 
-  OPTIONS
-    clean
-      remove all indexes in system
+OPTIONS
+  clean
+    remove all indexes in system
 
-    create[=<num_samples>]
-      create a collection with <num_samples>. Default (and minimum samples) is 15.
+  create[=<num_samples>]
+    create a collection with <num_samples>. Default (and minimum samples) is 15.
     
-    formula
-      only run the formula query ... skip the select block query.
+  formula
+    only run the formula query ... skip the select block query.
 
-    index
-      create indexes on the collection
+  index
+    create indexes on the collection
 
-    profile
-      run profile during query and bring up the `pf view`
+  profile
+    run profile during query and bring up the `pf view`
 
-    query[=<window>
-      default <window> is 5 ... a window of 5 results in 10 samples
+  query[=<window>
+    default <window> is 5 ... a window of 5 results in 10 samples
 
-  EXAMPLES
-    ./bug --help
-  
-    ./bug --clean --create 
-    ./bug --clean --create=1000 --index
-    ./bug --clean --query=5
-    ./bug --clean --create=1000 --query
-    ./bug --clean --create=1000 --index --query=5
-    ./bug --clean --create=100000 --index 
-    ./bug --clean --create=100000 --index --query=50000 --formula --profile; edit
-    ./bug --query=50000 --formula
-    ./bug --query=50000 --formula --profile
-    ./bug --clean --create --index --query=30; edit
+EXAMPLES
+  ./bug --help
+  ./bug --clean --create 
+  ./bug --clean --create --index
+  ./bug --clean --create --index --query=30; edit
+  ./bug --clean --create=300 --index --query=600; edit
+  ./bug --query=100000; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T12:14:11.8840799331665-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T12:47:39.8382949829101-08:00']}
