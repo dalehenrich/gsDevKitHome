@@ -83,4 +83,7 @@ tally % smpl% ms class and method name
 15@      -> \'startDate\'->06/30/1993
 16@      -> \'time\'->anArray( 0, 1, 46, 46, 0, 1)
 17@      -> \'window size\'->2
-',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T13:09:24.224818944931-08:00']}
+---
+dkh 11/3/2014 13:10
+-------------------
+Push the StarSchema down a bit for a deeper index path and force the IndexDictionary into play ... also try starting the indexes created on nsc BEFORE adding all the elements to compare to a \"properly sized\" indexDictionary ...',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T13:11:55.179328918457-08:00']}
