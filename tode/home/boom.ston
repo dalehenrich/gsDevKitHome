@@ -1,2 +1,3 @@
-TDTopezLeafNode{#name:'boom',#contents:'cd /home/gs/bugs/bug44758
-./bug --query=50000  ',#creationTime:DateAndTime['2014-10-30T15:05:40.9181659221649-07:00'],#modificationTime:DateAndTime['2014-10-31T17:08:41.4371380805969-07:00']}
+TDTopezLeafNode{#name:'boom',#contents:'# ./bug --clean --depth --create=300 --index --query=100000 --profile=query; edit
+cd /home/gs/bugs/bug44758
+./bug --depth --query=100000 ',#creationTime:DateAndTime['2014-10-30T15:05:40.9181659221649-07:00'],#modificationTime:DateAndTime['2014-11-03T15:10:57.7236180305481-08:00']}

@@ -112,6 +112,7 @@ Yeppers looks like traversal can be costly ...
 16@      -> \'time\'->anArray( 112, 112, 92, 92, 111, 111)
 17@      -> \'window size\'->333
 
+formula:
 --------------------
 elapsed CPU time: 118 ms
 tally     %  smpl%    ms class and method name
@@ -129,6 +130,21 @@ tally     %  smpl%    ms class and method name
    0   0.00  93.16 109.9 RangeIndexReadStream      >> _uniqueValuesAddInto:spec:
    0   0.00  93.16 109.9 BtreeQuerySpec            >> traverseValuesFrom:start:end:previous:into:
 
+selectBlock:
+--------------------
+elapsed CPU time: 296 ms
+tally     %  smpl%    ms class and method name
+----- -----  ----- ----- ---------------------
+  45  15.62  23.96  70.9 Date                      >> <
+  39  13.54  13.54  40.1 NscBuilder                >> add:
+  38  13.19  35.07 103.8 Magnitude                 >> <=
+  32  11.11  11.11  32.9 IdentityBag               >> _at:
+  25   8.68   8.68  25.7 SmallInteger              >> <
+  25   8.68   8.68  25.7 SmallInteger              >> >
+  25   8.68   8.68  25.7 Boolean                   >> &
+  21   7.29  15.97  47.3 Date                      >> >
+  17   5.90   5.90  17.5 Boolean                   >> not
+  15   5.21  97.92 289.8 UnorderedCollection       >> _select:
+   1   0.35   0.35   1.0 System class              >> _readClock
 
-
-',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T14:52:36.1850349903106-08:00']}
+',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T15:00:03.9728960990905-08:00']}
