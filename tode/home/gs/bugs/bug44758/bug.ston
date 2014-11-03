@@ -6,9 +6,8 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       {#(\'help\' $h #\'none\').
       #(\'clean\' nil #\'none\').
       #(\'create\' nil #\'optional\').
-      #(\'formula\' nil #\'none\').
       #(\'index\' nil #\'optional\').
-      #(\'profile\' nil #\'none\').
+      #(\'profile\' nil #\'optional\').
       #(\'query\' nil #\'optional\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -90,9 +89,14 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'query\'
         ifPresent: [ :window | 
-          | startDate endDate baseStartDate baseEndDate mid d1 d2 windowSize profileTool queryString samplesPerDay |
+          | startDate endDate baseStartDate baseEndDate mid d1 d2 windowSize profileTool queryString samplesPerDay profile |
           profileTool := topez toolInstanceFor: \'pf\'.
-          opts at: \'profile\' ifPresent: [ :ignored | profileTool pfstart ].
+          profile := #\'all\'.
+          opts
+            at: \'profile\'
+            ifPresent: [ :spec | 
+              spec ifNotNil: [ profile := spec asSymbol ].
+              profileTool pfstart ].
           samplesPerDay := UserGlobals at: #\'samples\' ifAbsent: [ 15 ].
           windowSize := (window ifNil: [ 5 ] ifNotNil: [ window asNumber ])
             // samplesPerDay.
@@ -122,24 +126,24 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             queryOptions: GsQueryOptions default - GsQueryOptions autoOptimize;
             optimize;
             yourself.
-false ifTrue: [
-          queryTime := Time
-            millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ] ].
-          opts
-            at: \'formula\'
-            ifAbsent: [ 
-              false
-                ifTrue: [ 
-                  selectResult := theColl
-                    select: [ :each | 
-                      each.quantity < 25 & (startDate <= each.orderDate) & (each.orderDate < endDate)
-                        & (1 <= each.discount) & (each.discount <= 3) ] ].
+          (profile == #\'all\' or: [ profile == #\'query\' ])
+            ifTrue: [ 
+              queryTime := Time
+                millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ] ].
+          (profile == #\'all\' or: [ profile == #\'selectBlock\' ])
+            ifTrue: [ 
+              selectResult := theColl
+                select: [ :each | 
+                  each.quantity < 25 & (startDate <= each.orderDate) & (each.orderDate < endDate)
+                    & (1 <= each.discount) & (each.discount <= 3) ].
               selectTime := Time
                 millisecondsToRun: [ 
                   selectCpuTime := System
                     millisecondsToRun: [ 
                       selectResult := theColl
-                        select: [ :each | startDate <= each.orderDate & (each.orderDate < endDate) ] ] ].
+                        select: [ :each | startDate <= each.orderDate & (each.orderDate < endDate) ] ] ] ].
+          (profile == #\'all\' or: [ profile == #\'queryBlock\' ])
+            ifTrue: [ 
               false
                 ifTrue: [ 
                   selectBlockResult := theColl
@@ -147,12 +151,12 @@ false ifTrue: [
                       (each.quantity < 25) & (startDate <= each.orderDate)
                         & (each.orderDate < endDate) & (1 <= each.discount)
                         & (each.discount <= 3) } ].
-              false ifTrue: [ selectBlockTime := Time
+              selectBlockTime := Time
                 millisecondsToRun: [ 
                   selectBlockCpuTime := System
                     millisecondsToRun: [ 
                       selectBlockResult := theColl
-                        select: { :each | (startDate <= each.orderDate) & (each.orderDate < endDate) } ] ]] ].
+                        select: { :each | (startDate <= each.orderDate) & (each.orderDate < endDate) } ] ] ].
           opts at: \'profile\' ifPresent: [ :ignored | profileTool pfview ] ].
       analysis
         at: \'nsc\' put: theColl;
@@ -182,7 +186,7 @@ false ifTrue: [
   bug - bug sript utility template
 SYNOPSIS
   bug [-h|--help]
-  bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula] [--profile]
+  bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--profile[=all|formula|selectBlock|queryBlock]]
 DESCRIPTION
   Attempt to characterize the performance issues seen in 3.1.0.2 MagLev runs involving these indexes:
           nsc
@@ -231,14 +235,19 @@ OPTIONS
   create[=<num_samples>]
     create a collection with <num_samples>. Default (and minimum samples) is 15.
     
-  formula
-    only run the formula query ... skip the select block query.
-
   index
     create indexes on the collection
 
-  profile
-    run profile during query and bring up the `pf view`
+  profile[=all|formula|selectBlock|queryBlock]
+    run profile during query and bring up the `pf view`. 
+      all
+        profile combined, query, select, and selectBlock queries
+      formula
+        profile the formula query
+      selectBlock
+        profile the selectBlock query 
+      queryBlock
+        profile the queryBlock query 
 
   query[=<window>
     default <window> is 5 ... a window of 5 results in 10 samples
@@ -250,5 +259,9 @@ EXAMPLES
   ./bug --clean --create --index --query=30; edit
   ./bug --clean --create=300 --index --query=600; edit
   ./bug --query=100000; edit
+  ./bug --query=100000 profile; edit
+  ./bug --query=100000 profile=query; edit
+  ./bug --query=100000 profile=selectBlock; edit
+  ./bug --query=100000 profile=queryBlock; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T13:03:20.6790549755096-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T14:25:48.0495200157165-08:00']}
