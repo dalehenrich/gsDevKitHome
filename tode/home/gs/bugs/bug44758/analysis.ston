@@ -86,4 +86,49 @@ tally % smpl% ms class and method name
 ---
 dkh 11/3/2014 13:10
 -------------------
-Push the StarSchema down a bit for a deeper index path and force the IndexDictionary into play ... also try starting the indexes created on nsc BEFORE adding all the elements to compare to a \"properly sized\" indexDictionary ...',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T13:11:55.179328918457-08:00']}
+Push the StarSchema down a bit for a deeper index path and force the IndexDictionary into play ... also try starting the indexes created on nsc BEFORE adding all the elements to compare to a \"properly sized\" indexDictionary ...
+
+dkh 11/3/2014 14:49
+-------------------
+Yeppers looks like traversal can be costly ...
+
+  ./bug --clean --depth --create=300 --index --query=100000 --profile=query; edit
+
+1@       -> \'base endDate\'->12/31/1993
+2@       -> \'base startDate\'->01/01/1993
+3@       -> \'CORRECT\'->true
+4@       -> \'endDate\'->05/31/1994
+5@       -> \'mid\'->182:00:00:00
+6@       -> \'nsc\'->aRcIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01/07/1993 discou...
+7@       -> \'nsc size\'->109500
+8@       -> \'query\'->(startDate <= each.value.value.orderDate < endDate)
+9@       -> \'query result\'->anIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01/07/199...
+10@      -> \'query result size\'->109500
+11@      -> \'samples per day\'->300
+12@      -> \'select block result\'->anIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01...
+13@      -> \'select result\'->anIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01/07/19...
+14@      -> \'sorted\'->anArray( 1->1->index = 1 orderDate = 01/01/1993 discount = 0 quantity = 1, 1->1->index = 2 orderDate = 01/01/1993 discount = 5 qua...
+15@      -> \'startDate\'->08/03/1992
+16@      -> \'time\'->anArray( 112, 112, 92, 92, 111, 111)
+17@      -> \'window size\'->333
+
+--------------------
+elapsed CPU time: 118 ms
+tally     %  smpl%    ms class and method name
+----- -----  ----- ----- ---------------------
+ 109  93.16  93.16 109.9 BtreeBasicLeafNode        >> _traverseValues:start:end:previous:into:
+   1   0.85   0.85   1.0 System class              >> _addToRcReadSet:includingAllNodes:
+   1   0.85   7.69   9.1 PPActionParser            >> parseOn:
+   1   0.85   0.85   1.0 System class              >> _readClock
+   1   0.85 101.71 120.0 AbstractDictionary        >> at:ifPresent:
+   1   0.85   1.71   2.0 PPCharSetPredicate        >> initializeOn:
+   1   0.85   0.85   1.0 Character class           >> withValue:
+   1   0.85   0.85   1.0 Association class         >> newWithKey:value:
+   1   0.85   0.85   1.0 Object                    >> shallowCopy
+   0   0.00  93.16 109.9 RangeIndexReadStream      >> _uniqueValuesAddInto:comparing:key:and:key:
+   0   0.00  93.16 109.9 RangeIndexReadStream      >> _uniqueValuesAddInto:spec:
+   0   0.00  93.16 109.9 BtreeQuerySpec            >> traverseValuesFrom:start:end:previous:into:
+
+
+
+',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T14:52:36.1850349903106-08:00']}

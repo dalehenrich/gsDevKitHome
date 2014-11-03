@@ -304,5 +304,6 @@ EXAMPLES
 
   ./bug --clean --depth --create --index --query=30; edit
   ./bug --clean --depth --create=300 --index --query=600; edit
+  ./bug --depth --query=100000; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T14:46:05.2602500915527-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T14:48:24.9982531070709-08:00']}
