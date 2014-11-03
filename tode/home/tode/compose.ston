@@ -1,0 +1,5 @@
+TDSmalltalkLeafNode{#name:'compose',#contents:'TDComposedDirectoryNode
+    linkNodePath: \'/tmp\'
+    asChildOfPath: \'/home\'
+    named: \'temp\'
+    topez: (TDTopezServer for: 0)',#creationTime:DateAndTime['2014-10-30T15:45:37.9828159809112-07:00'],#modificationTime:DateAndTime['2014-10-30T15:45:49.5817630290985-07:00']}

@@ -1,0 +1,11 @@
+dkh 10/31/2014 10:17
+--------------------
+Spot web page on Oracle site:
+
+  http://www.oracle.com/technetwork/server-storage/solaris10/spot-138236.html
+
+dkh 10/31/2014 11:00
+--------------------
+Here's the (currently) latest version of spot installation:
+
+  /opt/solarisstudio12.3/bin/spot

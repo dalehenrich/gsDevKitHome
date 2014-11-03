@@ -1,0 +1,69 @@
+TDStringLeafNode{#name:'analysis_1',#contents:'dkh 10/31/2014 11:25
+--------------------
+Well, it looks like we caught a FetchOop red handed (from Spot output):
+
+---
+Function Name: RelValueHolderSType::fetchObj()
+Attr.      Name
+User CPU
+ sec.
+0.430      relInitCachedValueKind(om*,RelValueHolderSType*,omObjSType**,int)
+0.        *RelValueHolderSType::fetchObj()
+0.430      om::FetchOop(omObjSType*,long)
+---
+
+The point of relops is to _NOT_ fetch objects (unnecessarily) and RelRelate should not be faulting expecially in this use case:
+
+---
+Function Name: relInitCachedValueKind(om*,RelValueHolderSType*,omObjSType**,int)
+Attr.      Name
+User CPU
+ sec.
+0.500      RelRelate(om*,RelValueHolderSType*,RelValueHolderSType*,int,int,omObjSType**)
+0.030      relInitCachedValueKind(om*,RelValueHolderSType*,omObjSType**,int)
+0.        *relInitCachedValueKind(om*,RelValueHolderSType*,omObjSType**,int)
+0.430      RelValueHolderSType::fetchObj()
+0.030      om::FetchClassObj(omObjSType*)
+0.030      RelValueHolderSType::obj()
+0.020      cacheSmallDouble(om*,RelValueHolderSType*)
+0.010      om::ClassId(omObjSType*)
+0.010      om::FetchOop(omObjSType*,long)
+0.         relInitCachedValueKind(om*,RelValueHolderSType*,omObjSType**,int)
+---
+
+IDXBtreeRangeComparisonQuerySpec::traverseValuesFrom is the primitive call for pulling in  the results of the range query and I think that this is just wrong:
+
+---
+Function Name: RelRelate(om*,RelValueHolderSType*,RelValueHolderSType*,int,int,omObjSType**)
+Attr.      Name
+User CPU
+ sec.
+0.851      IDXBtreeRangeComparisonQuerySpec::traverseValuesFrom(om*,omObjSType**,int,int,int,omObjSType**)
+0.030     *RelRelate(om*,RelValueHolderSType*,RelValueHolderSType*,int,int,omObjSType**)
+0.530      relInitCachedValueKind(om*,RelValueHolderSType*,omObjSType**,int)
+0.260      classDateAndTimeRelate(om*,RelValueHolderSType*,RelValueHolderSType*,int,int)
+0.020      RelValueHolderSType::fetchObjNoFault()
+0.010      RelValueHolderSType::isIdenticalTo(RelValueHolderSType*)
+---
+
+dkh 10/31/2014 12:36
+--------------------
+=>[1] RelValueHolderSType::fetchObj(this = 0xffffffff7fff9950), line 302 in \"relops.ht\"
+  [2] relInitCachedValueKind(omPtr = 0xffffffff6e002000, valueHolder = 0xffffffff7fff9950, collatorH = 0xffffffff6e4ba078, recursedFromDT = 0), line 2800 in \"relops.c\"
+  [3] RelRelate(omPtr = 0xffffffff6e002000, lOperand = 0xffffffff7fff9950, rOperand = 0xffffffff7fff9bb8, totalOrder = 0, forCompare = 1, collatorH = 0xffffffff6e4ba078), line 3061 in \"relops.c\"
+  [4] IDXBtreeRangeComparisonQuerySpec::traverseValuesFrom(this = 0xffffffff7fff9dd0, omPtr = 0xffffffff6e002000, leafNodeH = 0xffffffff6e0675b0, from = 1, to = 1980, entrySize = 4, nscBuilderH = 0xffffffff6e067588), line 3932 in \"index.c\"
+  [5] IdxTraverseValuesStartEndInto(omPtr = 0xffffffff6e002000, ARStackPtr = 0xffffffff6e067570), line 3565 in \"index.c\"
+  [6] 0xffffffff77bb4f28(0xffffffff6e002000, 0xffffffff6e067578, 0xffffffff6e067570, 0xffffffffffffff48, 0x1510, 0x0), at 0xffffffff77bb4f28 
+  [7] IntLpSupControlLoop(omPtr = 0xffffffff6e002000, enterNativeCodeArg = 1, resultH = 0xffffffff6e4ba038), line 8570 in \"intloopsup.c\"
+  [8] intControlLoop(omPtr = 0xffffffff6e002000, enterNativeCode = 1, resultH = 0xffffffff6e4ba038), line 271 in \"interp.c\"
+  [9] IntExecuteMethod(iS = 0xffffffff6e03d9b8, receiverH = 0xffffffff6e4ba020, methodH = 0xffffffff6e4ba028, flags = 1, argsH = (nil), nArgs = 0), line 699 in \"interp.c\"
+  [10] executeFromCtx(omPtr = 0xffffffff6e002000, source = 261542401U, contextObj = 1U, symbolListArg = 20U, flags = 1, environmentId = 0, forExecuteBlock = 0, blockArgs = (nil), numArgs = 0), line 728 in \"gemdo.c\"
+  [11] GemDoExecuteFromContext(source = 261542401U, contextObj = 1U, symbolListArg = 20U, flags = 1, environmentId = 0, result = 0xffffffff7fffa9b0), line 738 in \"gemdo.c\"
+  [12] gciCall6Args(cmdId = LGC_CALL_EXEC_FROM_CONTEXT_OBJ, gemDoFct = 0xffffffff7ad518c8 = &GemDoExecuteFromContext(unsigned long,unsigned long,unsigned long,int,unsigned short,unsigned long*), arg1 = 261542401, arg2 = 1, arg3 = 20, arg4 = 1, arg5 = 0, arg6 = -2147505744), line 2124 in \"gcirpc.c\"
+  [13] GciExecuteFromContextDbg_(source = 261542401U, contextObject = 1U, symbolList = 20U, flags = 1, environmentId = 0), line 3032 in \"gcirpc.c\"
+  [14] GciExecuteDbg_(source = 261542401U, symbolList = 20U, flags = 1, environmentId = 0), line 2982 in \"gcirpc.c\"
+  [15] TpAuxDispatchCmd(cmd = cmdRun), line 7403 in \"topazm.c\"
+  [16] processCommand(), line 2823 in \"topazm.c\"
+  [17] topazMain(argc = 2, argv = 0xffffffff7fffea28, gciDynLibHandle = 0xffffffff7e000600), line 3862 in \"topazm.c\"
+  [18] main(argc = 2, argv = 0xffffffff7fffea28), line 87 in \"topaz.c\"
+',#creationTime:DateAndTime['2014-10-31T16:39:28.7188260555267-07:00'],#modificationTime:@2}

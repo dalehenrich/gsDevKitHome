@@ -1,6 +1,6 @@
-TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+TDScriptLeafNode{#name:'bug_1',#contents:'[ :topez :objIn :tokens :command | 
   | opts args |
-  \"for help: ./bug -h\"
+  \"for help: ./bug_1 -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -16,55 +16,37 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime selectBlockResult selectBlockTime selectBlockCpuTime |
+      | analysis theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime names selectBlockResult selectBlockTime selectBlockCpuTime |
       analysis := Dictionary new.
       opts
         at: \'clean\'
         ifPresent: [ :ignored | 
           \"clean up indexes here\"
           UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
-          IndexManager removeAllIndexes.
-          Smalltalk at: #\'StarSchema\' ifPresent: [ :cl | cl removeFromSystem ] ].
+          IndexManager removeAllIndexes ].
+      names := {\'Dale\'.
+      \'Nic\'.
+      \'Brian\'.
+      \'Janet\'.
+      \'Heather\'}.
       opts
         at: \'create\'
         ifPresent: [ :sampleCount | 
-          | cls nsc samples startDate minCount |
-          cls := Smalltalk
-            at: #\'StarSchema\'
-            ifAbsent: [ 
-              cls := Object
-                subclass: \'StarSchema\'
-                instVarNames: #(\'index\' \'orderDate\' \'discout\' \'quantity\')
-                inDictionary: UserGlobals.
-              cls
-                compile: \'index: anObject index := anObject\';
-                compile: \'index ^index\';
-                compile: \'orderDate: anObject orderDate := anObject\';
-                compile: \'orderDate ^orderDate\';
-                compile: \'discout: anObject discout := anObject\';
-                compile: \'discout ^discout\';
-                compile: \'quantity: anObject quantity := anObject\';
-                compile: \'quantity ^quantity\';
-                compile:
-                    \'printOn: aStream aStream nextPutAll: \'\'index = \'\', index printString, \'\' orderDate = \'\', orderDate printString, \'\' discout = \'\', discount printString, \'\' quantity = \'\', quantity printString\';
-                yourself ].
+          | nsc samples base minCount |
           minCount := 15.
           samples := sampleCount
             ifNil: [ minCount ]
             ifNotNil: [ sampleCount asNumber max: minCount ].
           nsc := RcIdentityBag new: 100.
-          startDate := Date newDay: 1 year: 1993.
+          base := DateAndTime now.
           UserGlobals
             at: #\'coll\' put: nsc;
-            at: #\'startDate\' put: startDate;
+            at: #\'baseDate\' put: base;
             yourself.
           1 to: samples do: [ :index | 
-            | sample date |
-            date := startDate + (index - 1) days.
-            sample := cls new
-              index: index;
-              orderDate: date;
-              yourself.
+            | sample |
+            sample := index
+              -> ((names at: index \\\\ 5 + 1) -> (base + (index - 1) days)).
             nsc add: sample.
             index \\\\ 1000 = 0
               ifTrue: [ System commitTransaction ] ] ].
@@ -86,7 +68,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
           profileTool := topez toolInstanceFor: \'pf\'.
           opts at: \'profile\' ifPresent: [ :ignored | profileTool pfstart ].
           windowSize := window ifNil: [ 5 ] ifNotNil: [ window asNumber ].
-          startDate := UserGlobals at: #\'startDate\' ifAbsent: [ Date now ].
+          startDate := UserGlobals at: #\'baseDate\' ifAbsent: [ DateAndTime now ].
           endDate := startDate + (theColl size - 1) days.
           mid := (endDate - startDate) / 2.
           d1 := startDate + mid - windowSize days.
@@ -146,51 +128,12 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       TDManPage
         viewManPage:
           \'NAME
-    bug - bug sript utility template
+    bug_1 - bug_1 sript utility template
   SYNOPSIS
-    bug [-h|--help]
-    bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula] [--profile]
+    bug_1 [-h|--help]
+    bug_1 [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--formula] [--profile]
   DESCRIPTION
-    Attempt to characterize the performance issues seen in 3.1.0.2 MagLev runs involving these indexes:
-          nsc
-            createEqualityIndexOn: \'\'orderDate\'\' withLastElementClass: Date;
-            createEqualityIndexOn: \'\'discount\'\'
-              withLastElementClass: SmallInteger;
-            createEqualityIndexOn: \'\'quantity\'\'
-              withLastElementClass: SmallInteger;
-            yourself 
-
-    and this queries:
-
-                (lines select: {:each |
-                        (each.quantity < 25)
-                        & (each.orderDate >= startDate) & (each.orderDate < endDate)
-                        & (each.discount >= 1) & (each.discount <= 3)
-                })
-
-    giving these profile results:
-
-================
-STATISTICAL SAMPLING RESULTS
-elapsed CPU time:    89413 ms
-monitoring interval: 1.0 ms
-
- tally       %   class and method name
-------   -----   --------------------------------------
- 15091   17.08   BtreeBasicLeafNode        >> _addValues:start:end:into:
- 14229   16.10   Array                     >> at:
-  6952    7.87   Number                    >> _classSortOrdinal
-  5235    5.92   PathEvaluator             >> _traverse:cachedOffsets:cachedClasses:incomplete:
-  3683    4.17   Object                    >> size
-  3541    4.01   QueryExecuter             >> evaluatePathConstantPredicates:for:
-  3394    3.84   SmallInteger              >> =
-  2497    2.83   IdentityBag               >> _at:
-  2262    2.56   Object                    >> _idxGreaterThanAndLessThanValues:
-
-    The theory at the time was that we were seeing at: and PathEvaluator calls on the stack because 
-    the result set size was such that we were doing brute force queries on a large result set ... 
-    But ... later runs and rebuilt indexes resulted in better performance profiles ... 
-
+    Code used in working toward 3.3 patch: http://kermit/bug?bug=44758#event7
   OPTIONS
     clean
       remove all indexes in system
@@ -211,16 +154,15 @@ monitoring interval: 1.0 ms
       default <window> is 5 ... a window of 5 results in 10 samples
 
   EXAMPLES
-    ./bug --help
-  
-    ./bug --clean --create 
-    ./bug --clean --create=1000 --index
-    ./bug --clean --query=5
-    ./bug --clean --create=1000 --query
-    ./bug --clean --create=1000 --index --query=5
-    ./bug --clean --create=100000 --index 
-    ./bug --clean --create=100000 --index --query=50000 --formula --profile; edit
-    ./bug --query=50000 --formula
-    ./bug --query=50000 --formula --profile
+    ./bug_1 --help
+    ./bug_1 --clean --create 
+    ./bug_1 --clean --create=1000 --index
+    ./bug_1 --clean --query=5
+    ./bug_1 --clean --create=1000 --query
+    ./bug_1 --clean --create=1000 --index --query=5
+    ./bug_1 --clean --create=100000 --index 
+    ./bug_1 --clean --create=100000 --index --query=50000 --formula --profile; edit
+    ./bug_1 --query=50000 --formula
+    ./bug_1 --query=50000 --formula --profile
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T11:32:32.0235719680786-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-03T10:57:15.8774170875549-08:00'],#modificationTime:DateAndTime['2014-11-03T10:59:43.6605100631713-08:00']}
