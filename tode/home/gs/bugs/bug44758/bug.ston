@@ -9,6 +9,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       #(\'depth\' nil #\'none\').
       #(\'index\' nil #\'optional\').
       #(\'profile\' nil #\'optional\').
+      #(\'run\' nil #\'required\').
       #(\'query\' nil #\'optional\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -98,14 +99,15 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'query\'
         ifPresent: [ :window | 
-          | startDate endDate baseStartDate baseEndDate mid d1 d2 windowSize profileTool queryString samplesPerDay profile depth |
+          | startDate endDate baseStartDate baseEndDate mid d1 d2 windowSize profileTool queryString samplesPerDay profile run depth |
           profileTool := topez toolInstanceFor: \'pf\'.
-          profile := #\'all\'.
+          run := #\'all\'.
           opts
             at: \'profile\'
             ifPresent: [ :spec | 
-              spec ifNotNil: [ profile := spec asSymbol ].
-              profileTool pfstart ].
+              spec ifNotNil: [ run := spec asSymbol ].
+              profileTool pfstart ]
+            ifAbsent: [ opts at: \'run\' ifPresent: [ :spec | run := spec asSymbol ] ].
           samplesPerDay := UserGlobals at: #\'samples\' ifAbsent: [ 15 ].
           windowSize := (window ifNil: [ 5 ] ifNotNil: [ window asNumber ])
             // samplesPerDay.
@@ -139,11 +141,11 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             queryOptions: GsQueryOptions default - GsQueryOptions autoOptimize;
             optimize;
             yourself.
-          (profile == #\'all\' or: [ profile == #\'query\' ])
+          (run == #\'all\' or: [ run == #\'query\' ])
             ifTrue: [ 
               queryTime := Time
                 millisecondsToRun: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ] ].
-          (profile == #\'all\' or: [ profile == #\'selectBlock\' ])
+          (run == #\'all\' or: [ run == #\'selectBlock\' ])
             ifTrue: [ 
               | block |
               opts
@@ -164,7 +166,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
                 millisecondsToRun: [ 
                   selectCpuTime := System
                     millisecondsToRun: [ selectResult := theColl select: block ] ] ].
-          (profile == #\'all\' or: [ profile == #\'queryBlock\' ])
+          (run == #\'all\' or: [ run == #\'queryBlock\' ])
             ifTrue: [ 
               | block |
               opts
@@ -221,7 +223,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
 SYNOPSIS
   bug [-h|--help]
   bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--profile[=all|formula|selectBlock|queryBlock]]
-      [--depth]
+      [--depth] [--run=formula|selectBlock|queryBlock]
 DESCRIPTION
   Attempt to characterize the performance issues seen in 3.1.0.2 MagLev runs involving these indexes:
           nsc
@@ -287,6 +289,16 @@ OPTIONS
       queryBlock
         profile the queryBlock query 
 
+  run=formula|selectBlock|queryBlock
+    run 
+      profile during query and bring up the `pf view`. 
+    formula
+      profile the formula query
+    selectBlock
+      profile the selectBlock query 
+    queryBlock
+      profile the queryBlock query 
+
   query[=<window>
     default <window> is 5 ... a window of 5 results in 10 samples
 
@@ -305,5 +317,6 @@ EXAMPLES
   ./bug --clean --depth --create --index --query=30; edit
   ./bug --clean --depth --create=300 --index --query=600; edit
   ./bug --depth --query=100000; edit
+  ./bug --depth --query=100000 --run=query; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T14:48:24.9982531070709-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T16:08:19.6723289489746-08:00']}
