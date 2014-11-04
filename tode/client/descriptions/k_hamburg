@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'hamburg.gemtalksystems.com',
 	#stoneName : 'k_hamburg',
 	#gemHost : 'hamburg.gemtalksystems.com',
-	#netLDI : '36046',
+	#netLDI : '56590',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
