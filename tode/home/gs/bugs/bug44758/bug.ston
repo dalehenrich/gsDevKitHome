@@ -9,6 +9,8 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       #(\'depth\' nil #\'none\').
       #(\'index\' nil #\'optional\').
       #(\'profile\' nil #\'optional\').
+      #(\'rebuild\' nil #\'required\').
+      #(\'reps\' nil #\'required\').
       #(\'run\' nil #\'required\').
       #(\'query\' nil #\'optional\')}
     optionsAndArguments: [ :options :operands | 
@@ -19,7 +21,8 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
     ifAbsent: [ 
       | analysis sortedColl theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime selectBlockResult selectBlockTime selectBlockCpuTime reps indexDictStats |
       analysis := Dictionary new.
-      reps := 10.
+      reps := 1.
+      opts at: \'reps\' ifPresent: [ :count | reps := count asNumber ].
       opts
         at: \'clean\'
         ifPresent: [ :ignored | 
@@ -98,6 +101,21 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             createIndexesOn: theColl;
             yourself ].
       opts
+        at: \'rebuild\'
+        ifPresent: [ :collisionBucketSize | 
+          theColl _indexedPaths
+            ifNotNil: [ :iList | 
+              | indexObj |
+              1 to: iList size by: 2 do: [ :i | 
+                ((iList at: i + 1) == 1 and: [ (iList at: i) indexDictionary ~~ nil ])
+                  ifTrue: [ indexObj := iList at: i ] ].
+              indexObj
+                ifNotNil: [ 
+                  indexObj indexDictionary
+                    rebuildTable: 0
+                    targetBucketSize: collisionBucketSize asNumber
+                    for: indexObj ] ] ].
+      opts
         at: \'query\'
         ifPresent: [ :window | 
           | startDate endDate baseStartDate baseEndDate mid d1 d2 windowSize profileTool queryString samplesPerDay profile run depth |
@@ -146,8 +164,8 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             ifTrue: [ 
               queryTime := Time
                 millisecondsToRun: [ 
-                  reps
-                    timesRepeat: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ] ] ].
+                  queryCpuTime := System
+                    millisecondsToRun: [ reps timesRepeat: [ queryResult := query queryResult ] ] ] ].
           (run == #\'all\' or: [ run == #\'selectBlock\' ])
             ifTrue: [ 
               | block |
@@ -168,7 +186,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
               selectTime := Time
                 millisecondsToRun: [ 
                   selectCpuTime := System
-                    millisecondsToRun: [ selectResult := theColl select: block ] ] ].
+                    millisecondsToRun: [ reps timesRepeat: [ selectResult := theColl select: block ] ] ] ].
           (run == #\'all\' or: [ run == #\'queryBlock\' ])
             ifTrue: [ 
               | block |
@@ -192,18 +210,18 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
               selectBlockTime := Time
                 millisecondsToRun: [ 
                   selectBlockCpuTime := System
-                    millisecondsToRun: [ selectBlockResult := theColl select: block ] ] ].
+                    millisecondsToRun: [ reps timesRepeat: [ selectBlockResult := theColl select: block ] ] ] ].
           opts at: \'profile\' ifPresent: [ :ignored | profileTool pfview ] ].
       sortedColl := opts
         at: \'depth\'
         ifPresent: [ :notUsed | theColl asArray sorted: [ :a :b | a value value index <= b value value index ] ]
         ifAbsent: [ theColl asArray sorted: [ :a :b | a index <= b index ] ].
-indexDictStats := Dictionary new.
-theColl _getIndexDictionary _statisticsInto: indexDictStats.
+      indexDictStats := Dictionary new.
+      theColl _getIndexDictionary _statisticsInto: indexDictStats.
       analysis
         at: \'nsc\' put: theColl;
         at: \'nsc size\' put: theColl size;
-at: \'index dict stats\' put: indexDictStats;
+        at: \'index dict stats\' put: indexDictStats;
         at: \'sorted\' put: sortedColl;
         at: \'query\' put: query;
         at: \'query result\' put: queryResult;
@@ -228,7 +246,8 @@ at: \'index dict stats\' put: indexDictStats;
   bug - bug sript utility template
 SYNOPSIS
   bug [-h|--help]
-  bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--profile[=all|formula|selectBlock|queryBlock]]
+  bug [--clean] [--create[=<num_samples>]] [--index] [--query[=<window>]] [--reps=<rep_count>] [--rebuild=<bucket_size>]
+      [--profile[=all|formula|selectBlock|queryBlock]]
       [--depth] [--run=formula|selectBlock|queryBlock]
 DESCRIPTION
   Attempt to characterize the performance issues seen in 3.1.0.2 MagLev runs involving these indexes:
@@ -295,6 +314,12 @@ OPTIONS
       queryBlock
         profile the queryBlock query 
 
+  rebuild=<bucket_size>
+    rebuild the rcindex dictionary using <bucket_size> as target collision bucket size.
+
+  reps=<rep_count>
+    number of times to perform the query.
+
   run=formula|selectBlock|queryBlock
     run 
       profile during query and bring up the `pf view`. 
@@ -323,6 +348,7 @@ EXAMPLES
   ./bug --clean --depth --create --index --query=30; edit
   ./bug --clean --depth --create=300 --index --query=600; edit
   ./bug --depth --query=100000; edit
-  ./bug --depth --query=100000 --run=query; edit
+  ./bug --depth --query=100000 --run=query --reps=10; edit
+  ./bug --rebuild=25
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T16:55:28.277221918106-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-04T11:34:28.0072770118713-08:00']}

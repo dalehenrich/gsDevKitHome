@@ -229,4 +229,26 @@ dkh 11/3/2014 17:16
 What\'s the parformance if we try to skinny the bucket size down to 50 or 25? Do we get better perfomance?
 
 
-',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T17:17:50.963907957077-08:00']}
+dkh 11/4/2014 11:40
+-------------------
+Checkpoint run before changing rc index dictionary bucket size: ./bug --depth --query=100000  --reps=10; edit
+
+1@       -> \'base endDate\'->12/31/1993
+2@       -> \'base startDate\'->01/01/1993
+3@       -> \'CORRECT\'->true
+4@       -> \'endDate\'->05/31/1994
+5@       -> \'index dict stats\'->aDictionary( #\'IndexDictionaryPages\'->anIdentitySet( 42623, 44322, 44760, 44761, 44762, 44763, 44829, 44830, 44831, 4483...
+6@       -> \'mid\'->182:00:00:00
+7@       -> \'nsc\'->aRcIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01/07/1993 discou...
+8@       -> \'nsc size\'->109500
+9@       -> \'query\'->(startDate <= each.value.value.orderDate < endDate)
+10@      -> \'query result\'->anIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01/07/199...
+11@      -> \'query result size\'->109500
+12@      -> \'samples per day\'->300
+13@      -> \'select block result\'->anIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01...
+14@      -> \'select result\'->anIdentityBag( 7->7->index = 1989 orderDate = 01/07/1993 discount = 4 quantity = 7, 7->7->index = 1988 orderDate = 01/07/19...
+15@      -> \'sorted\'->anArray( 1->1->index = 1 orderDate = 01/01/1993 discount = 0 quantity = 1, 1->1->index = 2 orderDate = 01/01/1993 discount = 5 qua...
+16@      -> \'startDate\'->08/03/1992
+17@      -> \'time\'->anArray( 1071, 1072, 803, 802, 1019, 1019)
+18@      -> \'window size\'->333
+',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-04T11:41:37.7475590705871-08:00']}
