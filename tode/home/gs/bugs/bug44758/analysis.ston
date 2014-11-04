@@ -210,4 +210,23 @@ User CPU
 At the end of the day we\'re burning significant cpu in [1.701      indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)] which is spending all time in [1.811     *om::FetchOopNoFault(omObjSType*,long)] ... 
 
 soooooo, I\'m suspicious that the RcIndexDictionary needs to be rebuilt...
-',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T16:48:24.2508409023284-08:00']}
+
+dkh 11/3/2014 16:56
+-------------------
+Buuuuuuut ... taking a look at the index dict statistics:
+
+1@       -> #\'AvgEntriesPerIndexBucket\'->1.0933599600599101E02
+2@       -> #\'IndexDictionaryPages\'->anIdentitySet( 17159, 17184, 17185, 17186, 17219, 17220, 17221, 17222, 17223, 17224, 17225, 17226, 17227, 17228, 17...
+3@       -> #\'IndexDictionaryPhysicalSize\'->5846928
+4@       -> #\'IndexDictionaryRootSize\'->2003
+5@       -> #\'IndexDictionarySpaceUtilization\'->anArray( anArray( 109, 110, 108, 110, 110, 109, 110, 106, 109, 109, 110, 109, 110, 108, 109, 110, 108, 1...
+6@       -> #\'LargestIndexBucketSize\'->110
+
+the largest bucket size is 110 ... which is not bad .... the target size is 145 so we\'re not off base ... we\'re just burning cpu with lot\'s o\'lookups ...
+
+dkh 11/3/2014 17:16
+-------------------
+What\'s the parformance if we try to skinny the bucket size down to 50 or 25? Do we get better perfomance?
+
+
+',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T17:17:50.963907957077-08:00']}

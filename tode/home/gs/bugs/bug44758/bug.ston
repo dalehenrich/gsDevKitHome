@@ -17,9 +17,9 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis sortedColl theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime selectBlockResult selectBlockTime selectBlockCpuTime reps |
+      | analysis sortedColl theColl query selectResult queryResult queryTime selectTime queryCpuTime selectCpuTime selectBlockResult selectBlockTime selectBlockCpuTime reps indexDictStats |
       analysis := Dictionary new.
-reps := 10.
+      reps := 10.
       opts
         at: \'clean\'
         ifPresent: [ :ignored | 
@@ -145,7 +145,9 @@ reps := 10.
           (run == #\'all\' or: [ run == #\'query\' ])
             ifTrue: [ 
               queryTime := Time
-                millisecondsToRun: [ reps timesRepeat: [queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ]] ] ].
+                millisecondsToRun: [ 
+                  reps
+                    timesRepeat: [ queryCpuTime := System millisecondsToRun: [ queryResult := query queryResult ] ] ] ].
           (run == #\'all\' or: [ run == #\'selectBlock\' ])
             ifTrue: [ 
               | block |
@@ -196,9 +198,12 @@ reps := 10.
         at: \'depth\'
         ifPresent: [ :notUsed | theColl asArray sorted: [ :a :b | a value value index <= b value value index ] ]
         ifAbsent: [ theColl asArray sorted: [ :a :b | a index <= b index ] ].
+indexDictStats := Dictionary new.
+theColl _getIndexDictionary _statisticsInto: indexDictStats.
       analysis
         at: \'nsc\' put: theColl;
         at: \'nsc size\' put: theColl size;
+at: \'index dict stats\' put: indexDictStats;
         at: \'sorted\' put: sortedColl;
         at: \'query\' put: query;
         at: \'query result\' put: queryResult;
@@ -320,4 +325,4 @@ EXAMPLES
   ./bug --depth --query=100000; edit
   ./bug --depth --query=100000 --run=query; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T16:32:53.3784089088439-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-03T16:55:28.277221918106-08:00']}
