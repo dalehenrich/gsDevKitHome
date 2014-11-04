@@ -147,4 +147,67 @@ tally     %  smpl%    ms class and method name
   15   5.21  97.92 289.8 UnorderedCollection       >> _select:
    1   0.35   0.35   1.0 System class              >> _readClock
 
-',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T15:00:03.9728960990905-08:00']}
+dkh 11/3/2014 16:42
+-------------------
+here\'s the tail of the spot run:
+---
+Function Name: traverseBackwardsAndAdd(om*,omObjSType**,omObjSType**,omObjSType**,long,omObjSType**,omObjSType**)
+Attr.      Name
+User CPU
+ sec.
+3.783      IDXBtreeRangeComparisonQuerySpec::traverseValuesFrom(om*,omObjSType**,int,int,int,omObjSType**)
+0.160     *traverseBackwardsAndAdd(om*,omObjSType**,omObjSType**,omObjSType**,long,omObjSType**,omObjSType**)
+1.861      indexDictionaryAtTerm(om*,omObjSType**,omObjSType**,omObjSType**,int*,omObjSType**)
+0.761      indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)
+0.700      nscBuilderAdd(om*,omObjSType**,omObjSType**)
+0.070      om::FetchOop(omObjSType*,long)
+0.050      om::AddPathToRcReadSet(om*,omObjSType**,long)
+0.050      om::FetchOopNoFault(omObjSType*,long)
+0.040      BmSetBit(PageCacheSType*,RepTreeRootSType*,unsigned long)
+0.040      indexBucketBitOperation(om*,omObjSType**,long,IdxBucketOpEType)
+0.040      om::objIdOfObj(om*,omObjSType**)
+0.010      indexBucketIsBucketValueBag(om*,omObjSType**,long)
+0.         om::LoadObj(om*,omSpaceType*,unsigned long,int)
+---
+Function Name: indexDictionaryAtTerm(om*,omObjSType**,omObjSType**,omObjSType**,int*,omObjSType**)
+Attr.      Name
+User CPU
+ sec.
+1.861      traverseBackwardsAndAdd(om*,omObjSType**,omObjSType**,omObjSType**,long,omObjSType**,omObjSType**)
+0.060     *indexDictionaryAtTerm(om*,omObjSType**,omObjSType**,omObjSType**,int*,omObjSType**)
+1.061      indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)
+0.460      om::FetchOop(omObjSType*,long)
+0.170      om::AddPathToRcReadSet(om*,omObjSType**,long)
+0.040      indexBucketBitOperation(om*,omObjSType**,long,IdxBucketOpEType)
+0.020      BmSetBit(PageCacheSType*,RepTreeRootSType*,unsigned long)
+0.020      om::objIdOfObj(om*,omObjSType**)
+0.010      indexBucketIsBucketValueBag(om*,omObjSType**,long)
+0.010      om::FetchOopNoFault(omObjSType*,long)
+0.010      om::LoadObj(om*,omSpaceType*,unsigned long,int)
+---
+Function Name: indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)
+Attr.      Name
+User CPU
+ sec.
+1.061      indexDictionaryAtTerm(om*,omObjSType**,omObjSType**,omObjSType**,int*,omObjSType**)
+0.761      traverseBackwardsAndAdd(om*,omObjSType**,omObjSType**,omObjSType**,long,omObjSType**,omObjSType**)
+0.120     *indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)
+1.701      om::FetchOopNoFault(omObjSType*,long)
+---
+Function Name: om::FetchOopNoFault(omObjSType*,long)
+Attr.      Name
+User CPU
+ sec.
+1.701      indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)
+0.050      traverseBackwardsAndAdd(om*,omObjSType**,omObjSType**,omObjSType**,long,omObjSType**,omObjSType**)
+0.030      IDXBtreeRangeComparisonQuerySpec::traverseValuesFrom(om*,omObjSType**,int,int,int,omObjSType**)
+0.010      indexDictionaryAtTerm(om*,omObjSType**,omObjSType**,omObjSType**,int*,omObjSType**)
+0.010      NscAddSortedOops(om*,omObjSType**,long,long,omObjSType**,int)
+0.010      nscSortOops(om*,long,omObjSType**,long,omObjSType**)
+1.811     *om::FetchOopNoFault(omObjSType*,long)
+---
+--------------------------
+At the end of the day we\'re burning significant cpu in [1.701      indexBucketBinarySearch(unsigned long,unsigned long,omObjSType**,int)] which is spending all time in [1.811     *om::FetchOopNoFault(omObjSType*,long)] ... 
+
+soooooo, I\'m suspicious that the RcIndexDictionary needs to be rebuilt...
+',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-03T16:48:24.2508409023284-08:00']}
