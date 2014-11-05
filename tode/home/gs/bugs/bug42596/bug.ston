@@ -1,47 +1,26 @@
 TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
-| opts args |
-\"for help: ./bug -h\"
-command
-  getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
-  optionsAndArguments: [ :options :operands | 
-    opts := options.
-    args := operands ].
-opts
-  at: \'help\'
-  ifAbsent: [ 
-    | testObj passivated reactivatedX stream reactivated1 reactivated2 reactivated3 reactivated4 |
-    testObj := Array with: \'Hello\' with: \'world\'.
-    passivated := (PassiveObject passivate: testObj) contents.
-    reactivated1 := (PassiveObject newWithContents: passivated) activate.
-    stream := WriteStreamLegacy on: String new.
-    PassiveObject passivate: testObj toStream: stream.
-    reactivatedX := (PassiveObject newWithContents: stream contents) activate.
-    reactivated1 = reactivatedX
-      ifFalse: [ self error: \'passivation mismatch\' ].
-    stream := WriteStreamPortable on: String new.
-    PassiveObject passivate: testObj toStream: stream.
-    reactivatedX := (PassiveObject newWithContents: stream contents) activate.
-    reactivated1 = reactivatedX
-      ifFalse: [ self error: \'passivation mismatch\' ].
-    stream := ReadWriteStreamPortable on: String new.
-    PassiveObject passivate: testObj toStream: stream.
-    reactivatedX := (PassiveObject newWithContents: stream contents) activate.
-    reactivated1 = reactivatedX
-      ifFalse: [ self error: \'passivation mismatch\' ].
-    stream := ReadStreamLegacy on: passivated.
-    reactivated2 := (PassiveObject newOnStream: stream) activate.
-    stream := ReadStreamPortable on: passivated.
-    reactivated3 := (PassiveObject newOnStream: stream) activate.
-    stream := ReadWriteStreamPortable with: passivated.
-\t\tstream reset.
-    reactivated4 := (PassiveObject newOnStream: stream) activate.
-    {reactivated1.
-    reactivated2.
-    reactivated3} ]
-  ifPresent: [ :ignored | 
-    TDManPage
-      viewManPage:
-        \'NAME
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [| testObj stream |
+
+testObj := (WriteStream on: DoubleByteString new)
+     nextPutAll: \'This is a test\';
+yourself.
+
+stream := WriteStreamPortable on: String new.
+PassiveObject passivate: testObj toStream: stream.
+  ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
   bug - bug sript utility template
 SYNOPSIS
   bug [-h|--help]
@@ -50,4 +29,4 @@ EXAMPLES
   ./bug --help
   ./bug -h
 \'
-      topez: topez ] ]',#creationTime:DateAndTime['2014-11-04T17:15:39.5280129909515-08:00'],#modificationTime:@2}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-04T17:15:39.5280129909515-08:00'],#modificationTime:DateAndTime['2014-11-04T17:22:55.456913948059-08:00']}

@@ -1,0 +1,14 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 11/4/2014 17:47
+-------------------
+
+Adding nextPutAllBytes: is going to be pretty dicey, since there is not a lot of support
+for adding bytes to CharacterCollection classes ... addAllBytes: is there to support passivate, 
+but I don\'t really think that it is correct to use addAllBytes: with the portable stream
+classes ... cause we might have off by one errors ...
+
+Also there is a call to super nextPutAllBytes: in legacy and there is no super implementation
+checking back to 2.4 ...
+
+Adding bytes to MultiByteStrings is probably okay, but adding bytes to Unicode strings starts getting crazy ... 
+
+I\'m beginning to think that the passivation needs to be revamped ... ',#creationTime:DateAndTime['2014-11-04T17:47:29.3060429096221-08:00'],#modificationTime:DateAndTime['2014-11-04T17:52:22.4127020835876-08:00']}
