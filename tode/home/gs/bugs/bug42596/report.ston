@@ -1,0 +1,46 @@
+TDTxtLeafNode{#name:'report',#contents:Text{#string:'42596  C2  PassiveObject operations fail with portable streams installed
+--------------------------------
+The following code works fine when the Legacy stream implementation is installed, but fails if the Portable stream implementation is installed. 
+
+PassiveObject >> next depends on ReadStream>>_fastNext, which is only on ReadStreamLegacy. 
+
+We might consider the possibility of actually *testing* the image with both kinds of streams... 
+
+run 
+| testObj passivated reactivated1 reactivated2 | 
+testObj := Array with: \'Hello\' with: \'world\'. 
+passivated := (PassiveObject passivate: testObj) contents. 
+reactivated1 := (PassiveObject newWithContents: passivated) activate. 
+reactivated2 := (PassiveObject newOnStream: passivated readStream) activate. 
+Array with: reactivated1 with: reactivated2 
+
+% 
+ERROR 2010 , a MessageNotUnderstood occurred (error 2010), a ReadStream does not understand #\'_fastNext\' (MessageNotUnderstood) 
+topaz 1> stk 
+==> 1 MessageNotUnderstood >> defaultAction (envId 0) @2 line 3 
+2 AbstractException >> _signalWith: (envId 0) @5 line 25 
+3 AbstractException >> signal (envId 0) @2 line 47 
+4 Object >> doesNotUnderstand: (envId 0) @9 line 10 
+5 Object >> _doesNotUnderstand:args:envId:reason: (envId 0) @7 line 12 
+6 PassiveObject >> next (envId 0) @9 line 7 
+7 PassiveObject >> activate (envId 0) @27 line 27 
+8 Executed Code @12 line 5 
+9 GsNMethod class >> _gsReturnToC (envId 0) @1 line 1 
+
+dkh 1/2/2014 11:35
+------------------
+readstrPortable.gs 
+
+dkh dkh 1/2/2014 18:50
+------------------
+fix bug 42596.
+
+Committed revision 32261.
+
+image/ReadWriteStream.gs
+image/ReadWriteStreamPortable.gs
+image/passiveobject.gs
+image/readstr.gs
+image/readstrPortable.gs
+tests/ernie/PassiveObject.gs
+',#runs:RunArray{#runs:[73,33,1616],#values:[[TextColor{#color:Color{#rgb:0}}],[],[TextColor{#color:Color{#rgb:0}}]],#lastIndex:nil,#lastRun:nil,#lastOffset:nil}},#creationTime:DateAndTime['2014-11-04T17:15:39.5376670360565-08:00'],#modificationTime:@13}

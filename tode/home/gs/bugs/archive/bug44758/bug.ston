@@ -351,4 +351,4 @@ EXAMPLES
   ./bug --depth --query=100000 --run=query --reps=10; edit
   ./bug --depth --rebuild=25; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-10-30T15:02:40.0424211025238-07:00'],#modificationTime:DateAndTime['2014-11-04T11:44:50.5686600208282-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-04T17:15:59.4823880195617-08:00'],#modificationTime:@2}

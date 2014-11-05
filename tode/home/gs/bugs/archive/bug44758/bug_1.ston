@@ -165,4 +165,4 @@ TDScriptLeafNode{#name:'bug_1',#contents:'[ :topez :objIn :tokens :command |
     ./bug_1 --query=50000 --formula
     ./bug_1 --query=50000 --formula --profile
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-03T10:57:15.8774170875549-08:00'],#modificationTime:DateAndTime['2014-11-03T10:59:43.6605100631713-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-04T17:15:59.4559450149536-08:00'],#modificationTime:@2}

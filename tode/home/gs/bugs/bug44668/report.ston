@@ -1,3 +1,0 @@
-TDStringLeafNode{#name:'report',#contents:'44668  P2  CharacterCollection>>_idxForSort*:collator: and _idxForCompare*:collator: do not handle non-character arg
--------------------------------
-Discovered while working on bug 44667 ... need to use double dispatching here so that nil can be handled correctly all of the new to 3.2 _idx*:collator: methods are suspect at this point ... clearly need more test coverage in this area ... ',#creationTime:DateAndTime['2014-10-08T12:44:42.7923040390014-07:00'],#modificationTime:DateAndTime['2014-10-08T12:45:10.7968189716339-07:00']}

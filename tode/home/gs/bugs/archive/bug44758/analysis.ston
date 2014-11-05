@@ -320,4 +320,4 @@ With Allen\'s improvements to indexBucketBinarySearch: ./bug --depth --query=100
 17@      -> \'time\'->anArray( 866, 866, 833, 832, 831, 831)
 18@      -> \'window size\'->333
 
-',#creationTime:DateAndTime['2014-10-31T16:39:33.2204151153564-07:00'],#modificationTime:DateAndTime['2014-11-04T13:19:03.1580231189727-08:00']}
+',#creationTime:DateAndTime['2014-11-04T17:15:59.3930950164794-08:00'],#modificationTime:@2}
