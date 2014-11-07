@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'project',#contents:'^ TDProjectSpecEntryDefinition new
+    configuration: \'Cryptography\'
+      version: #\'stable\'
+      repository: \'http://seaside.gemtalksystems.com/ss/Cryptography\'
+      loads: #(\'default\');
+    status: #(#\'inactive\');
+    locked: false;
+    yourself'}

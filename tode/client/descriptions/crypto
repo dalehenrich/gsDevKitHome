@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'crypto',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'crypto',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'crypto_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/crypto/backups/',
+	#gemstoneVersion : '3.3.0_k',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/crypto/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

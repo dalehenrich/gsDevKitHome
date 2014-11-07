@@ -196,6 +196,7 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'IdentitySet\' put: #(\'identityset.gs\');
     at: #\'IndexDictionaryEntryHolder\' put: #(\'identryholder.gs\');
     at: #\'IndexedQueryEvaluator\' put: #(\'indexquery.gs\');
+    at: #\'IndexingErrorPreventingCommit\' put: #(\'Exception.gs\');
     at: #\'IndexList\' put: #(\'indexlist.gs\');
     at: #\'IndexManager\' put: #(\'IndexManager.gs\');
     at: #\'IndexManagerAutoCommitPolicy\' put: #(\'indexmgrpolicy.gs\');
@@ -411,4 +412,4 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'VariableContext\' put: #(\'variablecon.gs\');
     at: #\'Warning\' put: #(\'Warning.gs\');
     at: #\'WriteStream\' put: #(\'writest.gs\' \'writestPortable.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.4023239612579-07:00'],#modificationTime:DateAndTime['2014-09-26T10:29:59.0012118816375-07:00']}
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.4023239612579-07:00'],#modificationTime:DateAndTime['2014-11-05T11:36:41.3263590335845-08:00']}
