@@ -3,4 +3,4 @@ TDStringLeafNode{#name:'analysis',#contents:'dkh 11/6/2014 17:18
 TDShellFsToSimpleComposedFsMvCpCommandTests>>testDirectoryNodeMv is failing because mv command is not creating leaf nodes in the target directory...
 
 TDFileSystemDirectoryNode inherits addAsChildOfFileSystemDirectoryNode: from TDDirectoryNode and it probably ought to be re-implemented in TDFileSystemDirectoryNode ... interesting that we haven\'t seen this issue before ... probably should be implemented using addChildFileSystemLeafNode:.
-',#creationTime:DateAndTime['2014-11-07T13:57:33.7460980415344-08:00'],#modificationTime:@2}
+',#creationTime:DateAndTime['2014-11-07T14:47:53.9815309047699-08:00'],#modificationTime:@2}

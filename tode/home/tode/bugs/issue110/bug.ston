@@ -1,0 +1,62 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'home\' nil #\'none\').
+      #(\'setup\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | shell |
+      shell := topez toolInstanceFor: \'mount\'.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | (topez lookup: \'/homes\' ifAbsent: [  ]) ifNotNil: [ :homes | homes rm ] ].
+      opts
+        at: \'setup\'
+        ifPresent: [ :ignored | 
+          shell
+            mount: \'$GS_HOME/homey/stoneHome\'
+              at: \'/homes\'
+              as: \'stoneHome\'
+              visitAsLeafNode: false;
+            mount: \'$GS_HOME/homey/systemHome\'
+              at: \'/homes\'
+              as: \'systemHome\'
+              visitAsLeafNode: false;
+            mount: \'$GS_HOME/homey/defaultHome\'
+              at: \'/homes\'
+              as: \'defaultHome\'
+              visitAsLeafNode: false;
+            yourself ].
+      opts
+        at: \'home\'
+        ifPresent: [ :ignored | 
+          | homesNode homeNode nodeList |
+          homesNode := topez lookup: \'/homes\'.
+          nodeList := #(\'/homes/stoneHome\' \'/homes/systemHome\' \'/homes/defaultHome\')
+            collect: [ :each | topez lookup: each ].
+          homeNode := TDComposedDirectoryNode
+            nodeList: nodeList
+            named: \'home\'
+            topez: topez.
+          homesNode addChildNode: homeNode ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help] [--clean] [--setup] [--home]
+DESCRIPTION
+EXAMPLES
+  /home/tode/bugs/issue110/bug --help
+  /home/tode/bugs/issue110/bug --clean --setup --home
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-07T15:38:39.328859090805-08:00']}
