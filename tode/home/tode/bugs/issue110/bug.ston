@@ -40,6 +40,23 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
         ifPresent: [ :ignored | 
           | homesNode homeNode |
           homesNode := topez lookup: \'/homes\'.
+          homeNode := TDRawGatewayNode new
+            name: \'home\';
+            contents:
+                \'TDComposedDirectoryNode
+            includesSpec:
+              {(\'\'/homes/stoneHome\'\' -> #()).
+              (\'\'/homes/systemHome\'\' -> #()).
+              (\'\'/homes/defaultHome\'\' -> #(\'\'gs\'\' \'\'index\'\' \'\'tode\'\' \'\'seaside\'\'))}
+            named: \'\'home\'\'
+            topez: self topez\';
+            topez: topez.
+          homesNode addChildNode: homeNode ].
+      opts
+        at: \'xhome\'
+        ifPresent: [ :ignored | 
+          | homesNode homeNode |
+          homesNode := topez lookup: \'/homes\'.
           homeNode := TDComposedDirectoryNode
             includesSpec:
               {(\'/homes/stoneHome\' -> #()).
@@ -61,4 +78,4 @@ EXAMPLES
   /home/tode/bugs/issue110/bug --clean 
   /home/tode/bugs/issue110/bug --clean --setup --home
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-07T17:19:37.4778668880462-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-07T17:27:40.1868159770965-08:00']}
