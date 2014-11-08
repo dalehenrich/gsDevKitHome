@@ -22,7 +22,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
         at: \'setup\'
         ifPresent: [ :ignored | 
           shell
-            mount: \'$GS_HOME/homey/stoneHome\'
+            mount: \'$GS_HOME/gemstone/stones/metacello/home\'
               at: \'/homes\'
               as: \'stoneHome\'
               visitAsLeafNode: false;
@@ -38,15 +38,13 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       opts
         at: \'home\'
         ifPresent: [ :ignored | 
-          | homesNode homeNode pathList |
+          | homesNode homeNode |
           homesNode := topez lookup: \'/homes\'.
-          pathList := #(\'/homes/stoneHome\' \'/homes/systemHome\' \'/homes/defaultHome\').
           homeNode := TDComposedDirectoryNode
-            pathList: pathList
-            includes:
-              {#().
-              #().
-              #(\'gs\' \'index\' \'tode\' \'seaside\')}
+            includesSpec:
+              {(\'/homes/stoneHome\' -> #()).
+              (\'/homes/systemHome\' -> #()).
+              (\'/homes/defaultHome\' -> #(\'gs\' \'index\' \'tode\' \'seaside\'))}
             named: \'home\'
             topez: topez.
           homesNode addChildNode: homeNode ] ]
@@ -63,4 +61,4 @@ EXAMPLES
   /home/tode/bugs/issue110/bug --clean 
   /home/tode/bugs/issue110/bug --clean --setup --home
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-07T16:37:51.6623380184173-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-07T17:19:37.4778668880462-08:00']}
