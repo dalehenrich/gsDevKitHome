@@ -22,21 +22,29 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
         at: \'setup\'
         ifPresent: [ :ignored | 
           shell
-            mount: \'$GS_HOME/gemstone/stones/metacello/home\'
+            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello/stoneHome\'
               at: \'/homes\'
               as: \'stoneHome\'
               visitAsLeafNode: false;
-            mount: \'$GS_HOME/homey/systemHome\'
+            mount: \'$GS_HOME/tode/homes/systemHome\'
               at: \'/homes\'
               as: \'systemHome\'
               visitAsLeafNode: false;
-            mount: \'$GS_HOME/homey/defaultHome\'
+            mount: \'$GS_HOME/tode/homes/devKitHome\'
               at: \'/homes\'
-              as: \'defaultHome\'
+              as: \'devKitHome\'
               visitAsLeafNode: false;
             yourself ].
       opts
         at: \'home\'
+        ifPresent: [ :ignored | 
+          shell
+            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello\'
+            at: \'/home/tode/bugs/issue110\'
+            as: \'metacello\'
+            visitAsLeafNode: false ].
+      opts
+        at: \'xhome\'
         ifPresent: [ :ignored | 
           | homesNode homeNode |
           homesNode := topez lookup: \'/homes\'.
@@ -47,7 +55,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
             includesSpec:
               {(\'\'/homes/stoneHome\'\' -> #()).
               (\'\'/homes/systemHome\'\' -> #()).
-              (\'\'/homes/defaultHome\'\' -> #(\'\'gs\'\' \'\'index\'\' \'\'tode\'\' \'\'seaside\'\'))}
+              (\'\'/homes/devKitHome\'\' -> #(\'\'gs\'\' \'\'index\'\' \'\'tode\'\' \'\'seaside\'\'))}
             named: \'\'home\'\'
             topez: self topez\';
             topez: topez.
@@ -78,4 +86,4 @@ EXAMPLES
   /home/tode/bugs/issue110/bug --clean 
   /home/tode/bugs/issue110/bug --clean --setup --home
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-07T17:27:40.1868159770965-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-11T15:44:41.1978158950805-08:00']}
