@@ -39,48 +39,12 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
         at: \'home\'
         ifPresent: [ :ignored | 
           shell
-            mountFile: \'$GS_HOME/tode/homes/stoneHomes/metacello/homeComposition.ston\'
+            mountFile:
+              \'$GS_HOME/tode/homes/stoneHomes/metacello/homeComposition.ston\'
             at: \'/home/tode/bugs/issue110\'
             as: \'home\'
             visitAsLeafNode: false ].
-      opts
-        at: \'xhome\'
-        ifPresent: [ :ignored | 
-          shell
-            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello\'
-            at: \'/home/tode/bugs/issue110\'
-            as: \'metacello\'
-            visitAsLeafNode: false ].
-      opts
-        at: \'xhome\'
-        ifPresent: [ :ignored | 
-          | homesNode homeNode |
-          homesNode := topez lookup: \'/homes\'.
-          homeNode := TDRawGatewayNode new
-            name: \'home\';
-            contents:
-                \'TDComposedDirectoryNode
-            includesSpec:
-              {(\'\'/homes/stoneHome\'\' -> #()).
-              (\'\'/homes/systemHome\'\' -> #()).
-              (\'\'/homes/devKitHome\'\' -> #(\'\'gs\'\' \'\'index\'\' \'\'tode\'\' \'\'seaside\'\'))}
-            named: \'\'home\'\'
-            topez: self topez\';
-            topez: topez.
-          homesNode addChildNode: homeNode ].
-      opts
-        at: \'xhome\'
-        ifPresent: [ :ignored | 
-          | homesNode homeNode |
-          homesNode := topez lookup: \'/homes\'.
-          homeNode := TDComposedDirectoryNode
-            includesSpec:
-              {(\'/homes/stoneHome\' -> #()).
-              (\'/homes/systemHome\' -> #()).
-              (\'/homes/defaultHome\' -> #(\'gs\' \'index\' \'tode\' \'seaside\'))}
-            named: \'home\'
-            topez: topez.
-          homesNode addChildNode: homeNode ] ]
+]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -95,4 +59,4 @@ EXAMPLES
   /home/tode/bugs/issue110/bug --clean --setup --home
   /home/tode/bugs/issue110/bug --home
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-12T10:49:17.4114279747009-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-12T11:05:37.5526819229126-08:00']}
