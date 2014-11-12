@@ -22,7 +22,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
         at: \'setup\'
         ifPresent: [ :ignored | 
           shell
-            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello/stoneHome\'
+            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello\'
               at: \'/homes\'
               as: \'stoneHome\'
               visitAsLeafNode: false;
@@ -36,18 +36,15 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
               visitAsLeafNode: false;
             yourself ].
       opts
-        at: \'errhome\'
+        at: \'home\'
         ifPresent: [ :ignored | 
-          self
-            error:
-              \'cannot create a file object .... FileDirectory only handles files ... no way to say this is a file in st expression\'.
           shell
-            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello/home.ston\'
+            mountFile: \'$GS_HOME/tode/homes/stoneHomes/metacello/homeComposition.ston\'
             at: \'/home/tode/bugs/issue110\'
             as: \'home\'
             visitAsLeafNode: false ].
       opts
-        at: \'home\'
+        at: \'xhome\'
         ifPresent: [ :ignored | 
           shell
             mount: \'$GS_HOME/tode/homes/stoneHomes/metacello\'
@@ -98,4 +95,4 @@ EXAMPLES
   /home/tode/bugs/issue110/bug --clean --setup --home
   /home/tode/bugs/issue110/bug --home
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-11T17:18:11.6204409599304-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-12T10:49:17.4114279747009-08:00']}
