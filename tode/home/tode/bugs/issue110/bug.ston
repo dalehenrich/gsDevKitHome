@@ -36,6 +36,17 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
               visitAsLeafNode: false;
             yourself ].
       opts
+        at: \'errhome\'
+        ifPresent: [ :ignored | 
+          self
+            error:
+              \'cannot create a file object .... FileDirectory only handles files ... no way to say this is a file in st expression\'.
+          shell
+            mount: \'$GS_HOME/tode/homes/stoneHomes/metacello/home.ston\'
+            at: \'/home/tode/bugs/issue110\'
+            as: \'home\'
+            visitAsLeafNode: false ].
+      opts
         at: \'home\'
         ifPresent: [ :ignored | 
           shell
@@ -85,5 +96,6 @@ EXAMPLES
   /home/tode/bugs/issue110/bug --help
   /home/tode/bugs/issue110/bug --clean 
   /home/tode/bugs/issue110/bug --clean --setup --home
+  /home/tode/bugs/issue110/bug --home
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-11T15:44:41.1978158950805-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-07T14:47:53.985356092453-08:00'],#modificationTime:DateAndTime['2014-11-11T17:18:11.6204409599304-08:00']}
