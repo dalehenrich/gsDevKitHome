@@ -1,0 +1,7 @@
+TDTopezLeafNode{#name:'newHome',#contents:'mount --todeRoot sys/default /sys default
+mount --todeRoot sys/local /sys local
+mount --todeRoot sys/stones /sys stones
+mount --stoneRoot root /sys stone
+mount --stoneRoot root/homeComposition.ston / home
+mount --stoneRoot root/projectComposition.ston / projects
+',#creationTime:DateAndTime['2014-11-13T15:11:24.4977540969848-08:00'],#modificationTime:DateAndTime['2014-11-13T15:13:14.2252509593963-08:00']}
