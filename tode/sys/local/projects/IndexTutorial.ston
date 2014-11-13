@@ -1,4 +1,4 @@
-TDObjectGatewayNode{#name:'project',#contents:'^ TDProjectSpecEntryDefinition new
+TDObjectGatewayNode{#name:'IndexTutorial',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'IndexTutorial\'
       repository: \'filetree://$GS_HOME/tutorials/indexing/repository\'
       loads: #( \'default\' );
