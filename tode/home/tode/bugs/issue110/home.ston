@@ -1,4 +1,0 @@
-TDObjectGatewayNode{#name:'home',#contents:'|  filename parentDir |
-  filename := ServerFileDirectory localNameFor: \'$GS_HOME/tode/homes/stoneHomes/metacello/homeComposition.ston\'.
-  parentDir := ServerFileDirectory forFileName: \'$GS_HOME/tode/homes/stoneHomes/metacello/homeComposition.ston\'.
-  parentDir directoryEntryFor: filename'}
