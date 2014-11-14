@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'k_hamburg',
+	#stoneHost : 'hamburg.gemtalksystems.com',
+	#stoneName : 'k_hamburg',
+	#gemHost : 'hamburg.gemtalksystems.com',
+	#netLDI : '56590',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '',
+	#gemstoneVersion : '3.3.0',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

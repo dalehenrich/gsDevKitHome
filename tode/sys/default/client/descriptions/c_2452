@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'c_2452',
+	#stoneHost : 'foos',
+	#stoneName : 'c_2452',
+	#gemHost : 'foos',
+	#netLDI : '55423',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos2/users/dhenrich/2.0/c_gss64bit_2452/backups/',
+	#gemstoneVersion : '2.4.5',
+	#gciLibraryName : 'libgcirpc64-245',
+	#adornmentColor : nil,
+	#serverGitRoot : '/opt/git',
+	#serverTodeRoot : '/opt/git/todeHome/dev/tode'
+}

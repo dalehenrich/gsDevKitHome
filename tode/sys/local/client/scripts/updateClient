@@ -1,0 +1,1 @@
+updateClient --lock --clientRepo=filetree:///opt/git/tode/repository
