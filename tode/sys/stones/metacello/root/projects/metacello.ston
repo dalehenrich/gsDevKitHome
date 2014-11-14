@@ -1,6 +1,7 @@
 TDObjectGatewayNode{#name:'metacello',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Metacello\'
-      repository: \'filetree:///opt/git/metacello-work/repository\'
+      repository:
+        \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/metacello/git/metacello-work/repository\'
       loads: #(\'Tests\');
     status: #(#\'active\');
     locked: true;
