@@ -1,4 +1,1 @@
-#no backups on travis
-mount --todeRoot home /
-commit
-cd 
+../../../default/client/scripts/installTravisServerTode2
