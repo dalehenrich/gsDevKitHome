@@ -17,24 +17,24 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
         ifPresent: [ :ignored | repair := true ]
         ifAbsent: [ repair := false ].
       cpTool := topez toolInstanceFor: \'cp\'.
+      stoneRoot := topez serverTodeStoneRoot.
+      stoneRootDir := ServerFileDirectory on: stoneRoot.
       validateDirBlock := [ :dir | 
       dir exists
         ifFalse: [ 
           repair
             ifTrue: [ dir assureExistence ]
-            ifFalse: [ self error: \'Missing directory: \' dir pathName printString ] ] ].
-      validateFileBlock := [ :dir :filename | 
+            ifFalse: [ self error: \'Missing directory: \' , dir pathName printString ] ] ].
+      validateFileBlock := [ :dir :filename :nodename | 
       (dir fileExists: filename)
         ifFalse: [ 
           repair
-            ifTrue: [ cpTool cp: \'/sys/stones/templates/\' , filename to: stoneRoot ]
+            ifTrue: [ cpTool cp: \'/sys/stones/templates/\' , nodename to: \'/sys/stone\' ]
             ifFalse: [ 
               self
                 error:
-                  \'Missing file: \' , filename printString
-                    , \' in directory: \' dir pathName printString ] ] ].
-      stoneRoot := topez serverTodeStoneRoot.
-      stoneRootDir := ServerFileDirectory on: stoneRoot.
+                  \'Missing file: \' , filename printString , \' in path: \'
+                    , dir pathName printString ] ] ].
       validateDirBlock value: stoneRootDir.
       rootDir := stoneRootDir directoryNamed: \'root\'.
       validateDirBlock value: rootDir.
@@ -42,8 +42,14 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
       validateDirBlock value: dir.
       dir := rootDir directoryNamed: \'projects\'.
       validateDirBlock value: dir.
-      validateFileBlock value: rootDir value: \'homeComposition.ston\'.
-      validateFileBlock value: rootDir value: \'projectComposition.ston\'.
+      validateFileBlock
+        value: rootDir
+        value: \'homeComposition.ston\'
+        value: \'homeComposition\'.
+      validateFileBlock
+        value: rootDir
+        value: \'projectComposition.ston\'
+        value: \'projectComposition\'.
       true ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -84,4 +90,4 @@ EXAMPLES
   /sys/bin/validateStoneSysNodes 
   /sys/bin/validateStoneSysNodes --repair
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-14T16:19:26.4569790363311-08:00'],#modificationTime:DateAndTime['2014-11-14T17:02:35.8234820365905-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-14T16:19:26.4569790363311-08:00'],#modificationTime:DateAndTime['2014-11-14T17:37:50.6578350067138-08:00']}
