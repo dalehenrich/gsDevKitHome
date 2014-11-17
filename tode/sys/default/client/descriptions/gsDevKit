@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'gsDevKit',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : '39525',
+	#netLDI : '57467',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
