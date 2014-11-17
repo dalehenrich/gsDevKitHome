@@ -36,3 +36,9 @@ $GS_HOME/bin/updateTodeImage -p _1
 $GS_HOME/bin/updateTodeImage -p _2
 
 $GS_HOME/bin/updateTodeImage -p _small
+
+$GS_HOME/bin/updateTodeImage -p _small_0
+
+$GS_HOME/bin/updateTodeImage -p _small_1
+
+$GS_HOME/bin/updateTodeImage -p _small_2

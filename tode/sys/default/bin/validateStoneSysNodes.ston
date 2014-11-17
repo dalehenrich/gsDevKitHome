@@ -12,7 +12,7 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
   opts
     at: \'help\'
     ifAbsent: [ 
-      | validateDirBlock validateFileBlock stoneRoot stoneRootDir repair rootDir dir cpTool |
+      | validateDirBlock validateFileBlock stoneRoot stoneRootDir repair dir cpTool |
       opts
         at: \'repair\'
         ifPresent: [ :ignored | repair := true ]
@@ -37,21 +37,20 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
                   \'Missing file: \' , filename printString , \' in path: \'
                     , dir pathName printString ] ] ].
       validateDirBlock value: stoneRootDir.
-      rootDir := stoneRootDir directoryNamed: \'root\'.
-      validateDirBlock value: rootDir.
-      dir := rootDir directoryNamed: \'home\'.
+      validateDirBlock value: stoneRootDir.
+      dir := stoneRootDir directoryNamed: \'home\'.
       validateDirBlock value: dir.
-      dir := rootDir directoryNamed: \'projects\'.
+      dir := stoneRootDir directoryNamed: \'projects\'.
       validateDirBlock value: dir.
       opts
         at: \'files\'
         ifPresent: [ :ignored | 
           validateFileBlock
-            value: rootDir
+            value: stoneRootDir
             value: \'homeComposition.ston\'
             value: \'homeComposition\'.
           validateFileBlock
-            value: rootDir
+            value: stoneRootDir
             value: \'projectComposition.ston\'
             value: \'projectComposition\' ].
       true ]
@@ -72,11 +71,10 @@ DESCRIPTION
         +-stones\\
           +-stones\\
           | +-<stone-name>\\
-          |   +-root\\
-          |     +-home\\
-          |     +-projects\\
-          |     +-homeComposition.ston
-          |     +-projectComposition.ston
+          |   +-home\\
+          |   +-projects\\
+          |   +-homeComposition.ston
+          |   +-projectComposition.ston
           +-templates\\
             +-homeComposition.ston
             +-projectComposition.ston
@@ -101,4 +99,4 @@ EXAMPLES
   /sys/default/bin/validateStoneSysNodes --repair
   /sys/default/bin/validateStoneSysNodes --files --repair
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-14T16:19:26.4569790363311-08:00'],#modificationTime:DateAndTime['2014-11-15T16:05:37.0675010681152-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-14T16:19:26.4569790363311-08:00'],#modificationTime:DateAndTime['2014-11-17T09:52:00.9386460781097-08:00']}

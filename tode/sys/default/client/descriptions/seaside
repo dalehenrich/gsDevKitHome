@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'seaside',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : '58315',
+	#netLDI : '52172',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
