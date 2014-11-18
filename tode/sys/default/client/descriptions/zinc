@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'zinc',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'zinc',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'zinc_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/zinc/backups/',
+	#gemstoneVersion : '3.2.2',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/zinc/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}
