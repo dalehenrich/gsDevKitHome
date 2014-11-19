@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'zinc',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'zinc_ldi',
+	#netLDI : '50170',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
