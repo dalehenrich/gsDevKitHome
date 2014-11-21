@@ -30,7 +30,7 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
         ifFalse: [ 
           repair
             ifTrue: [ dir assureExistence ]
-            ifFalse: [ self error: \'Missing directory: \' , dir pathName printString ] ] ].
+            ifFalse: [ nil error: \'Missing directory: \' , dir pathName printString ] ] ].
       validateFileBlock := [ :dir :filename :nodename | 
       (dir fileExists: filename)
         ifFalse: [ 
@@ -40,7 +40,7 @@ TDScriptLeafNode{#name:'validateStoneSysNodes',#contents:'[ :topez :objIn :token
                 cp: \'/sys/stones/templates/\' , nodename
                 to: \'/sys/stones/stones/\' , stoneName  ]
             ifFalse: [ 
-              self
+              nil
                 error:
                   \'Missing file: \' , filename printString , \' in path: \'
                     , dir pathName printString ] ] ].

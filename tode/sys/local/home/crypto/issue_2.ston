@@ -1,0 +1,35 @@
+TDScriptLeafNode{#name:'issue_2',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./issue_2 -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | bytes picker oldPicker testPicker |
+      SecureRandom destroyPickers.
+      picker := SecureRandom picker.
+      1000
+        timesRepeat: [ 
+          oldPicker := picker copy.
+          testPicker := picker copy.
+          (bytes := picker nextBytes: 16) size = 16
+            ifFalse: [ 
+              | testBytes |
+              testBytes := testPicker nextBytes: 16.
+              nil halt ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  issue_2 - issue_2 sript utility template
+SYNOPSIS
+  issue_2 [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./issue_2 --help
+  ./issue_2 -h
+\' ] ]',#creationTime:DateAndTime['2014-11-20T14:13:38.2742819786071-08:00'],#modificationTime:DateAndTime['2014-11-20T14:36:50.2771289348602-08:00']}

@@ -1,7 +1,7 @@
 TDObjectGatewayNode{#name:'zinc',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'ZincHTTPComponents\'
       repository: \'filetree:///opt/git/zinc/repository\'
-      loads: #(\'CI\' \'WebSocket\');
+      loads: #(\'CI\');
     status: #(#\'active\');
     locked: true;
     yourself'}
