@@ -2,6 +2,6 @@ TDObjectGatewayNode{#name:'crypto',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Cryptography\'
       repository: \'filetree:///opt/git/Cryptography/repository\'
       loads: #(\'Cryptography\');
-    status: #(#\'active\');
+    status: #(#\'inactive\');
     locked: true;
     yourself'}
