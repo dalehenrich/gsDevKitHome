@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'Ston',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Ston\'
+      repository:
+        \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/zinc/git/ston/repository\'
+      loads: #(\'Tests\');
+    status: #(#\'active\');
+    locked: false;
+    yourself'}

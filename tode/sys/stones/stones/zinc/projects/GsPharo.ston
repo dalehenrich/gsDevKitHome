@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'GsPharo',#contents:'^ TDProjectSpecEntryDefinition new
+    configuration: \'GsPharo\'
+      version: \'0.9.3\'
+      repository: \'http://seaside.gemtalksystems.com/ss/PharoCompat\'
+      loads: #(\'default\');
+    status: #();
+    locked: false;
+    yourself'}
