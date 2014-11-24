@@ -17,14 +17,20 @@ _createTransientMethodsFor: aClass dictionaries: aSymbolList category: categoryS
       theClass := isMeta
         ifTrue: [ aClass class ]
         ifFalse: [ aClass ].
-      theClass
+      [ theClass
         compileMethod: sourceString
         dictionaries: aSymbolList
         category: categorySymbol
         intoMethodDict: tmd
         intoCategories: (theClass _baseCategorys: 0)
         intoPragmas: nil
-        environmentId: 0 ].
+        environmentId: 0 ] 
+          on: CompileError
+          do: [:ex | | errorString |
+            errorString := GsNMethod 
+                _sourceWithErrors: ex errorDetails 
+                fromString: sourceString.
+            self error: errorString ]].
   self _installTransientMethodsFor: aClass methodDictionary: tmd ]
     ensure: [ prot _leaveProtectedMode ]
 %
