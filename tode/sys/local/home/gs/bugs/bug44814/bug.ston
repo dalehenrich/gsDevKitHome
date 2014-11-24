@@ -4,7 +4,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
-      #(\'error\' nil #\'none\').
+      #(\'error\' nil #\'required\').
       #(\'remove\' nil #\'none\').
       #(\'reset\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
@@ -16,14 +16,10 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       | dict evalMethods |
       dict := Dictionary new.
       evalMethods := true.
-      false
+      true
         ifTrue: [ 
-          Bug44814
-            compile: \'transientMethod ^nil\' classified: \'transient\';
-            compile: \'transientMethod1 ^nil\' classified: \'persistent\'.
-          Bug44814 class
-            compile: \'transientMethod ^nil\' classified: \'transient\';
-            compile: \'transientMethod1 ^nil\' classified: \'persistent\' ].
+          Bug44814 compile: \'transientMethod ^nil\' classified: \'transient\'.
+          Bug44814 class compile: \'transientMethod ^nil\' classified: \'transient\' ].
       opts
         at: \'reset\'
         ifPresent: [ :ignored | 
@@ -44,7 +40,14 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
               instanceSpec := classSpec := #().
               opts
                 at: \'error\'
-                ifPresent: [ :ignored | instanceSpec := {\'transientMethod ^^#tm\'} ]
+                ifPresent: [ :errType | 
+                  errType = \'compile\'
+                    ifTrue: [ instanceSpec := {\'transientMethod ^^#tm\'} ]
+                    ifFalse: [ 
+                      \"category\"
+                      Bug44814
+                        compile: \'transientMethod ^nil\'
+                        classified: \'persistent\' ] ]
                 ifAbsent: [ 
                   instanceSpec := {\'transientMethod ^#tm\'.
                   \'transientMethod1 ^#tm1\'}.
@@ -85,13 +88,14 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
           \'NAME
   bug - bug sript utility template
 SYNOPSIS
-  bug [-h|--help] [--errors] [--remove] [--reset]
+  bug [-h|--help] [--error=compile|category] [--remove] [--reset]
 DESCRIPTION
 EXAMPLES
   ./bug --help
   ./bug -h
-  ./bug --errors
+  ./bug --error=compile
+  ./bug --error=category
   ./bug --remove
   ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T15:07:04.2187678813934-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T15:22:44.2557559013366-08:00']}

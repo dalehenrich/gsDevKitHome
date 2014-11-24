@@ -10,8 +10,8 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList category: catego
   self _removeTransientMethodsFor: aBehavior.
   tmd := GsMethodDictionary new.
   transentMethodsSource
-    do: [ :sourceString | 
-    [ aBehavior
+    do: [ :sourceString | | gsNMethod |
+    [ gsNMethod := aBehavior
         compileMethod: sourceString
         dictionaries: aSymbolList
         category: categorySymbol
@@ -24,7 +24,11 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList category: catego
             errorString := GsNMethod 
                 _sourceWithErrors: ex errorDetails 
                 fromString: sourceString.
-            self error: errorString ]].
+            self error: errorString ].
+      (aBehavior categoryOfSelector: gsNMethod selector) 
+        ifNotNil: [:cat |
+          cat asSymbol == categorySymbol 
+            ifFalse: [ self error: 'transient method: ', gsNMethod selector asString, ' must be in the same method category as the original persistent method.' ]]].
   self _installTransientMethodsFor: aBehavior methodDictionary: tmd ]
     ensure: [ prot _leaveProtectedMode ]
 %
@@ -67,7 +71,7 @@ _removeTransientMethodsFor: aBehavior
     tmd keysDo: [ :sel | 
       (aBehavior persistentMethodAt: sel otherwise: nil)
         ifNil: [ 
-          (aBehavior categoryOfSelector: sel environmentId: 0)
+          (aBehavior categoryOfSelector: sel)
             ifNotNil: [ :catSymbol | 
               | setOfSelectors |
               setOfSelectors := (aBehavior _baseCategorys: 0)
