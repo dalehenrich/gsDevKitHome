@@ -20,13 +20,14 @@ _createTransientMethodsFor: aClass dictionaries: aSymbolList category: categoryS
       isMeta := transientSpec at: 1.
       sourceString := transientSpec at: 2.
       theClass := isMeta
-        ifTrue: [ aClass class ].
+        ifTrue: [ aClass class ]
+        ifFalse: [ aClass ].
       theClass
         compileMethod: sourceString
         dictionaries: aSymbolList
         category: categorySymbol
         intoMethodDict: tmd
-        intoCategories: nil
+        intoCategories: (theClass _baseCategorys: 0)
         intoPragmas: nil
         environmentId: 0 ].
   self _installTransientMethodsFor: aClass methodDictionary: tmd ]
@@ -49,6 +50,7 @@ _installTransientMethodsFor: aClass methodDictionary: tmd
           'Transient method dictionary for class ' , aClass printString
             , ' already exists' ].
   aClass transientMethodDictForEnv: 0 put: tmd.
+  aClass _clearLookupCaches: 0.
   classes add: aClass
 %
 category: 'Session Methods'
@@ -67,6 +69,7 @@ _removeTransientMethodsFor: aClass
     or: [ (aClass transientMethodDictForEnv: 0) isNil ])
     ifTrue: [ ^ false ].
   aClass transientMethodDictForEnv: 0 put: nil.
+  aClass _clearLookupCaches: 0.
   classes remove: aClass.
   ^ true ]
     ensure: [prot  _leaveProtectedMode ].

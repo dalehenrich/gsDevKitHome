@@ -4,6 +4,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
+      #(\'error\' nil #\'none\').
       #(\'remove\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -15,18 +16,29 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       dict := Dictionary new.
       opts
         at: \'remove\'
-        ifPresent: [ :ignored |  GsPackagePolicy _removeTransientMethodsFor: Bug44814]
+        ifPresent: [ :ignored | GsPackagePolicy _removeTransientMethodsFor: Bug44814 ]
         ifAbsent: [ 
+          | spec |
+          spec := opts
+            at: \'error\'
+            ifPresent: [ :ignored | 
+              {{false.
+              \'transientMethod ^^Object new\'}} ]
+            ifAbsent: [ 
+              {{false.
+              \'transientMethod ^Object new\'}} ].
           GsPackagePolicy
             _createTransientMethodsFor: Bug44814
             dictionaries: System myUserProfile symbolList
             category: #\'transient\'
-            transentMethodsSpec: #() ].
+            transentMethodsSpec: spec.
+          dict at: \'transientMethod result\' put: Bug44814 new transientMethod ].
       dict
         at: \'classes\'
           put:
             (SessionTemps current at: #\'UnicodeCompare_classes\' ifAbsent: [  ]);
         at: \'methods\' put: (Bug44814 transientMethodDictForEnv: 0);
+        at: \'class\' put: (Bug44814 );
         yourself ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -41,4 +53,4 @@ EXAMPLES
   ./bug -h
   ./bug --remove
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T11:46:32.9619579315185-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T12:03:28.945305109024-08:00']}
