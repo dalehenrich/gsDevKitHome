@@ -1,0 +1,10 @@
+TDStringLeafNode{#name:'analysis',#contents:'--transcript--\'Migrated 0 instances for 3 classes.\'
+--transcript--\'Sent but not implemented: #\'\'digitDiv:neg:\'\'\'
+--transcript--\'Sent but not implemented: #\'\'explode:\'\'\'
+--transcript--\'Sent but not implemented: #\'\'setCurrentMutator\'\'\'
+--transcript--\'Sent but not implemented: #\'\'pushNextField\'\'\'
+--transcript--\'Sent but not implemented: #\'\'setCurrentField\'\'\'
+--transcript--\'Sent but not implemented: #\'\'divideBySize:\'\'\'
+--transcript--\'Sent but not implemented: #\'\'unsignedShortAt:bigEndian:\'\'\'
+--transcript--\'Sent but not implemented: #\'\'appendTo:\'\'\'
+',#creationTime:DateAndTime['2014-11-22T12:41:41.5615780353546-08:00'],#modificationTime:DateAndTime['2014-11-22T14:32:57.3461709022522-08:00']}
