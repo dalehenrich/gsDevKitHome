@@ -5,15 +5,17 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
       #(\'error\' nil #\'none\').
-      #(\'remove\' nil #\'none\')}
+      #(\'remove\' nil #\'none\').
+      #(\'reset\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
   opts
     at: \'help\'
     ifAbsent: [ 
-      | dict |
+      | dict evalMethods |
       dict := Dictionary new.
+      evalMethods := true.
       false
         ifTrue: [ 
           Bug44814
@@ -23,62 +25,73 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
             compile: \'transientMethod ^nil\' classified: \'transient\';
             compile: \'transientMethod1 ^nil\' classified: \'persistent\' ].
       opts
-        at: \'remove\'
+        at: \'reset\'
         ifPresent: [ :ignored | 
-          GsPackagePolicy
-            _removeTransientMethodsFor: Bug44814;
-            _removeTransientMethodsFor: Bug44814 class ]
+          SessionTemps current
+            removeKey: #\'TransientSessionMethod_Behaviors\'
+            ifAbsent: [  ].
+          evalMethods := false ]
         ifAbsent: [ 
-          | instanceSpec classSpec |
-          instanceSpec := classSpec := #().
           opts
-            at: \'error\'
-            ifPresent: [ :ignored | instanceSpec := {\'transientMethod ^^Object new\'} ]
+            at: \'remove\'
+            ifPresent: [ :ignored | 
+              GsPackagePolicy
+                _removeTransientMethodsFor: Bug44814;
+                _removeTransientMethodsFor: Bug44814 class.
+              evalMethods := false ]
             ifAbsent: [ 
-              instanceSpec := {\'transientMethod ^Object new\'.
-              \'transientMethod1 ^Object new\'}.
-              classSpec := {\'transientMethod ^Object new\'.
-              \'transientMethod1 ^Object new\'} ].
-          GsPackagePolicy
-            _createTransientMethodsFor: Bug44814
-            dictionaries: System myUserProfile symbolList
-            category: #\'transient\'
-            transentMethodsSpec: instanceSpec.
-          GsPackagePolicy
-            _createTransientMethodsFor: Bug44814 class
-            dictionaries: System myUserProfile symbolList
-            category: #\'transient\'
-            transentMethodsSpec: classSpec ].
+              | instanceSpec classSpec |
+              instanceSpec := classSpec := #().
+              opts
+                at: \'error\'
+                ifPresent: [ :ignored | instanceSpec := {\'transientMethod ^^#tm\'} ]
+                ifAbsent: [ 
+                  instanceSpec := {\'transientMethod ^#tm\'.
+                  \'transientMethod1 ^#tm1\'}.
+                  classSpec := {\'transientMethod ^#tm\'.
+                  \'transientMethod1 ^#tm1\'} ].
+              GsPackagePolicy
+                _createTransientMethodsFor: Bug44814
+                dictionaries: System myUserProfile symbolList
+                category: #\'transient\'
+                transentMethodsSpec: instanceSpec.
+              GsPackagePolicy
+                _createTransientMethodsFor: Bug44814 class
+                dictionaries: System myUserProfile symbolList
+                category: #\'transient\'
+                transentMethodsSpec: classSpec ] ].
       dict
-        at: \'classes\'
+        at: \'behaviors\'
           put:
-            (SessionTemps current at: #\'UnicodeCompare_classes\' ifAbsent: [  ]);
+            (SessionTemps current at: #\'TransientSessionMethod_Behaviors\' ifAbsent: [  ]);
         at: \'methods\' put: (Bug44814 transientMethodDictForEnv: 0);
         at: \'class methods\' put: (Bug44814 class transientMethodDictForEnv: 0);
         at: \'class\' put: Bug44814;
         at: \'cats\' put: (Bug44814 _baseCategorys: 0);
         at: \'class cats\' put: (Bug44814 class _baseCategorys: 0);
         yourself.
-      false
+      evalMethods
         ifTrue: [ 
           dict
-            at: \'transientMethod1 result\' put: Bug44814 new transient1Method;
-            at: \'transientMethod1 class result\' put: Bug44814 transient1Method;
+            at: \'transientMethod1 result\' put: Bug44814 new transientMethod1;
+            at: \'transientMethod1 class result\' put: Bug44814 transientMethod1;
             at: \'transientMethod result\' put: Bug44814 new transientMethod;
             at: \'transientMethod class result\' put: Bug44814 transientMethod;
-            yourself ] .
-dict]
+            yourself ].
+      dict ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
   bug - bug sript utility template
 SYNOPSIS
-  bug [-h|--help] [--remove]
+  bug [-h|--help] [--errors] [--remove] [--reset]
 DESCRIPTION
 EXAMPLES
   ./bug --help
   ./bug -h
+  ./bug --errors
   ./bug --remove
+  ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T14:33:13.9115970134735-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T15:07:04.2187678813934-08:00']}

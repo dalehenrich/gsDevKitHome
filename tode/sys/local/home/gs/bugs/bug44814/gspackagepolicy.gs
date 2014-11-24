@@ -31,14 +31,13 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList category: catego
 category: 'Session Methods'
 classmethod: GsPackagePolicy
 _installTransientMethodsFor: aBehavior methodDictionary: tmd
-  | classes thisClass |
-  classes := SessionTemps current
-    at: #'UnicodeCompare_classes'
+  | behaviors |
+  behaviors := SessionTemps current
+    at: #'TransientSessionMethod_Behaviors'
     ifAbsent: [ 
-      classes := IdentitySet new _setNoStubbing.
-      SessionTemps current at: #'UnicodeCompare_classes' put: classes ].
-  thisClass := aBehavior thisClass.
-  ((classes includes: thisClass)
+      behaviors := IdentitySet new _setNoStubbing.
+      SessionTemps current at: #'TransientSessionMethod_Behaviors' put: behaviors ].
+  ((behaviors includes: aBehavior)
     or: [ (aBehavior transientMethodDictForEnv: 0) notNil ])
     ifTrue: [ 
       self
@@ -47,7 +46,7 @@ _installTransientMethodsFor: aBehavior methodDictionary: tmd
             , ' already exists' ].
   aBehavior transientMethodDictForEnv: 0 put: tmd.
   aBehavior _clearLookupCaches: 0.
-  classes add: thisClass
+  behaviors add: aBehavior
 %
 category: 'Session Methods'
 classmethod: GsPackagePolicy
@@ -55,20 +54,19 @@ _removeTransientMethodsFor: aBehavior
   "enter protected mode"
 
   <primitive: 2001>
-  | prot classes thisClass |
+  | prot behaviors |
   [ 
   prot := System _protectedMode.
-  classes := SessionTemps current
-    at: #'UnicodeCompare_classes'
+  behaviors := SessionTemps current
+    at: #'TransientSessionMethod_Behaviors'
     ifAbsent: [ ^ false ].
-  thisClass := aBehavior thisClass.
-  ((classes includes: thisClass) not
+  ((behaviors includes: aBehavior) not
     or: [ (aBehavior transientMethodDictForEnv: 0) isNil ])
     ifTrue: [ ^ false ].
-  (aBehavior transientMethodDictForEnv: 0)
-    keysDo: [ :sel | 
-      (aBehavior __basicRemoveSelector: sel environmentId: 0)
-        ifTrue: [ 
+  (aBehavior transientMethodDictForEnv: 0) ifNotNil: [:tmd |
+    tmd keysDo: [ :sel | 
+      (aBehavior persistentMethodAt: sel otherwise: nil)
+        ifNil: [ 
           (aBehavior categoryOfSelector: sel environmentId: 0)
             ifNotNil: [ :catSymbol | 
               | setOfSelectors |
@@ -76,9 +74,9 @@ _removeTransientMethodsFor: aBehavior
                 at: catSymbol
                 ifAbsent: [ IdentityBag new ].
               setOfSelectors remove: sel otherwise: nil ] ] ].
-  aBehavior transientMethodDictForEnv: 0 put: nil.
+      aBehavior transientMethodDictForEnv: 0 put: nil ].
   aBehavior _clearLookupCaches: 0.
-  classes remove: thisClass.
+  behaviors remove: aBehavior.
   ^ true ]
     ensure: [ prot _leaveProtectedMode ]
 %
