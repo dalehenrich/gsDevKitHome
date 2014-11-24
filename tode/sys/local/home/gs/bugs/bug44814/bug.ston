@@ -2,27 +2,43 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
   | opts args |
   \"for help: ./bug -h\"
   command
-    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'remove\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
   opts
     at: \'help\'
     ifAbsent: [ 
-      GsPackagePolicy
-_createTransientMethodsFor: Bug44814 dictionaries:  System myUserProfile symbolList category: #transient transentMethodsSpec: #()
-
-       ]
+      | dict |
+      dict := Dictionary new.
+      opts
+        at: \'remove\'
+        ifPresent: [ :ignored |  GsPackagePolicy _removeTransientMethodsFor: Bug44814]
+        ifAbsent: [ 
+          GsPackagePolicy
+            _createTransientMethodsFor: Bug44814
+            dictionaries: System myUserProfile symbolList
+            category: #\'transient\'
+            transentMethodsSpec: #() ].
+      dict
+        at: \'classes\'
+          put:
+            (SessionTemps current at: #\'UnicodeCompare_classes\' ifAbsent: [  ]);
+        at: \'methods\' put: (Bug44814 transientMethodDictForEnv: 0);
+        yourself ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
           \'NAME
   bug - bug sript utility template
 SYNOPSIS
-  bug [-h|--help]
+  bug [-h|--help] [--remove]
 DESCRIPTION
 EXAMPLES
   ./bug --help
   ./bug -h
+  ./bug --remove
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T11:12:48.5683801174163-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T11:46:32.9619579315185-08:00']}

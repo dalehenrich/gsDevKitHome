@@ -54,7 +54,12 @@ _installTransientMethodsFor: aClass methodDictionary: tmd
 category: 'Session Methods'
 classmethod: GsPackagePolicy
 _removeTransientMethodsFor: aClass
-  | classes |
+  "enter protected mode"
+
+  <primitive: 2001>
+  | prot classes |
+  [
+  prot := System _protectedMode.
   classes := SessionTemps current
     at: #'UnicodeCompare_classes'
     ifAbsent: [ ^ false ].
@@ -63,5 +68,6 @@ _removeTransientMethodsFor: aClass
     ifTrue: [ ^ false ].
   aClass transientMethodDictForEnv: 0 put: nil.
   classes remove: aClass.
-  ^ true
+  ^ true ]
+    ensure: [prot  _leaveProtectedMode ].
 %
