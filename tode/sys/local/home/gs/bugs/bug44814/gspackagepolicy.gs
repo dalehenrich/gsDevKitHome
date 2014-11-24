@@ -1,8 +1,3 @@
-
-
-
-
-
 category: 'Session Methods'
 classmethod: GsPackagePolicy
 _createTransientMethodsFor: aClass dictionaries: aSymbolList category: categorySymbol transentMethodsSpec: transentMethodsSpec
@@ -10,7 +5,7 @@ _createTransientMethodsFor: aClass dictionaries: aSymbolList category: categoryS
 
   <primitive: 2001>
   | prot tmd |
-  [
+  [ 
   prot := System _protectedMode.
   self _removeTransientMethodsFor: aClass.
   tmd := GsMethodDictionary new.
@@ -31,7 +26,7 @@ _createTransientMethodsFor: aClass dictionaries: aSymbolList category: categoryS
         intoPragmas: nil
         environmentId: 0 ].
   self _installTransientMethodsFor: aClass methodDictionary: tmd ]
-    ensure: [prot  _leaveProtectedMode ].
+    ensure: [ prot _leaveProtectedMode ]
 %
 category: 'Session Methods'
 classmethod: GsPackagePolicy
@@ -60,7 +55,7 @@ _removeTransientMethodsFor: aClass
 
   <primitive: 2001>
   | prot classes |
-  [
+  [ 
   prot := System _protectedMode.
   classes := SessionTemps current
     at: #'UnicodeCompare_classes'
@@ -68,18 +63,20 @@ _removeTransientMethodsFor: aClass
   ((classes includes: aClass) not
     or: [ (aClass transientMethodDictForEnv: 0) isNil ])
     ifTrue: [ ^ false ].
-  (aClass  transientMethodDictForEnv: 0) keysDo: [:sel |
-    (aClass __basicRemoveSelector: sel environmentId: 0)
-      ifTrue: [ 
-        (aClass categoryOfSelector: sel environmentId: 0)
-          ifNotNil: [:catSymbol | | setOfSelectors |
-            setOfSelectors := (aClass _baseCategorys: 0) 
-                                at: catSymbol 
-                                ifAbsent: [ IdentityBag new ].
-            setOfSelectors remove: sel otherwise: nil ]]].
+  (aClass transientMethodDictForEnv: 0)
+    keysDo: [ :sel | 
+      (aClass __basicRemoveSelector: sel environmentId: 0)
+        ifTrue: [ 
+          (aClass categoryOfSelector: sel environmentId: 0)
+            ifNotNil: [ :catSymbol | 
+              | setOfSelectors |
+              setOfSelectors := (aClass _baseCategorys: 0)
+                at: catSymbol
+                ifAbsent: [ IdentityBag new ].
+              setOfSelectors remove: sel otherwise: nil ] ] ].
   aClass transientMethodDictForEnv: 0 put: nil.
   aClass _clearLookupCaches: 0.
   classes remove: aClass.
   ^ true ]
-    ensure: [prot  _leaveProtectedMode ].
+    ensure: [ prot _leaveProtectedMode ]
 %
