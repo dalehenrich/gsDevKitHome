@@ -68,6 +68,15 @@ _removeTransientMethodsFor: aClass
   ((classes includes: aClass) not
     or: [ (aClass transientMethodDictForEnv: 0) isNil ])
     ifTrue: [ ^ false ].
+  (aClass  transientMethodDictForEnv: 0) keysDo: [:sel |
+    (aClass __basicRemoveSelector: sel environmentId: 0)
+      ifTrue: [ 
+        (aClass categoryOfSelector: sel environmentId: 0)
+          ifNotNil: [:catSymbol | | setOfSelectors |
+            setOfSelectors := (aClass _baseCategorys: 0) 
+                                at: catSymbol 
+                                ifAbsent: [ IdentityBag new ].
+            setOfSelectors remove: sel otherwise: nil ]]].
   aClass transientMethodDictForEnv: 0 put: nil.
   aClass _clearLookupCaches: 0.
   classes remove: aClass.
