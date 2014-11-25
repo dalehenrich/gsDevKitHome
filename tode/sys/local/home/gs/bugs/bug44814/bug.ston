@@ -45,11 +45,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
                 ifPresent: [ :errType | 
                   errType = \'compile\'
                     ifTrue: [ instanceSpec := {\'transientMethod ^^#tm\'} ]
-                    ifFalse: [ 
-                      \"category\"
-                      Bug44814
-                        compile: \'transientMethod ^nil\'
-                        classified: \'persistent\' ] ]
+                    ]
                 ifAbsent: [ 
                   instanceSpec := {\'transientMethod ^#tm\'.
                   \'transientMethod1 ^#tm1\'}.
@@ -90,7 +86,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
           \'NAME
   bug - bug sript utility template
 SYNOPSIS
-  bug [-h|--help] [--error=compile|category] [--remove] [--reset]
+  bug [-h|--help] [--error=compile] [--remove] [--reset]
 DESCRIPTION
 EXAMPLES
   ./bug --help
@@ -100,4 +96,4 @@ EXAMPLES
   ./bug --remove
   ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T16:16:43.4091680049896-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T16:25:02.1743600368499-08:00']}
