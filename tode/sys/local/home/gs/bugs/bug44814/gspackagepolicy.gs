@@ -1,7 +1,12 @@
 category: 'Session Methods'
 classmethod: GsPackagePolicy
-_createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory: defaultCategorySymbol transentMethodsSpec: transentMethodsSource
-  "enter protected mode"
+_createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory: defaultCategorySymbol transientMethodsSpec: transientMethodsSource
+  "Compile and install transient methods in <aBehavior>. 
+   Transient method source is specified as an array of strings by
+     <transientMethodsSource>.
+   If a persistent method already exists in <aBehavior> the method is installed
+     in the category of the existing method. Otherwise, the method is installed
+     in the given <defaultCategorySymbol."
 
   <primitive: 2001>
   | prot tmd |
@@ -9,9 +14,9 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory:
   prot := System _protectedMode.
   self _removeTransientMethodsFor: aBehavior.
   tmd := GsMethodDictionary new.
-  transentMethodsSource
+  transientMethodsSource
     do: [ :sourceString | | preCompiledMethod gsNMethod methodCategory |
-      "Pre-compile method to get category if method is already persistent"
+      "Pre-compile method to get method selector"
       preCompiledMethod := aBehavior
         _primitiveCompileMethod: sourceString
         symbolList: aSymbolList
@@ -21,9 +26,11 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory:
         intoCategories: GsMethodDictionary new
         intoPragmas: nil
         environmentId: 0.
-      methodCategory := defaultCategorySymbol. "use default if no pre-existing method"
+      methodCategory := defaultCategorySymbol. "set default"
       preCompiledMethod class == GsNMethod
-        ifTrue: [ 
+        ifTrue: [
+          "If a persistent method exists install the transient method in
+           the same method category" 
           (aBehavior categoryOfSelector: preCompiledMethod selector)
             ifNotNil: [:existingCategory |  methodCategory := existingCategory ]].
     [ gsNMethod := aBehavior
@@ -46,6 +53,9 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory:
 category: 'Session Methods'
 classmethod: GsPackagePolicy
 _installTransientMethodsFor: aBehavior methodDictionary: tmd
+  "Install method dictionary <tmd> as the transient method dictionary for
+   <aBehavior"
+
   | behaviors |
   behaviors := SessionTemps current
     at: #'TransientSessionMethod_Behaviors'
@@ -66,7 +76,7 @@ _installTransientMethodsFor: aBehavior methodDictionary: tmd
 category: 'Session Methods'
 classmethod: GsPackagePolicy
 _removeTransientMethodsFor: aBehavior
-  "enter protected mode"
+  "Remove all of the transient methods for aBehavior"
 
   <primitive: 2001>
   | prot behaviors |
