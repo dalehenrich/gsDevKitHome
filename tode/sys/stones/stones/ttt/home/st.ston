@@ -1,8 +1,1 @@
-TDSmalltalkLeafNode{#name:'st',#contents:'| int msg |
-  int := Integer new: 127 neg: false.
-  msg := #(48 33 48 9 6 5 43 14 3 2 26 5 0 4 20 170 244 198 29 220 197 232 162 218 190 222 15 59 72 44 217 174 169 67 77).
-  msg
-    with: (msg size to: 1 by: -1)
-    do: [ :each :index | int digitAt: index put: each ].
-  {int.
-  (int asByteArray)}',#creationTime:DateAndTime['2014-11-20T11:45:11.67732310295105-08:00'],#modificationTime:DateAndTime['2014-11-20T13:23:14.93123602867126-08:00']}
+TDSmalltalkLeafNode{#name:'st',#contents:'DateTime now',#creationTime:DateAndTime['2014-11-20T11:45:11.67732310295105-08:00'],#modificationTime:DateAndTime['2014-11-25T10:08:31.03339099884033-08:00']}
