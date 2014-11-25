@@ -1,0 +1,72 @@
+# Install support methods
+input transientSessionMethods.gs
+commit
+
+# Create example class
+run
+Object subclass: 'Bug44814' instVarNames: #() inDictionary: UserGlobals.
+%
+
+# Create persistent methods that will be overridden by transient methods
+run
+Bug44814 compile: 'transientMethod ^nil' classified: 'persistent'.
+Bug44814 class compile: 'transientMethod ^nil' classified: 'persistent'
+%
+
+# Should return { nil. nil }
+
+run
+{
+  Bug44814 transientMethod.
+  Bug44814 CLASS transientMethod.
+}
+%
+
+# Create instance and class side transient methods
+
+run
+  | spec |
+  spec := {'transientMethod ^#tm'.
+  'transientMethod1 ^#tm1'}.
+  GsPackagePolicy
+    _createTransientMethodsFor: Bug44814
+    dictionaries: System myUserProfile symbolList
+    defaultCategory: #'transient'
+    transientMethodsSpec: spec.	"create instance-side transient methods"
+  spec := {'transientMethod ^#tm'.
+  'transientMethod1 ^#tm1'}.
+  GsPackagePolicy
+    _createTransientMethodsFor: Bug44814 class
+    dictionaries: System myUserProfile symbolList
+    defaultCategory: #'transient'
+    transientMethodsSpec: spec	"create class-side transient methods"
+%
+
+# Should return { #tm. #tm. #tm1. #tm1 }
+
+run
+{
+  Bug44814 transientMethod.
+  Bug44814 CLASS transientMethod.
+  Bug44814 transientMethod1.
+  Bug44814 CLASS transientMethod1.
+}
+%
+
+# Remove the transient methods
+
+run
+GsPackagePolicy
+    _removeTransientMethodsFor: Bug44814;
+    _removeTransientMethodsFor: Bug44814 class
+%
+
+# Should return { nil. nil }
+
+run
+{
+  Bug44814 transientMethod.
+  Bug44814 CLASS transientMethod.
+}
+%
+
