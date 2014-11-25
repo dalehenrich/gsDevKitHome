@@ -1,3 +1,7 @@
+# must login first ....
+
+level 1
+
 # Install support methods
 input transientSessionMethods.gs
 commit
@@ -9,16 +13,26 @@ Object subclass: 'Bug44814' instVarNames: #() inDictionary: UserGlobals.
 
 # Create persistent methods that will be overridden by transient methods
 run
-Bug44814 compile: 'transientMethod ^nil' classified: 'persistent'.
-Bug44814 class compile: 'transientMethod ^nil' classified: 'persistent'
+Bug44814 
+  compileMethod: 'transientMethod ^nil'
+  dictionaries: System myUserProfile symbolList
+  category: 'persistent'.
+Bug44814 class 
+  compileMethod: 'transientMethod ^nil' 
+  dictionaries: System myUserProfile symbolList
+  category: 'persistent'.
 %
+
+set class Bug44814
+list selectors
+list cselectors
 
 # Should return { nil. nil }
 
 run
 {
+  Bug44814 new transientMethod.
   Bug44814 transientMethod.
-  Bug44814 CLASS transientMethod.
 }
 %
 
@@ -42,14 +56,18 @@ run
     transientMethodsSpec: spec	"create class-side transient methods"
 %
 
+set class Bug44814
+list selectors
+list cselectors
+
 # Should return { #tm. #tm. #tm1. #tm1 }
 
 run
 {
+  Bug44814 new transientMethod.
   Bug44814 transientMethod.
-  Bug44814 CLASS transientMethod.
+  Bug44814 new transientMethod1.
   Bug44814 transientMethod1.
-  Bug44814 CLASS transientMethod1.
 }
 %
 
@@ -61,12 +79,16 @@ GsPackagePolicy
     _removeTransientMethodsFor: Bug44814 class
 %
 
+set class Bug44814
+list selectors
+list cselectors
+
 # Should return { nil. nil }
 
 run
 {
+  Bug44814 new transientMethod.
   Bug44814 transientMethod.
-  Bug44814 CLASS transientMethod.
 }
 %
 
