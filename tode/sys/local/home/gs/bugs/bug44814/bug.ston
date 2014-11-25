@@ -18,6 +18,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       evalMethods := true.
       true
         ifTrue: [ 
+Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals.
           Bug44814 compile: \'transientMethod ^nil\' classified: \'persistent\'.
           Bug44814 class
             compile: \'transientMethod ^nil\'
@@ -95,4 +96,4 @@ EXAMPLES
   ./bug --remove
   ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T16:28:08.6105289459228-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T16:41:47.8529748916626-08:00']}
