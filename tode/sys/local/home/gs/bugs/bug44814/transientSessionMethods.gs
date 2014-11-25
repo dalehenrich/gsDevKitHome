@@ -1,12 +1,11 @@
 category: 'Session Methods'
 classmethod: GsPackagePolicy
-_createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory: defaultCategorySymbol transientMethodsSpec: transientMethodsSource
+_createTransientMethodsFor: aBehavior dictionaries: aSymbolList transientMethodsSpec: transientMethodsSource
   "Compile and install transient methods in <aBehavior>. 
    Transient method source is specified as an array of strings by
      <transientMethodsSource>.
-   If a persistent method already exists in <aBehavior> the method is installed
-     in the category of the existing method. Otherwise, the method is installed
-     in the given <defaultCategorySymbol."
+   To avoid having to modify the persistent category diction, you should only override
+     existing methods, so that the method category can be reused."
 
   <primitive: 2001>
   | prot tmd |
@@ -21,26 +20,26 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory:
       preCompiledMethod := aBehavior
         _primitiveCompileMethod: sourceString
         symbolList: aSymbolList
-        category: defaultCategorySymbol
+        category: #'xxyzzy'
         oldLitVars: nil
         intoMethodDict: GsMethodDictionary new
         intoCategories: GsMethodDictionary new
         intoPragmas: nil
         environmentId: 0.
-      methodCategory := defaultCategorySymbol.	"set default"
       preCompiledMethod class == GsNMethod
-        ifTrue: [ 
-          "If a persistent method exists install the transient method in
-           the same method category"
+        ifTrue: [  
           (aBehavior categoryOfSelector: preCompiledMethod selector)
-            ifNotNil: [ :existingCategory | methodCategory := existingCategory ] ].
+            ifNil: [ self error: 'Transient method: ',  preCompiledMethod selector asString, ' must override a existing methods' ]
+            ifNotNil: [ :existingCategory | 
+              "Use the category of the existing persistent method"
+              methodCategory := existingCategory ] ].
       [ 
       gsNMethod := aBehavior
         compileMethod: sourceString
         dictionaries: aSymbolList
         category: methodCategory
         intoMethodDict: tmd
-        intoCategories: (aBehavior _baseCategorys: 0)
+        intoCategories: nil
         intoPragmas: nil
         environmentId: 0 ]
         on: CompileError
@@ -98,14 +97,7 @@ _removeTransientMethodsFor: aBehavior
       tmd
         keysDo: [ :sel | 
           (aBehavior persistentMethodAt: sel otherwise: nil)
-            ifNil: [ 
-              (aBehavior categoryOfSelector: sel)
-                ifNotNil: [ :catSymbol | 
-                  | setOfSelectors |
-                  setOfSelectors := (aBehavior _baseCategorys: 0)
-                    at: catSymbol
-                    ifAbsent: [ IdentityBag new ].
-                  setOfSelectors remove: sel otherwise: nil ] ] ].
+            ifNil: [self error: 'Transient method: ',  sel asString, ' must override a existing methods' ] ].
       aBehavior transientMethodDictForEnv: 0 put: nil ].
   aBehavior _clearLookupCaches: 0.
   behaviors remove: aBehavior.

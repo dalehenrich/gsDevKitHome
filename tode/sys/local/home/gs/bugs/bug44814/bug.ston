@@ -18,7 +18,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       evalMethods := true.
       true
         ifTrue: [ 
-Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals.
+          Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals.
           Bug44814 compile: \'transientMethod ^nil\' classified: \'persistent\'.
           Bug44814 class
             compile: \'transientMethod ^nil\'
@@ -47,19 +47,15 @@ Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals.
                   errType = \'compile\'
                     ifTrue: [ instanceSpec := {\'transientMethod ^^#tm\'} ] ]
                 ifAbsent: [ 
-                  instanceSpec := {\'transientMethod ^#tm\'.
-                  \'transientMethod1 ^#tm1\'}.
-                  classSpec := {\'transientMethod ^#tm\'.
-                  \'transientMethod1 ^#tm1\'} ].
+                  instanceSpec := {\'transientMethod ^#tm\'}.
+                  classSpec := {\'transientMethod ^#tm\'} ].
               GsPackagePolicy
                 _createTransientMethodsFor: Bug44814
                 dictionaries: System myUserProfile symbolList
-                defaultCategory: #\'transient\'
                 transientMethodsSpec: instanceSpec.
               GsPackagePolicy
                 _createTransientMethodsFor: Bug44814 class
                 dictionaries: System myUserProfile symbolList
-                defaultCategory: #\'transient\'
                 transientMethodsSpec: classSpec ] ].
       dict
         at: \'behaviors\'
@@ -74,8 +70,6 @@ Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals.
       evalMethods
         ifTrue: [ 
           dict
-            at: \'transientMethod1 result\' put: Bug44814 new transientMethod1;
-            at: \'transientMethod1 class result\' put: Bug44814 transientMethod1;
             at: \'transientMethod result\' put: Bug44814 new transientMethod;
             at: \'transientMethod class result\' put: Bug44814 transientMethod;
             yourself ].
@@ -96,4 +90,4 @@ EXAMPLES
   ./bug --remove
   ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T16:41:47.8529748916626-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T20:55:44.1215460300445-08:00']}

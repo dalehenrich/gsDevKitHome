@@ -40,34 +40,29 @@ run
 
 run
   | spec |
-  spec := {'transientMethod ^#tm'.
-  'transientMethod1 ^#tm1'}.
+  spec := {'transientMethod ^#tm'}.
   GsPackagePolicy
     _createTransientMethodsFor: Bug44814
     dictionaries: System myUserProfile symbolList
-    defaultCategory: #'transient'
     transientMethodsSpec: spec.	"create instance-side transient methods"
-  spec := {'transientMethod ^#tm'.
-  'transientMethod1 ^#tm1'}.
+  spec := {'transientMethod ^#tm'}.
   GsPackagePolicy
     _createTransientMethodsFor: Bug44814 class
     dictionaries: System myUserProfile symbolList
-    defaultCategory: #'transient'
     transientMethodsSpec: spec	"create class-side transient methods"
 %
 
+commit
 set class Bug44814
 list selectors
 list cselectors
 
-# Should return { #tm. #tm. #tm1. #tm1 }
+# Should return { #tm. #tm }
 
 run
 {
   Bug44814 new transientMethod.
   Bug44814 transientMethod.
-  Bug44814 new transientMethod1.
-  Bug44814 transientMethod1.
 }
 %
 
