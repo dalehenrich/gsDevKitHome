@@ -18,8 +18,10 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       evalMethods := true.
       true
         ifTrue: [ 
-          Bug44814 compile: \'transientMethod ^nil\' classified: \'transient\'.
-          Bug44814 class compile: \'transientMethod ^nil\' classified: \'transient\' ].
+          Bug44814 compile: \'transientMethod ^nil\' classified: \'persistent\'.
+          Bug44814 class
+            compile: \'transientMethod ^nil\'
+            classified: \'persistent\' ].
       opts
         at: \'reset\'
         ifPresent: [ :ignored | 
@@ -56,12 +58,12 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
               GsPackagePolicy
                 _createTransientMethodsFor: Bug44814
                 dictionaries: System myUserProfile symbolList
-                category: #\'transient\'
+                defaultCategory: #\'transient\'
                 transentMethodsSpec: instanceSpec.
               GsPackagePolicy
                 _createTransientMethodsFor: Bug44814 class
                 dictionaries: System myUserProfile symbolList
-                category: #\'transient\'
+                defaultCategory: #\'transient\'
                 transentMethodsSpec: classSpec ] ].
       dict
         at: \'behaviors\'
@@ -98,4 +100,4 @@ EXAMPLES
   ./bug --remove
   ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T15:22:44.2557559013366-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T16:16:43.4091680049896-08:00']}

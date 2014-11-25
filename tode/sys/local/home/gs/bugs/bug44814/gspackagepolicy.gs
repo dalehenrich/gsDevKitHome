@@ -1,6 +1,6 @@
 category: 'Session Methods'
 classmethod: GsPackagePolicy
-_createTransientMethodsFor: aBehavior dictionaries: aSymbolList category: categorySymbol transentMethodsSpec: transentMethodsSource
+_createTransientMethodsFor: aBehavior dictionaries: aSymbolList defaultCategory: defaultCategorySymbol transentMethodsSpec: transentMethodsSource
   "enter protected mode"
 
   <primitive: 2001>
@@ -10,11 +10,26 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList category: catego
   self _removeTransientMethodsFor: aBehavior.
   tmd := GsMethodDictionary new.
   transentMethodsSource
-    do: [ :sourceString | | gsNMethod |
+    do: [ :sourceString | | preCompiledMethod gsNMethod methodCategory |
+      "Pre-compile method to get category if method is already persistent"
+      preCompiledMethod := aBehavior
+        _primitiveCompileMethod: sourceString
+        symbolList: aSymbolList
+        category: defaultCategorySymbol
+        oldLitVars: nil
+        intoMethodDict: GsMethodDictionary new
+        intoCategories: GsMethodDictionary new
+        intoPragmas: nil
+        environmentId: 0.
+      methodCategory := defaultCategorySymbol. "use default if no pre-existing method"
+      preCompiledMethod class == GsNMethod
+        ifTrue: [ 
+          (aBehavior categoryOfSelector: preCompiledMethod selector)
+            ifNotNil: [:existingCategory |  methodCategory := existingCategory ]].
     [ gsNMethod := aBehavior
         compileMethod: sourceString
         dictionaries: aSymbolList
-        category: categorySymbol
+        category: methodCategory
         intoMethodDict: tmd
         intoCategories: (aBehavior _baseCategorys: 0)
         intoPragmas: nil
@@ -24,11 +39,7 @@ _createTransientMethodsFor: aBehavior dictionaries: aSymbolList category: catego
             errorString := GsNMethod 
                 _sourceWithErrors: ex errorDetails 
                 fromString: sourceString.
-            self error: errorString ].
-      (aBehavior categoryOfSelector: gsNMethod selector) 
-        ifNotNil: [:cat |
-          cat asSymbol == categorySymbol 
-            ifFalse: [ self error: 'transient method: ', gsNMethod selector asString, ' must be in the same method category as the original persistent method.' ]]].
+            self error: errorString ]].
   self _installTransientMethodsFor: aBehavior methodDictionary: tmd ]
     ensure: [ prot _leaveProtectedMode ]
 %
