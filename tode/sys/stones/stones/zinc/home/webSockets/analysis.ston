@@ -1,45 +1,23 @@
-TDStringLeafNode{#name:'analysis',#contents:'--transcript--\'Sent but not implemented: #\'\'uint16\'\'\'
---transcript--\'Sent but not implemented: #\'\'primitiveFailed\'\'\'
---transcript--\'Sent but not implemented: #\'\'notYetImplemented\'\'\'
---transcript--\'Sent but not implemented: #\'\'asWords\'\'\'
---transcript--\'Sent but not implemented: #\'\'stopAndRemoveGemServerNamed:\'\'\'
+TDStringLeafNode{#name:'analysis',#contents:'--transcript--\'Sent but not implemented: #\'\'stopAndRemoveGemServerNamed:\'\'\'
 --transcript--\'Sent but not implemented: #\'\'start:named:onPorts:delegate:\'\'\'
 --transcript--\'Sent but not implemented: #\'\'vmStatisticsReportString\'\'\'
 --transcript--\'Sent but not implemented: #\'\'statisticsReport\'\'\'
 --transcript--\'Sent but not implemented: #\'\'vm\'\'\'
 --transcript--\'Sent but not implemented: #\'\'asDelay\'\'\'
---transcript--\'Sent but not implemented: #\'\'printOn:base:nDigits:\'\'\'
---transcript--\'Sent but not implemented: #\'\'isOtherEndClosed\'\'\'
---transcript--\'Sent but not implemented: #\'\'closeAndDestroy:\'\'\'
---transcript--\'Sent but not implemented: #\'\'addressForName:timeout:\'\'\'
---transcript--\'Sent but not implemented: #\'\'getLine\'\'\'
---transcript--\'Sent but not implemented: #\'\'promptUserForHostAddress\'\'\'
---transcript--\'Sent but not implemented: #\'\'digitDiv:neg:\'\'\'
---transcript--\'Sent but not implemented: #\'\'explode:\'\'\'
---transcript--\'Sent but not implemented: #\'\'setCurrentMutator\'\'\'
---transcript--\'Sent but not implemented: #\'\'pushNextField\'\'\'
---transcript--\'Sent but not implemented: #\'\'setCurrentField\'\'\'
---transcript--\'Sent but not implemented: #\'\'divideBySize:\'\'\'
---transcript--\'Sent but not implemented: #\'\'unsignedShortAt:bigEndian:\'\'\'
---transcript--\'Sent but not implemented: #\'\'monoSampleCount\'\'\'
---transcript--\'Sent but not implemented: #\'\'condensedSamples\'\'\'
---transcript--\'Sent but not implemented: #\'\'stopRecording\'\'\'
---transcript--\'Sent but not implemented: #\'\'resumeRecording\'\'\'
---transcript--\'Sent but not implemented: #\'\'clearRecordedSound\'\'\'
---transcript--\'Sent but not implemented: #\'\'appendTo:\'\'\'
---transcript--\'Undefined Symbol:#\'\'LargePositiveInteger\'\'\'
---transcript--\'Undefined Symbol:#\'\'MD5NonPrimitive\'\'\'
---transcript--\'Undefined Symbol:#\'\'OpenSSLKeyDerivationFunction\'\'\'
---transcript--\'Undefined Symbol:#\'\'SHA256NonPrimitive\'\'\'
 --transcript--\'Undefined Symbol:#\'\'SystemVersion\'\'\'
 --transcript--\'Undefined Symbol:#\'\'ZnServerStarter\'\'\'
 --transcript--\'Undefined Symbol:#\'\'SmalltalkImage\'\'\'
---transcript--\'Undefined Symbol:#\'\'Socket\'\'\'
---transcript--\'Undefined Symbol:#\'\'NetNameResolver\'\'\'
---transcript--\'Undefined Symbol:#\'\'SHA256WithPrimitive\'\'\'
---transcript--\'Undefined Symbol:#\'\'MD5WithPrimitive\'\'\'
---transcript--\'Undefined Symbol:#\'\'FillInTheBlank\'\'\'
---transcript--\'Undefined Symbol:#\'\'StandardFileStream\'\'\'
---transcript--\'Undefined Symbol:#\'\'Stack\'\'\'
---transcript--\'Undefined Symbol:#\'\'SoundRecorder\'\'\'
---transcript--\'Undefined Symbol:#\'\'SocketStream\'\'\'',#creationTime:DateAndTime['2014-11-20T17:50:05.3281550407409-08:00'],#modificationTime:DateAndTime['2014-11-20T17:50:12.4314920902252-08:00']}
+
+**************************************************************************************
+\tResults for TestCase
+1136 run, 1127 passes, 2 expected defects, 2 failures, 5 errors, 0 unexpected passes
+**************************************************************************************
+*** FAILURES *******************
+\tUndefinedSymbolsTest debug: #\'testUndefinedSymbols\'.
+\tSentButNotImplementedTest debug: #\'testSentButNotImplemented\'.
+*** ERRORS *******************
+\tZnWebSocketTests debug: #\'testChatroom\'.
+\tZnWebSocketTests debug: #\'testEcho\'.
+\tZnWebSocketTests debug: #\'testEchoSecureWebSocketsDotOrg\'.
+\tZnWebSocketTests debug: #\'testStatus\'.
+\tZnExampleStorageRestServerDelegateTest debug: #\'testQuery\'.',#creationTime:DateAndTime['2014-11-20T17:50:05.3281550407409-08:00'],#modificationTime:DateAndTime['2014-11-25T20:38:46.1311750411987-08:00']}
