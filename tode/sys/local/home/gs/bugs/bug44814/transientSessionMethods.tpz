@@ -8,7 +8,7 @@ commit
 
 # Create example class
 run
-Object subclass: 'Bug44814' instVarNames: #() inDictionary: UserGlobals.
+Object subclass: 'Bug44814' instVarNames: #() inDictionary: Globals.
 %
 
 # Create persistent methods that will be overridden by transient methods
