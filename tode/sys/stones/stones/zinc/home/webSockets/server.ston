@@ -1,0 +1,53 @@
+TDScriptLeafNode{#name:'server',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./server -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'register\' nil #\'required\').
+      #(\'restart\' nil #\'required\').
+      #(\'start\' nil #\'required\').
+      #(\'stop\' nil #\'required\').
+      #(\'test\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'register\'
+        ifPresent: [ :serverName | (MockGemServer register: serverName) useEventLog: false ].
+      opts
+        at: \'restart\'
+        ifPresent: [ :serverName | (GemServerRegistry gemServerNamed: serverName) restartGems ].
+      opts
+        at: \'start\'
+        ifPresent: [ :serverName | (GemServerRegistry gemServerNamed: serverName) startGems ].
+      opts
+        at: \'stop\'
+        ifPresent: [ :serverName | (GemServerRegistry gemServerNamed: serverName) stopGems ].
+      opts
+        at: \'test\'
+        ifPresent: [ :serverName | (GemServerRegistry gemServerNamed: serverName) recordGemPid: 1].
+ ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  server - server sript utility template
+SYNOPSIS
+  server [-h|--help] [--register=<server-name>]  
+         [--test=<server-name>]
+         [--start=<server-name>] [--stop=<server-name>] [--restart=<server-name>]
+DESCRIPTION
+EXAMPLES
+  ./server --help
+  ./server -h
+  ./server --register=test
+  ./server --test=test
+  ./server --start=test
+  ./server --stop=test
+  ./server --sretart=test
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-29T11:44:55.7484230995178-08:00'],#modificationTime:DateAndTime['2014-11-29T12:12:24.8385119438171-08:00']}

@@ -20,4 +20,24 @@ TDStringLeafNode{#name:'analysis',#contents:'--transcript--\'Sent but not implem
 \tZnWebSocketTests debug: #\'testEcho\'.
 \tZnWebSocketTests debug: #\'testEchoSecureWebSocketsDotOrg\'.
 \tZnWebSocketTests debug: #\'testStatus\'.
-\tZnExampleStorageRestServerDelegateTest debug: #\'testQuery\'.',#creationTime:DateAndTime['2014-11-20T17:50:05.3281550407409-08:00'],#modificationTime:DateAndTime['2014-11-25T20:38:46.1311750411987-08:00']}
+\tZnExampleStorageRestServerDelegateTest debug: #\'testQuery\'.
+
+---
+dkh 11/26/2014 11:44
+---
+gsApplicationTools:
+
+\'Sent but not implemented: #\'\'startServerNamed:\'\'\'
+\'Sent but not implemented: #\'\'addServerOfClass:withName:on:\'\'\'
+\'Sent but not implemented: #\'\'stopDefault\'\'\'
+\'Sent but not implemented: #\'\'debugMode:\'\'\'
+\'Sent but not implemented: #\'\'defaultPortList\'\'\'
+\'Undefined Symbol:#\'\'ZnServer\'\'\'
+
+---
+dkh 11/26/2014 14:26
+---
+Issue #2: rename packages to have GsApplication-Tools as base name
+Issue #2: rename Application-Server-Tools to GsApplicationTools-Server ... also doing a bit of restructuring
+Issue #2: add a tests package ... stub of test
+',#creationTime:DateAndTime['2014-11-20T17:50:05.3281550407409-08:00'],#modificationTime:DateAndTime['2014-11-26T14:28:17.5012099742889-08:00']}

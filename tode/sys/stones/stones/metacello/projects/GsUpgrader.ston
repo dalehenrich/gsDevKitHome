@@ -3,6 +3,6 @@ TDObjectGatewayNode{#name:'GsUpgrader',#contents:'^ TDProjectSpecEntryDefinition
       repository: \'filetree:///opt/git/gsUpgrader/repository\'
       loads: #( \'default\' );
     status: #( );
-    locked: true;
+    locked: false;
     yourself.
 '}

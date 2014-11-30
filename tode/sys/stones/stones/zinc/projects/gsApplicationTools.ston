@@ -1,0 +1,7 @@
+TDObjectGatewayNode{#name:'gsApplicationTools',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'GsApplicationTools\'
+      repository: \'filetree:///opt/git/gsApplicationTools/repository\'
+      loads: #(\'CI\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}
