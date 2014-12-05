@@ -2,6 +2,7 @@ TDSessionDescription {
 	#name : 'j_323',
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'j_323',
+        #gciLibraryName : 'libgcirpc-3.2.3-32',
 	#gemHost : 'foos.gemtalksystems.com',
 	#netLDI : '59357',
 	#gemTask : 'gemnetobject',
