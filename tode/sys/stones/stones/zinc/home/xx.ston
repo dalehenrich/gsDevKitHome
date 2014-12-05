@@ -1,0 +1,96 @@
+TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xx -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | visit lab surgery drugs dale janet dict t250Premium hsa1500Premium hsa6200Premium t250Deduct hsa1500Deduct hsa6200Deduct t250GemTalk hsa1500GemTalk hsa6200GemTalk t250Max hsa1500Max hsa6200Max block t250Block hsa1500Block hsa6200Block |
+      dict := Dictionary new.
+      visit := 400.
+      lab := 217.
+      surgery := 10000.
+      drugs := 0 + (7 * 12).
+      dale := visit + lab + surgery.
+      janet := visit + lab + drugs.
+      t250Premium := 1575.
+      hsa1500Premium := 1200.
+      hsa6200Premium := 0.
+      t250Deduct := 250.
+      hsa1500Deduct := 1500.
+      hsa6200Deduct := 6200.
+      t250GemTalk := 0.
+      hsa1500GemTalk := 3800.
+      hsa6200GemTalk := 5950.
+      t250Max := 1500.
+      hsa1500Max := 5000.
+      hsa6200Max := 6200.
+      block := [ :expenses :deduct :rate :max | 
+      | total |
+      expenses > deduct
+        ifTrue: [ total := deduct + ((expenses - deduct) * rate) ]
+        ifFalse: [ total := expenses ].
+      (total min: max) asInteger ].
+      t250Block := [ :expenses | 
+      block
+        value: expenses
+        value: t250Deduct
+        value: 0.10
+        value: t250Max ].
+      hsa1500Block := [ :expenses | 
+      block
+        value: expenses
+        value: hsa1500Deduct
+        value: 0.20
+        value: hsa1500Max ].
+      hsa6200Block := [ :expenses | 
+      block
+        value: expenses
+        value: hsa6200Deduct
+        value: 0.20
+        value: hsa6200Max ].
+      dict
+        at: \'Dale\' put: dale;
+        at: \'Janet\' put: janet;
+        at: \'t250\'
+          put:
+            t250Premium
+                +
+                  ((t250Block value: dale) + (t250Block value: janet) min: t250Max * 2);
+        at: \'t250-dale\' put: (t250Block value: dale);
+        at: \'t250-janet\' put: (t250Block value: janet);
+        at: \'hsa1500\'
+          put:
+            (hsa1500Premium
+                +
+                  ((hsa1500Block value: dale) + (hsa1500Block value: janet) min: hsa1500Max * 2)
+                - hsa1500GemTalk max: 0);
+        at: \'hsa1500-dale\' put: (hsa1500Block value: dale);
+        at: \'hsa1500-janet\' put: (hsa1500Block value: janet);
+        at: \'hsa6200\'
+          put:
+            (hsa6200Premium
+                +
+                  ((hsa6200Block value: dale) + (hsa6200Block value: janet) min: hsa6200Max * 2)
+                - hsa6200GemTalk max: 0);
+        at: \'hsa6200-dale\' put: (hsa6200Block value: dale);
+        at: \'hsa6200-janet\' put: (hsa6200Block value: janet);
+        yourself.
+      dict ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xx - xx sript utility template
+SYNOPSIS
+  xx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xx --help
+  ./xx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-01T17:56:03.2913589477539-08:00'],#modificationTime:DateAndTime['2014-12-01T20:24:55.4707050323486-08:00']}

@@ -1,0 +1,26 @@
+TDScriptLeafNode{#name:'vv',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./vv -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      [ 1 foo ] on: ExceptionSet new do: [:ex | self halt].
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  vv - vv sript utility template
+SYNOPSIS
+  vv [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./vv --help
+  ./vv -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-02T10:02:25.983491897583-08:00'],#modificationTime:DateAndTime['2014-12-02T10:02:53.2635989189147-08:00']}

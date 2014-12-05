@@ -104,3 +104,10 @@ _removeTransientMethodsFor: aBehavior
   ^ true ]
     ensure: [ prot _leaveProtectedMode ]
 %
+category: 'Session Methods'
+classmethod: GsPackagePolicy
+_removeAllTransientMethods
+  (SessionTemps current
+    at: #'TransientSessionMethod_Behaviors'
+    ifAbsent: [ #() ]) copy do: [:behavior | self _removeTransientMethodsFor: behavior ].
+%

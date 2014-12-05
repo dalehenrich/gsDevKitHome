@@ -16,11 +16,11 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
       | dict evalMethods |
       dict := Dictionary new.
       evalMethods := true.
-      true
+      (Smalltalk at: #Bug44814 ifAbsent: []) isNil
         ifTrue: [ 
           Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals.
-          Bug44814 compile: \'transientMethod ^nil\' classified: \'persistent\'.
-          Bug44814 class
+          (Smalltalk at: #Bug44814) compile: \'transientMethod ^nil\' classified: \'persistent\'.
+          (Smalltalk at: #Bug44814) class
             compile: \'transientMethod ^nil\'
             classified: \'persistent\' ].
       opts
@@ -35,8 +35,8 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
             at: \'remove\'
             ifPresent: [ :ignored | 
               GsPackagePolicy
-                _removeTransientMethodsFor: Bug44814;
-                _removeTransientMethodsFor: Bug44814 class.
+                _removeTransientMethodsFor: (Smalltalk at: #Bug44814);
+                _removeTransientMethodsFor: (Smalltalk at: #Bug44814) class.
               evalMethods := false ]
             ifAbsent: [ 
               | instanceSpec classSpec |
@@ -50,28 +50,28 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
                   instanceSpec := {\'transientMethod ^#tm\'}.
                   classSpec := {\'transientMethod ^#tm\'} ].
               GsPackagePolicy
-                _createTransientMethodsFor: Bug44814
+                _createTransientMethodsFor: (Smalltalk at: #Bug44814)
                 dictionaries: System myUserProfile symbolList
                 transientMethodsSpec: instanceSpec.
               GsPackagePolicy
-                _createTransientMethodsFor: Bug44814 class
+                _createTransientMethodsFor: (Smalltalk at: #Bug44814) class
                 dictionaries: System myUserProfile symbolList
                 transientMethodsSpec: classSpec ] ].
       dict
         at: \'behaviors\'
           put:
             (SessionTemps current at: #\'TransientSessionMethod_Behaviors\' ifAbsent: [  ]);
-        at: \'methods\' put: (Bug44814 transientMethodDictForEnv: 0);
-        at: \'class methods\' put: (Bug44814 class transientMethodDictForEnv: 0);
-        at: \'class\' put: Bug44814;
-        at: \'cats\' put: (Bug44814 _baseCategorys: 0);
-        at: \'class cats\' put: (Bug44814 class _baseCategorys: 0);
+        at: \'methods\' put: ((Smalltalk at: #Bug44814) transientMethodDictForEnv: 0);
+        at: \'class methods\' put: ((Smalltalk at: #Bug44814) class transientMethodDictForEnv: 0);
+        at: \'class\' put: (Smalltalk at: #Bug44814);
+        at: \'cats\' put: ((Smalltalk at: #Bug44814) _baseCategorys: 0);
+        at: \'class cats\' put: ((Smalltalk at: #Bug44814) class _baseCategorys: 0);
         yourself.
       evalMethods
         ifTrue: [ 
           dict
-            at: \'transientMethod result\' put: Bug44814 new transientMethod;
-            at: \'transientMethod class result\' put: Bug44814 transientMethod;
+            at: \'transientMethod result\' put: (Smalltalk at: #Bug44814) new transientMethod;
+            at: \'transientMethod class result\' put: (Smalltalk at: #Bug44814) transientMethod;
             yourself ].
       dict ]
     ifPresent: [ :ignored | 
@@ -90,4 +90,4 @@ EXAMPLES
   ./bug --remove
   ./bug --reset
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-11-24T20:55:44.1215460300445-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-11-24T11:09:44.9650909900665-08:00'],#modificationTime:DateAndTime['2014-12-02T13:57:03.7534139156341-08:00']}

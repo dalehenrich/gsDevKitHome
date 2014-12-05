@@ -1,43 +1,68 @@
-TDStringLeafNode{#name:'analysis',#contents:'--transcript--\'Sent but not implemented: #\'\'stopAndRemoveGemServerNamed:\'\'\'
---transcript--\'Sent but not implemented: #\'\'start:named:onPorts:delegate:\'\'\'
---transcript--\'Sent but not implemented: #\'\'vmStatisticsReportString\'\'\'
---transcript--\'Sent but not implemented: #\'\'statisticsReport\'\'\'
---transcript--\'Sent but not implemented: #\'\'vm\'\'\'
---transcript--\'Sent but not implemented: #\'\'asDelay\'\'\'
---transcript--\'Undefined Symbol:#\'\'SystemVersion\'\'\'
---transcript--\'Undefined Symbol:#\'\'ZnServerStarter\'\'\'
---transcript--\'Undefined Symbol:#\'\'SmalltalkImage\'\'\'
+TDStringLeafNode{#name:'analysis',#contents:'dkh 12/2/2014 17:33
+-------------------
+ZnWebSocketTests>>#testChatroom has a 30 second delay in middle of processing:
 
-**************************************************************************************
-\tResults for TestCase
-1136 run, 1127 passes, 2 expected defects, 2 failures, 5 errors, 0 unexpected passes
-**************************************************************************************
-*** FAILURES *******************
-\tUndefinedSymbolsTest debug: #\'testUndefinedSymbols\'.
-\tSentButNotImplementedTest debug: #\'testSentButNotImplemented\'.
-*** ERRORS *******************
-\tZnWebSocketTests debug: #\'testChatroom\'.
-\tZnWebSocketTests debug: #\'testEcho\'.
-\tZnWebSocketTests debug: #\'testEchoSecureWebSocketsDotOrg\'.
-\tZnWebSocketTests debug: #\'testStatus\'.
-\tZnExampleStorageRestServerDelegateTest debug: #\'testQuery\'.
-
----
-dkh 11/26/2014 11:44
----
-gsApplicationTools:
-
-\'Sent but not implemented: #\'\'startServerNamed:\'\'\'
-\'Sent but not implemented: #\'\'addServerOfClass:withName:on:\'\'\'
-\'Sent but not implemented: #\'\'stopDefault\'\'\'
-\'Sent but not implemented: #\'\'debugMode:\'\'\'
-\'Sent but not implemented: #\'\'defaultPortList\'\'\'
-\'Undefined Symbol:#\'\'ZnServer\'\'\'
-
----
-dkh 11/26/2014 14:26
----
-Issue #2: rename packages to have GsApplication-Tools as base name
-Issue #2: rename Application-Server-Tools to GsApplicationTools-Server ... also doing a bit of restructuring
-Issue #2: add a tests package ... stub of test
-',#creationTime:DateAndTime['2014-11-20T17:50:05.3281550407409-08:00'],#modificationTime:DateAndTime['2014-11-26T14:28:17.5012099742889-08:00']}
+--------------------
+info        Start Gems: ZnWebSocketTestChatServer                  15488  12/02/2014 17:27:59:084
+info        performOnServer: ZnWebSocketTestChatServer             15488  12/02/2014 17:27:59:098
+info        -->>Start ZnWebSocketTestChatServer on 1701            22587  12/02/2014 17:27:59:129
+info        recordGemPid: ZnWebSocketTestChatServer on 1701        22587  12/02/2014 17:27:59:130
+info        setStatmonCacheName: ZnWebSocketTestChatServer         22587  12/02/2014 17:27:59:131
+info        enableRemoteBreakpointHandling: ZnWebSocketTestCha...  22587  12/02/2014 17:27:59:132
+info        startSigAbortHandling: ZnWebSocketTestChatServer       22587  12/02/2014 17:27:59:187
+info        Starting ZnManagingMultiThreadedServer HTTP port 1...  22587  12/02/2014 17:27:59:244
+debug       Initializing server socket                             22587  12/02/2014 17:27:59:293
+debug       Executing request/response loop                        22587  12/02/2014 17:28:02:100
+transcript  \'waitForNonBlockingReadActivityUpToMs: 30000 - 201...  15488  12/02/2014 17:28:02:130
+info        Read aZnRequest(GET /ws-chatroom)                      22587  12/02/2014 17:28:02:153
+trace       GET /ws-chatroom 101 3ms                               22587  12/02/2014 17:28:02:213
+info        Wrote aZnWebSocketResponse(101 Switching Protocols...  22587  12/02/2014 17:28:02:268
+transcript  \'DONE ... waitForNonBlockingReadActivityUpToMs: 20...  15488  12/02/2014 17:28:02:295
+info        Connect webSocket1                                     15488  12/02/2014 17:28:02:312
+info        312438785 registering                                  22587  12/02/2014 17:28:02:318
+transcript  \'waitForNonBlockingReadActivityUpToMs: 30000 - 201...  15488  12/02/2014 17:28:02:323
+info        312438785 read message...                              22587  12/02/2014 17:28:02:418
+--22587--transcript--\'waitForNonBlockingReadActivityUpToMs: 30000 - 2014-12-02T17:28:02.4684898853302-08:00\'
+debug       Executing request/response loop                        22587  12/02/2014 17:28:02:469
+info        Read aZnRequest(GET /ws-chatroom)                      22587  12/02/2014 17:28:02:543
+trace       GET /ws-chatroom 101 0ms                               22587  12/02/2014 17:28:02:611
+info        Wrote aZnWebSocketResponse(101 Switching Protocols...  22587  12/02/2014 17:28:02:660
+transcript  \'DONE ... waitForNonBlockingReadActivityUpToMs: 20...  15488  12/02/2014 17:28:02:678
+info        Connect webSocket2                                     15488  12/02/2014 17:28:02:691
+info        Send message1                                          15488  12/02/2014 17:28:02:692
+info        Send message2                                          15488  12/02/2014 17:28:02:692
+transcript  \'waitForNonBlockingReadActivityUpToMs: 30000 - 201...  15488  12/02/2014 17:28:02:701
+info        312365825 registering                                  22587  12/02/2014 17:28:02:710
+info        312365825 read message...                              22587  12/02/2014 17:28:02:811
+info        312365825 got frame..                                  22587  12/02/2014 17:28:02:861
+info        312365825 Received message: \'Message 2 @ 12/02/201...  22587  12/02/2014 17:28:02:911
+info        312438785 Sending message: \'Message 2 @ 12/02/2014...  22587  12/02/2014 17:28:02:912
+info        312438785 sent message                                 22587  12/02/2014 17:28:02:912
+info        312365825 Sending message: \'Message 2 @ 12/02/2014...  22587  12/02/2014 17:28:02:913
+info        312365825 sent message                                 22587  12/02/2014 17:28:02:913
+info        312365825 distributed message                          22587  12/02/2014 17:28:02:913
+transcript  \'DONE ... waitForNonBlockingReadActivityUpToMs: 20...  15488  12/02/2014 17:28:02:949
+--->info        312365825 read message...                              22587  12/02/2014 17:28:02:969
+--22587--transcript--\'waitForNonBlockingReadActivityUpToMs: 30000 - 2014-12-02T17:28:03.019639968872-08:00\'
+transcript  \'waitForNonBlockingReadActivityUpToMs: 30000 - 201...  15488  12/02/2014 17:28:02:975
+info        startServerOn Delay expired.                           22587  12/02/2014 17:28:09:344
+info        startServerOn Delay expired.                           22587  12/02/2014 17:28:19:403
+info        startServerOn Delay expired.                           22587  12/02/2014 17:28:29:444
+--22587--transcript--\'DONE ... waitForNonBlockingReadActivityUpToMs: 2014-12-02T17:28:32.4691760540008-08:00\'
+--->info        312438785 got frame..                                  22587  12/02/2014 17:28:32:470
+info        312438785 Received message: \'Message 1 @ 12/02/201...  22587  12/02/2014 17:28:32:519
+info        312438785 Sending message: \'Message 1 @ 12/02/2014...  22587  12/02/2014 17:28:32:519
+info        312438785 sent message                                 22587  12/02/2014 17:28:32:520
+info        312365825 Sending message: \'Message 1 @ 12/02/2014...  22587  12/02/2014 17:28:32:520
+info        312365825 sent message                                 22587  12/02/2014 17:28:32:520
+info        312438785 distributed message                          22587  12/02/2014 17:28:32:521
+info        312438785 read message...                              22587  12/02/2014 17:28:32:569
+transcript  \'DONE ... waitForNonBlockingReadActivityUpToMs: 20...  15488  12/02/2014 17:28:32:572
+info        Read inbox1                                            15488  12/02/2014 17:28:32:585
+info        Read inbox2                                            15488  12/02/2014 17:28:32:585
+info        websocket2 closed                                      15488  12/02/2014 17:28:32:586
+info        websocket2 closed                                      15488  12/02/2014 17:28:32:586
+info        312438785 got frame..                                  22587  12/02/2014 17:28:32:619
+info        Stop Gems: ZnWebSocketTestChatServer                   15488  12/02/2014 17:28:32:669
+info        performOnServer: ZnWebSocketTestChatServer             15488  12/02/2014 17:28:32:678
+',#creationTime:DateAndTime['2014-11-20T17:50:05.3281550407409-08:00'],#modificationTime:DateAndTime['2014-12-02T17:39:34.3708999156951-08:00']}
