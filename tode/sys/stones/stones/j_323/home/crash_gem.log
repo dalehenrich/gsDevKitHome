@@ -1,0 +1,401 @@
+ _____________________________________________________________________________
+|                             Configuration Files                             |
+|                                                                             |
+| System File: /export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_323/extents/system.conf
+|                                                                             |
+| Executable File: /export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_323/gem.conf
+|_____________________________________________________________________________|
+ _____________________________________________________________________________
+|                Gem Configuration Options for process id 8390                |
+|_____________________________________________________________________________|
+
+DUMP_OPTIONS = TRUE;
+GEM_GCI_LOG_ENABLED = FALSE;
+GEM_ABORT_MAX_CRS = 0;
+GEM_FREE_FRAME_CACHE_SIZE = -1;
+GEM_FREE_FRAME_LIMIT = -1;
+GEM_FREE_PAGEIDS_CACHE = 200;
+GEM_HALT_ON_ERROR = -1;
+GEM_KEEP_MIN_SOFTREFS = 0;
+GEM_MAX_SMALLTALK_STACK_DEPTH = 1000;
+GEM_NATIVE_CODE_ENABLED = 2;
+GEM_PRIVATE_PAGE_CACHE_KB = 960KB;
+GEM_PGSVR_COMPRESS_PAGE_TRANSFERS = FALSE;
+GEM_PGSVR_FREE_FRAME_CACHE_SIZE = -1;
+GEM_PGSVR_FREE_FRAME_LIMIT = -1;
+GEM_PGSVR_UPDATE_CACHE_ON_READ = FALSE;
+GEM_REPOSITORY_IN_MEMORY = FALSE;
+GEM_RPC_KEEPALIVE_INTERVAL = 0;
+GEM_RPCGCI_TIMEOUT = 0;
+GEM_RPC_USE_SSL = TRUE;
+GEM_SOFTREF_CLEANUP_PERCENT_MEM = 50;
+GEM_TEMPOBJ_AGGRESSIVE_STUBBING = TRUE;
+GEM_TEMPOBJ_CACHE_SIZE = 50000KB;
+GEM_TEMPOBJ_MESPACE_SIZE = 0KB;
+GEM_TEMPOBJ_OOPMAP_SIZE = 0;
+GEM_TEMPOBJ_SCOPES_SIZE = 2000;
+GEM_TEMPOBJ_POMGEN_SIZE = 0KB;
+GEM_TEMPOBJ_POMGEN_PRUNE_ON_VOTE = 90;
+GEM_TEMPOBJ_POMGEN_SCAVENGE_INTERVAL = 1800;
+GEM_TEMPOBJ_START_ADDR not used on this platform
+LOG_WARNINGS = TRUE;
+SHR_NUM_FREE_FRAME_SERVERS = -1;
+SHR_PAGE_CACHE_LARGE_MEMORY_PAGE_POLICY = 0;
+SHR_PAGE_CACHE_LOCKED = FALSE;
+SHR_PAGE_CACHE_NUM_PROCS = 4089;
+SHR_PAGE_CACHE_NUM_SHARED_COUNTERS = 1900;
+SHR_PAGE_CACHE_PERMISSIONS = 660;
+SHR_PAGE_CACHE_SIZE_KB = 500000KB;
+SHR_TARGET_FREE_FRAME_COUNT = -1;
+SHR_WELL_KNOWN_PORT_NUMBER = 0;
+(vmGc spaceSizes: eden init 2048K max 9344K , survivor init 448K max 1600K,
+ vmGc    old max 37440K, code max 10048K, perm max 5056K, pom 10 * 4224K = 42240K,
+ vmGc    remSet 1156K, meSpace max 48172K oopMapSize 262144  max footprint 164M)
+ _____________________________________________________________________________
+|             GemStone/S64 Object-Oriented Data Management System             |
+|                   Copyright (C) GemTalk Systems 1986-2014                   |
+|                            All rights reserved.                             |
+|                           Covered by U.S Patents:                           |
+|            6,256,637 Transactional virtual machine architecture             |
+|              6,360,219 Object queues with concurrent updating               |
+|                  6,567,905 Generational Garbage Collector.                  |
+| 6,681,226 Selective Pessimistic Locking for a Concurrently Updateable Database
++-----------------------------------------------------------------------------+
+|    PROGRAM: topaz, Linear GemStone Interface (Linked Session)               |
+|    VERSION: 3.2.3, Thu Dec  4 16:56:29 2014 dhenrich private build          |
+|      BUILD: gss64_3_2_x_branch-34888-PRIVATE                                |
+|  BUILT FOR: x86-64 (Linux)                                                  |
+|       MODE: 64 bit                                                          |
+| RUNNING ON: 4-CPU foos x86_64 (Linux 3.11.0-26-generic #45~precise1-Ubuntu  |
+| SMP Tue Jul 15 04:02:35 UTC 2014) 18059MB                                   |
+| PROCESS ID: 8390      DATE: 12/06/2014 10:23:03 PST                         |
+|   USER IDS: REAL=dhenrich (562) EFFECTIVE=dhenrich (562)                    |
++-----------------------------------------------------------------------------+
+|   GEMSTONE_NRS_ALL = #dir:$GEMSTONE_LOGDIR#log:%N%P.log#dir:/home/dhenrich/gsDevKitHome/gemstone/stones/j_323/logs
+|_____________________________________________________________________________|
+Reading initialization file /home/dhenrich/.topazini
+topaz> SET GEMSTONE gs64stone
+topaz> #set gemnetid !#netldi:gs64ldi!gemnetobject
+topaz> # SET GEMSTONE gemserver61
+topaz> # set gemstone gemserver12
+topaz> set user DataCurator
+topaz> set password swordfish
+topaz> 
+topaz> 
+topaz> set user DataCurator pass swordfish gems j_323
+Warning: clearing the previous GemStone password.
+topaz> 
+topaz> display oops
+topaz> iferror stack
+topaz> 
+topaz> login
+[Info]: LNK client/gem GCI levels = 863/863
+[Info]: libssl-3.2.3-64.so: loaded
+[Info]: User ID: DataCurator
+[Info]: Repository: j_323
+[Info]: Session ID: 6
+[Info]: GCI Client Host: <Linked>
+[Info]: Page server PID: -1
+[Info]: Login Time: 12/06/2014 10:23:03.173 PST
+Gave this VM preference for OOM killer, Wrote to /proc/8390/oom_score_adj value 250
+[12/06/2014 10:23:03.175 PST]
+  gci login: currSession 1  linked session 
+successful login
+fileformat is now utf8
+sourcestringclass is now Unicode16 
+topaz 1> 
+topaz 1> run
+(GemServerRegistry gemServerNamed: 'rest') scriptStartServiceOn: 1720.
+%
+rest Server started on port 1720
+--transcript--aZnManagingMultiThreadedServer(running 1720)
+--transcript--'setOrClearBreakpoint: [0]: ''ZnRestServerDelegate _setMethodBreak: #''''handleRequest:'''' stepPoint: 14'''
+--transcript--'setOrClearBreakpoint: [1]: true'
+--transcript--'setOrClearBreakpoint: [2]: anArray( ''ZnRestServerDelegate>>handleRequest: @14'')'
+--transcript--'setOrClearBreakpoint[0]: '
+--transcript--'setOrClearBreakpoint[2] pre convert: true'
+--transcript--'setOrClearBreakpoint[3] convert to portable: true'
+--transcript--'setOrClearBreakpoint[4] post convert: false'
+--transcript--'setOrClearBreakpoint[5]: bouncing server'
+--transcript--'setOrClearBreakpoint: [6]: anArray( ''ZnRestServerDelegate>>handleRequest: @14'')'
+--transcript--aZnManagingMultiThreadedServer(running 1720)
+--transcript--'setOrClearBreakpoint: [0]: ''ZnRestServerDelegate _setMethodBreak: #''''handleRequest:'''' stepPoint: 1'''
+--transcript--'setOrClearBreakpoint: [1]: true'
+--transcript--'setOrClearBreakpoint: [2]: anArray( ''ZnRestServerDelegate>>handleRequest: @1'')'
+--transcript--'setOrClearBreakpoint[0]: '
+--transcript--'setOrClearBreakpoint[2] pre convert: false'
+--transcript--'setOrClearBreakpoint[3] convert to portable: true'
+--transcript--'setOrClearBreakpoint[4] post convert: false'
+--transcript--'setOrClearBreakpoint[5]: bouncing server'
+--transcript--'setOrClearBreakpoint: [6]: anArray( ''ZnRestServerDelegate>>handleRequest: @1'')'
+--transcript--aZnManagingMultiThreadedServer(running 1720)
+--transcript--'setOrClearBreakpoint: [0]: ''ZnRestServerDelegate _setMethodBreak: #''''handleRequest:'''' stepPoint: 1'''
+--transcript--'setOrClearBreakpoint: [1]: true'
+--transcript--'setOrClearBreakpoint: [2]: anArray( ''ZnRestServerDelegate>>handleRequest: @1'')'
+--transcript--'setOrClearBreakpoint[0]: '
+--transcript--'setOrClearBreakpoint[2] pre convert: true'
+--transcript--'setOrClearBreakpoint[3] convert to portable: true'
+--transcript--'setOrClearBreakpoint[4] post convert: false'
+--transcript--'setOrClearBreakpoint[5]: bouncing server'
+--transcript--'setOrClearBreakpoint: [6]: anArray( ''ZnRestServerDelegate>>handleRequest: @1'')'
+--transcript--aZnManagingMultiThreadedServer(running 1720)
+--transcript--'clearAllBreakpoints: [0]: '''''
+--transcript--'clearAllBreakpoints: [0]: '''''
+--transcript--'clearAllBreakpoints: [0]: '''''
+--transcript--'setOrClearBreakpoint: [0]: ''ZnRestServerDelegate _setMethodBreak: #''''handleRequest:'''' stepPoint: 1'''
+--transcript--'setOrClearBreakpoint: [1]: true'
+--transcript--'setOrClearBreakpoint: [2]: anArray( ''ZnRestServerDelegate>>handleRequest: @1'')'
+--transcript--'setOrClearBreakpoint[0]: '
+--transcript--'setOrClearBreakpoint[2] pre convert: false'
+--transcript--'setOrClearBreakpoint[3] convert to portable: true'
+--transcript--'setOrClearBreakpoint[4] post convert: false'
+--transcript--'setOrClearBreakpoint[5]: bouncing server'
+--transcript--'setOrClearBreakpoint: [6]: anArray( ''ZnRestServerDelegate>>handleRequest: @1'')'
+--transcript--aZnManagingMultiThreadedServer(running 1720)
+--transcript--'Creating continuation for: ''a Breakpoint occurred (error 6005), Method breakpoint encountered.'''
+Sat Dec  6 10:36:29 PST 2014
+gdb is /usr/bin/gdb
+===--- start gdb stacks
+Sat Dec  6 10:36:30 PST 2014
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7f100dd13700 (LWP 8393)]
+[New Thread 0x7f100e952700 (LWP 8392)]
+[New Thread 0x7f100f153700 (LWP 8391)]
+0x00007f103d9f5963 in poll () from /lib/x86_64-linux-gnu/libc.so.6
+
+Thread 4 (Thread 0x7f100f153700 (LWP 8391)):
+#0  0x00007f103bc2f14c in recv () from /lib/x86_64-linux-gnu/libpthread.so.0
+#1  0x00007f103abc7c12 in recv (__flags=0, __n=4, __buf=0x7f100f152eb0, __fd=9) at /usr/include/x86_64-linux-gnu/bits/socket2.h:45
+#2  SocketRead_ (sock=9, flags=0, dataPtr=0x7f100f152eb0 "", dataSize=4, err=0x7f100f152690) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/socket.c:2606
+#3  0x00007f103abadb9b in shrpcmonSocketReadFn (arg=0x7f102f6a4288) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/stncall.c:399
+#4  0x00007f103bc27e9a in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f103da0131d in clone () from /lib/x86_64-linux-gnu/libc.so.6
+#6  0x0000000000000000 in ?? ()
+
+Thread 3 (Thread 0x7f100e952700 (LWP 8392)):
+#0  0x00007f103bc2f14c in recv () from /lib/x86_64-linux-gnu/libpthread.so.0
+#1  0x00007f103abc7c12 in recv (__flags=0, __n=1, __buf=0x7f100e95168f, __fd=7) at /usr/include/x86_64-linux-gnu/bits/socket2.h:45
+#2  SocketRead_ (sock=7, flags=0, dataPtr=0x7f100e95168f "\004", dataSize=1, err=0x7f100e951690) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/socket.c:2606
+#3  0x00007f103abade23 in stnOobReaderThreadFn (arg=0x7f102f6a4288) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/stncall.c:551
+#4  0x00007f103bc27e9a in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+#5  0x00007f103da0131d in clone () from /lib/x86_64-linux-gnu/libc.so.6
+#6  0x0000000000000000 in ?? ()
+
+Thread 2 (Thread 0x7f100dd13700 (LWP 8393)):
+#0  0x00007f103d9f5963 in poll () from /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f103aaf0b84 in timeoutThreadFn (arg=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/socketprim.c:3319
+#2  0x00007f103bc27e9a in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+#3  0x00007f103da0131d in clone () from /lib/x86_64-linux-gnu/libc.so.6
+#4  0x0000000000000000 in ?? ()
+
+Thread 1 (Thread 0x7f103e0d1700 (LWP 8390)):
+#0  0x00007f103d9f5963 in poll () from /lib/x86_64-linux-gnu/libc.so.6
+#1  0x00007f103ab87361 in HostMilliSleep (milliseconds=<optimized out>, exitIfInterrupted=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostclientmt.c:167
+#2  0x00007f103ab83e96 in forkAndWait (cmdPath=0x7fff47b16e80 "/export/foos2/users/dhenrich/3.0/j_gss64bit/fast50/gs/product/bin/pstack", args=0x7fff47b15e60) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostdebugmt.c:67
+#3  0x00007f103ab847c3 in HostPrintCStackForPid (pid=8390) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostdebugmt.c:402
+#4  0x00007f103ab8469b in HostPrintCStack () at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostdebugmt.c:362
+#5  0x00007f103abd05bb in HostFaultHandler (sig=11, info=0x7fff47b183b0, context=0x7fff47b18280) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostunix.c:1178
+#6  <signal handler called>
+#7  om::IntStoreTemp (omPtr=0x7f102f694000, obj=0x14, offset=2, valToStore=0x7f1033ece468) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/intloop.c:1439
+#8  0x00007f103aa47db6 in IntLpBCLoop () at intloopam64.m4:1
+#9  0x00007f103aa29b20 in IntLpSupControlLoop (omPtr=0x7f102f694000, enterNativeCodeArg=0, resultH=0x7f102fb28038) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/intloopsup.c:8561
+#10 0x00007f103aa1779a in intControlLoop (resultH=0x7f102fb28038, enterNativeCode=<optimized out>, omPtr=0x7f102f694000) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/interp.c:271
+#11 IntExecuteMethod (iS=<optimized out>, receiverH=<optimized out>, methodH=<optimized out>, flags=<optimized out>, argsH=0x7f102f7f2870, nArgs=0) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/interp.c:699
+#12 0x00007f103a9021d3 in executeFromCtx (omPtr=0x7f102f694000, sourceH=0x7f102fb28008, contextObj=<optimized out>, symbolListArg=<optimized out>, flags=1, environmentId=0, forExecuteBlock=0, blockArgs=0x0, numArgs=0) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gemdo.c:726
+#13 0x00007f103a9026bc in GemDoExecuteFromContext (source=285478913, contextObj=1, symbolListArg=20, flags=1, environmentId=0, result=0x7fff47b18bb8) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gemdo.c:738
+#14 0x00007f103a88d258 in gciCall6Args (cmdId=LGC_CALL_EXEC_FROM_CONTEXT_OBJ, gemDoFct=0x7f103a9025d0 <GemDoExecuteFromContext(unsigned long, unsigned long, unsigned long, int, unsigned short, unsigned long*)>, arg1=285478913, arg2=1, arg3=20, arg4=1, arg5=0, arg6=140734396206008) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gcirpc.c:2142
+#15 0x00007f103a88fdbc in GciExecuteFromContextDbg_ (source=<optimized out>, contextObject=<optimized out>, symbolList=<optimized out>, flags=<optimized out>, environmentId=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gcirpc.c:3033
+#16 0x00007f103ac00145 in TpAuxDispatchCmd (cmd=cmdRun) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topazm.c:7405
+#17 0x00007f103ac0245f in processCommand () at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topazm.c:2824
+#18 0x00007f103ac02bf8 in topazMain (argc=<optimized out>, argv=<optimized out>, gciDynLibHandle=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topazm.c:3863
+#19 0x0000000000400a8e in main (argc=4, argv=0x7fff47b1bb78) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topaz.c:87
+
+Thread 4 (Thread 0x7f100f153700 (LWP 8391)):
+#0  0x00007f103bc2f14c in recv () from /lib/x86_64-linux-gnu/libpthread.so.0
+No symbol table info available.
+#1  0x00007f103abc7c12 in recv (__flags=0, __n=4, __buf=0x7f100f152eb0, __fd=9) at /usr/include/x86_64-linux-gnu/bits/socket2.h:45
+No locals.
+#2  SocketRead_ (sock=9, flags=0, dataPtr=0x7f100f152eb0 "", dataSize=4, err=0x7f100f152690) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/socket.c:2606
+        numBytes = <optimized out>
+#3  0x00007f103abadb9b in shrpcmonSocketReadFn (arg=0x7f102f6a4288) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/stncall.c:399
+        sErr = {errFlags = 0, errCode = SYSERR_NONE, eaiError = 0, categ = SYSERRCAT_ERRNO, errMsg = '\000' <repeats 1023 times>}
+        numRead = <optimized out>
+        ibSocket = 9
+        waitForStopReq = 1
+        socketBuf = "\000\067\025\017"
+        lostConn = 0
+        stopRequestVal = <optimized out>
+        thr = 0x7f102f6a4398
+        gotSigTerm = 0
+        status = 0
+        quietMode = <optimized out>
+        wks = 0x7f102f6a4288
+        doCloseSocket = <optimized out>
+#4  0x00007f103bc27e9a in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+No symbol table info available.
+#5  0x00007f103da0131d in clone () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#6  0x0000000000000000 in ?? ()
+No symbol table info available.
+
+Thread 3 (Thread 0x7f100e952700 (LWP 8392)):
+#0  0x00007f103bc2f14c in recv () from /lib/x86_64-linux-gnu/libpthread.so.0
+No symbol table info available.
+#1  0x00007f103abc7c12 in recv (__flags=0, __n=1, __buf=0x7f100e95168f, __fd=7) at /usr/include/x86_64-linux-gnu/bits/socket2.h:45
+No locals.
+#2  SocketRead_ (sock=7, flags=0, dataPtr=0x7f100e95168f "\004", dataSize=1, err=0x7f100e951690) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/socket.c:2606
+        numBytes = <optimized out>
+#3  0x00007f103abade23 in stnOobReaderThreadFn (arg=0x7f102f6a4288) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/stncall.c:551
+        socketBuf = "\004"
+        sErr = {errFlags = 0, errCode = SYSERR_NONE, eaiError = 0, categ = SYSERRCAT_ERRNO, errMsg = '\000' <repeats 1023 times>}
+        numRead = <optimized out>
+        wks = 0x7f102f6a4288
+        sessionPtr = 0x7f102f6a6270
+        ibSocket = 7
+        status = 0
+        stopRequestVal = <optimized out>
+        quietMode = <optimized out>
+        waitForStopReq = <optimized out>
+        thr = 0x7f102f6a4360
+        doCloseSocket = <optimized out>
+#4  0x00007f103bc27e9a in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+No symbol table info available.
+#5  0x00007f103da0131d in clone () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#6  0x0000000000000000 in ?? ()
+No symbol table info available.
+
+Thread 2 (Thread 0x7f100dd13700 (LWP 8393)):
+#0  0x00007f103d9f5963 in poll () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#1  0x00007f103aaf0b84 in timeoutThreadFn (arg=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/socketprim.c:3319
+        nowUsec = <optimized out>
+        numFds = 1
+        numFound = <optimized out>
+        toState = 0x7f103af238e0
+        rwks = 0x7f102f6a4288
+        wakeupCmd = {signalTimeMs = 0, signalPriority = 0}
+        pollGciSock = <optimized out>
+        msToWait = 500
+        commandSock = 12
+        gciClientSock = <optimized out>
+        omPtr = 0x7f102f694000
+        sErr = {errFlags = 0, errCode = SYSERR_NONE, eaiError = 0, categ = SYSERRCAT_ERRNO, errMsg = '\000' <repeats 1023 times>}
+        pollArr = {{fd = 12, events = 1, revents = 0}, {fd = -1, events = 0, revents = 0}}
+        signalUsec = 1417890993473000
+#2  0x00007f103bc27e9a in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
+No symbol table info available.
+#3  0x00007f103da0131d in clone () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#4  0x0000000000000000 in ?? ()
+No symbol table info available.
+
+Thread 1 (Thread 0x7f103e0d1700 (LWP 8390)):
+#0  0x00007f103d9f5963 in poll () from /lib/x86_64-linux-gnu/libc.so.6
+No symbol table info available.
+#1  0x00007f103ab87361 in HostMilliSleep (milliseconds=<optimized out>, exitIfInterrupted=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostclientmt.c:167
+No locals.
+#2  0x00007f103ab83e96 in forkAndWait (cmdPath=0x7fff47b16e80 "/export/foos2/users/dhenrich/3.0/j_gss64bit/fast50/gs/product/bin/pstack", args=0x7fff47b15e60) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostdebugmt.c:67
+        waitResult = 0
+        buf = "\204\003\000\000\000\000\000\000\205\003\000\000\000\000\000\000\260\203\261G\377\177\000\000\240\177\261G\377\177\000\000\200\202\261G\377\177\000\000\000\000\000\000\000\000\000\000(\263\370:\020\177\000\000\"\006\226=\020\177\000\000\214\003\000\000\000\000\000\000 \000\000\000\060\000\000\000P^\261G\377\177\000\000\220]\261G\377\177\000\000\220\003\000\000\000\000\000\000\221\003\000\000\000\000\000\000\222\003\000\000\000\000\000\000\306 \000\000\000\000\000\000\001\000\000\000\000\000\000\000?\000\000\000\000\000\000\000\226\003\000\000\000\000\000\000\227\003\000\000\000\000\000\000\230\003\000\000\000\000\000\000\231\003\000\000\000\000\000\000\232\003\000\000\000\000\000\000\233\003\000\000\000\000\000\000\234\003\000\000\000\000\000\000\000\025\244\342\235\216\317\\@^\261G\377\177\000\000\313?\270:\020\177\000\000L\277\304:\020\177\000\000\331\354\302;\020\177\000\000\000\000\000\000\000\000\000\000"...
+        oldSignal = {__sigaction_handler = {sa_handler = 0, sa_sigaction = 0}, sa_mask = {__val = {0, 140734396194384, 140734396194192, 831, 832, 833, 834, 835, 836, 837, 838, 839, 139707698784960, 139707493066753, 139707678072832, 140734396203952}}, sa_flags = 67108864, sa_restorer = 0x7f103bc2fcb0 <__restore_rt>}
+        childStatus = 0
+        child = 8540
+#3  0x00007f103ab847c3 in HostPrintCStackForPid (pid=8390) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostdebugmt.c:402
+        argArray = {0x7fff47b15e80 "pstack", 0x7fff47b17f80 "8390", 0x0}
+        pidStr = "8390\000\000\000\000\331\354\302;\020\177\000"
+        myPid = 8390
+        buffer = "\nBegin attempt to print C-level stack for process 8390 at: \000k 0x0 cr2 0x3c \n\000gsfs_pad 0x33 \n\000r15 0x7f102f7f2870 \n\000\261G\377\177\000\000\000\177\261G\377\177\000\000\001(\177/\020\177\000\000\347s\241:\020\177", '\000' <repeats 26 times>, "<", '\000' <repeats 47 times>, "2ڣ=\020\177\000\000\000\000\000\000\250,", '\000' <repeats 18 times>"\240, v\206:\020\177\000"
+        cmdName = "pstack\000\000\257\003\000\000\000\000\000\000\260\003\000\000\000\000\000\000\261\003\000\000\000\000\000\000\262\003\000\000\000\000\000\000\263\003\000\000\000\000\000\000\264\003\000\000\000\000\000\000\265\003\000\000\000\000\000\000\266\003\000\000\000\000\000\000\267\003\000\000\000\000\000\000\270\003\000\000\000\000\000\000\271\003\000\000\000\000\000\000\272\003\000\000\000\000\000\000\273\003\000\000\000\000\000\000\274\003\000\000\000\000\000\000\275\003\000\000\000\000\000\000\276\003\000\000\000\000\000\000\277\003\000\000\000\000\000\000\300\003\000\000\000\000\000\000\301\003\000\000\000\000\000\000\302\003\000\000\000\000\000\000\303\003\000\000\000\000\000\000\304\003\000\000\000\000\000\000\305\003\000\000\000\000\000\000\306\003\000\000\000\000\000\000\307\003\000\000\000\000\000\000\310\003\000\000\000\000\000\000\311\003\000\000\000\000\000\000\312\003\000\000\000\000\000\000\313"...
+        cmdNameWithPath = "/export/foos2/users/dhenrich/3.0/j_gss64bit/fast50/gs/product/bin/pstack\000\063.2.3_j-x86_64.Linux/bin/pstack", '\000' <repeats 552 times>, "foos", '\000' <repeats 1020 times>, "3.11.0-26-generic", '\000' <repeats 111 times>, "0|\261G\377\177\000\000 |\261G\377\177\000\000\250}\261G\377\177\000\000\240\305\304:\020\177\000\000*\000\000\000\000\000\000\000|W\225=\020\177\000\000\000\000\000\000\000\000\000\000\321"...
+#4  0x00007f103ab8469b in HostPrintCStack () at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostdebugmt.c:362
+No locals.
+#5  0x00007f103abd05bb in HostFaultHandler (sig=11, info=0x7fff47b183b0, context=0x7fff47b18280) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/hostunix.c:1178
+        mgr = <optimized out>
+        sigName = <optimized out>
+        validArgs = 0
+        pcRegister = <optimized out>
+        inGcilnk = <optimized out>
+        savedHandler = 0x7f103af8b328
+        doChaining = 1
+        msgBuf = "\n\nGemstone Signal Handler: Signal 11,  SIGSEGV Received \n", '\000' <repeats 127 times>"\375, \376\273:\020\177\000\000\067\017\000\000\000\000\000\000\025'\274:\020\177\000\000\067\017\000\000\000\000\000\000\376\301\267:\020\177\000\000\004\000\000\000\061\070\060\065\000@i/\020\177\000\000\360\001", '\000' <repeats 13 times>
+        foundSignal = 0
+        numSegvInProgress = <optimized out>
+#6  <signal handler called>
+No symbol table info available.
+#7  om::IntStoreTemp (omPtr=0x7f102f694000, obj=0x14, offset=2, valToStore=0x7f1033ece468) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/intloop.c:1439
+No locals.
+#8  0x00007f103aa47db6 in IntLpBCLoop () at intloopam64.m4:1
+No locals.
+#9  0x00007f103aa29b20 in IntLpSupControlLoop (omPtr=0x7f102f694000, enterNativeCodeArg=0, resultH=0x7f102fb28038) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/intloopsup.c:8561
+        res = <optimized out>
+        unwind_buf0 = {buf = {{__jmpbuf = {3, 6265634237753656279, 0, 0, 0, 0, 6281061972841923543, 6265679933281207255}, __mask_was_saved = 0, __saved_mask = {__val = {0, 139707491634616, 140734396205392, 139707496431664, 1, 6, 139707678747381, 139707491661312, 139707491881576, 139707491631104, 139707491631104, 139707491881576, 0, 0, 139707679861536, 0}}}}, previous = 0x7fff47b18a80}
+        uKind = <optimized out>
+        iS = 0x7f102f6d1568
+        enterNativeCode = 0
+        saveScope = {_root = 0x7f102f694db8, _codeGenGcDisallowed = 0x0, _gcDisallowed = 0x0, parent = 0x7fff47b188a0, basePtr = 0x7f102fb28038}
+#10 0x00007f103aa1779a in intControlLoop (resultH=0x7f102fb28038, enterNativeCode=<optimized out>, omPtr=0x7f102f694000) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/interp.c:271
+        uKind = <optimized out>
+#11 IntExecuteMethod (iS=<optimized out>, receiverH=<optimized out>, methodH=<optimized out>, flags=<optimized out>, argsH=0x7f102f7f2870, nArgs=0) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/interp.c:699
+        interruptBits = <optimized out>
+        nativeCode = 20
+        resultH = 0x7f102fb28038
+        omPtr = 0x7f102f694000
+        inFfi = 1587330
+        stk = <optimized out>
+        disableAsyncEvents = 796862552
+        scp = {_root = 0x7f102f694db8, parent = 0x7fff47b18950, basePtr = 0x7f102fb28030}
+#12 0x00007f103a9021d3 in executeFromCtx (omPtr=0x7f102f694000, sourceH=0x7f102fb28008, contextObj=<optimized out>, symbolListArg=<optimized out>, flags=1, environmentId=0, forExecuteBlock=0, blockArgs=0x0, numArgs=0) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gemdo.c:726
+        symListH = 0x7f102fb28010
+        compileFlags = <optimized out>
+        oldLitVars = 0x7f102fb28030
+        errors = <optimized out>
+        resO = <optimized out>
+        myScope = {_root = 0x7f102f694db8, parent = 0x7fff47b189e0, basePtr = 0x7f102fb28008}
+        recH = 0x7f102fb28020
+#13 0x00007f103a9026bc in GemDoExecuteFromContext (source=285478913, contextObj=1, symbolListArg=20, flags=1, environmentId=0, result=0x7fff47b18bb8) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gemdo.c:738
+        omPtr = 0x7f102f694000
+        scp = {_root = 0x7f102f694db8, parent = 0x0, basePtr = 0x7f102fb28000}
+        srcH = 0x14
+        resH = 0x11041001
+#14 0x00007f103a88d258 in gciCall6Args (cmdId=LGC_CALL_EXEC_FROM_CONTEXT_OBJ, gemDoFct=0x7f103a9025d0 <GemDoExecuteFromContext(unsigned long, unsigned long, unsigned long, int, unsigned short, unsigned long*)>, arg1=285478913, arg2=1, arg3=20, arg4=1, arg5=0, arg6=140734396206008) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gcirpc.c:2142
+        gciState = 0x7f103af14a20
+        sessionPtr = <optimized out>
+        sessionId = <optimized out>
+        locGciStateVec = 0x7f103af14a20
+        interrBits = <optimized out>
+        unwind_buf0 = {buf = {{__jmpbuf = {73, -6281290065916918825, 24758872, 1, 0, 0, 6281061972672054231, 6265680154736133079}, __mask_was_saved = 0, __saved_mask = {__val = {10297, 139707682462961, 139707678747964, 4294967295, 139707678099687, 139707678095008, 73, 7003360, 0, 0, 0, 139707678072832, 139707735205748, 5, 0, 139707678087544}}}}, previous = 0x0}
+        iS = <optimized out>
+        saveScope = {_root = 0x7f102f694db8, _codeGenGcDisallowed = 0x0, _gcDisallowed = 0x0, parent = 0x0, basePtr = 0x7f102fb28000}
+        uKind = <optimized out>
+#15 0x00007f103a88fdbc in GciExecuteFromContextDbg_ (source=<optimized out>, contextObject=<optimized out>, symbolList=<optimized out>, flags=<optimized out>, environmentId=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/gcirpc.c:3033
+        resultOop = 20
+#16 0x00007f103ac00145 in TpAuxDispatchCmd (cmd=cmdRun) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topazm.c:7405
+        envId = <optimized out>
+        flags = 1
+#17 0x00007f103ac0245f in processCommand () at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topazm.c:2824
+        oldCursor = <optimized out>
+        cmdId = <optimized out>
+#18 0x00007f103ac02bf8 in topazMain (argc=<optimized out>, argv=<optimized out>, gciDynLibHandle=<optimized out>) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topazm.c:3863
+        ifErrCmd = <optimized out>
+        gciInitOk = <optimized out>
+        isRemote = 0
+        fPtr = 0x7f103afaae00
+        wasInErrExec = 0
+#19 0x0000000000400a8e in main (argc=4, argv=0x7fff47b1bb78) at /export/foos2/users/dhenrich/3.0/j_gss64bit/src/topaz.c:87
+        theLib = 0x17965c0
+        quietMode = 0
+        errBuf = '\000' <repeats 5256 times>, "Jq\355=\020\177", '\000' <repeats 75 times>, "P\033\000\000\000\000\000\fG\033\000\000\000\000\000\fG\033", '\000' <repeats 13 times>, "\005\000\000\000\000\000\000\000\000@;\000\000\000\000\000\000\240;\000\000\000\000\000`\230;\000\000\000\000\000\270\344;\000\000\000\000\000\000@\033\000\000\000\000\000\003", '\000' <repeats 16 times>, " \000\000\000\000\000\000\230\037\000\000\000\000\000\000\230\037", '\000' <repeats 14 times>, "\005\000\000\000\000\000\000\000\000  \000\000\000\000\000\000@ \000\000\000\000\000\200\060 \000\000\000\000\000\b1 \000\000\000\000\000\000 \000\000\000\000\000\000\003", '\000' <repeats 127 times>"\330, \031\017>\020\177\000\000/\000\000\000\000\000\000\000"...
+        mainName = 0x401a0a "topazMain"
+        linked = <optimized out>
+        topazMainPtr = <optimized out>
+$1 = 1
+$2 = 1
+$3 = {<text variable, no debug info>} 0x7f103aa44400 <IntLpBCLoop>
+===--- end gdb stacks
+
+
+ _____________________________________________________________________________
+| Possible Internal Error: HostCoreDump invoked at 12/06/2014 10:36:33.923 PST
+ in process 8390

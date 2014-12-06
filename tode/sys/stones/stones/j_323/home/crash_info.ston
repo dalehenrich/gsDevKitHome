@@ -1,0 +1,156 @@
+TDStringLeafNode{#name:'crash_info',#contents:'Tode Session:
+-------------
+Welcome to tODE. 
+- Enter `help` for information on logging into GemStone. 
+- Enter `man --all` for information on tODE commands.
+- Enter `project list` to get busy...
+tode 1 > project list
+[18 sz:0 SmallInteger] 2
+tode 1 > ls
+crypto/  examples@/  gs/  index/  kermit/  maglev/  metacello/  old@/  README.md  seaside/  tode/  tutorials/  upgrader@/
+tode 1 > cd examples
+[238463745 sz:7 TDProxyLeafNode] /sys/j_323/home/examples/
+tode 1 > ./rest -h
+[126846977 sz:19 TDManPage class] TDManPage
+tode 1 > ./rest --unregister=rest
+[180716545 sz:19 GemServerRegistry class] GemServerRegistry
+tode 1 > ./rest --register=rest --port=1720 --log=all --logTo=objectLog
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > ./rest --restart=rest
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > break remote --enable
+
+[268 sz:0 Boolean] true
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 14
+
+
+sendSetOrClearBreakPointSignal: [0]: true[238510081 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 14
+
+sendSetOrClearBreakPointSignal: [0]: true[238469121 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > ./rest --restart=rest
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 14
+
+sendSetOrClearBreakPointSignal: [0]: true[238419201 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 14
+
+sendSetOrClearBreakPointSignal: [0]: true[238408193 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > ./rest --client=rest --uri=objects --post=`Dictionary with: #x -> 1 with: #y -> 1`
+
+[238395649 sz:26 Dictionary] aDictionary( \'uri\'->\'/storage/objects\', \'status-code\'->500, \'message\'->\'a MessageNotUnderstood occurred (error 2010), a ZnExampleStorageObje...
+tode 1 > ol view
+[262043137 sz:11 TDGemStoneTool] aTDGemStoneTool
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > ./rest --restart=rest
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261812737 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261808641 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261804801 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break remote --enable
+[268 sz:0 Boolean] true
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261814529 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > abort
+[268 sz:0 Boolean] true
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261829377 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261833729 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > ./rest --restart=rest
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261862657 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261866753 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[261870849 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break remote --enable
+[268 sz:0 Boolean] true
+tode 1 > abort
+[268 sz:0 Boolean] true
+tode 1 > ol clear --age=`1 hour`
+[268 sz:0 Boolean] true
+tode 1 > ./rest --restart=rest
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > ./rest --restart=rest
+[238455553 sz:12 ZnGemServer] aZnGemServer
+tode 1 > break remote 
+[268 sz:0 Boolean] true
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[285368321 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[285321985 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[264174849 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > logout
+tode 1 > login
+Topez ERROR: Unknown command: \'login\'
+tode 1 > cd examples
+[238580225 sz:7 TDProxyLeafNode] /sys/j_323/home/examples/
+tode 1 > break remote
+[268 sz:0 Boolean] true
+tode 1 > break set ZnRestServerDelegate>>handleRequest:
+[238572289 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > ol view --age=`1 hour`
+[238539009 sz:11 TDGemStoneTool] aTDGemStoneTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 14
+
+sendSetOrClearBreakPointSignal: [0]: true[238528001 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > abort
+[268 sz:0 Boolean] true
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > abort
+[268 sz:0 Boolean] true
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > logout
+tode 1 > break remote
+[268 sz:0 Boolean] true
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 1
+
+sendSetOrClearBreakPointSignal: [0]: true[238125057 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > old view --age=`2 houre`
+Topez ERROR: Unknown command: \'old\'
+tode 1 > ol view --age=`1 hour`
+[237497857 sz:11 TDGemStoneTool] aTDGemStoneTool
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 1
+
+sendSetOrClearBreakPointSignal: [0]: true[237486593 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > break clear
+[144897 sz:19 GsNMethod class] GsNMethod
+tode 1 > break set ZnRestServerDelegate>>handleRequest: 1
+
+sendSetOrClearBreakPointSignal: [0]: true[237341697 sz:15 TDDebugTool] aTDDebugTool
+tode 1 > ls
+crypto/  examples@/  gs/  index/  kermit/  maglev/  metacello/  old@/  README.md  seaside/  tode/  tutorials/  upgrader@/
+tode 1 > cd examples
+[237494273 sz:7 TDProxyLeafNode] /sys/j_323/home/examples/
+tode 1 > ./rest -h
+[126846977 sz:19 TDManPage class] TDManPage
+tode 1 > ls
+rest*
+tode 1 > touch sh stackdump
+[237450753 sz:7 TDProxyLeafNode] /sys/j_323/home/tode/stackdump/
+tode 1 > edit stackdump
+[237491457 sz:1 OrderedCollection] anOrderedCollection( /sys/j_323/home/tode/stackdump/)
+tode 1 > rm stackdump
+[237494273 sz:7 TDProxyLeafNode] /sys/j_323/home/examples/
+tode 1 > touch str stackdump
+[237243393 sz:7 TDProxyLeafNode] /sys/j_323/home/tode/stackdump/
+tode 1 > edit stackdump
+[237428993 sz:1 OrderedCollection] anOrderedCollection( /sys/j_323/home/tode/stackdump/)
+tode 1 > ',#creationTime:DateAndTime['2014-12-06T10:50:13.4050180912017-08:00'],#modificationTime:@2}

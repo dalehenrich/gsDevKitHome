@@ -1,0 +1,9 @@
+TDTopezLeafNode{#name:'crash',#contents:'break remote --enable
+/home/examples/rest --stop=rest
+eval `(Delay forSeconds: 3) wait`
+/home/examples/rest --restart=rest
+eval `(Delay forSeconds: 6) wait`
+break set ZnRestServerDelegate>>handleRequest: 1
+eval `(Delay forSeconds: 35) wait`
+/home/examples/rest --client=rest --uri=objects --post=`Dictionary with: #x -> 1 with: #y -> 1`
+',#creationTime:DateAndTime['2014-12-06T10:58:20.170037984848-08:00'],#modificationTime:DateAndTime['2014-12-06T11:20:32.5810639858245-08:00']}
