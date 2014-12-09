@@ -1,0 +1,32 @@
+TDScriptLeafNode{#name:'bootstrap',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bootstrap -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      Gofer new
+    url: \'http://smalltalkhub.com/mc/TorstenBergmann/Bootstrap/main\';
+    package: \'ConfigurationOfBootstrap\';
+    load.
+
+(Smalltalk at: #ConfigurationOfBootstrap) project stableVersion load
+
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bootstrap - bootstrap sript utility template
+SYNOPSIS
+  bootstrap [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bootstrap --help
+  ./bootstrap -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T14:11:06.3319358825683-08:00'],#modificationTime:DateAndTime['2014-12-08T14:11:23.4959700107574-08:00']}

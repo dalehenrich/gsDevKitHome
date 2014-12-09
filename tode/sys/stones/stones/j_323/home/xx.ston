@@ -1,0 +1,35 @@
+TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xx -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ | methodDict meth instance |
+methodDict := GsMethodDictionary new.
+meth := Array _primitiveCompileMethod: \'hello ^\'\'hello\'\'\'
+        symbolList: System myUserProfile symbolList
+        category: #\'xxyzzy\'
+        oldLitVars: nil
+        intoMethodDict: methodDict
+        intoCategories: GsMethodDictionary new
+        intoPragmas: nil
+        environmentId: 0.
+       meth _executeInContext: Array new
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xx - xx sript utility template
+SYNOPSIS
+  xx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xx --help
+  ./xx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T09:54:50.0635619163513-08:00'],#modificationTime:DateAndTime['2014-12-08T09:58:48.574667930603-08:00']}
