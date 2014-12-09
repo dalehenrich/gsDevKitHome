@@ -1,0 +1,41 @@
+TDScriptLeafNode{#name:'bootstrap',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bootstrap -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      Gofer new
+        package: \'GsUpgrader-Core\';
+        url: \'http://ss3.gemtalksystems.com/ss/gsUpgrader\';
+        load.
+      (Smalltalk at: #\'GsUpgrader\') upgradeGrease.
+      GsDeployer
+        deploy: [ 
+          Metacello new
+            baseline: \'Seaside3\';
+            repository: \'github://GsDevKit/Seaside31:v3.1.3.1-gs/repository\';
+            lock.
+          Metacello new
+            configuration: \'Bootstrap\';
+            repository:
+                \'http://smalltalkhub.com/mc/TorstenBergmann/Bootstrap/main\';
+            version: #\'stable\';
+            load ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bootstrap - bootstrap sript utility template
+SYNOPSIS
+  bootstrap [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bootstrap --help
+  ./bootstrap -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T17:20:32.862998008728-08:00'],#modificationTime:DateAndTime['2014-12-08T17:51:41.2616629600524-08:00']}

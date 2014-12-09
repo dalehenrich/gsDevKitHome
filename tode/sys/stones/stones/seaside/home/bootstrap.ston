@@ -9,14 +9,13 @@ TDScriptLeafNode{#name:'bootstrap',#contents:'[ :topez :objIn :tokens :command :
   opts
     at: \'help\'
     ifAbsent: [ 
-      Gofer new
-    url: \'http://smalltalkhub.com/mc/TorstenBergmann/Bootstrap/main\';
-    package: \'ConfigurationOfBootstrap\';
-    load.
-
-(Smalltalk at: #ConfigurationOfBootstrap) project stableVersion load
-
-       ]
+      GsDeployer
+        bulkMigrate:[ 
+          Gofer new
+            url: \'http://smalltalkhub.com/mc/TorstenBergmann/Bootstrap/main\';
+            package: \'ConfigurationOfBootstrap\';
+            load.
+          (Smalltalk at: #\'ConfigurationOfBootstrap\') project stableVersion load ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -29,4 +28,4 @@ EXAMPLES
   ./bootstrap --help
   ./bootstrap -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T14:11:06.3319358825683-08:00'],#modificationTime:DateAndTime['2014-12-08T14:11:23.4959700107574-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T14:11:06.3319358825683-08:00'],#modificationTime:DateAndTime['2014-12-08T16:46:38.5969779491424-08:00']}
