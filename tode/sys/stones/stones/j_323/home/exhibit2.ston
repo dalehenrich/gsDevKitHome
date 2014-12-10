@@ -1,0 +1,47 @@
+TDScriptLeafNode{#name:'exhibit2',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xx -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | processRan  sem launchBlock |
+\"run
+| source meth |
+source := \'| processRan sem launchBlock |
+      sem := Semaphore new.
+      processRan := false.
+      launchBlock := [ 
+      processRan := true.
+      sem signal ].
+      GemServerLauncher forkNative: launchBlock.
+      sem wait.
+      processRan \'.
+meth := source _compileInContext: nil symbolList: GsSession currentSession symbolList.
+meth _executeInContext: nil
+%\"
+      sem := Semaphore new.
+      processRan := false.
+      launchBlock := [ 
+      processRan := true.
+      sem signal ].
+      GemServerLauncher forkNative: launchBlock.
+      sem wait.
+      processRan ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xx - xx sript utility template
+SYNOPSIS
+  xx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xx --help
+  ./xx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-09T16:28:01.248811006546-08:00'],#modificationTime:DateAndTime['2014-12-09T16:38:52.6233940124511-08:00']}

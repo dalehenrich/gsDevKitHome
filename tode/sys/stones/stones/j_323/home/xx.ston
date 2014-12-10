@@ -8,18 +8,17 @@ TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :command
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [ | methodDict meth instance |
-methodDict := GsMethodDictionary new.
-meth := Array _primitiveCompileMethod: \'hello ^\'\'hello\'\'\'
-        symbolList: System myUserProfile symbolList
-        category: #\'xxyzzy\'
-        oldLitVars: nil
-        intoMethodDict: methodDict
-        intoCategories: GsMethodDictionary new
-        intoPragmas: nil
-        environmentId: 0.
-       meth _executeInContext: Array new
-       ]
+    ifAbsent: [ 
+      | processRan sem launchBlock |
+      sem := Semaphore new.
+      processRan := false.
+launchBlock :=[ 
+          processRan := true.
+          sem signal ].
+      GemServerLauncher
+        forkNative: launchBlock.
+      sem wait.
+      processRan ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -32,4 +31,4 @@ EXAMPLES
   ./xx --help
   ./xx -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T09:54:50.0635619163513-08:00'],#modificationTime:DateAndTime['2014-12-08T09:58:48.574667930603-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-08T09:54:50.0635619163513-08:00'],#modificationTime:DateAndTime['2014-12-09T16:27:39.1014840602874-08:00']}

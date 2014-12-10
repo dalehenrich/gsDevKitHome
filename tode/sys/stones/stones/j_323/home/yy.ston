@@ -1,0 +1,35 @@
+TDScriptLeafNode{#name:'yy',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./yy -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | proc |
+      UserGlobals at: #\'launcherSem\' put: TransientSemaphore new.
+      UserGlobals at: #\'launcherBlock\' put: [ Transcript cr; show: \'hi\' ].
+      proc := [ 
+      [ 
+      (UserGlobals at: #\'launcherSem\') wait.
+      [ UserGlobals at: #\'launcherBlock\' value ] fork.
+      Processor yield ]
+        repeat ]
+        fork.
+      Processor yield ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  yy - yy sript utility template
+SYNOPSIS
+  yy [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./yy --help
+  ./yy -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-09T15:29:25.6566638946533-08:00'],#modificationTime:DateAndTime['2014-12-09T16:23:59.7564740180969-08:00']}

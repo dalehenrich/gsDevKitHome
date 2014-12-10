@@ -1,0 +1,38 @@
+TDScriptLeafNode{#name:'exhibit1',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./xx -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | launchBlock processRan processRanAr sem |
+      launchBlock := [ 
+      processRan := true.
+      processRanAr at: 1 put: true ].
+      processRan := false.
+      processRanAr := {false}.
+     
+      sem := Semaphore new.
+      [ 
+      launchBlock value.
+      sem signal ] fork.
+      sem wait.
+      {processRan.
+      (processRanAr at: 1)} ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  xx - xx sript utility template
+SYNOPSIS
+  xx [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./xx --help
+  ./xx -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-09T15:18:32.3415360450744-08:00'],#modificationTime:DateAndTime['2014-12-09T16:39:22.501324892044-08:00']}
