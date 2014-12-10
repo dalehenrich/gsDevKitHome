@@ -4,7 +4,7 @@ TDSessionDescription {
 	#stoneName : 'j_323',
         #gciLibraryName : 'libgcirpc-3.2.3-32',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : '59357',
+	#netLDI : '45715',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
