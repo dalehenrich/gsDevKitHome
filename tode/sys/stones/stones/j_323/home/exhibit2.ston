@@ -9,8 +9,8 @@ TDScriptLeafNode{#name:'exhibit2',#contents:'[ :topez :objIn :tokens :command :c
   opts
     at: \'help\'
     ifAbsent: [ 
-      | processRan  sem launchBlock |
-\"run
+      | processRan sem launchBlock |\t\"reproduced in topaz\" 
+      \"run
 | source meth |
 source := \'| processRan sem launchBlock |
       sem := Semaphore new.
@@ -31,7 +31,7 @@ meth _executeInContext: nil
       sem signal ].
       GemServerLauncher forkNative: launchBlock.
       sem wait.
-      processRan ]
+      processRan]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -44,4 +44,4 @@ EXAMPLES
   ./xx --help
   ./xx -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-09T16:28:01.248811006546-08:00'],#modificationTime:DateAndTime['2014-12-09T16:38:52.6233940124511-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-09T16:28:01.248811006546-08:00'],#modificationTime:DateAndTime['2014-12-10T09:43:49.9533638954162-08:00']}
