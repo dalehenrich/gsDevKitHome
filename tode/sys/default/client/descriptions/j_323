@@ -13,7 +13,6 @@ TDSessionDescription {
 	#dataDirectory : nil,
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_323/backups/',
 	#gemstoneVersion : '3.2.3_j',
-	#gciLibraryName : nil,
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_323/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
