@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'j_324',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'j_324',
+        #gciLibraryName : 'libgcirpc-3.2.4-32',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : '45715',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_324/backups/',
+	#gemstoneVersion : '3.2.4_j',
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_324/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}
