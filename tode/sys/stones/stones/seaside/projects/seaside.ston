@@ -1,7 +1,8 @@
 TDObjectGatewayNode{#name:'seaside',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Seaside3\'
-      repository: \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/seaside/git/Seaside31/repository\'
-      loads: #(\'Development\' \'Zinc\' \'FastCGI\' \'Examples\' \'Tests\');
+      repository:
+        \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/seaside/git/Seaside31/repository\'
+      loads: #(\'Development\' \'Zinc\' \'FastCGI\' \'Examples\' \'Tests\' \'Swazoo\');
     status: #(#\'active\');
     locked: true;
     yourself'}

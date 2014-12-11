@@ -1,0 +1,6 @@
+TDTopezLeafNode{#name:'test_1',#contents:'break remote --enable
+/home/examples/rest --restart=rest
+eval `(Delay forSeconds: 3) wait`
+break set ZnRestServerDelegate>>handleRequest: 1
+eval `(Delay forSeconds: 15) wait`
+break clear',#creationTime:DateAndTime['2014-12-10T15:38:30.2349519729614-08:00'],#modificationTime:@2}
