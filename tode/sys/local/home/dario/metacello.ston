@@ -1,0 +1,44 @@
+TDScriptLeafNode{#name:'metacello',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./metacello -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ \"Pharo 1.4 load script :  Latest update: #14445\"
+      Gofer new
+        gemsource: \'metacello\';
+        package: \'ConfigurationOfMetacello\';
+        load.\t\"Bootstrap Metacello Preview, using mcz files (#\'previewBootstrap\' symbolic version\"
+      ((Smalltalk at: #\'ConfigurationOfMetacello\') project
+        version: #\'previewBootstrap\') load.\t\"Load the Preview version of Metacello from GitHub\"
+      (Smalltalk at: #\'Metacello\') new
+        configuration: \'MetacelloPreview\';
+        version: #\'stable\';
+        repository: \'github://dalehenrich/metacello-work:configuration\';
+        load.\t\"Now load latest version of Metacello\"
+      Metacello new
+        baseline: \'Metacello\';
+        repository: \'github://dalehenrich/metacello-work:master/repository\';
+        get.
+      Metacello new
+        baseline: \'Metacello\';
+        repository: \'github://dalehenrich/metacello-work:master/repository\';
+        onConflict: [ :ex | ex allow ];
+        load ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  metacello - metacello sript utility template
+SYNOPSIS
+  metacello [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./metacello --help
+  ./metacello -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-13T10:28:05.57363295555115-08:00'],#modificationTime:DateAndTime['2014-12-13T10:29:29.30578303337097-08:00']}

@@ -1,0 +1,56 @@
+TDScriptLeafNode{#name:'load',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./load -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      GsDeployer
+        bulkMigrate: [ 
+          {#(\'Seaside3\' \'3.0.13\' \'http://smalltalkhub.com/mc/Seaside/MetacelloConfigurations/main\').
+          #(\'ZincHTTPComponents\' \'1.1\' \'http://www.squeaksource.com/ZincHTTPComponents\').
+          #(\'Magritte3\' \'3.0\' \'http://www.squeaksource.com/MetacelloRepository\').
+          #(\'Magritte3AddOns\' \'3.0.0\' \'http://www.squeaksource.com/MetacelloRepository\').
+          #(\'Pier3\' \'3.0.0\' \'http://www.squeaksource.com/MetacelloRepository\').
+          #(\'Pier3AddOns\' \'3.0.3\' \'http://www.squeaksource.com/MetacelloRepository\')}
+            do: [ :ar | 
+              | projectName version repository |
+              projectName := ar at: 1.
+              version := ar at: 2.
+              repository := ar at: 3.
+              Metacello new
+                configuration: projectName;
+                repository: repository;
+                get.
+              Metacello new
+                configuration: projectName;
+                version: version;
+                repository: repository;
+                onUpgrade: [ :ex :existing :new | 
+                      existing locked
+                        ifTrue: [ ex disallow ]
+                        ifFalse: [ ex allow ] ];
+                onConflict: [ :ex | ex disallow ];
+                load.
+              Metacello new
+                configuration: projectName;
+                version: version;
+                repository: repository;
+                lock ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  load - load sript utility template
+SYNOPSIS
+  load [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./load --help
+  ./load -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-13T10:22:22.89332890510559-08:00'],#modificationTime:DateAndTime['2014-12-13T10:25:20.70121598243713-08:00']}
