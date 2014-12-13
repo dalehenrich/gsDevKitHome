@@ -3,8 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'gs_246',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'gs_246_ldi',
-	#gciLibraryName : 'libgcirpc64-246',
+	#netLDI : '43730',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
@@ -13,6 +12,7 @@ TDSessionDescription {
 	#dataDirectory : nil,
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_246/backups/',
 	#gemstoneVersion : '2.4.6',
+	#gciLibraryName : 'libgcirpc64-246',
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_246/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
