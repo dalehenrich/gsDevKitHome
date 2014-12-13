@@ -1,0 +1,88 @@
+TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./gemServer -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'debug\' nil #\'none\').
+      #(\'log\' nil #\'required\').
+      #(\'logTo\' nil #\'required\').
+      #(\'port\' nil #\'required\').
+      #(\'register\' nil #\'required\').
+      #(\'restart\' nil #\'required\').
+      #(\'start\' nil #\'required\').
+      #(\'stop\' nil #\'required\').
+      #(\'unregister\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | gemServer result |
+      result := #\'noop\'.
+      opts
+        at: \'unregister\'
+        ifPresent: [ :serverName | result := GemServerRegistry removeGemServerNamed: serverName ]
+        ifAbsent: [ 
+          opts
+            at: \'register\'
+            ifPresent: [ :serverName | 
+              gemServer := (GemServerRegistry gemServerNamed: serverName)
+                ifNil: [ gemServer := (ZnGemServer register: serverName) yourself ].
+              opts
+                at: \'debug\'
+                ifPresent: [ :ignored | gemServer debugMode: true ].
+              opts
+                at: \'port\'
+                ifPresent: [ :portString | gemServer ports: {(portString asNumber)} ].
+              opts
+                at: \'log\'
+                ifPresent: [ :logString | 
+                  logString = \'all\'
+                    ifTrue: [ gemServer logFilter: nil ]
+                    ifFalse: [ gemServer logFilter: logString asSymbol ].
+                  opts
+                    at: \'logTo\'
+                    ifPresent: [ :logToString | 
+                      logToString = \'objectLog\'
+                        ifTrue: [ gemServer logToObjectLog ]
+                        ifFalse: [ 
+                          logToString = \'transcript\'
+                            ifTrue: [ gemServer logToTranscript ] ] ] ] ].
+          result := gemServer ].
+      opts
+        at: \'restart\'
+        ifPresent: [ :serverName | result := (GemServerRegistry gemServerNamed: serverName) restartGems ].
+      opts
+        at: \'start\'
+        ifPresent: [ :serverName | result := (GemServerRegistry gemServerNamed: serverName) startGems ].
+      opts at: \'client\' ifPresent: [  ].
+      opts
+        at: \'stop\'
+        ifPresent: [ :serverName | result := (GemServerRegistry gemServerNamed: serverName) stopGems ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  gemServer - gemServer sript utility template
+SYNOPSIS
+  gemServer [-h|--help]
+       --register=<gemServer-name> [--port=<server-port>] [--logTo=transcript|objectLog] [--log=all|debug|error|info] [--debug]
+       --unregister=<gemServer-name>
+DESCRIPTION
+EXAMPLES
+  ./gemServer --help
+  ./gemServer -h
+  ./gemServer --register=seaside --port=1720 --log=all --logTo=transcript --debug
+  ./gemServer --register=seaside --port=1720 --log=all --logTo=transcript
+  ./gemServer --register=seaside --port=1720 --log=all --logTo=objectLog
+  ./gemServer --unregister=seaside
+
+  ./gemServer --start=seaside
+  ./gemServer --stop=seaside
+  ./gemServer --restart=seaside
+
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-11T10:07:39.4049460887908-08:00'],#modificationTime:DateAndTime['2014-12-11T10:10:54.8789460659027-08:00']}
