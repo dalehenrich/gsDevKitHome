@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'metacello',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : '57874',
+	#netLDI : '53246',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',

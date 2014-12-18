@@ -4,7 +4,6 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
-      #(\'debug\' nil #\'none\').
       #(\'log\' nil #\'required\').
       #(\'logTo\' nil #\'required\').
       #(\'port\' nil #\'required\').
@@ -12,6 +11,7 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
       #(\'restart\' nil #\'required\').
       #(\'start\' nil #\'required\').
       #(\'stop\' nil #\'required\').
+      #(\'type\' nil #\'required\').
       #(\'unregister\' nil #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -29,10 +29,22 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
             at: \'register\'
             ifPresent: [ :serverName | 
               gemServer := (GemServerRegistry gemServerNamed: serverName)
-                ifNil: [ gemServer := (ZnGemServer register: serverName) yourself ].
+                ifNil: [ 
+              | gemServerClass |
               opts
-                at: \'debug\'
-                ifPresent: [ :ignored | gemServer debugMode: true ].
+                at: \'type\'
+                ifPresent: [ :adaptor | 
+                  adaptor = \'zinc\'
+                    ifTrue: [ gemServerClass := ZnSeasideGemServer ]
+                    ifFalse: [ 
+                      adaptor = \'fastcgi\'
+                        ifTrue: [ gemServerClass := FastCGISeasideGemServer ]
+                        ifFalse: [ 
+                          adaptor = \'swazoo\'
+                            ifTrue: [ gemServerClass := SwazooSeasideGemServer ]
+                            ifFalse: [ self error: \'unknown  adaptor type: \' , adaptor printString ] ] ] ]
+                ifAbsent: [ gemServerClass := ZnSeasideGemServer ].
+gemServer := (gemServerClass register: serverName) yourself ].
               opts
                 at: \'port\'
                 ifPresent: [ :portString | gemServer ports: {(portString asNumber)} ].
@@ -69,15 +81,20 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
   gemServer - gemServer sript utility template
 SYNOPSIS
   gemServer [-h|--help]
-       --register=<gemServer-name> [--port=<server-port>] [--logTo=transcript|objectLog] [--log=all|debug|error|info] [--debug]
-       --unregister=<gemServer-name>
+  gemserver --register=<gemServer-name> --type=[zinc|fastcgi|swazoo] \\
+            [--port=<server-port>] \\
+            [--logTo=transcript|objectLog] [--log=all|debug|error|info] \\
+  gemServer --unregister=<gemServer-name>
 DESCRIPTION
 EXAMPLES
   ./gemServer --help
   ./gemServer -h
-  ./gemServer --register=seaside --port=1720 --log=all --logTo=transcript --debug
-  ./gemServer --register=seaside --port=1720 --log=all --logTo=transcript
-  ./gemServer --register=seaside --port=1720 --log=all --logTo=objectLog
+  ./gemServer --register=seaside --type=zinc --port=1750 --log=all \\
+              --logTo=transcript
+  ./gemServer --register=seaside --type=zinc --port=1750 --log=all \\
+              --logTo=transcript
+  ./gemServer --register=seaside --type=zinc --port=1750 --log=all \\
+               --logTo=objectLog
   ./gemServer --unregister=seaside
 
   ./gemServer --start=seaside
@@ -85,4 +102,4 @@ EXAMPLES
   ./gemServer --restart=seaside
 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-11T10:07:39.4049460887908-08:00'],#modificationTime:DateAndTime['2014-12-11T10:10:54.8789460659027-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-17T12:11:42.2836089134216-08:00'],#modificationTime:DateAndTime['2014-12-17T12:21:40.5298550128936-08:00']}

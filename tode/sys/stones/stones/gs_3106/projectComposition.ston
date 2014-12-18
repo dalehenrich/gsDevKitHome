@@ -3,7 +3,6 @@ TDRawGatewayNode{#name:'projectComposition',#contents:'(TDComposedDirectoryNode
     topez: self topez)
     addPathNode: \'/sys/stone/projects\';
     addPathNode: \'/sys/local/projects\'
-      excludes: #(\'GsUpgrader\' \'IndexTutorial\' \'zinc\');
-    addPathNode: \'/sys/default/projects\'
-      excludes: #(\'seaside\' \'magritte\' \'zinc\');
+      excludes: #(\'GsUpgrader\' \'IndexTutorial\');
+    addPathNode: \'/sys/default/projects\' excludes: #();
     yourself'}
