@@ -30,21 +30,21 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
             ifPresent: [ :serverName | 
               gemServer := (GemServerRegistry gemServerNamed: serverName)
                 ifNil: [ 
-              | gemServerClass |
-              opts
-                at: \'type\'
-                ifPresent: [ :adaptor | 
-                  adaptor = \'zinc\'
-                    ifTrue: [ gemServerClass := ZnSeasideGemServer ]
-                    ifFalse: [ 
-                      adaptor = \'fastcgi\'
-                        ifTrue: [ gemServerClass := FastCGISeasideGemServer ]
+                  | gemServerClass |
+                  opts
+                    at: \'type\'
+                    ifPresent: [ :adaptor | 
+                      adaptor = \'zinc\'
+                        ifTrue: [ gemServerClass := ZnSeasideGemServer ]
                         ifFalse: [ 
-                          adaptor = \'swazoo\'
-                            ifTrue: [ gemServerClass := SwazooSeasideGemServer ]
-                            ifFalse: [ self error: \'unknown  adaptor type: \' , adaptor printString ] ] ] ]
-                ifAbsent: [ gemServerClass := ZnSeasideGemServer ].
-gemServer := (gemServerClass register: serverName) yourself ].
+                          adaptor = \'fastcgi\'
+                            ifTrue: [ gemServerClass := FastCGISeasideGemServer ]
+                            ifFalse: [ 
+                              adaptor = \'swazoo\'
+                                ifTrue: [ gemServerClass := SwazooSeasideGemServer ]
+                                ifFalse: [ self error: \'unknown  adaptor type: \' , adaptor printString ] ] ] ]
+                    ifAbsent: [ gemServerClass := ZnSeasideGemServer ].
+                  gemServer := (gemServerClass register: serverName) yourself ].
               opts
                 at: \'port\'
                 ifPresent: [ :portString | gemServer ports: {(portString asNumber)} ].
@@ -91,9 +91,9 @@ EXAMPLES
   ./gemServer -h
   ./gemServer --register=seaside --type=zinc --port=1750 --log=all \\
               --logTo=transcript
-  ./gemServer --register=seaside --type=zinc --port=1750 --log=all \\
+  ./gemServer --register=seaside --type=zinc --port=1750 --log=error \\
               --logTo=transcript
-  ./gemServer --register=seaside --type=zinc --port=1750 --log=all \\
+  ./gemServer --register=seaside --type=zinc --port=1750 --log=error \\
                --logTo=objectLog
   ./gemServer --unregister=seaside
 
@@ -102,4 +102,4 @@ EXAMPLES
   ./gemServer --restart=seaside
 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-17T12:11:42.2836089134216-08:00'],#modificationTime:DateAndTime['2014-12-17T12:21:40.5298550128936-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-17T12:11:42.2836089134216-08:00'],#modificationTime:DateAndTime['2014-12-19T19:30:33.2171900272369-08:00']}
