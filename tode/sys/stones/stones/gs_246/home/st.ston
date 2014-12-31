@@ -8,11 +8,7 @@ TDScriptLeafNode{#name:'st',#contents:'[ :topez :objIn :tokens :command :command
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [\tZnClientTests debug: #\'testGetSmallHTMLOneShot\'.
-\tZnClientTests debug: #\'testGetSmallHTMLUrlConstruction\'.
-\tZnEasyTests debug: #\'testHeadSmallHTMLDocument\'.
-\tZnHTTPSocketFacadeTests debug: #\'testGetSmallHTMLDocument\'.
-]
+    ifAbsent: [ErrorSymbols at: #\'rtErrSignalAlmostOutOfMemory\']
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -25,4 +21,4 @@ EXAMPLES
   ./st --help
   ./st -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-03T16:24:49.30657291412354-08:00'],#modificationTime:DateAndTime['2014-12-09T19:38:28.71075296401978-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-03T16:24:49.30657291412354-08:00'],#modificationTime:DateAndTime['2014-12-23T19:05:45.69157791137695-08:00']}
