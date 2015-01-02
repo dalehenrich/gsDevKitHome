@@ -8,7 +8,7 @@ TDScriptLeafNode{#name:'st',#contents:'[ :topez :objIn :tokens :command :command
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [ErrorSymbols at: #\'rtErrSignalAlmostOutOfMemory\']
+    ifAbsent: [GemServerInteractiveVMTests debug: #\'testError\'.]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -21,4 +21,4 @@ EXAMPLES
   ./st --help
   ./st -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-03T16:24:49.30657291412354-08:00'],#modificationTime:DateAndTime['2014-12-23T19:05:45.69157791137695-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-03T16:24:49.30657291412354-08:00'],#modificationTime:DateAndTime['2014-12-31T12:43:30.01529288291931-08:00']}
