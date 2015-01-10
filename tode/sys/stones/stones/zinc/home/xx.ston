@@ -9,78 +9,30 @@ TDScriptLeafNode{#name:'xx',#contents:'[ :topez :objIn :tokens :command :command
   opts
     at: \'help\'
     ifAbsent: [ 
-      | visit lab surgery drugs dale janet dict t250Premium hsa1500Premium hsa6200Premium t250Deduct hsa1500Deduct hsa6200Deduct t250GemTalk hsa1500GemTalk hsa6200GemTalk t250Max hsa1500Max hsa6200Max block t250Block hsa1500Block hsa6200Block |
-      dict := Dictionary new.
-      visit := 400.
-      lab := 217.
-      surgery := 10000.
-      drugs := 0 + (7 * 12).
-      dale := visit + lab + surgery.
-      janet := visit + lab + drugs.
-      t250Premium := 1575.
-      hsa1500Premium := 1200.
-      hsa6200Premium := 0.
-      t250Deduct := 250.
-      hsa1500Deduct := 1500.
-      hsa6200Deduct := 6200.
-      t250GemTalk := 0.
-      hsa1500GemTalk := 3800.
-      hsa6200GemTalk := 5950.
-      t250Max := 1500.
-      hsa1500Max := 5000.
-      hsa6200Max := 6200.
-      block := [ :expenses :deduct :rate :max | 
-      | total |
-      expenses > deduct
-        ifTrue: [ total := deduct + ((expenses - deduct) * rate) ]
-        ifFalse: [ total := expenses ].
-      (total min: max) asInteger ].
-      t250Block := [ :expenses | 
-      block
-        value: expenses
-        value: t250Deduct
-        value: 0.10
-        value: t250Max ].
-      hsa1500Block := [ :expenses | 
-      block
-        value: expenses
-        value: hsa1500Deduct
-        value: 0.20
-        value: hsa1500Max ].
-      hsa6200Block := [ :expenses | 
-      block
-        value: expenses
-        value: hsa6200Deduct
-        value: 0.20
-        value: hsa6200Max ].
-      dict
-        at: \'Dale\' put: dale;
-        at: \'Janet\' put: janet;
-        at: \'t250\'
-          put:
-            t250Premium
-                +
-                  ((t250Block value: dale) + (t250Block value: janet) min: t250Max * 2);
-        at: \'t250-dale\' put: (t250Block value: dale);
-        at: \'t250-janet\' put: (t250Block value: janet);
-        at: \'hsa1500\'
-          put:
-            (hsa1500Premium
-                +
-                  ((hsa1500Block value: dale) + (hsa1500Block value: janet) min: hsa1500Max * 2)
-                - hsa1500GemTalk max: 0);
-        at: \'hsa1500-dale\' put: (hsa1500Block value: dale);
-        at: \'hsa1500-janet\' put: (hsa1500Block value: janet);
-        at: \'hsa6200\'
-          put:
-            (hsa6200Premium
-                +
-                  ((hsa6200Block value: dale) + (hsa6200Block value: janet) min: hsa6200Max * 2)
-                - hsa6200GemTalk max: 0);
-        at: \'hsa6200-dale\' put: (hsa6200Block value: dale);
-        at: \'hsa6200-janet\' put: (hsa6200Block value: janet);
-        yourself.
-      dict ]
+      | str1 str2 str3 str4 str5 asciiStream str6 str7 |
+      str1 := #[240 163 142 143] decodeFromUTF8.
+      asciiStream := WriteStream on: String new.
+      ((NeoJSONWriter on: asciiStream) asciiOnly: true) nextPut: str1.
+      str2 := asciiStream contents.
+      str3 := NeoJSONWriter toString: str1.
+      str4 := str3 encodeAsUTF8.
+      str5 := str4 decodeFromUTF8.
+      str6 := NeoJSONReader fromString: str5.
+      str7 := NeoJSONReader fromString: str2.
+      {{str1.\t\"Unicode32 string\"
+      (str1 asByteArray)}.
+      {str2.\t\"NeoJSON encoded using `asciiOnly = true`\"
+      (str2 asByteArray)}.
+      {str3.\t\"NeoJSON encoded using `asciiOnly = false`\"
+      (str3 asByteArray)}.
+      {str4.\t\"str3 encoded as UTF8\"
+      (str4 asByteArray)}.
+      {str5.\t\"str4 decoded from UTF8\"
+      (str5 asByteArray)}.
+      {str6.\t\"NeoJSON decoding of `str5` (`asciiOnly = false`)\"
+      (str6 asByteArray)}.
+      {str7.\t\"NeoJSON decoding of `str2` (`asciiOnly = true`)\"
+      (str7 asByteArray)}} ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -93,4 +45,4 @@ EXAMPLES
   ./xx --help
   ./xx -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-01T17:56:03.2913589477539-08:00'],#modificationTime:DateAndTime['2014-12-01T20:24:55.4707050323486-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-01T17:56:03.2913589477539-08:00'],#modificationTime:DateAndTime['2015-01-05T12:32:07.2668869495391-08:00']}

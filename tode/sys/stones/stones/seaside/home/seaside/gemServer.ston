@@ -9,6 +9,7 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
       #(\'port\' nil #\'required\').
       #(\'register\' nil #\'required\').
       #(\'restart\' nil #\'required\').
+      #(\'interactiveStart\' nil #\'required\').
       #(\'start\' nil #\'required\').
       #(\'stop\' nil #\'required\').
       #(\'type\' nil #\'required\').
@@ -23,12 +24,12 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
       result := #\'noop\'.
       opts
         at: \'unregister\'
-        ifPresent: [ :serverName | result := GemServerRegistry removeGemServerNamed: serverName ]
+        ifPresent: [ :serverName | result := GemServer removeGemServerNamed: serverName ]
         ifAbsent: [ 
           opts
             at: \'register\'
             ifPresent: [ :serverName | 
-              gemServer := (GemServerRegistry gemServerNamed: serverName)
+              gemServer := (GemServer gemServerNamed: serverName)
                 ifNil: [ 
                   | gemServerClass |
                   opts
@@ -65,14 +66,18 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
           result := gemServer ].
       opts
         at: \'restart\'
-        ifPresent: [ :serverName | result := (GemServerRegistry gemServerNamed: serverName) restartGems ].
+        ifPresent: [ :serverName | result := (GemServer gemServerNamed: serverName) restartGems ].
       opts
         at: \'start\'
-        ifPresent: [ :serverName | result := (GemServerRegistry gemServerNamed: serverName) startGems ].
+        ifPresent: [ :serverName | result := (GemServer gemServerNamed: serverName) startGems ].
+      opts
+        at: \'interactiveStart\'
+        ifPresent: [ :serverName | gemServer := GemServer gemServerNamed: serverName. 
+gemServer interactiveStartServiceOn: gemServer ports first \"does not return\"].
       opts at: \'client\' ifPresent: [  ].
       opts
         at: \'stop\'
-        ifPresent: [ :serverName | result := (GemServerRegistry gemServerNamed: serverName) stopGems ].
+        ifPresent: [ :serverName | result := (GemServer gemServerNamed: serverName) stopGems ].
       result ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -85,6 +90,10 @@ SYNOPSIS
             [--port=<server-port>] \\
             [--logTo=transcript|objectLog] [--log=all|debug|error|info] \\
   gemServer --unregister=<gemServer-name>
+  gemServer --interactiveStart=<gemServer-name>
+  gemServer --start=<gemServer-name>
+  gemServer --stop=<gemServer-name>
+  gemServer --restart=<gemServer-name>
 DESCRIPTION
 EXAMPLES
   ./gemServer --help
@@ -97,9 +106,11 @@ EXAMPLES
                --logTo=objectLog
   ./gemServer --unregister=seaside
 
+  ./gemServer --interactiveStart=seaside
+
   ./gemServer --start=seaside
   ./gemServer --stop=seaside
   ./gemServer --restart=seaside
 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-17T12:11:42.2836089134216-08:00'],#modificationTime:DateAndTime['2014-12-19T19:30:33.2171900272369-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-17T12:11:42.2836089134216-08:00'],#modificationTime:DateAndTime['2015-01-07T10:10:13.5720250606536-08:00']}

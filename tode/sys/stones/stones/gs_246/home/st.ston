@@ -8,7 +8,7 @@ TDScriptLeafNode{#name:'st',#contents:'[ :topez :objIn :tokens :command :command
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [GemServerInteractiveVMTests debug: #\'testError\'.]
+    ifAbsent: [ZnNewGsServerTests debug: #\'testError\'.]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -21,4 +21,4 @@ EXAMPLES
   ./st --help
   ./st -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-12-03T16:24:49.30657291412354-08:00'],#modificationTime:DateAndTime['2014-12-31T12:43:30.01529288291931-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-03T16:24:49.30657291412354-08:00'],#modificationTime:DateAndTime['2015-01-09T09:44:13.36290597915649-08:00']}
