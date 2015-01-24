@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'flow12.04',
+	#stoneHost : '192.168.100.129',
+	#stoneName : 'flow',
+	#gemHost : '192.168.100.129',
+	#netLDI : '55997',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/home/notroot/gsDevKitHome/gemstone/stones/flow/backups/',
+	#gemstoneVersion : '3.2.3',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/home/notroot/gsDevKitHome/gemstone/stones/flow/git',
+	#serverTodeRoot : '/home/notroot/gsDevKitHome/tode'
+}

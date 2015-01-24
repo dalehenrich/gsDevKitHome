@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'ubuntu12.04',
+	#stoneHost : '192.168.100.129',
+	#stoneName : 'kit',
+	#gemHost : '192.168.100.129',
+	#netLDI : '52699',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/home/notroot/gsDevKitHome/gemstone/stones/kit/backups/',
+	#gemstoneVersion : '3.2.3',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/home/notroot/gsDevKitHome/gemstone/stones/kit/git',
+	#serverTodeRoot : '/home/notroot/gsDevKitHome/tode'
+}

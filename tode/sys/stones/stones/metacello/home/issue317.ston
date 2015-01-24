@@ -1,0 +1,5 @@
+TDStringLeafNode{#name:'issue317',#contents:'The proposed fix (8fc99eecdbe2969e2f5bc0310fb6e9d92eb58995) causes a bunch of tests to fail:
+
+  eval `MetacelloScriptingConflictsTestCase debug: #testConfigurationConflict6.`
+
+and I think the fact that I switched between projectSpec and newSpec in override? is the culprit.',#creationTime:DateAndTime['2015-01-11T17:20:53.261843919754-08:00'],#modificationTime:DateAndTime['2015-01-11T17:22:40.5572679042816-08:00']}
