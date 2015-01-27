@@ -1,0 +1,7 @@
+TDObjectGatewayNode{#name:'mergery',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Mergery\'
+      repository: \'filetree:///opt/git/Mergery/repository\'
+      loads: #(\'default\');
+    status: #(#\'active\');
+    locked: false;
+    yourself'}

@@ -1,0 +1,28 @@
+TDStringLeafNode{#name:'mergeTestSpec',#contents:'operations:
+  added by them
+  added by us
+  []both added
+  []both deleted    1
+  deleted by them 2
+  deleted by us   3
+  []both modified   4
+  added
+  deleted         5
+  modified        6
+
+Package Rename
+--------------
+us1.0.0:
+  rename Mergery1 to Mergery3 
+  add Class3G to Mergery3 (renamed Mergery1)
+  add Class1H to Mergery3 (renamed Mergery1)
+  delete Class1A from Mergery3 (renamed Mergery1)
+them1.0.0:
+  add Class1G to Mergery1
+  add Class3G to Mergery1 -- [conflict]
+  delete Class1F from Mergery1
+
+Methods
+-------
+us:
+them:',#creationTime:DateAndTime['2015-01-26T11:22:24.0380771160125-08:00'],#modificationTime:DateAndTime['2015-01-26T13:10:41.9401469230651-08:00']}
