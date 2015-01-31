@@ -1,7 +1,7 @@
 TDStringLeafNode{#name:'mergeTestSpec',#contents:'operations:
   added by them
   added by us
-  []both added
+  both added
   []both deleted    1
   deleted by them 2
   deleted by us   3
@@ -22,7 +22,36 @@ them1.0.0:
   add Class3G to Mergery1 -- [conflict]
   delete Class1F from Mergery1
 
-Methods
--------
-us:
-them:',#creationTime:DateAndTime['2015-01-26T11:22:24.0380771160125-08:00'],#modificationTime:DateAndTime['2015-01-26T13:10:41.9401469230651-08:00']}
+us1.0.0.1:
+  add Class2A>>meth7 (different from them) [both added]
+  delete Class2A>>meth2                    [deleted by us]
+  mod Class2A>>meth3 (different from them) [both modified]
+them1.0.0.1:
+  add Class2A>>meth7 (different from us)   [both added]
+  delete Class2A>>meth1                    [deleted by them]
+  mod Class2A>>meth3 (different from us)   [both modified]
+
+--------------------------------------
+Ready to do the merge ...
+--------------------------------------
+
+Bugs
+----
+1. CR was used instead LF in Class2A>>meth7  ... that was a custom edit!
+2. The class category for MergeryClass1G is set to Mergery1 ... it doesn\'t match the package name ... 
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+INCORRECT
+---------
+us1.0.1:
+  add Class1B>>meth7 (different from them) [both added]
+  delete Class1B>>meth2                    [deleted by us]
+  mod Class1B>>meth3 (different from them) [both modified]
+them1.0.1:
+  add Class1B>>meth7 (different from us)   [both added]
+  delete Class1B>>meth1                    [deleted by them]
+  mod Class1B>>meth3 (different from us)   [both modified]
+',#creationTime:DateAndTime['2015-01-26T11:22:24.0380771160125-08:00'],#modificationTime:DateAndTime['2015-01-30T20:35:43.2316269874572-08:00']}

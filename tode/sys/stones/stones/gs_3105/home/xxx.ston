@@ -1,0 +1,22 @@
+TDSmalltalkLeafNode{#name:'xxx',#contents:'Gofer new
+    package: \'GsUpgrader-Core\';
+    url: \'http://ss3.gemtalksystems.com/ss/gsUpgrader\';
+    load.
+  (Smalltalk at: #\'GsUpgrader\') upgradeGrease.
+  (Smalltalk at: #\'GsDeployer\')
+    deploy: [ 
+      Metacello new
+        configuration: \'Magritte3\';
+        version: #\'release3.1\';
+        repository: \'http://www.smalltalkhub.com/mc/Magritte/Magritte3/main\';
+        onConflict: [ :ex :existingRegistration :newRegistration | 
+              Transcript
+                show:
+                  \'Conflict between existing: \' , existingRegistration className , \' \'
+                    , existingRegistration printString , Character cr asString
+                    , \'  and new: \' , newRegistration className , \' \'
+                    , newRegistration printString , Character cr asString
+                    , \'  resolved in favor of existing\'.
+              ex disallow ];
+        cacheRepository: \'/tmp/somewhere\';
+        load: \'Magritte-Seaside\' ]',#creationTime:DateAndTime['2015-01-29T14:14:06.5431079864502-08:00'],#modificationTime:DateAndTime['2015-01-29T14:14:11.76215291023254-08:00']}
