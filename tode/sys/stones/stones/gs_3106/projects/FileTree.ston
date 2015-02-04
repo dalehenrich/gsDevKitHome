@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'FileTree',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'FileTree\'
+      repository:
+        \'filetree:///export/foos1/users/dhenrich/git/filetree/repository\'
+      loads: #(\'default\' \'Tests\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}
