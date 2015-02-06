@@ -1,8 +1,8 @@
 TDSessionDescription {
-	#name : 'ubuntu12.04',
+	#name : 'tode12.04',
 	#stoneHost : '192.168.100.129',
 	#stoneName : 'tode',
-	#gemHost : '192.168.100.129',
+	#gemHost : 'foos',
 	#netLDI : '49256',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
@@ -10,10 +10,10 @@ TDSessionDescription {
 	#osUserId : nil,
 	#osPassword : nil,
 	#dataDirectory : nil,
-	#backupDirectory : '/home/notroot/gsDevKitHome/gemstone/stones/tode/backups/',
+	#backupDirectory : '/export/foos1/users/dhenrich/ubuntu12.04/backups',
 	#gemstoneVersion : '3.2.3',
 	#gciLibraryName : nil,
 	#adornmentColor : nil,
-	#serverGitRoot : '/home/notroot/gsDevKitHome/gemstone/stones/tode/git',
-	#serverTodeRoot : '/home/notroot/gsDevKitHome/gemstone/stones/tode/git/tode'
+	#serverGitRoot : '/export/foos1/users/dhenrich/ubuntu12.04/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/ubuntu12.04/tode'
 }
