@@ -1,19 +1,19 @@
 TDSessionDescription {
 	#name : 'ubuntu14.04_fwd',
 	#stoneHost : 'localhost',
-	#stoneName : 'pier',
+	#stoneName : 'seaside',
 	#gemHost : 'localhost',
-	#netLDI : '54737',
+	#netLDI : '54179',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
 	#osUserId : nil,
 	#osPassword : nil,
 	#dataDirectory : nil,
-        #backupDirectory : '/home/dhenrich/gsDevKitHome/gemstone/stones/pier/backups/',
+	#backupDirectory : '',
 	#gemstoneVersion : '3.1.0.6',
 	#gciLibraryName : nil,
 	#adornmentColor : nil,
-	#serverGitRoot : '/home/dhenrich/gsDevKitHome/gemstone/stones/pier/git',
+	#serverGitRoot : '',
 	#serverTodeRoot : '/home/dhenrich/gsDevKitHome/tode'
 }
