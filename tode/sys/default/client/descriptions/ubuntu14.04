@@ -1,9 +1,9 @@
 TDSessionDescription {
 	#name : 'ubuntu14.04',
-	#stoneHost : '192.168.100.131',
-	#stoneName : 'seaside3.1.2',
-	#gemHost : '192.168.100.131',
-	#netLDI : '52344',
+	#stoneHost : '192.168.100.129',
+	#stoneName : 'seaside',
+	#gemHost : '192.168.100.129',
+	#netLDI : '54179',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
@@ -11,5 +11,9 @@ TDSessionDescription {
 	#osPassword : nil,
 	#dataDirectory : nil,
 	#backupDirectory : '',
-	#gemstoneVersion : '3.2.2'
+	#gemstoneVersion : '3.1.0.6',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/home/dhenrich/gsDevKitHome/tode/sys/local/git',
+	#serverTodeRoot : '/home/dhenrich/gsDevKitHome/tode'
 }

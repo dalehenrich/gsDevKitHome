@@ -43,6 +43,14 @@ $GS_HOME/bin/updateTodeImage -p _small_1
 
 $GS_HOME/bin/updateTodeImage -p _small_2
 
+$GS_HOME/bin/updateTodeImage -p _medium
+
+$GS_HOME/bin/updateTodeImage -p _medium_0
+
+$GS_HOME/bin/updateTodeImage -p _medium_1
+
+$GS_HOME/bin/updateTodeImage -p _medium_2
+
 $GS_HOME/bin/updateTodeImage -p _server
 
 $GS_HOME/bin/updateTodeImage -p _client
