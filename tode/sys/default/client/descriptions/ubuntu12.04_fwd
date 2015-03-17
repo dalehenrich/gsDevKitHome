@@ -1,0 +1,19 @@
+TDSessionDescription {
+	#name : 'ubuntu12.04_fwd',
+	#stoneHost : 'localhost',
+	#stoneName : 'sample',
+	#gemHost : 'localhost',
+	#netLDI : '57987',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '',
+	#gemstoneVersion : '3.2.4',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '',
+	#serverTodeRoot : '/home/dhenrich/gsDevKitHome/tode'
+}
