@@ -1,0 +1,9 @@
+TDSmalltalkLeafNode{#name:'xxx',#contents:'Gofer new
+    package: \'GsUpgrader-Core\';
+    url: \'http://ss3.gemtalksystems.com/ss/gsUpgrader\';
+    load.
+  Gofer new
+    package: \'GsUpgrader-Core\';
+    repository:
+        (MCDirectoryRepository new directory: (ServerFileDirectory on: \'/tmp\'));
+    push',#creationTime:DateAndTime['2015-03-17T15:22:11.3286509513855-07:00'],#modificationTime:@2}

@@ -1,0 +1,20 @@
+TDSmalltalkLeafNode{#name:'xx',#contents:'\"**************************************************************************************
+        Results for anArray( \'BaselineOfMetacello\') Test Suite
+567 run, 564 passes, 0 expected defects, 0 failures, 3 errors, 0 unexpected passes
+**************************************************************************************
+*** ERRORS *******************
+        MetacelloRepositoryGemStoneTestCase debug: #\'testIssue332DownloadTags\'.
+        MetacelloGithubIssue277TestCase debug: #\'testGithubRepositoryPatternMatchingA\'.
+        MetacelloGithubIssue277TestCase debug: #\'testGithubRepositoryPatternMatchingE\'.
+**************************************************************************************
+
+MetacelloScriptingSuccessTestCase debug: #\'testGitHubTagPatternLoad1\'.
+        MetacelloScriptingSuccessTestCase debug: #\'testGitHubTagPatternLoad2\'.
+        MetacelloScriptingSuccessTestCase debug: #\'testGitHubTagPatternLoad2B\'.
+        MetacelloScriptingSuccessTestCase debug: #\'testGitHubTagPatternLoad3\'.
+\"
+
+  \"
+Issue #332: oops, #at:ifAbsent:ifPresent: isn\'t present in non\"
+
+  ',#creationTime:DateAndTime['2015-03-18T13:46:33.512794971466-07:00'],#modificationTime:DateAndTime['2015-03-18T14:02:16.367947101593-07:00']}
