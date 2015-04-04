@@ -1,24 +1,20 @@
 # Magritte 3.2.0 
 
+##Installation
+
+###Batch Install
+
 ```
-mount @/sys/stone/dirs/gsDevKitHome/projects/magritt3 /home magritte
+$GS_HOME/projects/magritte3/bin/createMagritteStone magritte 3.2.4
 ```
 
 ```
-project load Magritte3      # load Magritte3 project
-project load Seaside3       # load Seaside3 adaptors
-bu backup magritte3.2.0.dbf # make a backup after load completes
-project list                # refresh the project list
+$GS_HOME/projects/magritte3/bin/installMagritteSton magritte
 ```
 
-##Status
-Current status is that there are 3 errors in the Magritte tests:
+###tODE Install
 
 ```
-1726 run, 1723 passes, 0 expected defects, 0 failures, 3 errors, 0 unexpected passes
-  1726 tests
-
-MAMultipleOptionDescriptionTest>>#testOptionsAndLabels
-MASingleOptionDescriptionTest>>#testOptionsAndLabels
-MASingleOptionDescriptionTest>>#testOptionsAndLabelsToString
+mount @/sys/stone/dirs/gsDevKitHome/projects/magritte3 /home magritte # mount the magritte directory in tODE
+/home/magritte/install                                                # install Magritte
 ```

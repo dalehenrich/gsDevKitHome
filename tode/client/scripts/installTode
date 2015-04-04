@@ -1,6 +1,0 @@
-updateClient --lock --clientRepo=filetree:///opt/git/tode/repository
-installServer --clientScriptPath=scripts
-bu backup tode.dbf
-mount --todeRoot home /
-bu backup home.dbf
-cd 
