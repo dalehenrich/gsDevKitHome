@@ -1,0 +1,2 @@
+TDSmalltalkLeafNode{#name:'xxx',#contents:'System abortTransaction.
+  SystemRepository findReferencePathToObject: (Object _objectForOop: 119868673)',#creationTime:DateAndTime['2015-04-03T12:35:51.1982400417327-07:00'],#modificationTime:DateAndTime['2015-04-03T12:37:47.9661889076232-07:00']}

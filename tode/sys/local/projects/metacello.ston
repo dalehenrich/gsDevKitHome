@@ -2,6 +2,6 @@ TDObjectGatewayNode{#name:'metacello',#contents:'^ TDProjectSpecEntryDefinition 
     baseline: \'Metacello\'
       repository: \'filetree:///opt/git/metacello-work/repository\'
       loads: #(\'default\');
-    status: #(#\'active\');
+    status: #(#\'inactive\');
     locked: true;
     yourself'}
