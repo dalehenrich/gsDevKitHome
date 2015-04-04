@@ -1,7 +1,7 @@
 TDSessionDescription {
 	#name : 'ubuntu12.04',
 	#stoneHost : '192.168.100.128',
-	#stoneName : 'sample',
+	#stoneName : 'sample2',
 	#gemHost : '192.168.100.128',
 	#netLDI : '57987',
 	#gemTask : 'gemnetobject',
@@ -10,10 +10,10 @@ TDSessionDescription {
 	#osUserId : nil,
 	#osPassword : nil,
 	#dataDirectory : nil,
-	#backupDirectory : '/home/dhenrich/gsDevKitHome/gemstone/stones/sample/backups/',
+	#backupDirectory : '/home/dhenrich/gsDevKitHome/gemstone/stones/sample2/backups/',
 	#gemstoneVersion : '3.2.4',
 	#gciLibraryName : nil,
 	#adornmentColor : nil,
-	#serverGitRoot : '/home/dhenrich/gsDevKitHome/gemstone/stones/sample/git',
+	#serverGitRoot : '/home/dhenrich/gsDevKitHome/gemstone/stones/sample2/git',
 	#serverTodeRoot : '/home/dhenrich/gsDevKitHome/tode'
 }
