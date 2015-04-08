@@ -1,0 +1,8 @@
+TDSmalltalkLeafNode{#name:'larry',#contents:'| app cache objectsByKey assoc lastAccessTable |
+  app := WADispatcher default handlers at: \'UserInformationInterface\'.
+  cache := app cache.
+  objectsByKey := cache instVarNamed: #\'objectsByKey\'.
+  assoc := objectsByKey associationAt: \'5jTYOuLPzkOYLv4d\'.
+  cache expiryPolicy isExpired: assoc value key: assoc key.
+  lastAccessTable := cache expiryPolicy instVarNamed: #\'lastAccessTable\'.
+  lastAccessTable at: \'5jTYOuLPzkOYLv4d\' ifAbsent: [ \'missing\' ]',#creationTime:DateAndTime['2015-04-06T15:29:21.7136991024017-07:00'],#modificationTime:DateAndTime['2015-04-06T15:47:52.081109046936-07:00']}
