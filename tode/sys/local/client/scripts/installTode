@@ -1,3 +1,0 @@
-updateClient --lock --clientRepo=filetree:///opt/git/tode/repository
-script --script=installServerTode
-script --script=installServerTode2

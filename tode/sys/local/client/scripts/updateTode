@@ -1,3 +1,0 @@
-updateClient --lock --clientRepo=filetree:///opt/git/tode/repository
-updateServer --clientScriptPath=scripts
-bu backup home.dbf
