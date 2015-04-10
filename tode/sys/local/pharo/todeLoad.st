@@ -1,6 +1,6 @@
 [ 
   "Tests pharo todeLoad.st"
-  | gs_home metacello |
+  | gs_home |
   gs_home := Smalltalk os environment at: 'GS_HOME'.
   Metacello new
     baseline: 'Metacello';
