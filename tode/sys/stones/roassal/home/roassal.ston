@@ -1,0 +1,21 @@
+TDSmalltalkLeafNode{#name:'roassal',#contents:'| traversal array result |
+  traversal := {nil}.
+  result := OrderedCollection new.
+  traversal
+    at: 1
+    put: [ :a :r | 
+      | rtemp |
+      a
+        do: [ :e | 
+          e isArray
+            ifTrue: [ 
+              rtemp := OrderedCollection new.
+              r add: e asString -> rtemp -> rtemp asOop.
+              (traversal at: 1) value: e value: rtemp ]
+            ifFalse: [ r add: e asString -> e asOop ] ] ].
+  System commitTransaction.
+  array := SystemRepository
+    findAllReferencePathsToObjects: {#\'TDStackFrame\'}
+    printToLog: false.
+  (traversal at: 1) value: array value: result.
+  result',#creationTime:DateAndTime['2015-04-10T16:31:11.2067248821258-07:00'],#modificationTime:DateAndTime['2015-04-10T16:31:23.0658159255981-07:00']}

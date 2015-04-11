@@ -1,2 +1,19 @@
-TDSmalltalkLeafNode{#name:'xxx',#contents:'System abortTransaction.
-  SystemRepository findReferencePathToObject: (Object _objectForOop: 119868673)',#creationTime:DateAndTime['2015-04-03T12:35:51.1982400417327-07:00'],#modificationTime:DateAndTime['2015-04-03T12:37:47.9661889076232-07:00']}
+TDSmalltalkLeafNode{#name:'xxx',#contents:'| traversal array result |
+  traversal := nil.
+  result := OrderedCollection new.
+  traversal := [ :a :r | 
+  | rtemp |
+  a
+    do: [ :e | 
+      e isArray
+        ifTrue: [ 
+          rtemp := OrderedCollection new.
+          r add: e asString -> rtemp -> rtemp asOop.
+          traversal value: e value: rtemp ]
+        ifFalse: [ r add: e asString -> e asOop ] ] ].
+  System commitTransaction.
+  array := SystemRepository
+    findAllReferencePathsToObjects: {#\'TDStackFrame\'}
+    printToLog: false.
+  traversal value: array value: result.
+  result',#creationTime:DateAndTime['2015-04-10T15:35:10.2653799057006-07:00'],#modificationTime:DateAndTime['2015-04-10T15:41:50.268138885498-07:00']}
