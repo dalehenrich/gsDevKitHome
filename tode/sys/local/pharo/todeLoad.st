@@ -24,7 +24,7 @@
     version: #dev;
     repository: 'filetree://', gs_home, '/repository';
     get;
-    load  ]
+    load: #('Core' 'Visualize')  ]
       on: Warning
       do: [:ex | 
         Transcript cr; show: ex description.
