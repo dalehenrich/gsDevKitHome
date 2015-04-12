@@ -18,4 +18,4 @@ TDSmalltalkLeafNode{#name:'roassal',#contents:'| traversal array result |
     findAllReferencePathsToObjects: {#\'TDStackFrame\'}
     printToLog: false.
   (traversal at: 1) value: array value: result.
-  result',#creationTime:DateAndTime['2015-04-10T16:31:11.2067248821258-07:00'],#modificationTime:DateAndTime['2015-04-10T16:31:23.0658159255981-07:00']}
+  result inspect',#creationTime:DateAndTime['2015-04-10T16:31:11.2067248821258-07:00'],#modificationTime:DateAndTime['2015-04-11T07:07:30.6401491165161-07:00']}
