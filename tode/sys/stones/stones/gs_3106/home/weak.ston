@@ -1,0 +1,76 @@
+TDScriptLeafNode{#name:'weak',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./issue74a -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      }
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      
+          [ 
+          | x |
+          x := TransientStackValue
+            value:
+              {1.
+              2.
+              3}.
+          Smalltalk at: #\'TSV\' put: x.
+          (Delay forSeconds: 10) wait.
+          x := nil.
+          Smalltalk at: #\'TSV\' put: nil.
+          System commitTransaction.
+          Transcript
+            cr;
+            show: \'nil out temp (x)\' ]
+            fork.
+          (Delay forSeconds: 2) wait.
+          [ 
+          [ 
+          System
+            gemConfigurationAt: #\'GemSoftRefCleanupPercentMem\'
+            put:
+              ((10 max: System _tempObjSpacePercentUsedLastMark // 2) min: 80).
+          System _vmMarkSweep.
+          Transcript
+            cr;
+            show: \'Mark sweep[1]\'.
+          (SessionTemps current at: #\'TransientStackValue\' otherwise: #())
+            isEmpty
+            ifTrue: [ 
+              Transcript
+                cr;
+                show: \'transient gone\'.
+              nil error: \'transient gone\' ].
+          true ]
+            whileTrue: [ (Delay forSeconds: 1) wait ] ]
+            fork.
+          Processor yield.
+          [ 
+          | count |
+          count := 1.
+          [ count < 30 ]
+            whileTrue: [ 
+              count := count + 1.
+              Transcript show: \'-\'.
+              (Delay forSeconds: 1) wait ] ]
+            value.
+          \'hello\'  ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  issue74a - issue74a sript utility template
+SYNOPSIS
+  issue74a [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./weak --help
+
+  ./weak
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-13T17:32:14.58198094367981-07:00'],#modificationTime:DateAndTime['2015-04-13T19:09:49.87625002861023-07:00']}

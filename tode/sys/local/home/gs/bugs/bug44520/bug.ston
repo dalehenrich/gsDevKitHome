@@ -1,0 +1,70 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | results |
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          IndexManager current removeAllTracking.
+          results := DependencyList depMapKeys ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | ar depMapKeys depMapHiddenKeys depMapValues depMapHiddenValues |
+          ar := {}.
+          Smalltalk at: #\'Bug44520\' put: ar.
+          1 to: 2035 do: [ :index | ar add: index printString -> index ].
+          System commit.
+          ar do: [ :assoc | DependencyList set: Object new for: assoc ].
+          depMapKeys := DependencyList depMapKeys.
+          depMapValues := DependencyList depMapValues.
+          depMapHiddenKeys := {}.
+          DependencyList depMapKeysToHiddenSet: 2.
+          DependencyList
+            depMapHiddenSet: 2
+            do: [ :each | depMapHiddenKeys add: each ].
+          depMapHiddenValues := {}.
+          DependencyList depMapValuesToHiddenSet: 2.
+          DependencyList
+            depMapHiddenSet: 2
+            do: [ :each | depMapHiddenValues add: each ].
+          results := Dictionary new
+            at: \'keys\' put: depMapKeys;
+            at: \'keys hidden\' put: depMapHiddenKeys;
+            at: \'keys size\' put: depMapKeys size;
+            at: \'keys hidden size\' put: depMapHiddenKeys size;
+            at: \'values\' put: depMapValues;
+            at: \'values hidden\' put: depMapHiddenValues;
+            at: \'values size\' put: depMapValues size;
+            at: \'values hidden size\' put: depMapHiddenValues size;
+            yourself ].
+      results ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--boom][--clean]
+DESCRIPTION
+  Reproduce bug:
+
+    /sys/local/home/old/old/ernie/debug --class IndexUnitTest
+
+EXAMPLES
+  ./bug --help
+  ./bug --clean --boom
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-20T10:16:33.4468998908996-07:00'],#modificationTime:DateAndTime['2015-04-20T17:02:08.7213370800018-07:00']}

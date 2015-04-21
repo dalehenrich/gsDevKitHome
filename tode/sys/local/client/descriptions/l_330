@@ -12,7 +12,7 @@ TDSessionDescription {
 	#dataDirectory : nil,
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/l_330/backups/',
 	#gemstoneVersion : '3.3.0_l',
-	#gciLibraryName : nil,
+	#gciLibraryName : 'libgcirpc-3.3.0-32',
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/l_330/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'

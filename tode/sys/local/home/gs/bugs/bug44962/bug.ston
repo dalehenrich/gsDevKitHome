@@ -1,0 +1,75 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'create\' nil #\'none\').
+#(\'install\' nil #\'none\').
+
+      #(\'remove\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | cls result |
+      result := cls := Smalltalk
+        at: #\'Bug44814\'
+        ifAbsent: [ Object subclass: \'Bug44814\' instVarNames: #() inDictionary: UserGlobals ].
+      opts
+        at: \'install\'
+        ifPresent: [ :ignored | 
+          cls
+            compileMethod: \'transientMethod ^nil\'
+            dictionaries: System myUserProfile symbolList
+            category: \'persistent\'.
+          cls
+            compileMethod: \'transientMethod ^nil\'
+            dictionaries: System myUserProfile symbolList
+            category: \'persistent\' ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | spec |
+          spec := {\'transientMethod ^#tm\'}.
+          GsPackagePolicy
+            _createTransientMethodsFor: cls
+            dictionaries: System myUserProfile symbolList
+            transientMethodsSpec: spec.\t\"create instance-side transient methods\"
+          spec := {\'transientMethod ^#tm\'}.
+          GsPackagePolicy
+            _createTransientMethodsFor: cls class
+            dictionaries: System myUserProfile symbolList
+            transientMethodsSpec: spec\t\"create class-side transient methods\" ].
+      opts
+        at: \'remove\'
+        ifPresent: [ :ignored | 
+          GsPackagePolicy
+            _removeTransientMethodsFor: cls;
+            _removeTransientMethodsFor: cls class ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          result := {(cls new transientMethod).
+          (cls transientMethod)} ].
+      result ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--create][--remove][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --create --boom
+  ./bug --remove --boom
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-20T12:22:38.3884201049804-07:00'],#modificationTime:DateAndTime['2015-04-20T14:43:53.7663140296936-07:00']}

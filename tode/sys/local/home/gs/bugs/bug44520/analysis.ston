@@ -1,0 +1,46 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 4/20/2015 10:16
+-------------------
+==> test_results/battery_5/oneliner0417-160803.txt <==
+ smkbuildtst-0417-160803         F  errors: 1 test/0 outfile/0 rescheck          1865
+
+==> test_results/battery_6/oneliner0417-160803.txt <==
+ ernie0tst-0417-160803           F  errors: 17 test/0 outfile/0 rescheck         4043
+---
+
+dkh 4/20/2015 10:31
+-------------------
+16:18:15 IndexUnitTest debug: #testBasicQueries - start...error - a ArgumentTypeError occurred (error 2094), reason:rtErrBadArgKind, expected a SmallInteger
+------------------------------(
+1 [] in  ExecBlock1 (GSTestResult) >> runCase: @8 line 15  [GsNMethod 213114881]
+2 ArgumentTypeError (AbstractException) >> _executeHandler: @3 line 8  [GsNMethod 4364801]
+3 ArgumentTypeError (AbstractException) >> _signalWith: @1 line 1  [GsNMethod 4374017]
+4 ArgumentTypeError (AbstractException) >> signal @2 line 47  [GsNMethod 4376065]
+5 UndefinedObject (Object) >> _error:args: @15 line 11  [GsNMethod 12102401]
+6 UndefinedObject (Object) >> _errorExpectedClass: @2 line 5  [GsNMethod 4073217]
+7 UndefinedObject (Object) >> _validateClass: @4 line 6  [GsNMethod 4022273]
+8 DependencyList class >> _depMap:toHiddenSet: @3 line 5  [GsNMethod 13853185]
+9 DependencyList class >> depMapKeysToHiddenSet: @2 line 6  [GsNMethod 13855233]
+10 [] in  ExecBlock0 (IndexManager) >> removeAllIndexes @2 line 29  [GsNMethod 15841793]
+
+dkh 4/20/2015 11:01
+-------------------
+Looks like the correct code was not compiled in the image, so perhaps I forgot to resynchronize after rewrite and rebuild?
+
+dkh 4/20/2015 11:18
+-------------------
+lookup IndexManager >> removeAllIndexes
+
+dkh 4/20/2015 16:40
+-------------------
+/sys/local/home/old/old/ernie/debug --class IndexUnitTest
+
+dkh 4/20/2015 16:42
+-------------------
+Looks like the bit array and actual lists differ somewhat ...
+
+These two dependency lists are leftover after `IndexManager removeAllIndexes`:
+
+  1@       -> aDependencyList( aPathTerm( aRangeEqualityIndex( aPathTerm)), 1, aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm)), 4, aPathTerm( anUnicod...
+  2@       -> aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm)), -1, aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm( anIdentityIndex...
+
+',#creationTime:DateAndTime['2015-04-20T10:16:40.5793659687042-07:00'],#modificationTime:DateAndTime['2015-04-20T16:44:43.7839798927307-07:00']}

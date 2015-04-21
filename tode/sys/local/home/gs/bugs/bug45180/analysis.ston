@@ -1,0 +1,43 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 4/16/2015 09:56
+-------------------
+static void validateBucketCache(om *omPtr, omObjSType**bucketH)
+{
+  // traverse all of the slots in the bucket, making sure that the cache
+  // matches reality
+  int64 numElements = om::FetchPosSmallInt_(bucketH, OC__ABSTRACT_COLL_BUCKET_NUM_ELEM);
+  if (numElements == 0 || omPtr->inRemoveIncompleteIndex) {
+    return; // early exit
+  }
+  int64 numCachedElements = MIN( numElements, 
+                                 RCINDEXBUCKET_NUM_BITS_PER_SLOT * RCINDEXBUCKET_NUM_CACHE_SLOTS);
+  int64 lastCacheOffset = ((numCachedElements - 1) / RCINDEXBUCKET_NUM_BITS_PER_SLOT) +
+    OC_NAMED_SIZE_COLLISION_BUCKET;
+
+  int64 offset = OC_NAMED_SIZE_COLLISION_BUCKET + RCINDEXBUCKET_NUM_CACHE_SLOTS + 
+                 RCINDEXBUCKET_VALUE_ENTRY;
+  int64 count = 0;
+  for (int64 j = OC_NAMED_SIZE_COLLISION_BUCKET; j <= lastCacheOffset; j++) {
+    int64 cacheVal = om::FetchSmallInt_(bucketH, j);
+    for (int64 k = 0; k < RCINDEXBUCKET_NUM_BITS_PER_SLOT; k++) {
+      omObjSType* bvb = om::FetchOop(*bucketH, offset);
+      BoolType result = omPtr->FetchClassId(bvb) == OOP_CLASS_BUCKET_VALUE_BAG;
+      if (cacheVal & 1) {
+        // expect a BucketValueBag
+--->        UTL_ASSERT(result);
+      } else {
+        // expect no BucketValueBag
+        UTL_ASSERT(!result);
+      }
+      cacheVal = cacheVal >> 1;
+      count += 1;
+      offset += RCINDEXBUCKET_ENTRYSIZE;
+      if (count >= numElements)
+        return; // done 
+    }
+  }
+}
+
+---
+got an association instead of a bucket value bag.
+
+',#creationTime:DateAndTime['2015-04-16T09:51:10.0571238994598-07:00'],#modificationTime:DateAndTime['2015-04-16T11:20:40.8671100139617-07:00']}

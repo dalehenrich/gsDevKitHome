@@ -1,0 +1,42 @@
+TDScriptLeafNode{#name:'soft_1',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./soft -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | dict y |
+      y := {3.
+      2.
+      1}.
+      dict := KeySoftValueDictionary new.
+      dict
+        at: 1
+          put:
+            {1.
+              2.
+              3};
+        at: 2 put: y.
+y := nil.
+      System
+        gemConfigurationAt: #\'GemSoftRefCleanupPercentMem\'
+        put: ((10 max: System _tempObjSpacePercentUsedLastMark // 2) min: 80).
+      System _vmMarkSweep.
+      dict ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  soft - soft sript utility template
+SYNOPSIS
+  soft [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./soft --help
+  ./soft -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-13T19:13:23.34686708450317-07:00'],#modificationTime:DateAndTime['2015-04-13T19:21:06.95635890960693-07:00']}

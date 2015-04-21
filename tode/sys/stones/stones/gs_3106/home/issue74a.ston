@@ -1,0 +1,72 @@
+TDScriptLeafNode{#name:'issue74a',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./issue74a -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'class\' nil #\'required\').
+      #(\'soft\' nil #\'none\').
+      #(\'stub\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'soft\'
+        ifPresent: [ :ignored | SessionTemps current at: #\'TransientStackValue\' otherwise: nil ]
+        ifAbsent: [ 
+          | class |
+          opts
+            at: \'class\'
+            ifPresent: [ :clsName | class := Smalltalk at: clsName ]
+            ifAbsent: [ class := TransientStackValue ].
+          [ 
+          [ 
+          | x |
+          x := \'x\'
+            ->
+              (class
+                value:
+                  {1.
+                  2.
+                  3}).
+          opts at: \'stub\' ifPresent: [ :ignored | x _setNoStubbing ].
+          Smalltalk at: #\'TSV\' put: x ]
+            value.
+          [ true ] whileTrue: [ (Delay forSeconds: 1) wait ] ]
+            fork.
+          Processor yield.
+          [ 
+          (Delay forSeconds: 1) wait.
+          [ 
+          (Smalltalk at: #\'TSV\') value value ifNil: [ nil error: \'transient gone\' ].
+          true ]
+            whileTrue: [ (Delay forSeconds: 1) wait ] ]
+            fork.
+          [ 
+          (Delay forSeconds: 30) wait.
+          (Smalltalk at: #\'TSV\') value value: nil.
+          nil error: \'value cleared\'.
+System _vmMarkSweep ]
+            fork.
+          \'hello\' ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  issue74a - issue74a sript utility template
+SYNOPSIS
+  issue74a [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./issue74a --help
+
+  ./issue74a 
+  ./issue74a --soft
+  ./issue74a --stub
+  ./issue74a --class=TransientValue
+  ./issue74a --class=TransientValue --stub
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-13T16:43:19.64977288246155-07:00'],#modificationTime:DateAndTime['2015-04-13T17:26:03.56472897529602-07:00']}

@@ -1,0 +1,49 @@
+TDScriptLeafNode{#name:'soft_3',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./soft -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | dict y gc |
+      gc := [ 
+      | limit ar |
+      ar := Array new: 200000.
+      limit := (10 max: System _tempObjSpacePercentUsed // 2) min: 80.
+      Transcript
+        cr;
+        show:
+            \'limit: \' , limit printString , \' > \'
+                , System _tempObjSpacePercentUsed printString.
+      System gemConfigurationAt: #\'GemSoftRefCleanupPercentMem\' put: limit.
+      ar := nil.
+      System _vmMarkSweep ].
+      y := TransientStackValue
+        value:
+          {3.
+          2.
+          1}.
+      Smalltalk at: #\'TSV\' put: y.
+      System commitTransaction.
+      gc value.
+      true
+        ifTrue: [ y := nil ].
+      gc value.
+      SessionTemps current at: #\'TransientStackValue\' otherwise: nil ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  soft - soft sript utility template
+SYNOPSIS
+  soft [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./soft --help
+  ./soft -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-13T20:12:22.37185907363892-07:00'],#modificationTime:@2}

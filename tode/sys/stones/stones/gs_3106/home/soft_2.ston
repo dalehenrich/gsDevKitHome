@@ -1,0 +1,44 @@
+TDScriptLeafNode{#name:'soft_2',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./soft -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | dict y limit ar |
+      ar := Array new: 2000.\t\"burn temp object space\"
+      y := TransientStackValue
+        value:
+          {3.
+          2.
+          1}.
+      dict := SessionTemps current at: #\'TransientStackValue\' otherwise: nil.
+      true
+        ifTrue: [ y := nil ].
+      limit := (10 max: System _tempObjSpacePercentUsedLastMark // 2) min: 80.
+      Transcript
+        cr;
+        show:
+            \'limit: \' , limit printString , \' > \'
+                , System _tempObjSpacePercentUsed printString.
+      System gemConfigurationAt: #\'GemSoftRefCleanupPercentMem\' put: limit.
+      ar := nil.
+      System _vmMarkSweep.
+      dict ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  soft - soft sript utility template
+SYNOPSIS
+  soft [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./soft --help
+  ./soft -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-13T20:05:01.47191905975342-07:00'],#modificationTime:@2}
