@@ -43,4 +43,47 @@ These two dependency lists are leftover after `IndexManager removeAllIndexes`:
   1@       -> aDependencyList( aPathTerm( aRangeEqualityIndex( aPathTerm)), 1, aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm)), 4, aPathTerm( anUnicod...
   2@       -> aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm)), -1, aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm( anIdentityIndex...
 
-',#creationTime:DateAndTime['2015-04-20T10:16:40.5793659687042-07:00'],#modificationTime:DateAndTime['2015-04-20T16:44:43.7839798927307-07:00']}
+dkh 4/20/2015 17:38
+-------------------
+/export/lithium7/users/dhenrich/3.0/k_gss64bit/battery/smkbuildtst-0420-154117/SUnit.log
+---
+15:48:35 IndexUnitTest debug: #testBasicQueries - start...FAILURE: 
+fail - ResumableTestFailure: 1 ResumableTestFailure >> signal: @8 line 6  [GsNMethod 154063873]
+2 ResumableTestFailure class (AbstractException class) >> signal: @3 line 4  [GsNMethod 5203201]
+3 ResumableTestFailure class (AbstractException class) >> sunitSignalWith: @2 line 2  [GsNMethod 4089345]
+4 IndexUnitTest (GSTestCase) >> assert:description: @6 line 4  [GsNMethod 34043905]
+5 IndexUnitTest (GSTestCase) >> assert: @2 line 3  [GsNMethod 34042625]
+6 IndexUnitTest >> testBasicQueries @52 line 46  [GsNMethod 229831169]
+7 IndexUnitTest (Object) >> perform: @1 line 1  [GsNMethod 1874945]
+8 IndexUnitTest (TestCase) >> performTest @3 line 2  [GsNMethod 18667777]
+9 IndexUnitTest (GSTestCase) >> performTest @5 line 6  [GsNMethod 34069761]
+10 [] in  ExecBlock0 (TestCase) >> runCase @3 line 5  [GsNMethod 18679041]
+11 ExecBlock0 (ExecBlock) >> ensure: @2 line 12  [GsNMethod 2190081]
+12 IndexUnitTest (TestCase) >> runCase @4 line 6  [GsNMethod 18678017]
+13 [] in  ExecBlock0 (GSTestCase) >> runCase @2 line 11  [GsNMethod 34085633]
+14 System class >> millisecondsToRun: @4 line 13  [GsNMethod 5291521]
+15 [] in  ExecBlock0 (GSTestCase) >> runCase @2 line 11  [GsNMethod 34087425]
+16 Time class >> secondsElapsedTime: @5 line 11  [GsNMethod 11817729]
+17 Time class >> millisecondsElapsedTime: @2 line 6  [GsNMethod 11819521]
+18 IndexUnitTest (GSTestCase) >> runCase @15 line 10  [GsNMethod 34085377]
+19 [] in  ExecBlock0 (GSTestResult) >> runCase: @2 line 4  [GsNMethod 33309185]
+20 ExecBlock0 (ExecBlock) >> on:do: @3 line 45  [GsNMethod 1896193]
+21 [] in  ExecBlock0 (GSTestResult) >> runCase: @4 line 6  [GsNMethod 33310465]
+22 ExecBlock0 (ExecBlock) >> on:do: @3 line 45  [GsNMethod 1896193]
+23 GSTestResult >> runCase: @2 line 11  [GsNMethod 33308929]
+24 IndexUnitTest (TestCase) >> run: @2 line 2  [GsNMethod 18676225]
+25 [] in  ExecBlock1 (GSTestSuite) >> run: @3 line 5  [GsNMethod 33330689]
+26 OrderedCollection (Collection) >> do: @5 line 10  [GsNMethod 1952257]
+27 GSTestSuite >> run: @3 line 3  [GsNMethod 33330433]
+28 [] in  ExecBlock0 (GSTestSuite) >> run @2 line 5  [GsNMethod 33327105]
+29 ExecBlock0 (ExecBlock) >> ensure: @2 line 12  [GsNMethod 2190081]
+30 ExecBlock0 (BlockClosure) >> sunitEnsure: @2 line 6  [GsNMethod 18535937]
+31 GSTestSuite >> run @5 line 5  [GsNMethod 33326593]
+32 GSTestCase class >> runEx: @3 line 4  [GsNMethod 33774081]
+33 IndexUnitTest class (GSTestCase class) >> runEx @2 line 4  [GsNMethod 33772801]
+34 Executed Code  @19 line 31  [GsNMethod 243675393]
+35 <Reenter marker>
+
+
+
+',#creationTime:DateAndTime['2015-04-20T10:16:40.5793659687042-07:00'],#modificationTime:DateAndTime['2015-04-20T17:39:42.5271000862121-07:00']}

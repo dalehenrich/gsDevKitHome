@@ -22,8 +22,7 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
           stoneRoot := topez evaluateCommandString: \'/home/gs/stoneRoot\'.
           path := (System
             performOnServer:
-              \'cd -P \' , stoneRoot fullName , \'/product/../../..; pwd\') trimBoth.
-          ].
+              \'cd -P \' , stoneRoot fullName , \'/product/../../..; pwd\') trimBoth ].
       classToFilenameMap := topez
         evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
       externalMethodMap := IdentityDictionary new.
@@ -77,5 +76,7 @@ EXAMPLES
   ./fileout --help
   ./fileout --path=/export/grace3/users/dhenrich/2.0/a_gss64bit
   ./fileout --path=/export/foos2/users/dhenrich/3.0/j_gss64bit
+  ./fileout --path=/export/foos2/users/dhenrich/3.0/k_gss64bit
+  ./fileout --path=/export/foos2/users/dhenrich/3.0/l_gss64bit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2014-08-28T06:42:32.7895319461822-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-21T16:42:52.9302470684051-07:00']}

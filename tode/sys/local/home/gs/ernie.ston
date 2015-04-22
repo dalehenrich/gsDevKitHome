@@ -4,30 +4,66 @@ TDScriptLeafNode{#name:'ernie',#contents:'[ :topez :objIn :tokens :command |
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
-      #(\'prep\' $p #\'none\')}
+      #(\'class\' nil #\'required\').
+      #(\'find\' nil #\'required\').
+      #(\'prep\' nil #\'none\').
+      #(\'test\' nil #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
   opts
     at: \'help\'
     ifAbsent: [ 
+      | findTool |
+      findTool := topez toolInstanceFor: \'find\'.
       opts
         at: \'prep\'
         ifPresent: [ :ignored | 
-          | ernieUserGlobals tool myProfile |
+          | ernieUserGlobals myProfile |
           \"\"
-          tool := topez toolInstanceFor: \'find\'.
-          ernieUserGlobals := tool
+          ernieUserGlobals := findTool
             findSymbolDictionary: #\'UserGlobals\'
             username: \'Ernie\'.
           GsPackagePolicy current externalSymbolList: {ernieUserGlobals}.
           (GsSession currentSession symbolList includes: ernieUserGlobals)
             ifFalse: [ 
-              
               GsSession currentSession symbolList
                 add: ernieUserGlobals
                 after: GsSession currentSession symbolList first.
-              ClassOrganizer clearCachedOrganizer ] ] ]
+              ClassOrganizer clearCachedOrganizer ] ].
+      opts
+        at: \'class\'
+        ifPresent: [ :className | 
+          | classDefs |
+          classDefs := {((TDSymbolDictionaryDefinition new
+            symbolDictionaryName: #\'UserGlobals\';
+            username: \'Ernie\';
+            yourself) classDefinitionNamed: className)}.
+          classDefs
+            editUsing:
+              (TDEditorSpec topez: topez editorAspect: #\'definitionList\') ].
+      opts
+        at: \'find\'
+        ifPresent: [ :regexPattern | 
+          (findTool findRegex: regexPattern)
+            ifNotNil: [ :regex | 
+              | classDefs |
+              classDefs := (findTool
+                findClassDefsInSymbolDictionary: #\'UserGlobals\'
+                username: \'Ernie\')
+                select: [ :def | regex search: def theClassName asString ].
+              classDefs
+                editUsing:
+                  (TDEditorSpec topez: topez editorAspect: #\'definitionList\') ] ].
+      opts
+        at: \'test\'
+        ifPresent: [ :className | 
+          | symbolList cls |
+          symbolList := (AllUsers
+            userWithId: \'Ernie\'
+            ifAbsent: [ self error: \'No user named Ernie found.\' ]) symbolList.
+          cls := symbolList objectNamed: className asSymbol.
+          cls debugEx ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -35,8 +71,19 @@ TDScriptLeafNode{#name:'ernie',#contents:'[ :topez :objIn :tokens :command |
   ernie - ernie sript utility template
 SYNOPSIS
   ernie [-h|--help]
+        [--class=<class-name>]
+        [--find=<class-regex-pattern>]
+        [--prep]
+        [--test=<class-name]
 DESCRIPTION
 OPTIONS
+  --class=<class-name>
+    Look up the named class in Ernie UserGlobals.
+
+  --find=<class-regex-pattern>
+    Find the set of classes matching the regex pattern in Ernie UserGlobals.
+
+
   --prep
     Install Ernie UserGlobals right after my UserGlobals, so that UserGlobals
     lookup preserved while making Ernie UserGlobal classes available for 
@@ -44,8 +91,15 @@ OPTIONS
 
     This is a NON-PERSISTENT change and should be run after each login.
 
+  --test=<class-name>
+    Look up the named class in Ernie UserGlobals and run the tests using #debugEx.
+
+
 EXAMPLES
   ./ernie --help
+  ./ernie --class=IndexUnitTest
+  ./ernie --find=IndexUnit
+  ./ernie --test=IndexUnitTest
   ./ernie --prep
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2015-04-20T17:36:26.5688068866729-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2015-04-21T16:13:43.3809740543365-07:00']}
