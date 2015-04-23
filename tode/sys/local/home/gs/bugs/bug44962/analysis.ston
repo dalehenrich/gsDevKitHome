@@ -4,4 +4,30 @@ Besides bug 44962, see bug 44814 for additional information...
 
 dkh 4/21/2015 17:23
 -------------------
-Need a test class for transient methods test to isolate the changes I\'m making in tODE from the session methods under test ...',#creationTime:DateAndTime['2015-04-20T13:07:30.1900479793548-07:00'],#modificationTime:DateAndTime['2015-04-21T17:24:00.4035899639129-07:00']}
+[DONE]Need a test class for transient methods test to isolate the changes I\'m making in tODE from the session methods under test ...
+
+dkh 4/22/2015 06:32
+-------------------
+Starting to think about Behavior>>compileTransientMethod:classified: and Behavior>>removeTransientSelector:...
+  1. Cannot use the regular remove method because it involves GsPackagePolicy 
+     in the decision which implies persistent registration...
+  2. The tricky bit is that the method must be in a category, but I don\'t
+     want to add overhead for transient method categories
+  3. Unicode16 class>>_useUnicodeComparePrimitives: directly installs the transient
+     method dictionary which makes it potentially dangerous for switching while
+     using session methods, transient or persistent ... 
+  4. It seems prudent that we require a persistent method to exist so that all of the
+     method bookkeeping will work ... since there is code that conflates transient 
+     method dictionaries and using persisten session methods ...
+  5. individual transient session methods need to honor the session method rules 
+     from GsPackagePolicy, namely GsPackagePolicy class>>restrictedClasses and not 
+     overwriting protected methods (see GsPackagePolicy>>permitSessionMethodFor:selector:)
+  6. Pay attention to GsPackagePolicy>>_sessionMethodsSet: ... may need to add remove classes 
+     individually rather than wholesale replacement.
+
+dkh 4/22/2015 10:11
+-------------------
+Plan ... 
+  1. Convert transient session methods to use method-based add/remove
+  2. Convert Unicode16 class>>_useUnicodeComparePrimitives:
+  3. Convert GsPackagePolicy>>buildSessionMethodDictionary',#creationTime:DateAndTime['2015-04-20T13:07:30.1900479793548-07:00'],#modificationTime:DateAndTime['2015-04-22T11:11:22.4507639408111-07:00']}

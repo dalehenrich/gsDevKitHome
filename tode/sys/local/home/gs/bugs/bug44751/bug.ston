@@ -1,0 +1,56 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | nsc cls sample oldClass |
+      \"clean up indexes here\"
+      UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+      IndexManager removeAllIndexes.
+      nsc := IdentityBag new.
+      UserGlobals at: #\'coll\' put: nsc.
+      Smalltalk at: #\'Becomer\' ifPresent: [ :cl | cl removeFromSystem ].
+      cls := Object
+        subclass: \'Becomer\'
+        instVarNames: #(\'number\' \'slot1\')
+        inDictionary: UserGlobals.
+      cls
+        compile: \'slot1: anObject slot1 := anObject\';
+        compile: \'number: aNumber number := aNumber\';
+        compile: \'number ^number\';
+        compile: \'<= aBecomer ^aBecomer number <= self number\';
+        compile: \'< aBecomer ^aBecomer number < self number\';
+        compile: \'> aBecomer ^aBecomer number > self number\';
+        yourself.
+      sample := cls new.
+      sample
+        number: 1;
+        slot1: DateTime now.
+      nsc add: (Set with: sample).
+ nsc
+    createEqualityIndexOn: \'*\' withLastElementClass: cls;
+    yourself
+ ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug 
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-22T13:59:13.6085140705108-07:00'],#modificationTime:DateAndTime['2015-04-22T14:02:02.0737929344177-07:00']}

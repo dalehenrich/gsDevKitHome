@@ -1,4 +1,9 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
 /home/gs/ernie --prep
 cd /home/gs/bugs/bug44962/
-/home/gs/ernie --find=transient',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-04-21T16:47:53.5530219078064-07:00']}
+/home/gs/ernie --find=transient
+browse class GsPackagePolicy Behavior
+browse method _useUnicodeComparePrimitives:
+#browse method -r transientMethodDictForEnv
+limit protocol false
+test class TransientSessionMethodsTestCase',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-04-22T14:59:17.5592288970947-07:00']}

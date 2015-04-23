@@ -409,7 +409,10 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'TestSystem\' put: #(\'TestSystem.gs\');
     at: #\'TestTranLog\' put: #(\'TestTranLog.gs\');
     at: #\'TestVersion\' put: #(\'TestVersion.gs\');
-    at: #\'TransientSessionMethodsTestCase\' put: #(\'TransientSessionMethods.gs\');
+    at: #\'TransientSessionMethodsClass\'
+      put: #(\'TransientSessionMethodsClass.gs\');
+    at: #\'TransientSessionMethodsTestCase\'
+      put: #(\'TransientSessionMethodsTests.gs\');
     at: #\'ThreeByteChar\' put: #(\'AbstractCharacter.gs\');
     at: #\'ThreeByteString\' put: #(\'AbstractCharacter.gs\');
     at: #\'TimeZoneInfoTestCase\' put: #(\'TimeZoneInfo.gs\');
@@ -445,4 +448,4 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'WriteStreamTestCase\' put: #(\'WriteStream.gs\');
     at: #\'XCharStringTest\' put: #(\'XCharStringTest.gs\');
     at: #\'ZeroDivideTestCase\' put: #(\'ANSIExceptionTests.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-04-21T16:41:16.6675460338592-07:00']}
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-04-21T20:38:32.0156199932098-07:00']}

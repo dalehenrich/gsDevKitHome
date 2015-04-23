@@ -1,0 +1,3 @@
+dkh 4/22/2015 17:20
+-------------------
+bug 44962 ... added in code to restrict to unprotected methods in classes not on the restrcited list ... compiling

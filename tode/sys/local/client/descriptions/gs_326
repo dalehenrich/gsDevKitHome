@@ -1,0 +1,20 @@
+TDSessionDescription {
+	#name : 'gs_326',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'gs_326',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'gs_326_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_326/backups/',
+	#snapshotDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_326/snapshots/',
+	#gemstoneVersion : '3.2.6',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_326/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}
