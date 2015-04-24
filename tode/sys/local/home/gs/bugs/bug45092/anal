@@ -1,11 +1,11 @@
-TDStringLeafNode{#name:'analysis',#contents:'dkh 4/23/2015 12:39
+dkh 4/23/2015 12:39
 -------------------
 /export/ghana3/users/bretlb/tr3.batt/smkbuildtst-0423-110316
 /export/ghana3/users/bretlb/tr3.batt/smkbuildtst.saveForDale 
 
 assoctst/rcindextst.opl:RcIndexTest continueTransactionTest1_1.
 ernie/MultiSessionIndexTest.gs:continueTransactionTest1_1
-ernie/MultiSessionIndexTest.gs:System commitTransaction ifFalse: [self error: \'continueTransactionTest1_1 commit failed\'].
+ernie/MultiSessionIndexTest.gs:System commitTransaction ifFalse: [self error: 'continueTransactionTest1_1 commit failed'].
 
 ---
 Error 2318 , a UserDefinedError occurred (error 2318), reason:halt, SharedDependencyLists Audit Failed (2): Audit and repair of SharedDependencyLists:
@@ -21,7 +21,7 @@ BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                     
           continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
 BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
           continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
-          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, \'8\')
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
 ---
 [18656]
 [Info]: Client PID: 9139
@@ -31,15 +31,15 @@ BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
 [Info]: Client PID: 9139
 [Info]: Session ID: 8
 ---
-Object subclass: \'TestDepMapObject\'
-\tinstVarNames: #( count type id
-\t                  name salary bday)
-\tclassVars: #()
-\tclassInstVars: #()
-\tpoolDictionaries: #()
-\tinDictionary: \'\'
-\tcategory: \'User Classes\'
-\toptions: #()
+Object subclass: 'TestDepMapObject'
+	instVarNames: #( count type id
+	                  name salary bday)
+	classVars: #()
+	classInstVars: #()
+	poolDictionaries: #()
+	inDictionary: ''
+	category: 'User Classes'
+	options: #()
 ---
 
 dkh 4/23/2015 14:35
@@ -61,15 +61,15 @@ step 0:
     SharedArray add: obj ].
   System commitTransaction
 
-  SharedNsc createEqualityIndexOn: \'id\' withLastElementClass: String
-  SharedNsc createEqualityIndexOn: \'count\' withLastElementClass: Integer.
+  SharedNsc createEqualityIndexOn: 'id' withLastElementClass: String
+  SharedNsc createEqualityIndexOn: 'count' withLastElementClass: Integer.
 ---
  
 step 1: Sess 9
 --------------
   System abortTransaction.
 
-  SharedNsc remove: obj.      obj OOP: 756453633; \'8\' OOP: 782408961
+  SharedNsc remove: obj.      obj OOP: 756453633; '8' OOP: 782408961
   SharedNsc2 remove: obj.
   System commitTransaction
 
@@ -83,7 +83,7 @@ BUG 45092 continueTransactionTest3_1 obj OOP: 756453633                         
 
 step 2: Sess 8
 --------------
-  SharedNsc2 createEqualityIndexOn: \'id\' withLastElementClass: String 
+  SharedNsc2 createEqualityIndexOn: 'id' withLastElementClass: String 
   System abortTransaction.
 
   SharedNsc2 add: obj.        obj OOP: 756453633
@@ -94,18 +94,18 @@ BUG 45092 continueTransactionTest3_2 obj OOP: 756453633                         
   
 step 3: Sess 9
 --------------
-  System commitTransaction. \"failed with conflicts\"
+  System commitTransaction. "failed with conflicts"
 
   System continueTransaction. 
 
-  System transactionConflicts at: #\'Write-Dependency\' 
-     anArray( aTestDepMapObject, \'8\')
+  System transactionConflicts at: #'Write-Dependency' 
+     anArray( aTestDepMapObject, '8')
 
 BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                      [18656]
           continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
 BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
           continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
-          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, \'8\')
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
 
 dkh 4/23/2015 15:28
 -------------------
@@ -144,13 +144,13 @@ dkh 4/23/2015 15:53
 --------------
 step 0: Sess 9
 --------------
-  SharedNsc createEqualityIndexOn: \'id\' withLastElementClass: String
+  SharedNsc createEqualityIndexOn: 'id' withLastElementClass: String
 ---
 
 --------------
 step 0: Sess 8
 --------------
-  SharedNsc createEqualityIndexOn: \'count\' withLastElementClass: Integer.
+  SharedNsc createEqualityIndexOn: 'count' withLastElementClass: Integer.
 ---
 
 --------------
@@ -158,7 +158,7 @@ step 1: Sess 9
 --------------
   System abortTransaction.
 
-  SharedNsc remove: obj.      obj OOP: 756453633; \'8\' OOP: 782408961
+  SharedNsc remove: obj.      obj OOP: 756453633; '8' OOP: 782408961
   SharedNsc2 remove: obj.
   System commitTransaction
 
@@ -170,7 +170,7 @@ BUG 45092 continueTransactionTest3_1 obj OOP: 756453633                         
 --------------
 step 2: Sess 8
 --------------
-  SharedNsc2 createEqualityIndexOn: \'id\' withLastElementClass: String 
+  SharedNsc2 createEqualityIndexOn: 'id' withLastElementClass: String 
   System abortTransaction.
 
   SharedNsc2 add: obj.        obj OOP: 756453633
@@ -184,14 +184,14 @@ step 3: Sess 9
 --------------
   System commitTransaction.
 
-  System continueTransaction. \"failed with conflicts\"
+  System continueTransaction. "failed with conflicts"
 
-  System transactionConflicts at: #\'Write-Dependency\'                            anArray( aTestDepMapObject, \'8\')
+  System transactionConflicts at: #'Write-Dependency'                            anArray( aTestDepMapObject, '8')
 BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                      [18656]
           continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
 BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
           continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
-          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, \'8\')
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
 ---
 --------------
 
@@ -211,7 +211,7 @@ step 1: Sess 9
 --------------
 step 1: Sess 9
 --------------
-  SharedNsc remove: obj.      obj OOP: 756453633; \'8\' OOP: 782408961
+  SharedNsc remove: obj.      obj OOP: 756453633; '8' OOP: 782408961
   SharedNsc2 remove: obj.
   System commitTransaction
 --------------
@@ -246,7 +246,7 @@ step ?: Sess 8
 --------------
 step 2: Sess 8
 --------------
-  SharedNsc2 createEqualityIndexOn: \'id\' withLastElementClass: String 
+  SharedNsc2 createEqualityIndexOn: 'id' withLastElementClass: String 
   System abortTransaction.
 --------------
 20.132758.6  Abort session: 8 beginId:(541 19) 8589935538
@@ -275,10 +275,10 @@ RcIndexTest continueTransactionTest3_3.
 --------------
 step 3: Sess 9
 --------------
-  System commitTransaction. \"failed with conflicts\"
+  System commitTransaction. "failed with conflicts"
 
   System continueTransaction. 
 --------------
 20.132763.0  continueTran session: 9 beginId:(541 21)
 --------------
---------------',#creationTime:DateAndTime['2015-04-23T12:39:27.369281053543-07:00'],#modificationTime:DateAndTime['2015-04-24T11:17:09.9497549533844-07:00']}
+--------------
