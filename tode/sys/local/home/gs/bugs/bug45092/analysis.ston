@@ -1,0 +1,353 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 4/23/2015 12:39
+-------------------
+/export/ghana3/users/bretlb/tr3.batt/smkbuildtst-0423-110316
+
+assoctst/rcindextst.opl:RcIndexTest continueTransactionTest1_1.
+ernie/MultiSessionIndexTest.gs:continueTransactionTest1_1
+ernie/MultiSessionIndexTest.gs:System commitTransaction ifFalse: [self error: \'continueTransactionTest1_1 commit failed\'].
+
+---
+Error 2318 , a UserDefinedError occurred (error 2318), reason:halt, SharedDependencyLists Audit Failed (2): Audit and repair of SharedDependencyLists:
+1 dependency list(s) were empty.
+---
+BUG 45092 continueTransactionTest3_1 obj OOP: 756453633                          [18656]
+          continueTransactionTest3_1 obj dependency list OOP: 762820353
+
+BUG 45092 continueTransactionTest3_2 obj OOP: 756453633                          [18586]
+          continueTransactionTest3_2 obj dependency list OOP: 783260161
+
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                      [18656]
+          continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
+          continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, \'8\')
+---
+[18656]
+[Info]: Client PID: 9139
+[Info]: Session ID: 9
+---
+[18586]
+[Info]: Client PID: 9139
+[Info]: Session ID: 8
+---
+Object subclass: \'TestDepMapObject\'
+\tinstVarNames: #( count type id
+\t                  name salary bday)
+\tclassVars: #()
+\tclassInstVars: #()
+\tpoolDictionaries: #()
+\tinDictionary: \'\'
+\tcategory: \'User Classes\'
+\toptions: #()
+---
+
+dkh 4/23/2015 14:35
+-------------------
+bare bones operations for test 3:
+
+step 0:
+  System abortTransaction.
+  SharedNsc := Set new.
+  SharedNsc2 := Set new.
+  SharedArray := Array new.
+  1 to: 20 do: [ :i | 
+    | obj |
+    obj := TestDepMapObject new.
+    obj count: i.
+    obj id: i printString.
+    SharedNsc add: obj.
+    SharedNsc2 add: obj.
+    SharedArray add: obj ].
+  System commitTransaction
+
+  SharedNsc createEqualityIndexOn: \'id\' withLastElementClass: String
+  SharedNsc createEqualityIndexOn: \'count\' withLastElementClass: Integer.
+---
+ 
+step 1: Sess 9
+--------------
+  System abortTransaction.
+
+  SharedNsc remove: obj.      obj OOP: 756453633; \'8\' OOP: 782408961
+  SharedNsc2 remove: obj.
+  System commitTransaction
+
+  SharedNsc add: obj.
+
+objId 756453633 isNewObj=1  class 767444481 segId:0 len 6 gcSz 6 psize 72 bits 0x201 page 4294973013
+Oop values:  66(sI 8) 20  782408961  20  20  20 
+
+BUG 45092 continueTransactionTest3_1 obj OOP: 756453633                          [18656]
+          continueTransactionTest3_1 obj dependency list OOP: 762820353
+
+step 2: Sess 8
+--------------
+  SharedNsc2 createEqualityIndexOn: \'id\' withLastElementClass: String 
+  System abortTransaction.
+
+  SharedNsc2 add: obj.        obj OOP: 756453633
+  System commitTransaction
+
+BUG 45092 continueTransactionTest3_2 obj OOP: 756453633                          [18586]
+          continueTransactionTest3_2 obj dependency list OOP: 783260161
+  
+step 3: Sess 9
+--------------
+  System commitTransaction. \"failed with conflicts\"
+
+  System continueTransaction. 
+
+  System transactionConflicts at: #\'Write-Dependency\' 
+     anArray( aTestDepMapObject, \'8\')
+
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                      [18656]
+          continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
+          continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, \'8\')
+
+dkh 4/23/2015 15:28
+-------------------
+set session 2
+run
+RcIndexTest continueTransactionTest3_1.
+^true
+%
+set session 1
+run
+RcIndexTest continueTransactionTest3_2.
+^true
+%
+set session 2
+run
+RcIndexTest continueTransactionTest3_3.
+^true
+%
+set session 1
+run
+RcIndexTest selectiveAbortTest1_1.
+^true
+%
+set session 2
+run
+RcIndexTest removeIndex1.
+RcIndexTest removeIndex2.
+RcIndexTest removeIndex3.
+^true
+%s
+---
+
+~otisa/bin/searchoops 756453633 762820353 782408961 783260161
+-------------------------------------------------------------
+20.76853.0  GetFreeOops session: 7 beginId:(514 1)  oop  756453633 
+20.76909.0  ReturnFreeOops session: 7 beginId:(514 8)  oop  756453633 
+20.91610.0  GetFreeOops session: 9 beginId:(517 0)  oop  756453633 
+20.100464.5  GetFreeOops session: 9 beginId:(521 0)  oop  762820353 
+20.129248.4  ReturnFreeOops session: 9 beginId:(536 0)  oop  756453633  762820353 
+20.129377.7  GetFreeOops session: 8 beginId:(536 19)  oop  756453633 
+20.129377.13  GetFreeOops session: 9 beginId:(536 21)  oop  762820353 
+20.130229.10  GetFreeOops session: 8 beginId:(539 33)  oop  782408961 
+
+20.130328.0  Data session: 8 beginId:(539 33) recordSize:17336 
+objId 756453633 isNewObj=1  class 767444481 segId:0 len 6 gcSz 6 psize 72 bits 0x201 page 4294973013
+Oop values:  66(sI 8) 20  782408961  20  20  20 
+
+20.131127.0  GetFreeOops session: 8 beginId:(539 33)  oop  783260161 
+
+20.131228.0  Data session: 8 beginId:(539 33)  newobj  782408961 cls 74753 onPage 6442455805,
+
+20.132021.2  WriteSet session: 8 beginId:(539 33)  oop  756453633 
+20.132041.0  WriteSet session: 8 beginId:(539 33)  oop  782408961 
+20.132074.2  UsedOops session: 8 beginId:(539 33)  oop  756453633 
+20.132096.0  UsedOops session: 8 beginId:(539 33)  oop  782408961 
+20.132096.6  Commit session: 8 beginId:(539 33)  timeWritten: 04/23/2015 11:18:33 PDT
+--------------
+step 0: Sess 9 (SharedNsc createEqualityIndexOn: \'id\' withLastElementClass: String)
+--------------
+20.132129.3  Abort session: 9 beginId:(540 0) user: Ernie gemhost: ghana clientIP: ::1 ruid=688 euid=688 luid=688 processId=18656 rUname=bretlb eUname= lUname=
+20.132134.0  BeginData session: 9 beginId:(540 1) storeDep:756453633 , value 764443905 
+ storeDep:782408961 , value 764446721 
+
+20.132138.5  DepMapChangeSet session: 9 beginId:(540 1)  oop  756453633  782408961 
+20.132138.10  Commit session: 9 beginId:(540 1)  timeWritten: 04/23/2015 11:18:33 PDT
+--------------
+step 0: Sess 8 (SharedNsc createEqualityIndexOn: \'count\' withLastElementClass: Integer.)
+--------------
+20.132171.44  Abort session: 8 beginId:(540 3) user: Ernie gemhost: ghana clientIP: ::1 ruid=688 euid=688 luid=688 processId=18586 rUname=bretlb eUname= lUname=
+ 7037
+
+20.132176.0  BeginData session: 8 beginId:(540 4) storeDep:756453633 , value 783272193 
+
+20.132210.5  DepMapChangeSet session: 8 beginId:(540 4)  oop  756453633 
+20.132210.10  Commit session: 8 beginId:(540 4)  timeWritten: 04/23/2015 11:18:33 PDT
+
+20.132286.0  Abort session: 9 beginId:(540 7) user: Ernie gemhost: ghana clientIP: ::1 ruid=688 euid=688 luid=688 processId=18656 rUname=bretlb eUname= lUname=
+ 4294972890
+
+20.132437.0  BeginData session: 8 beginId:(541 0) storeDep:756453633 , value 783260929 
+ storeDep:782408961 , value 783260417 
+ storeDep:756460545 , value 783260161 
+ storeDep:756462849 , value 783260161 
+  newobj  783260161 cls 89601 onPage 4294971949,
+20.132441.1  WriteSet session: 8 beginId:(541 0)  oop  783260161 
+20.132441.4  UsedOops session: 8 beginId:(541 0)  oop  783260161 
+20.132441.5  DepMapChangeSet session: 8 beginId:(541 0)  oop  756453633  782408961 
+20.132441.10  Commit session: 8 beginId:(541 0)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132483.0  BeginData session: 8 beginId:(541 5) storeDep:756458241 , value 783260161 
+
+20.132515.10  Commit session: 8 beginId:(541 5)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132560.0  BeginData session: 9 beginId:(541 11) storeDep:756454657 , value 783260161 
+
+20.132593.10  Commit session: 9 beginId:(541 11)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132661.0  BeginData session: 9 beginId:(541 16) storeDep:782408961 , value 783259905 
+ storeDep:756453633 , value 762826753 
+ storeDep:756453633 , value 783260161 
+ storeDep:782408961 , value 20 
+ storeDep:756453633 , value 20 
+
+20.132725.5  DepMapChangeSet session: 9 beginId:(541 16)  oop  756453633  782408961 
+20.132725.10  Commit session: 9 beginId:(541 16)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132759.0  BeginData session: 8 beginId:(541 20) storeDep:756453633 , value 783260161 
+ storeDep:782408961 , value 783259905 
+
+20.132759.5  DepMapChangeSet session: 8 beginId:(541 20)  oop  756453633  782408961 
+20.132759.10  Commit session: 8 beginId:(541 20)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132770.0  BeginData session: 9 beginId:(541 26) storeDep:756432129 , value 783260161 
+ storeDep:756432385 , value 783260161 
+ storeDep:756434689 , value 783260161 
+ storeDep:756436225 , value 783260161 
+ storeDep:756437505 , value 783260161 
+ storeDep:756440065 , value 783260161 
+ storeDep:756442625 , value 783260161 
+ storeDep:756444673 , value 783260161 
+ storeDep:756446721 , value 783260161 
+ storeDep:756448001 , value 783260161 
+ storeDep:756449281 , value 783260161 
+ storeDep:756451073 , value 783260161 
+ storeDep:756458241 , value 783260161 
+ storeDep:756463873 , value 783260161 
+ storeDep:756464385 , value 783260161 
+ storeDep:756469505 , value 783260161 
+
+20.132770.10  Commit session: 9 beginId:(541 26)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132775.0  BeginData session: 9 beginId:(541 28) storeDep:782408961 , value 20 
+ storeDep:756453633 , value 20 
+  object  783260161 cls 89601 onPage 8589935295,
+20.132775.1  WriteSet session: 9 beginId:(541 28)  oop  783260161 
+20.132775.5  DepMapChangeSet session: 9 beginId:(541 28)  oop  756453633  782408961 
+20.132775.10  Commit session: 9 beginId:(541 28)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.132789.0  BeginData session: 8 beginId:(541 30) storeDep:756453633 , value 783239937 
+
+20.133027.5  DepMapChangeSet session: 8 beginId:(541 30)  oop  756453633 
+20.133027.10  Commit session: 8 beginId:(541 30)  timeWritten: 04/23/2015 11:18:34 PDT
+
+20.133056.10  Commit session: 9 beginId:(542 1) user: Ernie gemhost: ghana clientIP: ::1 ruid=688 euid=688 luid=688 processId=18656 rUname=bretlb eUname= lUname=
+  crPage: 8589935215 commitSeq: 0.1609  timeWritten: 04/23/2015 11:18:35 PDT
+  seqType:normal beginLogRecord: 20.133056
+
+20.133063.0  BeginData session: 8 beginId:(542 7) storeDep:756453633 , value 20 
+
+20.133063.5  DepMapChangeSet session: 8 beginId:(542 7)  oop  756453633 
+
+20.133063.10  Commit session: 8 beginId:(542 7)  timeWritten: 04/23/2015 11:18:35 PDT
+
+20.133086.6  ConflictSet session: 5 beginId:(542 6)  oop  756453633 
+
+20.132286.0  Abort session: 9 beginId:(540 7) user: Ernie gemhost: ghana clientIP: ::1 ruid=688 euid=688 luid=688 processId=18656 rUname=bretlb eUname= lUname=
+
+----------
+ record: 20.133364  prev: 20.133360 
+ recordSize: 1024 numLogicalRecs: 16 fileCreationTime: 1429813021
+
+
+20.133721.0  Data session: 8 beginId:(543 3) storeDep:756453633 , value 783243521 
+ storeDep:782408961 , value 783244033 
+
+20.134248.0  DepMapChangeSet session: 8 beginId:(543 3)  oop  756453633 
+20.134262.0  DepMapChangeSet session: 8 beginId:(543 3)  oop  782408961 
+20.134262.5  Commit session: 8 beginId:(543 3)  timeWritten: 04/23/2015 11:18:36 PDT
+
+20.135201.0  Data session: 8 beginId:(548 2) storeDep:756453633 , value 20 
+ storeDep:782408961 , value 20 
+
+20.135504.0  DepMapChangeSet session: 8 beginId:(548 2)  oop  756453633 
+20.135518.0  DepMapChangeSet session: 8 beginId:(548 2)  oop  782408961 
+20.135518.5  Commit session: 8 beginId:(548 2)  timeWritten: 04/23/2015 11:18:41 PDT
+
+20.135662.141  ReturnFreeOops session: 9 beginId:(548 12)  oop  762820353 
+20.135696.149  GetFreeOops session: 11 beginId:(548 12)  oop  762820353 
+20.138356.0  Data session: 11 beginId:(548 11)  newobj  762820353 cls 99073 onPage 4294967459,
+20.141148.0  WriteSet session: 11 beginId:(548 11)  oop  762820353 
+20.141457.2  UsedOops session: 11 beginId:(548 11)  oop  762820353 
+20.141466.6  Commit session: 11 beginId:(548 11)  timeWritten: 04/23/2015 11:18:42 PDT
+
+20.148415.0  PossibleDead session: 4 beginId:(556 0)  oop  783260161 
+20.148450.25  Logout session: 4 beginId:(558 3) userProfileOop: 479233 userId: \'DataCurator\' timeWritten: 04/23/2015 11:20:14 PDT
+
+20.149006.0  WsUnionPossDead session: 2 beginId:(554 11)  oop  783260161 
+20.149612.0  DeadObjs session: 2 beginId:(560 0)  oop  783260161 
+
+dkh 4/23/2015 15:53
+-------------------
+
+--------------
+step 0: Sess 9
+--------------
+  SharedNsc createEqualityIndexOn: \'id\' withLastElementClass: String
+---
+
+--------------
+step 0: Sess 8
+--------------
+  SharedNsc createEqualityIndexOn: \'count\' withLastElementClass: Integer.
+---
+
+--------------
+step 1: Sess 9
+--------------
+  System abortTransaction.
+
+  SharedNsc remove: obj.      obj OOP: 756453633; \'8\' OOP: 782408961
+  SharedNsc2 remove: obj.
+  System commitTransaction
+
+  SharedNsc add: obj.
+
+BUG 45092 continueTransactionTest3_1 obj OOP: 756453633                          [18656]
+          continueTransactionTest3_1 obj dependency list OOP: 762820353
+--
+--------------
+step 2: Sess 8
+--------------
+  SharedNsc2 createEqualityIndexOn: \'id\' withLastElementClass: String 
+  System abortTransaction.
+
+  SharedNsc2 add: obj.        obj OOP: 756453633
+  System commitTransaction
+BUG 45092 continueTransactionTest3_2 obj OOP: 756453633                          [18586]
+          continueTransactionTest3_2 obj dependency list OOP: 783260161
+--
+
+--------------
+step 3: Sess 9
+--------------
+  System commitTransaction.
+
+  System continueTransaction. \"failed with conflicts\"
+
+  System transactionConflicts at: #\'Write-Dependency\'                            anArray( aTestDepMapObject, \'8\')
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                      [18656]
+          continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
+          continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, \'8\')
+---
+--------------
+',#creationTime:DateAndTime['2015-04-23T12:39:27.369281053543-07:00'],#modificationTime:DateAndTime['2015-04-23T17:10:56.8552730083465-07:00']}

@@ -1,0 +1,18 @@
+45092  P2  SharedDependencyLists Audit Failed, sparc.Solaris smkbuildtst
+  gather more information
+44014  P3  GsQuery isn't helpful about parenthesis
+43975  P2  Rather cryptic parsing error from petit parser. Can we make it more informative?
+43901  P2  Better error reporting for invalid/incorrect index queries
+  add character location info if possible and assess new capabilities
+43958  P2  PathTerm>>auditDirectNscCounts:for:on:count: does not use the `nsc` arg ...
+  just fix
+43886  P2  Unused audit methods? ... deprecation candidates...
+  just deprecate  
+43751  P2  Incorrect result from select block on collection with Unicode index
+  evaluate
+42963  R2  ensure: block executed twice
+  verify
+42596  C2  PassiveObject operations fail with portable streams installed
+  fix
+44776  P3  PPCharSetPredicate>>initializeOn: is quite expensive
+  fix

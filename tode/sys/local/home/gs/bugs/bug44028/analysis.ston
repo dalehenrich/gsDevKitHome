@@ -1,0 +1,67 @@
+TDStringLeafNode{#name:'analysis',#contents:'dkh 4/23/2015 09:55
+-------------------
+Results from `./bug --clean --create` ... and the results appear to be correct (3.3, Revision: 36048):
+
+.        -> aDictionary( \'shared dependency lists\'->anArray( aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm, aSetValuedPathTerm( anU...
+(class)@ -> Dictionary
+(oop)@   -> 185926401
+1@       -> \'audit\'->\'Indexes are OK\'
+2@       -> \'depMap keys\'->anArray( aSampleIndexObject, aSampleIndexObject)
+3@       -> \'depMap values\'->anArray( aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm, aSetValuedPathTerm( anUnicodeRangeEqualityInde...
+4@       -> \'nsc\'->anIdentityBag( aSampleIndexObject, aSampleIndexObject)
+5@       -> \'query\'->(each.children.*.age <= 18) & (each.children.*.name < \'Lisa\')
+6@       -> \'query 1\'->anArray( aSampleIndexObject, aSampleIndexObject, aSampleIndexObject, aSampleIndexObject)
+7@       -> \'query 2 (malformed)\'->\'malformed query (expected)\'
+8@       -> \'query 3\'->anArray( aSampleIndexObject, aSampleIndexObject, aSampleIndexObject, aSampleIndexObject)
+9@       -> \'query 4\'->anArray( )
+10@      -> \'query 5 (malformed)\'->\'malformed query (expected)\'
+11@      -> \'query 6 (malformed)\'->\'malformed query (expected)\'
+12@      -> \'query 7\'->anArray( )
+13@      -> \'shared dependency lists\'->anArray( aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm, aSetValuedPathTerm( anUnicodeRangeEq...
+
+according to bug report:
+
+  (GsQuery fromString: \'(each.children.*.name ~= \'\'Lisa\'\')\' 
+     on: coll) queryResult
+
+  returns 2 results
+
+in the above test, \'query 7\' is empty which I believe is the expected result.
+
+The second query:
+
+  (GsQuery fromString: \'(each.children.*.name <= \'\'Lisa\'\')\' 
+     on: coll) queryResult
+
+  returns an empty result set. 
+
+in the above test, \'query 4\' is empty which I believe is the expected result.
+
+dkh 4/23/2015 09:58
+-------------------
+Adding additional index:
+
+   equalityIndex: \'each.children.*.name\' lastElementClass: String;
+
+.        -> aDictionary( \'query\'->(each.children.*.name < \'Lisa\') & (each.children.*.age <= 18), \'depMap values\'->anArray( aDependencyList( aPathTerm( a...
+(class)@ -> Dictionary
+(oop)@   -> 191354113
+1@       -> \'audit\'->\'Indexes are OK\'
+2@       -> \'depMap keys\'->anArray( SampleIndexObject(1 [190809601]), SampleIndexObject(2 [190809857]))
+3@       -> \'depMap values\'->anArray( aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm, aSetValuedPathTerm( anUnicodeRangeEqualityInde...
+4@       -> \'nsc\'->anIdentityBag( SampleIndexObject(1 [190809601]), SampleIndexObject(2 [190809857]))
+5@       -> \'query\'->(each.children.*.name < \'Lisa\') & (each.children.*.age <= 18)
+6@       -> \'query 1\'->\'(each.object1.*.qwezxc ~= \'\'Lisa\'\')\'
+7@       -> \'query 1 result\'->anArray( SampleIndexObject(1 [190809601]), SampleIndexObject(1 [190809601]), SampleIndexObject(2 [190809857]), SampleIndex...
+8@       -> \'query 2 (malformed)\'->\'malformed query (expected)\'
+9@       -> \'query 3\'->\'(each.object1.*.path1 ~= \'\'20\'\')\'
+10@      -> \'query 3 result\'->anArray( SampleIndexObject(1 [190809601]), SampleIndexObject(1 [190809601]), SampleIndexObject(2 [190809857]), SampleIndex...
+11@      -> \'query 4\'->\'(each.children.*.name <= \'\'Lisa\'\')\'
+12@      -> \'query 4 result\'->anArray( )
+13@      -> \'query 5 (malformed)\'->\'malformed query (expected)\'
+14@      -> \'query 6 (malformed)\'->\'malformed query (expected)\'
+15@      -> \'query 7\'->\'(each.children.*.name ~= \'\'Lisa\'\')\'
+16@      -> \'query 7 result\'->anArray( )
+17@      -> \'shared dependency lists\'->anArray( aDependencyList( aPathTerm( anUnicodeRangeEqualityIndex( aPathTerm, aSetValuedPathTerm( anUnicodeRangeEq...
+
+and the results stay the same (and correct)',#creationTime:DateAndTime['2015-04-23T09:39:11.7692749500274-07:00'],#modificationTime:DateAndTime['2015-04-23T10:10:25.5142810344696-07:00']}

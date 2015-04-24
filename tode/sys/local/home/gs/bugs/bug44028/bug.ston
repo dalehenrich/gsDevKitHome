@@ -1,0 +1,160 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\').
+      #(\'install\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl query |
+      analysis := Dictionary new.
+      Smalltalk
+        at: #\'SampleIndexObject\'
+        ifAbsent: [ opts at: \'install\' put: nil ].
+      opts
+        at: \'install\'
+        ifPresent: [ :ignored | 
+          | cls |
+          \"install supporting code here\"
+          topez evaluateCommandString: \'/home/gs/bugs/installSampleIndexObject\'.
+          cls := Object
+            subclass: \'SampleIndexObject\'
+            instVarNames: #(\'path1\' \'path2\' \'value1\' \'object1\' \'children\')
+            inDictionary: UserGlobals.
+          cls compileMissingAccessingMethods ].
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc cls indexSpec |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          true
+            ifTrue: [ 
+              cls := Smalltalk at: #\'SampleIndexObject\'.
+              1 to: 2 do: [ :index | 
+                | sample set |
+                sample := cls new.
+                set := Set new.
+                1 to: 2 do: [ :j | 
+                  set
+                    add:
+                      (cls new
+                        value1: index * 10 + j;
+                        path1: (index * 10 + j) asString;
+                        yourself) ].
+                sample
+                  value1: index;
+                  object1: set;
+                  yourself.
+                nsc add: sample ] ].
+          indexSpec := GsIndexSpec new
+            equalityIndex: \'each.children.*.age\' lastElementClass: String;
+            equalityIndex: \'each.children.*.name\' lastElementClass: String;
+            yourself.
+          indexSpec createIndexesOn: nsc ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          \"recreate bug here\"
+           ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      query := \'each.value1 <= 1\' asQueryOn: theColl.
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'depMap keys\' put: DependencyList depMapKeys;
+        at: \'depMap values\' put: DependencyList depMapValues;
+        at: \'nsc\' put: theColl;
+        at: \'query 1 result\'
+          put:
+            (GsQuery fromString: \'(each.object1.*.qwezxc ~= \'\'Lisa\'\')\' on: theColl) asArray;
+        at: \'query 1\'
+          put:
+            (GsQuery fromString: \'(each.object1.*.qwezxc ~= \'\'Lisa\'\')\') printString;
+        at: \'query 2 (malformed)\'
+          put:
+            ([ 
+              (GsQuery
+                fromString:
+                  \'(each.object1.*.path1 < \'\'20\'\') & (each.object1.*.value1 <= 20)\'
+                on: theColl) asArray ]
+                on: GsMalformedQueryExpressionError
+                do: [ :ignored | \'malformed query (expected)\' ]);
+        at: \'query 3 result\'
+          put:
+            (GsQuery fromString: \'(each.object1.*.path1 ~= \'\'20\'\') \' on: theColl) asArray;
+        at: \'query 3\'
+          put:
+            (GsQuery fromString: \'(each.object1.*.path1 ~= \'\'20\'\') \') printString;
+        at: \'query 4 result\'
+          put:
+            (GsQuery fromString: \'(each.children.*.name <= \'\'Lisa\'\')\' on: theColl) asArray;
+        at: \'query 4\'
+          put:
+            (GsQuery fromString: \'(each.children.*.name <= \'\'Lisa\'\')\') printString;
+        at: \'query 7 result\'
+          put:
+            (GsQuery fromString: \'(each.children.*.name ~= \'\'Lisa\'\')\' on: theColl) asArray;
+        at: \'query 7\'
+          put:
+            (GsQuery fromString: \'(each.children.*.name ~= \'\'Lisa\'\')\') printString;
+        at: \'query 5 (malformed)\'
+          put:
+            ([ 
+              (GsQuery
+                fromString:
+                  \'(each.object1.*.bark < \'\'20\'\') & (each.object1.*.value1 <= 20)\'
+                on: theColl) asArray ]
+                on: GsMalformedQueryExpressionError
+                do: [ :ignored | \'malformed query (expected)\' ]);
+        at: \'query 6 (malformed)\'
+          put:
+            ([ 
+              (GsQuery
+                fromString:
+                  \'(each.children.*.name < \'\'Lisa\'\') & (each.children.*.age <= 18)\'
+                on: theColl)
+                optimize;
+                queryResult ]
+                on: GsMalformedQueryExpressionError
+                do: [ :ignored | \'malformed query (expected)\' ]);
+        at: \'query\'
+          put:
+            (GsQuery
+                fromString:
+                  \'(each.children.*.name < \'\'Lisa\'\') & (each.children.*.age <= 18)\'
+                on: theColl) optimize;
+        at: \'shared dependency lists\'
+          put: SharedDependencyLists allEntries asArray;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --clean --create
+  ./bug --clean --create --boom
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-23T09:33:42.4285330772399-07:00'],#modificationTime:DateAndTime['2015-04-23T10:09:53.1767079830169-07:00']}

@@ -7,7 +7,7 @@ TDScriptLeafNode{#name:'dev',#contents:'[ :topez :objIn :tokens :command |
       #(\'ernie\' nil #\'none\').
       #(\'legacyCompareMode\' $p #\'none\').
       #(\'netldi\' nil #\'required\').
-      #(\'prep\' $p #\'none\').
+      #(\'prep\' $p #\'optional\').
       #(\'remove\' $r #\'none\').
       #(\'unicodeCompareMode\' $p #\'none\').
       #(\'verbose\' $v #\'none\')}
@@ -82,19 +82,24 @@ System commit\' ].
       expression := stream contents ].
   opts
     at: \'prep\'
-    ifPresent: [ :optValue | 
+    ifPresent: [ :restrictedClassName | 
       \"GemStone 2.4 patch:
 classmethod: GsPackagePolicy
 restrictedClasses
 ^#()
 %
-\"
-      expression := \'| cls index set |
+\"      expression := \'| cls index set |
 cls := GsPackagePolicy.
 index := cls class allInstVarNames indexOfIdentical: #\'\'restrictedClasses\'\'.
 set := cls instVarAt: index.
-set removeAll: set.
-System commit\' ].
+set removeAll: set.\', (restrictedClassName ifNil: [\'\'] ifNotNil: [
+\'
+set add: \'
+        , restrictedClassName asSymbol printString
+        ,
+          \'.\' ]), \'
+System commit\' ]
+    .
   opts
     at: \'help\'
     ifAbsent: [ 
@@ -137,7 +142,7 @@ System commit\' ].
   dev - dev sript utility template
 SYNOPSIS
   dev [-h|--help][--netldi=<netldi-name>][-v|--verbose]
-  dev --prep
+  dev --prep[=<class-name>>
   dev --remove <class-name> <selector>...
   dev --ernie
   dev --legacyCompareMode
@@ -152,14 +157,16 @@ DESCRIPTION
 \t\t
   With --prep option, the restricted classes set for session
   methods is cleared, allowing free editting of all methods and classes
-  in the system.
+  in the system. If an argument is supplied, then the named class will
+  be added to the list of restricted classes after the rest were removed.
 
 EXAMPLES
   ./dev --help
   ./dev --ernie
   ./dev --prep
+  ./dev --prep=BasicSortNode
   ./dev --remove IndexManager _createIndex:for:on:withLastElementClass:
   ./dev --legacyCompareMode
   ./dev --unicodeCompareMode
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2014-09-25T16:53:37.5040159225463-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-04-23T11:05:57.2756919860839-07:00']}
