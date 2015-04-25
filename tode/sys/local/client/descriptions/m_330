@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'm_330',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'm_330_ldi',
+	#netLDI : '56715',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
@@ -13,7 +13,7 @@ TDSessionDescription {
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/m_330/backups/',
 	#snapshotDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/m_330/snapshots/',
 	#gemstoneVersion : '3.3.0_m',
-	#gciLibraryName : nil,
+	#gciLibraryName : 'libgcirpc-3.3.0-32',
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/m_330/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
