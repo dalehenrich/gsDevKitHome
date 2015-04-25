@@ -1,3 +1,2 @@
-44962  G2  Non-persistent session methods
-44814  R3  Better handling of unicode compare methods and sessionMethod methods needed for 3.3
-  in progress
+45092  P2  SharedDependencyLists Audit Failed, sparc.Solaris smkbuildtst
+  smoke build ... checkin ... wait for reproduction

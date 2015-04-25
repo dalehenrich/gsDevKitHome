@@ -17,12 +17,7 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
       path := opts
         at: \'path\'
         ifPresent: [ :optVal | optVal ]
-        ifAbsent: [ 
-          | stoneRoot checkoutDir ans |
-          stoneRoot := topez evaluateCommandString: \'/home/gs/stoneRoot\'.
-          path := (System
-            performOnServer:
-              \'cd -P \' , stoneRoot fullName , \'/product/../../..; pwd\') trimBoth ].
+        ifAbsent: [ nil error: \'Must specify --path option\' ].
       classToFilenameMap := topez
         evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
       externalMethodMap := IdentityDictionary new.
@@ -79,4 +74,4 @@ EXAMPLES
   ./fileout --path=/export/foos2/users/dhenrich/3.0/k_gss64bit
   ./fileout --path=/export/foos2/users/dhenrich/3.0/l_gss64bit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-21T16:42:52.9302470684051-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-24T15:48:14.1357419490814-07:00']}
