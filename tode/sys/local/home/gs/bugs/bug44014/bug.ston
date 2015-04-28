@@ -1,0 +1,35 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | coll |
+\"Multiple predicates in a query need to be parenthesized. Selection blocks are helpful if you forget:
+
+coll select: {:each | each.age > 18 & each.age <= 65\'}
+
+on execution, will result in:
+
+coll select: {:each | each.age > 18 The conjoined terms of the given SelectBlock were not parenthesized.->& each.age <= 65\'}\"
+      coll := Set new.
+      (GsQuery fromString: \'each.age > 18 & each.age <= 65\' on: coll)
+        queryResults ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T11:01:07.5794649124145-07:00'],#modificationTime:DateAndTime['2015-04-27T11:04:32.3875999450683-07:00']}

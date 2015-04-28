@@ -1,0 +1,5 @@
+44776  P3  PPCharSetPredicate>>initializeOn: is quite expensive
+  k_: see latest comment in bug ... and decide whether or not to move forward
+44014  P3  GsQuery isn't helpful about parenthesis
+43975  P2  Rather cryptic parsing error from petit parser. Can we make it more informative?
+  l_: add character location info if possible and assess new capabilities [IN PROCESS]

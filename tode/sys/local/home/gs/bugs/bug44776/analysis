@@ -1,0 +1,21 @@
+dkh 4/25/2015 10:03
+-------------------
+Lazily initialize Dictionary (2) vs original (1)
+./bug --reps=10000 --samples=10
+  1 - elapsed CPU time: 1540 ms
+  2 - elapsed CPU time: 764 ms
+./bug --reps=10000 --samples=50
+  1 - elapsed CPU time: 1977 ms
+  2 - elapsed CPU time: 6167 ms
+./bug --reps=10000 --samples=14
+  1 - elapsed CPU time: 1587 ms
+  2 - elapsed CPU time: 1846 ms
+./bug --reps=10000 --samples=15
+  1 - elapsed CPU time: 1601 ms
+  2 - elapsed CPU time: 2048 ms
+./bug --reps=10000 --samples=16
+  1 - elapsed CPU time: 1611 ms
+  2 - elapsed CPU time: 2035 ms
+./bug --reps=10000 --samples=100
+  1 - elapsed CPU time: 2486 ms
+  2 - elapsed CPU time: 11742 ms

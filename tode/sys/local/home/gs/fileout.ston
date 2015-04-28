@@ -73,5 +73,6 @@ EXAMPLES
   ./fileout --path=/export/foos2/users/dhenrich/3.0/j_gss64bit
   ./fileout --path=/export/foos2/users/dhenrich/3.0/k_gss64bit
   ./fileout --path=/export/foos2/users/dhenrich/3.0/l_gss64bit
+  ./fileout --path=/export/foos2/users/dhenrich/3.0/m_gss64bit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-24T15:48:14.1357419490814-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-25T07:15:54.8530960083007-07:00']}

@@ -1,0 +1,35 @@
+TDScriptLeafNode{#name:'comment2',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./comment2 -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | c1 c2 |
+      c1 := \'A\' asUnicodeString.
+      c2 := (Utf8 withAll: #[65 4]) asUnicodeString.
+      {c1.
+      c2.
+      (c1 = c2).
+      (c1 _idxForCompareEqualTo: c2).
+      (c2 = c1).
+      (c2 _idxForCompareEqualTo: c1).
+      (c1 compareTo: c2 collator: IcuCollator default useMinSize: false).
+      (c1 compareTo: c2 collator: IcuCollator default useMinSize: true)} ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  comment2 - bug sript utility template
+SYNOPSIS
+  comment9 [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./comment2 --help
+  ./comment2 -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T10:26:31.9834508895874-07:00'],#modificationTime:@2}

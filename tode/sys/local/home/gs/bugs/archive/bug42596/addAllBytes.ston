@@ -1,0 +1,47 @@
+TDScriptLeafNode{#name:'addAllBytes',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./addAllBytes -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | samples str |
+      samples := {(String new
+        add: (Character withValue: 32);
+        yourself).
+      (Unicode7 new
+        add: (Character withValue: 32);
+        yourself).
+      (DoubleByteString new
+        add: (Character withValue: 16r20ac);
+        yourself).
+      (Unicode16 new
+        add: (Character withValue: 16r20ac);
+        yourself).
+      (QuadByteString new
+        add: (Character withValue: 16r672c);
+        yourself).
+      (Unicode32 new
+        add: (Character withValue: 16r672c);
+        yourself)}.
+      str := String new.
+      samples do: [ :charColl | str addAllBytes: charColl ].
+      {str asByteArray.
+ samples collect: [:each | each asByteArray]}]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  addAllBytes - addAllBytes sript utility template
+SYNOPSIS
+  addAllBytes [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./addAllBytes --help
+  ./addAllBytes -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T17:22:03.2298290729522-07:00'],#modificationTime:@2}

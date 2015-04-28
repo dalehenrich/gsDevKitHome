@@ -1,0 +1,51 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'reps\' nil #\'required\').
+      #(\'samples\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | pftool chars reps samples |
+      pftool := topez toolInstanceFor: \'pf\'.
+      reps := samples := 1000.
+      opts at: \'reps\' ifPresent: [ :arg | reps := arg asNumber ].
+      opts at: \'samples\' ifPresent: [ :arg | samples := arg asNumber ].
+      chars := {}.
+      samples
+        timesRepeat: [ chars add: (Character withValue: (1 to: 255) atRandom) ].
+      [ 
+      pftool pfstart.
+      reps
+        timesRepeat: [ 
+          | pred |
+          pred := PPCharSetPredicate on: [ :char |  ].
+          chars do: [ :char | pred value: char ] ]]
+        ensure: [ pftool pfview: \'bug44776 - 1\' ].
+      [pftool pfstart.
+reps
+        timesRepeat: [ 
+          | pred |
+          pred := PPCharSetPredicate newOn: [ :char |  ].
+          chars do: [ :char | pred newValue: char ] ] ]
+        ensure: [ pftool pfview: \'bug44776 - 2\' ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help][--reps=<reps>][--samples=<samples>]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+  ./bug --reps=10000 --samples=30
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-25T09:40:54.6138839721679-07:00'],#modificationTime:DateAndTime['2015-04-25T10:16:02.9507019519805-07:00']}

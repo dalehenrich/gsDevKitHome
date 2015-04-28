@@ -1,0 +1,47 @@
+TDScriptLeafNode{#name:'alex',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | ans |
+      ans := Dictionary new.
+      {String.
+      Unicode7.
+      DoubleByteString.
+      Unicode16.
+      QuadByteString.
+      Unicode32}
+        do: [ :aClass | 
+          | empty |
+          empty := aClass new.
+          1 to: 16rFFFF do: [ :e | 
+            | aStr res |
+            aStr := aClass new
+              add: e asCharacter;
+              yourself.
+            res := {(empty = aStr).
+            (aStr = empty).
+            (empty _idxForCompareEqualTo: aStr).
+            (aStr _idxForCompareEqualTo: empty)}.
+            res ~= #(false false false false)
+              ifTrue: [self halt. (ans at: aClass ifAbsent: [ ans at: aClass put: {} ]) add: e -> res ] ] ].
+      ans ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T10:26:31.94380402565-07:00'],#modificationTime:@2}

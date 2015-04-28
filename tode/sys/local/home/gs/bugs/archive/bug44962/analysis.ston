@@ -30,4 +30,4 @@ dkh 4/22/2015 10:11
 Plan ... 
   1. Convert transient session methods to use method-based add/remove
   2. Convert Unicode16 class>>_useUnicodeComparePrimitives:
-  3. Convert GsPackagePolicy>>buildSessionMethodDictionary',#creationTime:DateAndTime['2015-04-20T13:07:30.1900479793548-07:00'],#modificationTime:DateAndTime['2015-04-22T11:11:22.4507639408111-07:00']}
+  3. Convert GsPackagePolicy>>buildSessionMethodDictionary',#creationTime:DateAndTime['2015-04-27T10:28:46.7201170921325-07:00'],#modificationTime:@2}

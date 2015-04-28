@@ -1,0 +1,37 @@
+TDScriptLeafNode{#name:'bug43975',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      false ifTrue: [ GsQuery fromString: \'each age\'].
+      GsQuery fromString: \'(each.age >= 3) | \'.
+      GsQuery fromString: \'each\'.
+      false
+        ifTrue: [ GsQuery fromString: \'each.\' ].
+      GsQuery fromString: \'each.age\'.
+      false
+        ifTrue: [ GsQuery fromString: \'each.age >= \' ].
+      false
+        ifTrue: [ GsQuery fromString: \'each.age  x\' ].
+      false
+        ifTrue: [ GsQuery fromString: \'each.age >\' ].
+      GsQuery fromString: \'each.age > e\' ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T11:27:03.0369980335235-07:00'],#modificationTime:DateAndTime['2015-04-27T17:34:50.38685297966-07:00']}

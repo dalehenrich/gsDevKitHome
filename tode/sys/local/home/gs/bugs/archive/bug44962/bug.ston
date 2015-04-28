@@ -72,4 +72,4 @@ EXAMPLES
   ./bug --create --boom
   ./bug --remove --boom
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-20T12:22:38.3884201049804-07:00'],#modificationTime:DateAndTime['2015-04-20T14:43:53.7663140296936-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T10:28:46.7263820171356-07:00'],#modificationTime:@2}

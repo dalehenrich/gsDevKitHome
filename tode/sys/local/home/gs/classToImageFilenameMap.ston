@@ -404,7 +404,7 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'UnicodeIndexSpecification\' put: #(\'idxquerymethods.gs\');
     at: #\'UnicodeRangeEqualityIndex\' put: #(\'unicoderangeindex.gs\');
     at: #\'UnorderedCollection\'
-      put: #(\'unorderedcoll.gs\' \'unorderedcoll2.gs\' \'unorderedcoll3.gs\');
+      put: #(\'unorderedcoll.gs\' \'unorderedcoll3.gs\' \'unorderedcoll2.gs\');
     at: #\'UserProfile\' put: #(\'userpro.gs\');
     at: #\'UserProfileSet\' put: #(\'userprofileset.gs\');
     at: #\'UserSecurityData\' put: #(\'usersecuritydata.gs\');
@@ -412,4 +412,5 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'VariableContext\' put: #(\'variablecon.gs\');
     at: #\'Warning\' put: #(\'Warning.gs\');
     at: #\'WriteStream\' put: #(\'writest.gs\' \'writestPortable.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.4023239612579-07:00'],#modificationTime:DateAndTime['2014-11-05T11:36:41.3263590335845-08:00']}
+    at: #\'WriteStreamPortable\' put: #(\'writestPortable.gs\');
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.4023239612579-07:00'],#modificationTime:DateAndTime['2015-04-27T10:16:22.5503709316253-07:00']}

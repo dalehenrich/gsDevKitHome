@@ -11,4 +11,8 @@ checking back to 2.4 ...
 
 Adding bytes to MultiByteStrings is probably okay, but adding bytes to Unicode strings starts getting crazy ... 
 
-I\'m beginning to think that the passivation needs to be revamped ... ',#creationTime:DateAndTime['2014-11-04T17:47:29.3060429096221-08:00'],#modificationTime:DateAndTime['2014-11-04T17:52:22.4127020835876-08:00']}
+I\'m beginning to think that the passivation needs to be revamped ... 
+
+dkh 4/27/2015 09:36
+-------------------
+Looking into adding nextPutAllBytes: which will depend upon String>>addAllBytes: ... if it works with unicode then I will ship it...',#creationTime:DateAndTime['2015-04-27T17:22:03.2345330715179-07:00'],#modificationTime:@2}

@@ -1,4 +1,6 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
 /home/gs/ernie --prep
-/home/gs/ernie --find=index
-cd /home/gs/bugs/bug45092/',#creationTime:DateAndTime['2015-04-20T17:30:31.3597249984741-07:00'],#modificationTime:DateAndTime['2015-04-23T12:42:15.4810280799865-07:00']}
+/home/gs/ernie --find=pp
+browse class PPCharSetPredicate
+cd /home/gs/bugs/bug44776/
+',#creationTime:DateAndTime['2015-04-20T17:30:31.3597249984741-07:00'],#modificationTime:DateAndTime['2015-04-25T09:41:43.1210510730743-07:00']}

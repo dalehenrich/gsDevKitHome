@@ -8,15 +8,16 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       args := operands ].
   opts
     at: \'help\'
-    ifAbsent: [| testObj stream |
-
-testObj := (WriteStream on: DoubleByteString new)
-     nextPutAll: \'This is a test\';
-yourself.
-
-stream := WriteStreamPortable on: String new.
-PassiveObject passivate: testObj toStream: stream.
-  ]
+    ifAbsent: [ 
+      | testObj stream |
+      testObj := ((WriteStream on: DoubleByteString new)
+        nextPutAll: \'This is a test\';
+        yourself) .
+      stream := WriteStreamPortable on: String new.
+      PassiveObject passivate: testObj toStream: stream.
+      {testObj.
+      stream.
+      ((PassiveObject newOnStream: stream contents) activate)} ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -29,4 +30,4 @@ EXAMPLES
   ./bug --help
   ./bug -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-11-04T17:15:39.5280129909515-08:00'],#modificationTime:DateAndTime['2014-11-04T17:22:55.456913948059-08:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T17:22:03.2447819709777-07:00'],#modificationTime:@2}

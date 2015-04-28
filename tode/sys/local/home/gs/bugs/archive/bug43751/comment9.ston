@@ -1,0 +1,33 @@
+TDScriptLeafNode{#name:'comment9',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./comment9 -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | s1 s2 |
+      s1 := #[196 128] asUnicodeString.
+      s2 := Unicode7 new.
+      {s1.
+      s2.
+      (s1 = s2).
+      (s1 _idxForCompareEqualTo: s2).
+      (s2 = s1).
+      (s2 _idxForCompareEqualTo: s1)} ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  comment9 - bug sript utility template
+SYNOPSIS
+  comment9 [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./comment9 --help
+  ./comment9 -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T10:26:31.9870550632476-07:00'],#modificationTime:@2}

@@ -1,0 +1,6 @@
+TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
+#/home/gs/ernie --prep
+#/home/gs/ernie --find=IXQueryLifeCycleTestCase
+cd /home/gs/bugs/bug42596
+limit protocol false
+',#creationTime:DateAndTime['2015-04-25T09:10:25.2174680233001-07:00'],#modificationTime:DateAndTime['2015-04-27T09:31:07.8989219665527-07:00']}
