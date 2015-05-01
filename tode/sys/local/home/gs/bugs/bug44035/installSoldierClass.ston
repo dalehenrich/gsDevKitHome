@@ -99,7 +99,7 @@ rank := newRank\';
   vals := {}.
   [ stream _btreeAtEnd not and: [ stream _peekKey _idxForSortEqualTo: aKey ] ]
     whileTrue: [ 
-      aKey == stream _peekKey
+      aKey == stream _peekKey 
         ifTrue: [ 
           | peeked |
           \"pick out the values at the given key that are identical to anObject\"
@@ -146,4 +146,4 @@ EXAMPLES
   ./installSoldierClass --help
   ./installSoldierClass -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-04-30T20:50:57.8392989635467-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-04-30T21:06:08.3763110637664-07:00']}
