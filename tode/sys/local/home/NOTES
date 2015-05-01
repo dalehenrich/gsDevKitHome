@@ -4,15 +4,10 @@
   k_: take a serious look at 44545 and fix the other two along the way ...
       ??
 
-44014  P3  GsQuery isn't helpful about parenthesis
-43975  P2  Rather cryptic parsing error from petit parser. Can we make it more informative?
-  l_: add character location info if possible and assess new capabilities [IN PROCESS]
-      revise checkin comment 
-
 44035  P2  my selector path term example doesn't work
 43947  P2  need example for doing your own index maintenance for selector-based indexes
   m_: address now?
-      ??
+      in progress
 
 ------------------------------------------
 44495  R3  Indexed query performance

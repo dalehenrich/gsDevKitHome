@@ -17,7 +17,7 @@ TDScriptLeafNode{#name:'installSoldierClass',#contents:'[ :topez :objIn :tokens 
         classInstVars: #()
         poolDictionaries: #()
         inDictionary: UserGlobals.
-cls1 category: \'Selector-PathTerm-Example\'.
+      cls1 category: \'Selector-PathTerm-Example\'.
       cls1 compileMissingAccessingMethods.
       cls1 class
         compile:
@@ -60,23 +60,47 @@ rank := newRank\';
         classInstVars: #()
         poolDictionaries: #()
         inDictionary: UserGlobals.
-cls2 category: \'Selector-PathTerm-Example\'.
+      cls2 category: \'Selector-PathTerm-Example\'.
       cls2 compileMissingAccessingMethods.
       cls2
         compile:
-            \'modifyingObject: anObject atOffset: anOffset to: newValue
-  | vals pathTerm |
+            \'modifyingObject: anObject atOffset: anOffset to: newKey
+  | pathTerm |
   anOffset == self trackedOffset
     ifFalse: [ ^ self ].
-  vals := {}.
   pathTerm := self selectorPathTerm.
   1 to: pathTerm size do: [ :j | 
     | indexObj |
     \" for each index utilizing this path term \"
-    indexObj := pathTerm at: j.\t\" add the equality index to the answer \"
-    vals add: indexObj.\t\" remove the B-tree entries and get the corresponding values \"
-    vals add: (indexObj _removeBtreeEntriesForKey: self) ].
-  self halt\';
+    indexObj := pathTerm at: j.
+    self updateIndex: indexObj forKeysWithValue: anObject toNewKey: newKey ]\';
+        compile:
+            \'updateIndex: indexObj forKeysWithValue: anObject toNewKey: newKey
+  | aKey stream vals |
+  \" first we need to find all values that have aKey as the key \"
+  aKey := anObject
+    perform:
+      (selectorPathTerm name copyFrom: 2 to: selectorPathTerm name size) asSymbol.
+  stream := indexObj asQueryEvaluator
+    _findAllValuesGreaterThanKey: aKey
+    andEquals: true.
+  vals := {}.
+  [ stream _btreeAtEnd not and: [ stream _peekKey _idxForSortEqualTo: aKey ] ]
+    whileTrue: [ 
+      aKey == stream _peekKey
+        ifTrue: [ 
+          | peeked |
+          \"pick out the values at the given key that are identical to anObject\"
+          peeked := stream _peekValue.
+          peeked == anObject
+            ifTrue: [ vals add: peeked ] ].
+      stream _btreeNext ].
+  1 to: vals size do: [ :i | 
+    \"remove the entry for each old value \"
+    indexObj btreeRemoveKey: aKey value: (vals at: i) ].
+  1 to: vals size do: [ :i | 
+    \"add the entry back for each new value\"
+    indexObj btreeAt: newKey put: (vals at: i) ]\';
         yourself.
       cls3 := Object
         subclass: #\'SoldierNscModificationTracker\'
@@ -85,7 +109,7 @@ cls2 category: \'Selector-PathTerm-Example\'.
         classInstVars: #()
         poolDictionaries: #()
         inDictionary: UserGlobals.
-cls3 category: \'Selector-PathTerm-Example\'.
+      cls3 category: \'Selector-PathTerm-Example\'.
       cls3 compileMissingAccessingMethods.
       cls3
         compile:
@@ -96,7 +120,7 @@ cls3 category: \'Selector-PathTerm-Example\'.
   newObject _setModificationTrackingTo: self selectorModificationTracker\';
         compile:
             \'removing: anObject from: trackedObject
-  self halt\';
+  anObject _clearModificationTrackingTo: self selectorModificationTracker\';
         yourself ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -110,4 +134,4 @@ EXAMPLES
   ./installSoldierClass --help
   ./installSoldierClass -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-04-30T16:04:07.5019690990448-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-04-30T17:12:27.4024219512939-07:00']}

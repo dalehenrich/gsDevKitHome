@@ -88,18 +88,22 @@ classmethod: GsPackagePolicy
 restrictedClasses
 ^#()
 %
-\"      expression := \'| cls index set |
+\"
+      expression := \'| cls index set |
 cls := GsPackagePolicy.
 index := cls class allInstVarNames indexOfIdentical: #\'\'restrictedClasses\'\'.
 set := cls instVarAt: index.
-set removeAll: set.\', (restrictedClassName ifNil: [\'\'] ifNotNil: [
-\'
-set add: \'
-        , restrictedClassName asSymbol printString
+set removeAll: set.\'
         ,
-          \'.\' ]), \'
-System commit\' ]
-    .
+          (restrictedClassName
+            ifNil: [ \'\' ]
+            ifNotNil: [ 
+              \'
+set add: \' , restrictedClassName asSymbol printString , \'.\' ])
+        ,
+          \'
+(AllUsers userWithId: \'\'DataCurator\'\') addPrivilege: #\'\'CompilePrimitives\'\'.
+System commit\' ].
   opts
     at: \'help\'
     ifAbsent: [ 
@@ -169,4 +173,4 @@ EXAMPLES
   ./dev --legacyCompareMode
   ./dev --unicodeCompareMode
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-04-23T11:05:57.2756919860839-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-04-30T19:57:19.6678349971771-07:00']}
