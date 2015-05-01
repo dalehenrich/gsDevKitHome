@@ -1,3 +1,89 @@
 dkh 4/30/2015 17:08
 -------------------
 The best thing to do is to remove the entries and return a `vals` array with information that can be used to restore the entries after the object has been modified to it's new state.
+
+dkh 4/30/2015 20:44
+-------------------
+Turns out that if I a) arrange for modification tracking to return a "btreeRemovals array" and b) craft the "btreeRemovals array" to contain the objects I need to update the index data structure, I can make it work...
+
+---
+Object>>_modifyingInstVarAtOffset:to:
+--
+  _modifyingInstVarAtOffset: anInteger to: newValue
+    "The instance variable at the given offset is being modified.  Update any
+     indexes that depend upon that instance variable.  Collect list of indexes which
+     depend directly on the receiver (btreeRemovals). The caller is expected to call 
+     _addObjectToBtreesWithValues: with the list. Returns an Array.  If the index
+     objects were modified correctly, the first slot in array is nil and the
+     second slot is the list of btreeRemovals; otherwise the first slot is a boolean 
+     and the second slot is an exception."
+  
+    <primitive: 2001>
++   | depList inIndex prot btreeRemovals x |
+-   | depList inIndex prot btreeRemovals |
+    prot := System _protectedMode.
+    [ 
+    inIndex := false.
+    btreeRemovals := {}.
+    depList := DependencyList for: self.	" first handle modification tracking "
+    1 to: depList size by: 2 do: [ :i | 
+      (depList at: i + 1) ~~ 0
+        ifTrue: [ inIndex := true ]
+        ifFalse: [ 
+          anInteger >= self class firstPublicInstVar
++           ifTrue: [ 
++             btreeRemovals add: (depList at: i).
++             btreeRemovals
++               add:
++                 ((depList at: i) modifyingObject: self atOffset: anInteger to: newValue) ] ] ].
+-           ifTrue: [ (depList at: i) modifyingObject: self atOffset: anInteger to: newValue ] ] ].
+    inIndex
+      ifFalse: [ 
+        ^ {nil.
+        btreeRemovals} ].
+    System _bypassReadAuth.
+    [ 
+    | i |
+    i := 1.
+    [ i <= depList size ]
+      whileTrue: [ 
+        | ivOffsetOrReferenceCount |
+        ivOffsetOrReferenceCount := depList at: i + 1.
+        ivOffsetOrReferenceCount < 0
+          ifTrue: [ 
+            | pathTerm indexObj |
+            "remove object from the btrees associated with the last element of 
+             an index path... caller will add receiver back after instance variable is 
+             updated"
+            "bug 42640 ... upgraded reference counts are not an issue"
+            pathTerm := depList at: i.
+            indexObj := pathTerm at: pathTerm size.
+            btreeRemovals add: indexObj.
+            btreeRemovals add: (indexObj _removeBtreeEntriesForKey: self) ]
+          ifFalse: [ 
+            ivOffsetOrReferenceCount == anInteger
+              ifTrue: [ 
+                | resultOrErrorArray |
+                resultOrErrorArray := (depList at: i)
+                  update: self
+                  at: anInteger
+                  to: newValue.
+                resultOrErrorArray == true
+                  ifFalse: [ 
+                    "error array"
+                    btreeRemovals isEmpty
+                      ifFalse: [ 
+                        "ensure that error includes information that indexing objects were modified"
+                        resultOrErrorArray at: 1 put: true ].
+                    ^ resultOrErrorArray ] ] ].
+        i := i + 2 ] ]
+      onSynchronous: Error
+      do: [ :ex | 
+        " returns Array containing error information "
+        ^ {true.
+        ex} ] ]
+      ensure: [ 
+        System _exitBypassReadAuth.
+        prot _leaveProtectedMode ].
+    ^ {nil.
+    btreeRemovals}
