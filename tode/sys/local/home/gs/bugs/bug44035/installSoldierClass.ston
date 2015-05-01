@@ -1,0 +1,113 @@
+TDScriptLeafNode{#name:'installSoldierClass',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./installSoldierClass -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | cls1 cls2 cls3 |
+      cls1 := Object
+        subclass: #\'Soldier\'
+        instVarNames: #(#\'name\' #\'rank\')
+        classVars: #(#\'Ranks\')
+        classInstVars: #()
+        poolDictionaries: #()
+        inDictionary: UserGlobals.
+cls1 category: \'Selector-PathTerm-Example\'.
+      cls1 compileMissingAccessingMethods.
+      cls1 class
+        compile:
+            \'initialize
+| index |
+Ranks := SymbolKeyValueDictionary new.
+index := 1.
+#( #Lieutenant #Captain #Major #Colonel #General )
+\tdo: [:e | Ranks at: e put: index.
+\t\tindex := index + 1 ].\';
+        compile:
+            \'rankOrderForRank: aSymbol
+^ (Ranks at: aSymbol otherwise: 0)\';
+        yourself.
+      cls1 initialize.
+      cls1
+        compile:
+            \'rankOrder
+^self class rankOrderForRank: rank.\';
+        compile:
+            \'printOn: aStream
+aStream nextPutAll: self rank asString.
+aStream nextPut: $ .
+aStream nextPutAll: self name asString.\';
+        compile:
+            \'oldPromoteTo: newRank
+\"Promote the receiver to the given rank.\"
+| anArray |
+anArray := self removeObjectFromBtrees.
+rank := newRank.
+self addObjectToBtreesWithValues: anArray\';
+        compile:
+            \'promoteTo: newRank
+rank := newRank\';
+        yourself.
+      cls2 := Object
+        subclass: #\'SoldierModificationTracker\'
+        instVarNames: #(#\'trackedOffset\' #\'selectorPathTerm\')
+        classVars: #()
+        classInstVars: #()
+        poolDictionaries: #()
+        inDictionary: UserGlobals.
+cls2 category: \'Selector-PathTerm-Example\'.
+      cls2 compileMissingAccessingMethods.
+      cls2
+        compile:
+            \'modifyingObject: anObject atOffset: anOffset to: newValue
+  | vals pathTerm |
+  anOffset == self trackedOffset
+    ifFalse: [ ^ self ].
+  vals := {}.
+  pathTerm := self selectorPathTerm.
+  1 to: pathTerm size do: [ :j | 
+    | indexObj |
+    \" for each index utilizing this path term \"
+    indexObj := pathTerm at: j.\t\" add the equality index to the answer \"
+    vals add: indexObj.\t\" remove the B-tree entries and get the corresponding values \"
+    vals add: (indexObj _removeBtreeEntriesForKey: self) ].
+  self halt\';
+        yourself.
+      cls3 := Object
+        subclass: #\'SoldierNscModificationTracker\'
+        instVarNames: #(#\'selectorModificationTracker\')
+        classVars: #()
+        classInstVars: #()
+        poolDictionaries: #()
+        inDictionary: UserGlobals.
+cls3 category: \'Selector-PathTerm-Example\'.
+      cls3 compileMissingAccessingMethods.
+      cls3
+        compile:
+            \'adding: newObject to: trackedObject
+  \"add a dependency to the soldier modification tracker, so that changes to the 
+   object that affect the selector-based index can be tracked\"
+
+  newObject _setModificationTrackingTo: self selectorModificationTracker\';
+        compile:
+            \'removing: anObject from: trackedObject
+  self halt\';
+        yourself ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  installSoldierClass - installSoldierClass sript utility template
+SYNOPSIS
+  installSoldierClass [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./installSoldierClass --help
+  ./installSoldierClass -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-04-30T16:04:07.5019690990448-07:00']}

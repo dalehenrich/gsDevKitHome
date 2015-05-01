@@ -1,0 +1,11 @@
+dkh 4/27/2015 22:37
+-------------------
+`separator expected` in PPTrimmingParser>>parseOn: ... the petit failures from the trin action are left in to the globals dictionary in PPContext, but the failures are not propogated, so somehow we need to feed the trimmer a disposable PPContext ...  
+
+dkh 4/29/2015 06:36
+-------------------
+back all the way out of including the position in the error message ... consider embedding eror message in query
+
+dkh 4/29/2015 21:22
+-------------------
+/home/gs/bugs/bug43975/testSuite ... covers the tests that were failing in the battery test

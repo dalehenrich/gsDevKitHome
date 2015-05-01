@@ -1,0 +1,56 @@
+TDStringLeafNode{#name:'battery',#contents:'KNOWN FAILURES
+---------------
+
+==> test_results/battery_2/oneliner0429-162221.txt <==
+ parasingtst-0429-162221         F  errors: 1 test/0 outfile/0 rescheck          1604
+
+==> test_results/battery_3/oneliner0429-162221.txt <==
+ parawisctst-0429-162221         F  errors: 1 test/0 outfile/0 rescheck          1655
+
+==> test_results/battery_5/oneliner0429-162221.txt <==
+ smkbuildtst-0429-162221         F  errors: 10 test/0 outfile/0 rescheck         1999
+
+Parsing errors
+--------------
+==> test_results/battery_6/oneliner0429-162221.txt <==
+ ernie0tst-0429-162221           F  errors: 39 test/0 outfile/0 rescheck         3732
+
+ERROR: GsQueryGrammarTestCase #testPath1
+ 
+ERROR: GsQueryGrammarTestCase #testPath2
+ 
+ERROR: GsQueryGrammarTestCase #testPath3
+ 
+ERROR: GsQueryGrammarTestCase #testPredicateExpression11
+ 
+ERROR: GsQueryGrammarTestCase #testPrimaryFailure1
+ 
+ERROR: GsQueryGrammarTestCase #testPrimaryFailure2
+ 
+ERROR: GsQueryGrammarTestCase #testQueryPath2
+ 
+ERROR: GsQueryParserTestCase #testPath1
+ 
+ERROR: GsQueryParserTestCase #testPredicateExpression11
+ 
+ERROR: GsQueryParserTestCase #testPredicateExpression7
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testEndOfInputExpected
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testInvalidQueryExpression
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testLiteralOrVariableExpected
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testOperatorExpected
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testOrAndNotExpected
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testParenExpected
+ 
+ERROR: IXQueryExpressionParseErrorTestCase #testPathLiteralVariableExpected
+ 
+ERROR: PPLambdaParserTest #testParseOnError
+ 
+ERROR: PPLambdaParserTest #testParseStartingAtOnError
+ 
+',#creationTime:DateAndTime['2015-04-29T17:29:45.6139049530029-07:00'],#modificationTime:DateAndTime['2015-04-29T17:31:55.459585905075-07:00']}

@@ -155,6 +155,7 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'GsProcess\' put: #(\'gsprocess.gs\');
     at: #\'GsQuery\' put: #(\'idxquerymethods.gs\');
     at: #\'GsQueryConjoinSetChecker\' put: #(\'idxquerymethods.gs\');
+    at: #\'GsQueryErrorHandlingParser\' put: #(\'idxquerymethods.gs\');
     at: #\'GsQueryFormula\' put: #(\'idxquerymethods.gs\');
     at: #\'GsQueryFormulaVisitor\' put: #(\'idxquerymethods.gs\');
     at: #\'GsQueryGrammar\' put: #(\'idxquerymethods.gs\');
@@ -264,6 +265,7 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'PPCharSetPredicate\' put: #(\'ppmethods.gs\');
     at: #\'PPChoiceParser\' put: #(\'ppmethods.gs\');
     at: #\'PPCompositeParser\' put: #(\'ppmethods.gs\');
+    at: #\'PPContext\' put: #(\'ppmethods.gs\');
     at: #\'PPDelegateParser\' put: #(\'ppmethods.gs\');
     at: #\'PPEndOfInputParser\' put: #(\'ppmethods.gs\');
     at: #\'PPEpsilonParser\' put: #(\'ppmethods.gs\');
@@ -413,4 +415,4 @@ TDSmalltalkLeafNode{#name:'classToImageFilenameMap',#contents:'Dictionary new
     at: #\'Warning\' put: #(\'Warning.gs\');
     at: #\'WriteStream\' put: #(\'writest.gs\' \'writestPortable.gs\');
     at: #\'WriteStreamPortable\' put: #(\'writestPortable.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.4023239612579-07:00'],#modificationTime:DateAndTime['2015-04-27T10:16:22.5503709316253-07:00']}
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.4023239612579-07:00'],#modificationTime:DateAndTime['2015-04-28T06:41:09.6840889453887-07:00']}

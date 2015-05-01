@@ -1,0 +1,3 @@
+dkh 4/30/2015 17:08
+-------------------
+The best thing to do is to remove the entries and return a `vals` array with information that can be used to restore the entries after the object has been modified to it's new state.

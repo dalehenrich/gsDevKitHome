@@ -266,6 +266,7 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
       put: #(\'IXQueryExecuterOptimizationSamples.gs\');
     at: #\'IXQueryExpressionPrintStringTestCase\'
       put: #(\'IXQueryExpressionPrintString.gs\');
+    at: #\'IXQueryExpressionParseErrorTestCase\' put: #(\'IXQueryExpression.gs\');
     at: #\'IXQueryExpressionTestCase\' put: #(\'IXQueryExpression.gs\');
     at: #\'IXQueryFromBlockPredicateTestCase\'
       put: #(\'IXQueryFromBlockPredicate.gs\');
@@ -322,7 +323,7 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'PPExpressionParserTestCase\' put: #(\'PPExpressionParser.gs\');
     at: #\'PPExtensionTestCase\' put: #(\'PPExtension.gs\');
     at: #\'PPLambdaParser\' put: #(\'PPLambdaParserEx.gs\');
-    at: #\'PPLambdaParserTestCase\' put: #(\'PPLambdaParser.gs\');
+    at: #\'PPLambdaParserTest\' put: #(\'PPLambdaParser.gs\');
     at: #\'PPObjectTestCase\' put: #(\'PPObject.gs\');
     at: #\'PPParserResource\' put: #(\'PPParserResource.gs\');
     at: #\'PPParserTestCase\' put: #(\'PPParser.gs\');
@@ -448,4 +449,4 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'WriteStreamTestCase\' put: #(\'WriteStream.gs\');
     at: #\'XCharStringTest\' put: #(\'XCharStringTest.gs\');
     at: #\'ZeroDivideTestCase\' put: #(\'ANSIExceptionTests.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-04-21T20:38:32.0156199932098-07:00']}
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-04-29T20:28:30.104197025299-07:00']}

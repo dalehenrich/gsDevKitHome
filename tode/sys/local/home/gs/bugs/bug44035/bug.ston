@@ -1,0 +1,141 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'reset\' nil #\'none\').
+      #(\'create\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl preBoomQuery postBoomQuery |
+      analysis := Dictionary new.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up tracking here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager current removeAllTracking ].
+      opts
+        at: \'reset\'
+        ifPresent: [ :ignored | Smalltalk at: #\'Soldier\' ifPresent: [ :cls | cls removeFromSystem ] ].
+      Smalltalk at: #\'Soldier\' ifAbsent: [ opts at: \'install\' put: nil ].
+      opts
+        at: \'install\'
+        ifPresent: [ :ignored | 
+          \"install supporting code here\"
+          topez
+            evaluateCommandString: \'/home/gs/bugs/bug44035/installSoldierClass\' ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc cls selectorTracker nscTracker indexList selectorPathTerm terms |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          cls := Smalltalk at: #\'Soldier\'.
+          GsIndexSpec new
+            equalityIndex: \'each.#rankOrder\' lastElementClass: SmallInteger;
+            createIndexesOn: nsc.
+          indexList := nsc _indexedPaths.
+          terms := {}.
+          indexList
+            _putAllCommonPathTermsForPathArray: \'#rankOrder\' asArrayOfPathTerms
+            into: terms.
+          selectorPathTerm := terms first.
+          selectorTracker := SoldierModificationTracker new
+            selectorPathTerm: selectorPathTerm;
+            trackedOffset: 2;
+            yourself.
+          nscTracker := SoldierNscModificationTracker new
+            selectorModificationTracker: selectorTracker;
+            yourself.
+          true
+            ifTrue: [ nsc _setModificationTrackingTo: nscTracker ].
+          nsc
+            add:
+                (cls new
+                    name: \'Patton\';
+                    rank: #\'General\';
+                    yourself);
+            add:
+                (cls new
+                    name: \'Sanders\';
+                    rank: #\'Colonel\';
+                    yourself);
+            add:
+                (cls new
+                    name: \'Houlihan\';
+                    rank: #\'Major\';
+                    yourself);
+            add:
+                (cls new
+                    name: \'Vimes\';
+                    rank: #\'Captain\';
+                    yourself);
+            add:
+                (cls new
+                    name: \'Dan\';
+                    rank: #\'Lieutenant\';
+                    yourself);
+            add:
+                (cls new
+                    name: \'Pyle\';
+                    rank: #\'Private\';
+                    yourself);
+            yourself\t\"create collection of soliders\" ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      preBoomQuery := ((GsQuery fromString: \'each.#rankOrder > rank\')
+        bind: \'rank\'
+          to: ((Smalltalk at: #\'Soldier\') rankOrderForRank: #\'Captain\');
+        on: theColl;
+        yourself) asArray.
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | nsc |
+          nsc := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+          (nsc detect: [ :each | each name = \'Dan\' ] ifNone: [ nil ])
+            promoteTo: #\'General\' ].
+      postBoomQuery := ((GsQuery fromString: \'each.#rankOrder > rank\')
+        bind: \'rank\'
+          to: ((Smalltalk at: #\'Soldier\') rankOrderForRank: #\'Captain\');
+        on: theColl;
+        yourself) asArray.
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'depMap keys\' put: DependencyList depMapKeys;
+        at: \'depMap values\' put: DependencyList depMapValues;
+        at: \'nsc\' put: theColl;
+        at: \'preBoomQuery\' put: preBoomQuery;
+        at: \'postBoomQuery\' put: preBoomQuery;
+        at: \'select result\'
+          put:
+            (theColl
+                select: [ :ea | ea rankOrder > ((Smalltalk at: #\'Soldier\') rankOrderForRank: #\'Captain\') ])
+                asArray;
+        at: \'shared dependency lists\'
+          put: SharedDependencyLists allEntries asArray;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--reset][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --clean --reset
+  ./bug --clean --create --boom; edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:05:31.9967539310455-07:00'],#modificationTime:DateAndTime['2015-04-30T16:50:11.1704080104827-07:00']}

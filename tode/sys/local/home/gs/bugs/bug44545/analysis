@@ -1,0 +1,69 @@
+dkh 4/29/2015 17:02
+-------------------
+
+_findAllValuesReversedGreaterThan: val1 andEquals: bool1 andLessThan: val2 andEquals: bool2 using: aComparison
+  "Returns a RangeIndexReverseReadStream that iterates over all objects in the index
+ that satisfy the query."
+
+  | array1 array2 stream doNext |
+  ((self index _canCompareWith: val1) and: [ self index _canCompareWith: val2 ])
+    ifFalse: [ self _error: #'assocErrBadComparison' ].
+  stream := self reverseReadStreamClass new rangeIndex: self index.	" check to see if the query is even satisfiable "
+  (aComparison
+    satisfiableQueryGreaterThan: val1
+    andEquals: bool1
+    andLessThan: val2
+    andEquals: bool2)
+    ifFalse: [ 
+      stream currentStack: {0}.
+      ^ stream ].
+  doNext := false.
+  array1 := {}.	" see if querying > or >= "
+--->
+  bool1
+    ifTrue: [ 
+      " if >=, perform < and do an '_advance' operation later "
+      (self btreeRoot
+        _findAllValuesLessThanKey: val1
+        andEquals: false
+        into: array1
+        using: aComparison)
+        ifTrue: [ doNext := true ]
+        ifFalse: [ 
+          " all were greater than or equal to "
+          self btreeRoot
+            _putFirstIndexOfFirstChildInto: array1
+            ifGreaterThanOrEqualTo: val1
+            using: aComparison ] ]
+    ifFalse: [ 
+      " if >, ask the B-tree specifically for > "
+      (self btreeRoot
+        _findAllValuesGreaterThanKey: val1
+        into: array1
+        using: aComparison)
+        ifFalse: [ 
+          " none were greater than "
+          stream currentStack: {0}.
+          ^ stream ] ].
+  array2 := {}.	" ask the B-tree for the second boundary of the query result "
+  (self btreeRoot
+    _findAllValuesLessThanKey: val2
+    andEquals: bool2
+    into: array2
+    using: aComparison)
+    ifFalse: [ 
+      " none were found less than "
+      stream currentStack: {0}.
+      ^ stream ].
+  stream currentStack: array1.
+  stream endIndex: (array2 at: 1).
+  stream endNode: (array2 at: 2).
+  (stream endNode == (array1 at: 2) and: [ stream endIndex < (array1 at: 1) ])
+    ifTrue: [ 
+      array1 at: 1 put: 0.
+      ^ stream ].
+  doNext
+    ifTrue: [ 
+      " advance the B-tree positioning "
+      stream _advance ].
+  ^ stream

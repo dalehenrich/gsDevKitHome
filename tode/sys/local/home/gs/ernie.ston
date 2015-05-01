@@ -7,6 +7,7 @@ TDScriptLeafNode{#name:'ernie',#contents:'[ :topez :objIn :tokens :command |
       #(\'class\' nil #\'required\').
       #(\'find\' nil #\'required\').
       #(\'prep\' nil #\'none\').
+      #(\'selector\' nil #\'required\').
       #(\'test\' nil #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -63,7 +64,10 @@ TDScriptLeafNode{#name:'ernie',#contents:'[ :topez :objIn :tokens :command |
             userWithId: \'Ernie\'
             ifAbsent: [ self error: \'No user named Ernie found.\' ]) symbolList.
           cls := symbolList objectNamed: className asSymbol.
-          cls debugEx ] ]
+          opts
+            at: \'selector\'
+            ifPresent: [ :selector | cls debug: selector asSymbol ]
+            ifAbsent: [ cls debugEx ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -74,7 +78,7 @@ SYNOPSIS
         [--class=<class-name>]
         [--find=<class-regex-pattern>]
         [--prep]
-        [--test=<class-name]
+        [--test=<class-name [--selector=<test-selector>]]
 DESCRIPTION
 OPTIONS
   --class=<class-name>
@@ -91,8 +95,9 @@ OPTIONS
 
     This is a NON-PERSISTENT change and should be run after each login.
 
-  --test=<class-name>
+  --test=<class-name> [--selector=<test-selector>]
     Look up the named class in Ernie UserGlobals and run the tests using #debugEx.
+    If --selector is specified, run only the <test-selector> using #debug:
 
 
 EXAMPLES
@@ -100,6 +105,7 @@ EXAMPLES
   ./ernie --class=IndexUnitTest
   ./ernie --find=IndexUnit
   ./ernie --test=IndexUnitTest
+  ./ernie --test=IXQueryExpressionParseErrorTestCase --selector=testIncompleteQueryPath
   ./ernie --prep
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2015-04-21T16:13:43.3809740543365-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2015-04-28T12:52:52.0465750694274-07:00']}

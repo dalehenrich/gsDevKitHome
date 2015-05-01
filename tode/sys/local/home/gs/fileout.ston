@@ -4,6 +4,10 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
+#(\'j\' nil #\'none\').
+#(\'k\' nil #\'none\').
+#(\'l\' nil #\'none\').
+#(\'m\' nil #\'none\').
       #(\'path\' $p #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -14,10 +18,26 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
       | gsTool path classToFilenameMap externalMethodMap looseChanges warnings |
       gsTool := topez toolInstanceFor: \'gs\'.
       warnings := Set new.
-      path := opts
+      opts
         at: \'path\'
-        ifPresent: [ :optVal | optVal ]
-        ifAbsent: [ nil error: \'Must specify --path option\' ].
+        ifPresent: [ :arg | path := arg ]
+        ifAbsent: [ 
+          opts
+            at: \'j\'
+            ifPresent: [ :ignored | path := \'/export/foos2/users/dhenrich/3.0/j_gss64bit\' ]
+            ifAbsent: [ 
+              opts
+                at: \'k\'
+                ifPresent: [ :ignored | path := \'/export/foos2/users/dhenrich/3.0/k_gss64bit\' ]
+                ifAbsent: [ 
+                  opts
+                    at: \'l\'
+                    ifPresent: [ :ignored | path := \'/export/foos2/users/dhenrich/3.0/l_gss64bit\' ]
+                    ifAbsent: [ 
+                      opts
+                        at: \'m\'
+                        ifPresent: [ :ignored | path := \'/export/foos2/users/dhenrich/3.0/m_gss64bit\' ]
+                        ifAbsent: [ nil error: \'Must specify --path option\' ] ] ] ] ].
       classToFilenameMap := topez
         evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
       externalMethodMap := IdentityDictionary new.
@@ -62,7 +82,7 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
           \'NAME
   fileout - fileout sript utility template
 SYNOPSIS
-  fileout [-h|--help]--path=<image-directory>
+  fileout [-h|--help] (--path=<image-directory> | -j | --k | --l | --m )
 DESCRIPTION
   If the --path is not specified, then the checkout directory is assumed to be 
   the product directory for the stone.
@@ -70,9 +90,9 @@ DESCRIPTION
 EXAMPLES
   ./fileout --help
   ./fileout --path=/export/grace3/users/dhenrich/2.0/a_gss64bit
-  ./fileout --path=/export/foos2/users/dhenrich/3.0/j_gss64bit
-  ./fileout --path=/export/foos2/users/dhenrich/3.0/k_gss64bit
-  ./fileout --path=/export/foos2/users/dhenrich/3.0/l_gss64bit
-  ./fileout --path=/export/foos2/users/dhenrich/3.0/m_gss64bit
+  ./fileout --j # /export/foos2/users/dhenrich/3.0/j_gss64bit
+  ./fileout --k # /export/foos2/users/dhenrich/3.0/k_gss64bit
+  ./fileout --l # /export/foos2/users/dhenrich/3.0/l_gss64bit
+  ./fileout --m # /export/foos2/users/dhenrich/3.0/m_gss64bit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-25T07:15:54.8530960083007-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-30T10:48:19.1554470062255-07:00']}

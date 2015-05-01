@@ -1,7 +1,8 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
-# /home/gs/ernie --prep
-# /home/gs/ernie --find=transient
-cd /home/gs/bugs/bug43975/
+/home/gs/ernie --prep
+/home/gs/ernie --find=^ix
+/home/go
 limit protocol false
-browse class --exact PPFailure PPContext GsQueryGrammar GsQueryErrorHandlingParser
-',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-04-27T16:59:52.5235090255737-07:00']}
+browse class --exact PPFailure PPContext GsQueryGrammar GsQueryErrorHandlingParser GsQueryParseError
+browse sender handleGsQueryErrorMessage: handleGsQueryErrorMessage:nestMessages:
+',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-04-29T09:48:50.9106810092926-07:00']}

@@ -1,4 +1,4 @@
-TDScriptLeafNode{#name:'bug44014',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
   | opts args |
   \"for help: ./bug -h\"
   command
@@ -9,9 +9,10 @@ TDScriptLeafNode{#name:'bug44014',#contents:'[ :topez :objIn :tokens :command :c
   opts
     at: \'help\'
     ifAbsent: [ 
-      GsQuery fromString: \'each.age > 18 & each.age <= 65\'.
-      GsQuery fromString: \'each.age >= 3)\'.
-      ]
+      Time
+        millisecondsElapsedTime: [ 
+          5000
+            timesRepeat: [ GsQuery fromString: \'(each.submittedBy == bob) & (each.assignedTo == bob)\' ] ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -24,4 +25,4 @@ EXAMPLES
   ./bug --help
   ./bug -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T11:26:49.3358581066131-07:00'],#modificationTime:DateAndTime['2015-04-28T14:54:00.5374860763549-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-29T12:44:30.4733459949493-07:00'],#modificationTime:DateAndTime['2015-04-29T15:03:21.2694981098175-07:00']}

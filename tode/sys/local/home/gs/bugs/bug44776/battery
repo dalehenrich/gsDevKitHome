@@ -1,0 +1,107 @@
+==> test_results/battery_2/oneliner0429-163607.txt <==
+ ernie0tst-0429-163607           F  errors: 65 test/0 outfile/0 rescheck         3844
+
+ERROR: PPPredicateCacheTest #testAny
+ 
+ERROR: PPPredicateCacheTest #testAny
+ 
+ERROR: PPPredicateCacheTest #testAnyExceptAnyOf
+ 
+ERROR: PPPredicateCacheTest #testAnyExceptAnyOf
+ 
+ERROR: PPPredicateCacheTest #testAnyOf
+ 
+ERROR: PPPredicateCacheTest #testAnyOf
+ 
+ERROR: PPPredicateCacheTest #testBetweenAnd
+ 
+ERROR: PPPredicateCacheTest #testBetweenAnd
+ 
+ERROR: PPPredicateCacheTest #testBlank
+ 
+ERROR: PPPredicateCacheTest #testBlank
+ 
+ERROR: PPPredicateCacheTest #testChar
+ 
+ERROR: PPPredicateCacheTest #testChar
+ 
+ERROR: PPPredicateCacheTest #testCr
+ 
+ERROR: PPPredicateCacheTest #testCr
+ 
+ERROR: PPPredicateCacheTest #testDigit
+ 
+ERROR: PPPredicateCacheTest #testDigit
+ 
+ERROR: PPPredicateCacheTest #testEndOfFile
+ 
+ERROR: PPPredicateCacheTest #testEndOfFile
+ 
+ERROR: PPPredicateCacheTest #testEndOfLine
+ 
+ERROR: PPPredicateCacheTest #testEndOfLine
+ 
+ERROR: PPPredicateCacheTest #testExpect
+ 
+ERROR: PPPredicateCacheTest #testExpect
+ 
+ERROR: PPPredicateCacheTest #testHex
+ 
+ERROR: PPPredicateCacheTest #testHex
+ 
+ERROR: PPPredicateCacheTest #testLetter
+ 
+ERROR: PPPredicateCacheTest #testLetter
+ 
+ERROR: PPPredicateCacheTest #testLf
+ 
+ERROR: PPPredicateCacheTest #testLf
+ 
+ERROR: PPPredicateCacheTest #testLowercase
+ 
+ERROR: PPPredicateCacheTest #testLowercase
+ 
+ERROR: PPPredicateCacheTest #testNewline
+ 
+ERROR: PPPredicateCacheTest #testNewline
+ 
+ERROR: PPPredicateCacheTest #testOnMessage
+ 
+ERROR: PPPredicateCacheTest #testOnMessage
+ 
+ERROR: PPPredicateCacheTest #testPunctuation
+ 
+ERROR: PPPredicateCacheTest #testPunctuation
+ 
+ERROR: PPPredicateCacheTest #testSequenceParser
+ 
+ERROR: PPPredicateCacheTest #testSequenceParser
+ 
+ERROR: PPPredicateCacheTest #testSpace
+ 
+ERROR: PPPredicateCacheTest #testSpace
+ 
+ERROR: PPPredicateCacheTest #testStartOfLine
+ 
+ERROR: PPPredicateCacheTest #testStartOfLine
+ 
+ERROR: PPPredicateCacheTest #testStartOfLogicalLine
+ 
+ERROR: PPPredicateCacheTest #testStartOfLogicalLine
+ 
+ERROR: PPPredicateCacheTest #testStartOfWord
+ 
+ERROR: PPPredicateCacheTest #testStartOfWord
+ 
+ERROR: PPPredicateCacheTest #testTab
+ 
+ERROR: PPPredicateCacheTest #testTab
+ 
+ERROR: PPPredicateCacheTest #testUppercase
+ 
+ERROR: PPPredicateCacheTest #testUppercase
+ 
+ERROR: PPPredicateCacheTest #testWord
+ 
+ERROR: PPPredicateCacheTest #testWord
+ 

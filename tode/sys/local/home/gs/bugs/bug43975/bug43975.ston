@@ -9,18 +9,21 @@ TDScriptLeafNode{#name:'bug43975',#contents:'[ :topez :objIn :tokens :command :c
   opts
     at: \'help\'
     ifAbsent: [ 
-      false ifTrue: [ GsQuery fromString: \'each age\'].
-      GsQuery fromString: \'(each.age >= 3) | \'.
+      GsQuery fromString: \'(each.age >= 3) | (each age\'.\t\"\"
+      false
+        ifTrue: [ GsQuery fromString: \'each age\'\t\"\" ].
+      false
+        ifTrue: [ GsQuery fromString: \'(each.age >= 3) | \'\t\"\" ].
       GsQuery fromString: \'each\'.
       false
-        ifTrue: [ GsQuery fromString: \'each.\' ].
+        ifTrue: [ GsQuery fromString: \'each.\' \"\"].
       GsQuery fromString: \'each.age\'.
       false
-        ifTrue: [ GsQuery fromString: \'each.age >= \' ].
+        ifTrue: [ GsQuery fromString: \'each.age >= \'\t\"\" ].
       false
-        ifTrue: [ GsQuery fromString: \'each.age  x\' ].
+        ifTrue: [ GsQuery fromString: \'each.age  x\'\t\"\" ].
       false
-        ifTrue: [ GsQuery fromString: \'each.age >\' ].
+        ifTrue: [ GsQuery fromString: \'each.age >\'\t\"\" ].
       GsQuery fromString: \'each.age > e\' ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -34,4 +37,4 @@ EXAMPLES
   ./bug --help
   ./bug -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T11:27:03.0369980335235-07:00'],#modificationTime:DateAndTime['2015-04-27T17:34:50.38685297966-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-27T11:27:03.0369980335235-07:00'],#modificationTime:DateAndTime['2015-04-28T11:52:56.5471470355987-07:00']}

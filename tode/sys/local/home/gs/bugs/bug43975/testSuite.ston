@@ -1,0 +1,5 @@
+TDTopezLeafNode{#name:'testSuite',#contents:'/home/gs/ernie --test=GsQueryParserTestCase
+/home/gs/ernie --test=PPLambdaParserTest
+/home/gs/ernie --test=IXQueryExpressionParseErrorTestCase
+/home/gs/ernie --test=GsQueryGrammarTestCase
+',#creationTime:DateAndTime['2015-04-29T05:53:05.0314099788665-07:00'],#modificationTime:DateAndTime['2015-04-30T12:07:06.4113619327545-07:00']}
