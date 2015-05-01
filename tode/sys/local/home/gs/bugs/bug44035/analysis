@@ -87,3 +87,13 @@ Object>>_modifyingInstVarAtOffset:to:
         prot _leaveProtectedMode ].
     ^ {nil.
     btreeRemovals}
+
+dkh 4/30/2015 21:34
+-------------------
+SelectorPathTermNscModificationTracker should be the primary interface and manages one or more SelectorPathTermModificationTracker ... one for each of objects/ivs that need to be tracked ...
+
+Do an example that is the sum of two different instance variables.
+
+Do another example that involves two different objects?
+
+Implement Object>>newModifyingObject:atOffset:to: to call modifyingObject:atOffset:to: and return an empty array ... then change Object>>_modifyingInstVarAtOffset:to: to call newModifyingObject:atOffset:to: ... then we have new api that is consistent with old applications 
