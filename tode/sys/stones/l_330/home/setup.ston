@@ -1,8 +1,7 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
 /home/gs/ernie --prep
-/home/gs/ernie --find=^ix
+#/home/gs/ernie --find=^ix
 /home/go
 limit protocol false
-browse class --exact PPFailure PPContext GsQueryGrammar GsQueryErrorHandlingParser GsQueryParseError
-browse sender handleGsQueryErrorMessage: handleGsQueryErrorMessage:nestMessages:
-',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-04-29T09:48:50.9106810092926-07:00']}
+browse method --spec IXQueryExpressionParseErrorTestCase>>testNoSetValueInFirstPosition GsQueryGrammar>>queryPath
+',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-05-01T14:24:17.4350879192352-07:00']}

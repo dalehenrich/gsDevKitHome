@@ -112,8 +112,7 @@ System commit\' ].
         ifNil: [ 
           Transcript
             cr;
-            show: \'Nothing to do!\'.
-          nil ]
+            show: \'Nothing to do!\' ]
         ifNotNil: [ 
           | sessionDescription |
           verbose
@@ -138,7 +137,40 @@ System commit\' ].
           [ 
           systemUser login.
           systemUser executeString: expression ]
-            ensure: [ systemUser ifNotNil: [ systemUser logout ] ] ] ]
+            ensure: [ systemUser ifNotNil: [ systemUser logout ] ] ].
+      opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          System commit.
+          ClassOrganizer class
+            compile:
+              \'new
+    \"Creates and returns a new instance of ClassOrganizer with a root of Object,
+   and using the symbolList of the current UserProfile.\"
+  
+   ^ self _newWithRoot: Object symbolList: GsSession currentSession symbolList\'.
+          GsPackagePolicy
+            compile:
+              \'permitSessionMethodFor: aBehavior selector: selector
+  | cl thisName |
+  cl := aBehavior whichClassIncludesSelector: selector.
+  cl
+    ifNotNil: [ 
+      false
+        ifTrue: [ 
+          (cl compiledMethodAt: selector) _isProtected
+            ifTrue: [ ^ false ] ] ].
+  thisName := aBehavior thisClass name asSymbol.
+  (self class restrictedClasses includes: thisName)
+    ifTrue: [ ^ false ].
+  externalSymbolList
+    do: [ :symDict | 
+      (symDict includesKey: thisName)
+        ifTrue: [ ^ true ] ].
+  ^ (aBehavior canWriteMethodsEnv: 0) not\'.
+          System commit.
+ClassOrganizer clearCachedOrganizer.
+          topez evaluateCommandString: \'/home/gs/installLooseChanges --prep\' ] ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -173,4 +205,4 @@ EXAMPLES
   ./dev --legacyCompareMode
   ./dev --unicodeCompareMode
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-04-30T19:57:19.6678349971771-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-05-01T13:57:13.2781629562377-07:00']}

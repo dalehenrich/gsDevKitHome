@@ -2,7 +2,9 @@ TDScriptLeafNode{#name:'installLooseChanges',#contents:'[ :topez :objIn :tokens 
   | opts args |
   \"for help: ./fileout -h\"
   command
-    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'prep\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
@@ -11,7 +13,13 @@ TDScriptLeafNode{#name:'installLooseChanges',#contents:'[ :topez :objIn :tokens 
     ifAbsent: [ 
       | looseChanges systemSession gemNRS stoneNRS netldiName ernieSession systemUser ernieUser |
       netldiName := System gemEnvironmentVariable: \'gs64ldi\'.
-      looseChanges := topez evaluateCommandString: \'/home/gs/looseChanges\'.
+      looseChanges := opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          looseChanges := {{(ClassOrganizer class).
+          #\'Instance Creation\'.
+          #\'new\'}. {GsPackagePolicy. #\'Private\'. #\'permitSessionMethodFor:selector:\'.}} ]
+        ifAbsent: [ topez evaluateCommandString: \'/home/gs/looseChanges\' ].
       gemNRS := GsNetworkResourceString
         gemNRSForNetLDI: netldiName
         onHost: \'foos\'.
@@ -70,12 +78,18 @@ TDScriptLeafNode{#name:'installLooseChanges',#contents:'[ :topez :objIn :tokens 
           \'NAME
   installLooseChanges - installLooseChanges sript utility template
 SYNOPSIS
-  installLooseChanges [-h|--help]
+  installLooseChanges [-h|--help][--prep]
 DESCRIPTION
   Install loose changes as SystemUser. Session methods for the changes to 
   SystemUser methods are cleared. Effectively discarding the changes.
 
+  --prep, installs ClassOrganizer class>>new and GsPackagePolicy>>permitSessionMethodFor:selector:.
+  These methods are overwritten as part ./dev --prep...
+
 EXAMPLES
   ./installLooseChanges --help
+
+  ./installLooseChanges 
+  ./installLooseChanges --prep
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:28:59.5327110290527-07:00'],#modificationTime:DateAndTime['2015-04-17T15:16:29.3889338970184-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:28:59.5327110290527-07:00'],#modificationTime:DateAndTime['2015-05-01T11:57:19.5073549747467-07:00']}

@@ -1,29 +1,39 @@
+45180  P2  assertion failure in validateBucketCache from IdxShiftIndexBucketCacheAt
+  k_:  showed up again ... tranlog analysis needed 
+
 44545  P2  GsQuery>>reversedReadStream exists but not really implemented
 44079  P2  GsQuery>> readStream produces diffrent result from queryResult for some special Objects
 44061  P2  GsQuery block-based operations may not be correct for ~=
   k_: take a serious look at 44545 and fix the other two along the way ...
       ??
+---
+44751  R3  SetValued term should be disallowed as first term
+  l_:  work in progress
+---
+45237  R2  inst var modification tracking cannot be used for non-index based updates
+  m_: fix for 3.3
+      smoke_index ERRORS, address become issues ...
 
 44035  P2  my selector path term example doesn't work
-43947  P2  need example for doing your own index maintenance for selector-based indexes
-  m_: address now?
-      in progress
-
-------------------------------------------
-44495  R3  Indexed query performance
-  ?_: reevaluate with James' caching ...
-
+  m_: adapt Lisa's example to use modification tracking.
+      consider additional more complicated examples of modification tracking scenario's
+      some of these examples should be added to the selector based path term tests
+---
 
 ==========================================
+45266  P2  Divergence between PositionalStream installed and PositionableStreamPortable
 44805  P2  seasidetst and friends failing in 3.3
-44751  R3  SetValued term should be disallowed as first term
 44650  P2  glasstst failures
 44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
 44282  P3  readme.txt points to location with text that seems out of date
 44185  R2  "Licensed cpuAffinity has been exceeded." running 3.2 on travis-c
-
-
 ------------------------------------------
-Transcript compiled references need to be associations
-transient symbol list should be used everywhere in our code ....
-
+44669  P2  index audit does not detect entries with equal keys but out of order oops
+44495  R3  Indexed query performance
+44429  P3  Similar index incorrect operation, different errors of different severity
+44072  P3  Why isn't requirePathTerms in GsQueryOptions ?
+44069  M3  Verify handling index enumeration methods that modify the collection
+44026  P3  Nit on error for (disallowed) set-valued query
+44012  P2  New indexing classes do not have class comments
+43851  F2  Concurrent index creation
+43541  G3  Integrate Pragmas in the base system

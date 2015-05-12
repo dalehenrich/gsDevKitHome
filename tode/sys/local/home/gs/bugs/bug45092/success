@@ -1,0 +1,54 @@
+**wait for lithium_k battery test**
+~otisa/bin/searchoops 758760705 765320961 784794881
+=======================================
+=======================================
+=======================================
+=======================================
+
+=============
+set session 1
+run
+RcIndexTest setup.
+^true
+%
+
+
+=============
+set session 2
+run
+RcIndexTest createIndex1. ('id')
+^true
+%
+
+
+=============
+set session 1
+run
+RcIndexTest createIndex2. ('count')
+^true
+%
+
+
+=============
+set session 1
+run
+RcIndexTest continueTransactionTest3_1.
+^true
+%
+
+
+=============
+set session 1
+run
+RcIndexTest continueTransactionTest3_2.
+^true
+%
+
+
+=============
+set session 2
+run
+RcIndexTest continueTransactionTest3_3.
+^true
+%
+

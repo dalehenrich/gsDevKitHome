@@ -21,14 +21,6 @@ TDScriptLeafNode{#name:'ernie',#contents:'[ :topez :objIn :tokens :command |
         at: \'prep\'
         ifPresent: [ :ignored | 
           | ernieUserGlobals myProfile |
-          \"\"
-          ClassOrganizer class
-            compile:
-              \'new
-    \"Creates and returns a new instance of ClassOrganizer with a root of Object,
-   and using the symbolList of the current UserProfile.\"
-  
-   ^ self _newWithRoot: Object symbolList: GsSession currentSession symbolList\'.
           ernieUserGlobals := findTool
             findSymbolDictionary: #\'UserGlobals\'
             username: \'Ernie\'.
@@ -115,4 +107,4 @@ EXAMPLES
   ./ernie --test=IXQueryExpressionParseErrorTestCase --selector=testIncompleteQueryPath
   ./ernie --prep
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2015-04-30T17:14:24.3199059963226-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T07:37:43.3372368812561-07:00'],#modificationTime:DateAndTime['2015-05-01T12:27:25.4792048931121-07:00']}

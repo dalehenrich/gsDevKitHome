@@ -1,0 +1,98 @@
+~otisa/bin/searchoops 758760705 765320961 784794881
+=======================================
+=======================================
+BUG 45092 continueTransactionTest3_1 obj OOP: 758760705
+          continueTransactionTest3_1 obj dependency list OOP: 765308673
+--
+BUG 45092 continueTransactionTest3_2 obj OOP: 758760705
+          continueTransactionTest3_2 obj dependency list OOP: 784794881
+          continueTransactionTest3_2 obj dependency list size: 2
+--
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 758760705
+          continueTransactionTest3_3 [0] obj dependency list OOP: 765308673
+          continueTransactionTest3_3 [0] obj dependency list size: 4
+BUG 45092 PRE-continueTransaction
+BUG 45092 POST-continueTransaction
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 758760705
+          continueTransactionTest3_3 [1] obj dependency list OOP: 765308673
+          continueTransactionTest3_3 [1] obj dependency list size: 4
+          continueTransactionTest3_3 [1] 3_2 dependency list OOP: 784794881
+          continueTransactionTest3_3 [1] 3_2 dependency list size: 2
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
+BUG 45092: SharedDependencyLists Audit Failed (2): Audit and repair of SharedDependencyLists:
+anIdentitySet dependency list(s) were empty:
+        dependency list oops: 765320961
+=======================================
+=======================================
+
+=============
+set session 1
+run
+RcIndexTest setup.
+^true
+%
+20.131335.0  Data session: 8 beginId:(551 26)  newobj  758760705 cls 769956353 onPage 6442456162,
+20.133025.0  WriteSet session: 8 beginId:(551 26)  oop  758760705 
+20.133066.0  UsedOops session: 8 beginId:(551 26)  oop  758760705 
+20.133074.6  Commit session: 8 beginId:(551 26)  timeWritten: 05/03/2015 11:34:29 PDT
+
+
+=============
+set session 2
+run
+RcIndexTest createIndex1. ('id')
+^true
+%
+20.133111.0  BeginData session: 9 beginId:(553 0) storeDep:758760705 , value 766996481 
+20.133115.5  DepMapChangeSet session: 9 beginId:(553 0)  oop  758760705 
+20.133115.10  Commit session: 9 beginId:(553 0)  timeWritten: 05/03/2015 11:34:30 PDT
+
+
+=============
+set session 1
+run
+RcIndexTest createIndex2. ('count')
+^true
+%
+20.133149.0  BeginData session: 8 beginId:(553 2) storeDep:758760705 , value 784806657 
+20.133183.5  DepMapChangeSet session: 8 beginId:(553 2)  oop  758760705 
+20.133183.10  Commit session: 8 beginId:(553 2)  timeWritten: 05/03/2015 11:34:30 PDT
+
+
+=============
+set session 1
+run
+RcIndexTest continueTransactionTest3_1.
+^true
+%
+20.133648.0  BeginData session: 9 beginId:(554 8) storeDep:758760705 , value 765320961 
+ storeDep:758760705 , value 784794881 
+ storeDep:758760705 , value 20 
+20.133712.0  Data session: 9 beginId:(554 8)  newobj  765320961 cls 89601 onPage 5428,
+20.133712.1  WriteSet session: 9 beginId:(554 8)  oop  765320961 
+20.133712.4  UsedOops session: 9 beginId:(554 8)  oop  765320961 
+20.133712.5  DepMapChangeSet session: 9 beginId:(554 8)  oop  758760705 
+20.133712.10  Commit session: 9 beginId:(554 8)  timeWritten: 05/03/2015 11:34:31 PDT
+
+
+=============
+set session 1
+run
+RcIndexTest continueTransactionTest3_2.
+^true
+%
+20.133746.0  BeginData session: 8 beginId:(554 13) storeDep:758760705 , value 784794881 
+  object  765320961 cls 89601 onPage 8589935544,
+20.133746.1  WriteSet session: 8 beginId:(554 13)  oop  765320961 
+20.133746.5  DepMapChangeSet session: 8 beginId:(554 13)  oop  758760705 
+20.133746.10  Commit session: 8 beginId:(554 13)  timeWritten: 05/03/2015 11:34:31 PDT
+
+
+=============
+set session 2
+run
+RcIndexTest continueTransactionTest3_3.
+^true
+%
+20.133753.0  continueTran session: 9 beginId:(554 14)
+

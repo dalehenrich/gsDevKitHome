@@ -369,3 +369,129 @@ BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
           continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
 --------------
 20.135662.141  ReturnFreeOops session: 9 beginId:(548 12)  oop  762820353
+
+dkh 5/12/2015 14:31
+-------------------
+New occurrence (/export/lithium2/users/dsingh/smkbuildTST-0503-111849):
+
+BUG 45092 continueTransactionTest3_1 obj OOP: 758760705
+          continueTransactionTest3_1 obj dependency list OOP: 765308673
+--
+BUG 45092 continueTransactionTest3_2 obj OOP: 758760705
+          continueTransactionTest3_2 obj dependency list OOP: 784794881
+          continueTransactionTest3_2 obj dependency list size: 2
+--
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 758760705
+          continueTransactionTest3_3 [0] obj dependency list OOP: 765308673
+          continueTransactionTest3_3 [0] obj dependency list size: 4
+BUG 45092 PRE-continueTransaction
+BUG 45092 POST-continueTransaction
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 758760705
+          continueTransactionTest3_3 [1] obj dependency list OOP: 765308673
+          continueTransactionTest3_3 [1] obj dependency list size: 4
+          continueTransactionTest3_3 [1] 3_2 dependency list OOP: 784794881
+          continueTransactionTest3_3 [1] 3_2 dependency list size: 2
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
+BUG 45092: SharedDependencyLists Audit Failed (2): Audit and repair of SharedDependencyLists:
+anIdentitySet dependency list(s) were empty:
+        dependency list oops: 765320961
+---
+I looked at the additional logging and the empty dependency list does not appear to be directly involved in the current continuation transaction test ... 
+---
+~otisa/bin/searchoops 765320961 765308673 784794881
+
+20.101392.5  GetFreeOops session: 9 beginId:(532 0)  oop  765308673  765320961 
+20.130244.4  ReturnFreeOops session: 9 beginId:(548 19)  oop  765308673  765320961 
+20.130401.13  GetFreeOops session: 9 beginId:(549 1)  oop  765308673  765320961 
+20.132143.0  GetFreeOops session: 8 beginId:(551 26)  oop  784794881 
+20.133414.0  BeginData session: 8 beginId:(553 17) storeDep:758763265 , value 784794881 
+ storeDep:758763777 , value 784794881 
+  newobj  784794881 cls 89601 onPage 6442456098,
+20.133418.1  WriteSet session: 8 beginId:(553 17)  oop  784794881 
+20.133418.4  UsedOops session: 8 beginId:(553 17)  oop  784794881 
+20.133418.10  Commit session: 8 beginId:(553 17)  timeWritten: 05/03/2015 11:34:30 PDT
+
+20.133460.0  BeginData session: 8 beginId:(553 22) storeDep:758763009 , value 784794881 
+
+20.133492.10  Commit session: 8 beginId:(553 22)  timeWritten: 05/03/2015 11:34:30 PDT
+
+20.133536.0  BeginData session: 9 beginId:(553 27) storeDep:758760961 , value 784794881 
+
+20.133569.10  Commit session: 9 beginId:(553 27)  timeWritten: 05/03/2015 11:34:31 PDT
+
+20.133648.0  BeginData session: 9 beginId:(554 8) storeDep:758760705 , value 765320961 
+ storeDep:758760705 , value 784794881 
+
+20.133712.0  Data session: 9 beginId:(554 8)  newobj  765320961 cls 89601 onPage 5428,
+20.133712.1  WriteSet session: 9 beginId:(554 8)  oop  765320961 
+20.133712.4  UsedOops session: 9 beginId:(554 8)  oop  765320961 
+20.133712.10  Commit session: 9 beginId:(554 8)  timeWritten: 05/03/2015 11:34:31 PDT
+
+20.133746.0  BeginData session: 8 beginId:(554 13) storeDep:758760705 , value 784794881 
+  object  765320961 cls 89601 onPage 8589935544,
+20.133746.1  WriteSet session: 8 beginId:(554 13)  oop  765320961 
+20.133746.10  Commit session: 8 beginId:(554 13)  timeWritten: 05/03/2015 11:34:31 PDT
+
+20.133753.0  continueTran session: 9 beginId:(554 14)
+
+20.133872.0  EpochWsUnion session: 6 beginId:(555 1)  oop  765320961 
+20.133905.0  EpochWsUnion session: 6 beginId:(555 1)  oop  784794881 
+20.134052.0  EpochNewObjsUnion session: 6 beginId:(555 1)  oop  765320961 
+20.134085.0  EpochNewObjsUnion session: 6 beginId:(555 1)  oop  784794881 
+20.134133.6  PossibleDead session: 6 beginId:(557 0)  oop  765320961 
+---
+
+OOP 765320961 got written for first time in 20.133712.10 commit and the second time in 20.133746.10 commit:
+
+20.130401.13  GetFreeOops session: 9 beginId:(549 1)  oop  765308673  765320961 
+
+20.133648.0  BeginData session: 9 beginId:(554 8) storeDep:758760705 , value 765320961 
+ storeDep:758760705 , value 784794881 
+
+20.133712.0  Data session: 9 beginId:(554 8)  newobj  765320961 cls 89601 onPage 5428,
+20.133712.1  WriteSet session: 9 beginId:(554 8)  oop  765320961 
+20.133712.4  UsedOops session: 9 beginId:(554 8)  oop  765320961 
+20.133712.10  Commit session: 9 beginId:(554 8)  timeWritten: 05/03/2015 11:34:31 PDT
+
+20.133746.0  BeginData session: 8 beginId:(554 13) storeDep:758760705 , value 784794881 
+  object  765320961 cls 89601 onPage 8589935544,
+20.133746.1  WriteSet session: 8 beginId:(554 13)  oop  765320961 
+20.133746.10  Commit session: 8 beginId:(554 13)  timeWritten: 05/03/2015 11:34:31 PDT
+
+That second commit is when the dependency list was emptied ...
+
+---
+Herels the full tale of the tape for the second transaction:
+
+20.133746.0  BeginData session: 8 beginId:(554 13)
+  numObjs:11  hasSelectiveAbort:0 pad2:0 
+ { storeDep : value }
+ { 758760705 : 784794881 } { 784452353 : 784794625 } 243443457  765320961  784465921  784794113  784464385  784464385 
+ 752521217  752574465  784790529 
+
+20.133746.1  WriteSet session: 8 beginId:(554 13) count:8 
+ 243443457  752521217  752574465  765320961  784464385  784465921  784790529  784794113 
+
+20.133746.2  CommitToken session: 8 beginId:(554 13)
+
+20.133746.3  UsedPages session: 8 beginId:(554 13) count:5 
+ 8589935487  8589935492  8589935541  8589935543  8589935544 
+
+20.133746.4  UsedOops session: 8 beginId:(554 13) count:1  784790529 
+
+20.133746.5  DepMapChangeSet session: 8 beginId:(554 13) count:2 
+ 758760705  784452353 
+
+20.133746.6  ScavengablePages session: 8 beginId:(554 13) count:6 
+ 211  5428  5474  6111  8589934772  8589935543 
+
+20.133746.7  TTE: TranSetTte session: 8 beginId:(554 13) : newLevel 1
+
+20.133746.8  TTE: clear_Tte session: 8 beginId:(554 13)
+
+20.133746.9  TTE: set_Tte session: 8 beginId:(554 13) : newLevel 1
+
+20.133746.10  Commit session: 8 beginId:(554 13)  crPage: 8589935541 commitSeq: 0.1604  timeWritten: 05/03/2015 11:34:31 PDT
+  seqType:normal beginLogRecord: 20.133746
+
+-----------------------------
