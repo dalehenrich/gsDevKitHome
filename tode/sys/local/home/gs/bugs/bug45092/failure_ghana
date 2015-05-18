@@ -1,0 +1,69 @@
+[ghana]
+~otisa/bin/searchoops 758760705 765320961 784794881
+=======================================
+=======================================
+BUG 45092 continueTransactionTest3_1 obj OOP: 756453633                          [18656]
+          continueTransactionTest3_1 obj dependency list OOP: 762820353
+
+BUG 45092 continueTransactionTest3_2 obj OOP: 756453633                          [18586]
+          continueTransactionTest3_2 obj dependency list OOP: 783260161
+
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 756453633                      [18656]
+          continueTransactionTest3_3 [0] obj dependency list OOP: 762820353
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 756453633
+          continueTransactionTest3_3 [1] obj dependency list OOP: 762820353
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( aTestDepMapObject, '8')
+=======================================
+=======================================
+
+=============
+set session 1
+run
+RcIndexTest setup.
+^true
+%
+
+=============
+set session 2
+run
+RcIndexTest createIndex1. ('id')
+^true
+%
+
+=============
+set session 1
+run
+RcIndexTest createIndex2. ('count')
+^true
+%
+
+=============
+set session 2
+run
+RcIndexTest continueTransactionTest3_1.
+^true
+%
+--
+ - target Dependency List
+ - DepListBucket that references 
+--
+
+
+=============
+set session 1
+run
+RcIndexTest continueTransactionTest3_2.
+^true
+%
+ - target Dependency List
+ - DepListBucket that references 
+--
+
+
+=============
+set session 2
+run
+RcIndexTest continueTransactionTest3_3.
+^true
+%
+20.133753.0  continueTran session: 9 beginId:(554 14)

@@ -64,14 +64,14 @@ rank := newRank\';
       cls2 compileMissingAccessingMethods.
       cls2
         compile:
-            \'btreeAt: anObject put: ar
+            \'modifiedObject: anObject data: ar
   | newKey indexObj vals |
   newKey := anObject rankOrder.
   indexObj := ar at: 1.
   vals := ar at: 2.
   vals do: [ :val | indexObj btreeAt: newKey put: anObject ]\';
         compile:
-            \'modifyingObject: anObject atOffset: anOffset to: newKey
+            \'aboutToModifyObject: anObject atOffset: anOffset to: newKey
   | pathTerm vals |
   anOffset == self trackedOffset
     ifFalse: [ ^ self ].
@@ -146,4 +146,4 @@ EXAMPLES
   ./installSoldierClass --help
   ./installSoldierClass -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-04-30T21:06:08.3763110637664-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-05-15T14:55:05.6473569869995-07:00']}

@@ -1,0 +1,79 @@
+dkh 5/15/2015 16:28
+-------------------
+
+Sceanario 1: add SmallInteger when String expected
+--------------------------------------------------
+1. ImproperOperation(AbstractException)>>_signalFromPrimitive: @5 line 15
+2. IdentityBag>>add: @1 line 1
+3. [] in Executed Code
+4. Dictionary(AbstractDictionary)>>at:ifPresent: @4 line 6
+5. [] in Executed Code
+6. Dictionary(AbstractDictionary)>>at:ifPresent:ifAbsent: @3 line 5
+7. Dictionary>>at:ifAbsent:ifPresent: @2 line 5
+8. [] in Executed Code
+9. ExecBlock4(ExecBlock)>>cull:cull:cull:cull: @7 line 4
+10. TDTopezServer>>evaluateCommand:objIn: @18 line 22
+11. TDTopezServer>>evaluateSTONCommand: @8 line 6
+12. Executed Code
+13. GsNMethod class>>_gsReturnToC @1 line 1
+---
+a ImproperOperation occurred (error 2300), Attempt to insert a key into the B-tree that was an invalid class for which the B-tree was created. 
+(#'rtErrRangeEqualityIndexInvalidClassKindForBtree')
+
+Sceanario 2: add String when SmallInteger expected
+--------------------------------------------------
+1. IndexingErrorPreventingCommit(AbstractException)>>_signalWith: @5 line 25
+2. MessageNotUnderstood(AbstractException)>>signal @2 line 47
+3. SmallInteger class(Object)>>doesNotUnderstand: @9 line 10
+4. SmallInteger class(Object)>>_doesNotUnderstand:args:envId:reason: @7 line 12
+5. String(CharacterCollection)>>_idxBasicCanCompareWithClass: @2 line 8
+6. BtreeBasicLeafNode(BtreeNode)>>_basicCanCompare:withClass: @2 line 5
+7. BtreeBasicLeafNode>>_canCompare:withClass: @2 line 5
+8. RangeEqualityIndex>>_canCompareWith: @4 line 8
+9. RangeEqualityIndex>>btreeAt:put: @2 line 7
+10. PathTerm>>addMappingsForObject:logging: @17 line 17
+11. IndexManager>>_addMappingsFor:on: @97 line 91
+12. [] in IndexManager>>_buildIndex:for:fromSpec: @29 line 26
+13. IndexManager(ExecBlock)>>onSynchronous:do: @2 line 14
+14. IndexManager>>_buildIndex:for:fromSpec: @2 line 28
+15. [] in IndexManager>>createIndexFor:fromSpec: @2 line 15
+16. IndexManager>>execStartingIndexMaintenance: @19 line 32
+17. [] in IndexManager>>executeStartingIndexMaintenance: @3 line 22
+18. IndexManager(ExecBlock)>>ensure: @2 line 12
+19. IndexManager>>executeStartingIndexMaintenance: @3 line 23
+20. IndexManager>>createIndexFor:fromSpec: @10 line 15
+21. EqualityIndexSpecification(AbstractIndexSpecification)>>createIndexOn: @3 line 2
+22. [] in ExecBlock1(GsIndexSpec)>>createIndexesOn: @2 line 2
+23. Array(Collection)>>do: @5 line 10
+24. GsIndexSpec>>createIndexesOn: @3 line 2
+25. IdentityBag(UnorderedCollection)>>createEqualityIndexOn:withLastElementClass: @4 line 11
+26. [] in Executed Code
+27. Dictionary(AbstractDictionary)>>at:ifPresent: @4 line 6
+28. [] in Executed Code
+29. Dictionary(AbstractDictionary)>>at:ifPresent:ifAbsent: @3 line 5
+30. Dictionary>>at:ifAbsent:ifPresent: @2 line 5
+31. [] in Executed Code
+32. ExecBlock4(ExecBlock)>>cull:cull:cull:cull: @7 line 4
+33. TDTopezServer>>evaluateCommand:objIn: @18 line 22
+34. TDTopezServer>>evaluateTopezScriptCommand: @14 line 9
+35. [] in TDTopezServer>>evaluateTopezScript: @2 line 23
+36. [] in TDCommandLine class>>line:forEachCommand: @14 line 12
+37. OrderedCollection(Collection)>>do: @5 line 10
+38. TDCommandLine class>>line:forEachCommand: @3 line 5
+39. [] in TDCommandLine class>>fromStream:selectLine:forEachCommand: @4 line 26
+40. OrderedCollection(Collection)>>do: @5 line 10
+41. TDCommandLine class>>fromStream:selectLine:forEachCommand: @31 line 24
+42. [] in TDTopezServer>>evaluateTopezScript: @9 line 11
+43. [] in ExecBlock0(ExecBlock)>>ifCurtailed: @2 line 6
+44. ExecBlock0(ExecBlock)>>ensure: @2 line 12
+45. TDTopezServer(ExecBlock)>>ifCurtailed: @3 line 8
+46. TDTopezServer>>evaluateTopezScript: @2 line 26
+47. TDClientScriptElementBuilder(TDClientSourceElementBuilder)>>todeItMenuAction:selectedText: @3 line 5
+48. TDClientScriptElementBuilder(Object)>>perform:with:with: @1 line 1
+49. TDClientScriptElementBuilder(TDWindowBuilder)>>handleMenuActions:listElement:actionArg: @12 line 10
+50. [] in TDClientScriptElementBuilder(TDClientSourceElementBuilder)>>menuActionBlock @6 line 8
+51. TDClientScriptElementBuilder(ExecBlock)>>valueWithArguments: @1 line 1
+52. TDClientScriptElementBuilder(ExecBlock)>>value:value:value:value:value: @2 line 11
+53. GsNMethod class>>_gsReturnToC @1 line 1
+---
+a IndexingErrorPreventingCommit occurred (error 2726), a MessageNotUnderstood occurred (error 2010), a SmallInteger class does not understand  #'_idxBasicCanCompareWithCharacterCollectionInstance:'

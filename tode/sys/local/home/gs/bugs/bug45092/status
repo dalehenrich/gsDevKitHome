@@ -1,0 +1,8 @@
+dkh 5/13/2015 17:01
+-------------------
+running smoke build test on lithium:k_gss64bit ... with latest logging that includes some tranlog marks ... looking for the expression that creates the the empty deplist ... not logged yet and not sure where it is being created/
+
+763597569 in success is created and written in RcIndexTest continueTransactionTest3_1, but it is not showing up in the logging ... so it must be an intermediate deplist?
+
+The goal is to catch with smalltalk logging the particular guy so that we'll have more info when the test fails again ...
+

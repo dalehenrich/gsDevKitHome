@@ -314,6 +314,8 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'PassiveObjectTestCase\' put: #(\'PassiveObject.gs\');
     at: #\'PerfTest\' put: #(\'PerfTest.gs\');
     at: #\'PersistentContinuationTestCase\' put: #(\'Continuation.gs\');
+    at: #\'PositionableStreamHierarchyTestCase\'
+      put: #(\'PositionableStreamHierarchy.gs\');
     at: #\'PositionableStreamTestCase\' put: #(\'PositionableStream.gs\');
     at: #\'PPAbstractParserTestCase\' put: #(\'PPAbstractParser.gs\');
     at: #\'PPArithmeticParser\' put: #(\'PPArithmeticParserEx.gs\');
@@ -449,4 +451,4 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'WriteStreamTestCase\' put: #(\'WriteStream.gs\');
     at: #\'XCharStringTest\' put: #(\'XCharStringTest.gs\');
     at: #\'ZeroDivideTestCase\' put: #(\'ANSIExceptionTests.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-04-29T20:28:30.104197025299-07:00']}
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-05-15T15:59:53.6029629707336-07:00']}

@@ -1,0 +1,129 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\').
+      #(\'0\' nil #\'required\').
+      #(\'1\' nil #\'none\').
+      #(\'2\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis map |
+      analysis := Dictionary new.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'shared\' ifAbsent: [  ].
+          UserGlobals removeKey: #\'shared2\' ifAbsent: [  ].
+          UserGlobals removeKey: #\'sharedA\' ifAbsent: [  ].
+          IndexManager removeAllIndexes.
+          System commitTransaction ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | sharedNsc sharedNsc2 sharedArray |
+          sharedNsc := Set new.
+          sharedNsc2 := Set new.
+          sharedArray := Array new.
+          UserGlobals at: #\'shared\' put: sharedNsc.
+          UserGlobals at: #\'shared2\' put: sharedNsc2.
+          UserGlobals at: #\'sharedA\' put: sharedArray.
+          1 to: 20 do: [ :i | 
+            | obj |
+            obj := TestDepMapObject new.
+            obj count: i.
+            obj id: i printString.
+            sharedNsc add: obj.
+            sharedNsc2 add: obj.
+            sharedArray add: obj ].
+          System commitTransaction.
+          sharedNsc createEqualityIndexOn: \'id\' withLastElementClass: String.
+          System commitTransaction.
+          sharedNsc createEqualityIndexOn: \'count\' withLastElementClass: Integer.
+          System commitTransaction ].
+      opts
+        at: \'0\'
+        ifPresent: [ :boolean | 
+          (UserGlobals at: #\'shared2\')
+            createEqualityIndexOn: \'id\'
+            withLastElementClass: String.
+          boolean == \'true\'
+            ifTrue: [ System abortTransaction ] ].
+      opts
+        at: \'1\'
+        ifPresent: [ :ignored | 
+          | obj |
+          obj := (UserGlobals at: #\'sharedA\') at: 8.
+          (UserGlobals at: #\'shared\') remove: obj.
+          (UserGlobals at: #\'shared2\') remove: obj.
+          System commitTransaction ].
+      opts
+        at: \'2\'
+        ifPresent: [ :ignored | 
+          | obj |
+          obj := (UserGlobals at: #\'sharedA\') at: 8.
+          (UserGlobals at: #\'shared\') add: obj ].
+      map := IdentityDictionary new.
+      DependencyList depMapKeys
+        do: [ :key | 
+          | dl |
+          dl := DependencyList for: key.
+          (map at: dl ifAbsent: [ map at: dl put: {} ]) add: key ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          (UserGlobals at: #\'shared\') copy
+            do: [ :each | (UserGlobals at: #\'shared\') remove: each ] ].
+      false
+        ifTrue: [ analysis at: \'audit\' put: (SharedDependencyLists _auditAndRepair: true) ].
+      analysis
+        at: \'shared\' put: (UserGlobals at: #\'shared\' ifAbsent: [  ]);
+        at: \'shared2\' put: (UserGlobals at: #\'shared2\' ifAbsent: [  ]);
+        at: \'sharedA\' put: (UserGlobals at: #\'sharedA\' ifAbsent: [  ]);
+        at: \'depMap keys\' put: DependencyList depMapKeys;
+        at: \'depMap values\' put: DependencyList depMapValues;
+        at: \'map\' put: map;
+        at: \'shared dependency lists\'
+          put: SharedDependencyLists allEntries asArray;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--clean][--create][--0=true|false][--1][--2][--boom]
+DESCRIPTION
+  Reproduce bug. Requires RcIndexTest and Ernie to be installaed.
+
+  --0=false
+    creates index on shared2, then commits (not bug scenario). 
+
+  --0=true
+    creates index on shared2, then aborts (bug scenario).
+
+EXAMPLES
+  ./bug --help
+
+  ./bug --clean --create --0=true; edit
+  ./bug --clean --create --0=true --1; edit
+  ./bug --clean --create --0=true --1 --2; edit
+
+  ./bug --clean --create; edit
+  ./bug --clean --create --1; edit
+  ./bug --clean --create --1 --2; edit
+
+  ./bug --clean --create --boom; edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-13T09:39:07.0234870910644-07:00'],#modificationTime:DateAndTime['2015-05-13T15:28:31.0244169235229-07:00']}

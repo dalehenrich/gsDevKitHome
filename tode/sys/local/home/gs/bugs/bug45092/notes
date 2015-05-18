@@ -1,0 +1,24 @@
+dkh 5/13/2015 10:11
+-------------------
+Interesting that there are entries in the SharedDependencyLists that are not in the depMapValues (bug 43681).
+
+How are deplists trapped?
+  - when a new index is added to a collection
+  - when last object with membership in a set of indexes is removed from the index
+
+How are empty deplists created?
+ - during full audit and repair
+
+DepListTable>>removeEntriesContaining: unconditionally zeros out the dependency list size, but if DepListTable>>remove:logging: returrns false, the deplist was not found in the bucket (it may actually be in another bucket? or should have been in the dependency list)
+
+DependencyList>>_removeCompletelyPathTerm:, DependencyList>>_removeEntryAtOffset: and DependencyList>>_removePathTerm:for: shorten the size of the dependency list using #size: .... and could be shortening the list ... 
+
+DependencyList>>_removePathTerm:for: is the method that is used during normal operation and is exposed in this particular case ... theoretically it should be possible to create an empty dependency list with this method.
+
+The call path from DependencyList class>>removePathTerm:for:logging: to DependencyList>>_removePathTerm:for: arranges to avoid zeroing the length of a deplist because a copy of the deplist is zeroed out ...
+
+DependencyList>>_removeEntryAtOffset: is called by DependencyList>>_sortEntries: which is done during the audit (and recorded as an audit failure).
+
+DepListTable>>at:logging: is an effective filter for empty deplists, since it refuses to add an empty depList ... 
+
+DependencyList class>>from: makes a copy and will only zero out a deplist size if it contains obsolete path terms ...

@@ -35,10 +35,9 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
         number: 1;
         slot1: DateTime now.
       nsc add: (Set with: sample).
- nsc
-    createEqualityIndexOn: \'*\' withLastElementClass: cls;
-    yourself
- ]
+      nsc
+        createEqualityIndexOn: \'*\' withLastElementClass: cls;
+        yourself ]
     ifPresent: [ :ignored | 
       TDManPage
         viewManPage:
@@ -53,4 +52,4 @@ EXAMPLES
   ./bug --help
   ./bug 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-22T13:59:13.6085140705108-07:00'],#modificationTime:DateAndTime['2015-04-22T14:02:02.0737929344177-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-22T13:59:13.6085140705108-07:00'],#modificationTime:DateAndTime['2015-05-14T15:12:18.247610092163-07:00']}

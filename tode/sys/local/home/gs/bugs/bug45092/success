@@ -1,7 +1,24 @@
-**wait for lithium_k battery test**
-~otisa/bin/searchoops 758760705 765320961 784794881
+~otisa/bin/searchoops 757056001 783639809 783639041
 =======================================
 =======================================
+BUG 45092 continueTransactionTest3_1 [0] obj OOP: 757056001
+          continueTransactionTest3_1 [0] obj dependency list OOP: 783639809
+BUG 45092 continueTransactionTest3_1 [1] obj OOP: 757056001
+          continueTransactionTest3_1 [1] obj dependency list OOP: 783639041
+BUG 45092 continueTransactionTest3_1 [2] obj OOP: 757056001
+          continueTransactionTest3_1 [2] obj dependency list OOP: 763592961
+--
+BUG 45092 continueTransactionTest3_2 obj OOP: 757056001
+          continueTransactionTest3_2 obj dependency list OOP: 783639041
+          continueTransactionTest3_2 obj dependency list size: 2
+--
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 757056001
+          continueTransactionTest3_3 [0] obj dependency list OOP: 763592961
+          continueTransactionTest3_3 [0] obj dependency list size: 4
+BUG 45092 PRE-continueTransaction
+BUG 45092 POST-continueTransaction
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 757056001
+          continueTransactionTest3_3 [1] obj dependency list OOP: 763592961
 =======================================
 =======================================
 
@@ -11,7 +28,11 @@ run
 RcIndexTest setup.
 ^true
 %
-
+20.125020.0  Data session: 8 beginId:(673 6)  newobj  757056001 cls 768179713 onPage 15247,
+20.125818.0  GetFreeOops session: 8 beginId:(673 6)  oop  783639041  783639809 
+20.126678.2  WriteSet session: 8 beginId:(673 6)  oop  757056001 
+20.126741.0  UsedOops session: 8 beginId:(673 6)  oop  757056001 
+20.126749.6  Commit session: 8 beginId:(673 6)  timeWritten: 05/12/2015 17:12:37 PDT
 
 =============
 set session 2
@@ -19,7 +40,10 @@ run
 RcIndexTest createIndex1. ('id')
 ^true
 %
+20.126785.0  BeginData session: 9 beginId:(673 8) storeDep:757056001 , value 765247233 
 
+20.126789.5  DepMapChangeSet session: 9 beginId:(673 8)  oop  757056001 
+20.126789.10  Commit session: 9 beginId:(673 8)  timeWritten: 05/12/2015 17:12:37 PDT
 
 =============
 set session 1
@@ -27,15 +51,25 @@ run
 RcIndexTest createIndex2. ('count')
 ^true
 %
+20.126823.0  BeginData session: 8 beginId:(673 11) storeDep:757056001 , value 783651073 
 
+20.126857.5  DepMapChangeSet session: 8 beginId:(673 11)  oop  757056001 
+20.126857.10  Commit session: 8 beginId:(673 11)  timeWritten: 05/12/2015 17:12:38 PDT
 
 =============
-set session 1
+set session 2
 run
 RcIndexTest continueTransactionTest3_1.
 ^true
 %
-
+20.127314.0  BeginData session: 9 beginId:(675 12) storeDep:757056001 , value 763597569 
+ storeDep:757056001 , value 783639041 
+ storeDep:757056001 , value 20 
+20.127378.0  Data session: 9 beginId:(675 12)  newobj  763597569 cls 89601 onPage 6442464936,
+20.127378.1  WriteSet session: 9 beginId:(675 12)  oop  763597569 
+20.127378.4  UsedOops session: 9 beginId:(675 12)  oop  763597569 
+20.127378.5  DepMapChangeSet session: 9 beginId:(675 12)  oop  757056001 
+20.127378.10  Commit session: 9 beginId:(675 12)  timeWritten: 05/12/2015 17:12:39 PDT
 
 =============
 set session 1
@@ -43,7 +77,11 @@ run
 RcIndexTest continueTransactionTest3_2.
 ^true
 %
-
+20.127412.0  BeginData session: 8 beginId:(675 16) storeDep:757056001 , value 783639041 
+  object  763597569 cls 89601 onPage 6442464998,
+20.127412.1  WriteSet session: 8 beginId:(675 16)  oop  763597569 
+20.127412.5  DepMapChangeSet session: 8 beginId:(675 16)  oop  757056001 
+20.127412.10  Commit session: 8 beginId:(675 16)  timeWritten: 05/12/2015 17:12:39 PDT
 
 =============
 set session 2
@@ -51,4 +89,4 @@ run
 RcIndexTest continueTransactionTest3_3.
 ^true
 %
-
+20.127419.0  continueTran session: 9 beginId:(675 17)

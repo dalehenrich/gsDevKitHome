@@ -1,0 +1,105 @@
+~otisa/bin/searchoops 772384257 783590657 783589889 777084417
+=======================================
+=======================================
+BUG 45092 continueTransactionTest3_1 [0] obj OOP: 772384257
+          continueTransactionTest3_1 [0] obj dependency list OOP: 783590657
+BUG 45092 continueTransactionTest3_1 [1] obj OOP: 772384257
+          continueTransactionTest3_1 [1] obj dependency list OOP: 783589889
+BUG 45092 continueTransactionTest3_1 [2] obj OOP: 772384257
+          continueTransactionTest3_1 [2] obj dependency list OOP: 20
+BUG 45092 continueTransactionTest3_1 [3] obj OOP: 772384257
+          continueTransactionTest3_1 [3] obj dependency list OOP: 777049345
+--
+BUG 45092 continueTransactionTest3_2 [0] obj OOP: 772384257
+          continueTransactionTest3_2 [0] obj dependency list OOP: 20
+          continueTransactionTest3_2 [0] obj dependency list size: 0
+BUG 45092 continueTransactionTest3_2 [1] obj OOP: 772384257
+          continueTransactionTest3_2 [1] obj dependency list OOP: 783589889
+          continueTransactionTest3_2 [1] obj dependency list size: 2
+--
+BUG 45092 continueTransactionTest3_3 [0] obj OOP: 772384257
+          continueTransactionTest3_3 [0] obj dependency list OOP: 777049345
+          continueTransactionTest3_3 [0] obj dependency list size: 4
+BUG 45092 PRE-continueTransaction
+BUG 45092 POST-continueTransaction
+BUG 45092 continueTransactionTest3_3 [1] obj OOP: 772384257
+          continueTransactionTest3_3 [1] obj dependency list OOP: 777049345
+          continueTransactionTest3_3 [1] obj dependency list size: 4
+          continueTransactionTest3_3 [1] 3_2 dependency list OOP: 783589889
+          continueTransactionTest3_3 [1] 3_2 dependency list size: 2
+          continueTransactionTest3_3 [1] transaction conflicts: anArray( '8', aTestDepMapObject)
+=======================================
+=======================================
+
+=============
+set session 1
+run
+RcIndexTest setup.
+^true
+%
+
+=============
+set session 2
+run
+RcIndexTest createIndex1. ('id')
+^true
+%
+
+=============
+set session 1
+run
+RcIndexTest createIndex2. ('count')
+^true
+%
+
+=============
+set session 2
+run
+RcIndexTest continueTransactionTest3_1.
+^true
+%
+--
+777084417 - target Dependency List
+243025153 - DepListBucket that references 777084417
+--
+20.128089.0  BeginData session: 9 beginId:(732 14) storeDep:772384257 , value 777084417 
+ storeDep:772384257 , value 783589889 
+ storeDep:772384257 , value 20 
+20.128089.0  BeginData session: 9 beginId:(732 14)  object  243025153 cls 107009 onPage 14812   1:777084417,
+20.128153.0  Data session: 9 beginId:(732 14) recordSize:16208 
+objId 777084417 isNewObj=1  class 89601 segId:4 len 4 gcSz 4 psize 56 bits 0x201 page 14696
+Oop values:  783590913  26(sI 3) 783601921  10(sI 1)
+20.128153.1  WriteSet session: 9 beginId:(732 14)  oop  777084417 
+20.128153.4  UsedOops session: 9 beginId:(732 14)  oop  777084417 
+20.128153.5  DepMapChangeSet session: 9 beginId:(732 14)  oop  772384257 
+20.128153.10  Commit session: 9 beginId:(732 14)  timeWritten: 05/13/2015 17:30:29 PDT
+
+=============
+set session 1
+run
+RcIndexTest continueTransactionTest3_2.
+^true
+%
+--
+777084417 - target Dependency List
+243025153 - DepListBucket that references 777084417 and is niled out in this session
+--
+20.128188.0  BeginData session: 8 beginId:(732 18) storeDep:772384257 , value 783589889 
+20.128188.0  BeginData session: 8 beginId:(732 18) recordSize:2864 
+objId 777084417 class 89601 segId:4 len 0 gcSz 0 psize 24 bits 0x1 page 8589936121
+
+20.128188.0  BeginData session: 8 beginId:(732 18) recordSize:2864 
+objId 243025153 class 107009 segId:4 len 4 gcSz 4 psize 56 bits 0x1 page 8589936121
+Oop values:  2(sI 0) 20  20  20 
+
+20.128188.1  WriteSet session: 8 beginId:(732 18)  oop  777084417 
+20.128188.5  DepMapChangeSet session: 8 beginId:(732 18)  oop  772384257 
+20.128188.10  Commit session: 8 beginId:(732 18)  timeWritten: 05/13/2015 17:30:29 PDT
+
+=============
+set session 2
+run
+RcIndexTest continueTransactionTest3_3.
+^true
+%
+20.128195.3  continueTran session: 9 beginId:(732 19)

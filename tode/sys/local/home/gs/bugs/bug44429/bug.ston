@@ -1,0 +1,102 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'1\' nil #\'none\').
+      #(\'2\' nil #\'none\').
+      #(\'3\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\').
+      #(\'install\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl query |
+      analysis := Dictionary new.
+      Smalltalk
+        at: #\'SampleIndexObject\'
+        ifAbsent: [ opts at: \'install\' put: nil ].
+      opts
+        at: \'install\'
+        ifPresent: [ :ignored | 
+          \"install supporting code here\"
+          topez evaluateCommandString: \'/home/gs/bugs/installSampleIndexObject\' ].
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc cls |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          cls := Smalltalk at: #\'SampleIndexObject\'.
+          1 to: 2 do: [ :index | 
+            | sample |
+            sample := cls new.
+            sample
+              value1: index printString;
+              yourself.
+            nsc add: sample ].
+          nsc
+            createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
+            createEqualityIndexOn: \'path1\' withLastElementClass: String;
+            yourself ].
+      opts
+        at: \'1\'
+        ifPresent: [ :ignored | 
+          | nsc cls sample |
+          nsc := UserGlobals at: #\'coll\'.
+          cls := Smalltalk at: #\'SampleIndexObject\'.
+          sample := cls new.
+          sample
+            path1: 1;
+            yourself.
+          nsc add: sample ].
+      opts
+        at: \'2\'
+        ifPresent: [ :ignored | 
+          | nsc cls sample |
+          nsc := UserGlobals at: #\'coll\'.
+          cls := Smalltalk at: #\'SampleIndexObject\'.
+          sample := cls new.
+          sample
+            value1: \'1\';
+            yourself.
+          nsc add: sample ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'depMap keys\' put: DependencyList depMapKeys;
+        at: \'depMap values\' put: DependencyList depMapValues;
+        at: \'nsc\' put: theColl;
+        at: \'shared dependency lists\'
+          put: SharedDependencyLists allEntries asArray;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --clean --create --1
+  ./bug --clean --create --2
+  ./bug --clean --create --3
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-15T16:24:18.3650040626525-07:00'],#modificationTime:DateAndTime['2015-05-15T16:32:14.3383200168609-07:00']}

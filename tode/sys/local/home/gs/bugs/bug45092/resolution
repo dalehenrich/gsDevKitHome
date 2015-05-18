@@ -31,40 +31,31 @@ anIdentitySet dependency list(s) were empty:
 =======================================
 
 =============
+# STEP 1
 set session 1
 run
 RcIndexTest setup.
 ^true
 %
-20.131335.0  Data session: 8 beginId:(551 26)  newobj  758760705 cls 769956353 onPage 6442456162,
-20.133025.0  WriteSet session: 8 beginId:(551 26)  oop  758760705 
-20.133066.0  UsedOops session: 8 beginId:(551 26)  oop  758760705 
-20.133074.6  Commit session: 8 beginId:(551 26)  timeWritten: 05/03/2015 11:34:29 PDT
-
 
 =============
+# STEP 2
 set session 2
 run
 RcIndexTest createIndex1. ('id')
 ^true
 %
-20.133111.0  BeginData session: 9 beginId:(553 0) storeDep:758760705 , value 766996481 
-20.133115.5  DepMapChangeSet session: 9 beginId:(553 0)  oop  758760705 
-20.133115.10  Commit session: 9 beginId:(553 0)  timeWritten: 05/03/2015 11:34:30 PDT
-
 
 =============
+# STEP 3
 set session 1
 run
 RcIndexTest createIndex2. ('count')
 ^true
 %
-20.133149.0  BeginData session: 8 beginId:(553 2) storeDep:758760705 , value 784806657 
-20.133183.5  DepMapChangeSet session: 8 beginId:(553 2)  oop  758760705 
-20.133183.10  Commit session: 8 beginId:(553 2)  timeWritten: 05/03/2015 11:34:30 PDT
-
 
 =============
+# STEP 4
 set session 2
 run
 RcIndexTest continueTransactionTest3_1.
@@ -92,6 +83,7 @@ Oop values:  784795905  26(sI 3) 784806913  10(sI 1)
 
 
 =============
+# STEP 5
 set session 1
 run
 RcIndexTest continueTransactionTest3_2.
@@ -115,10 +107,14 @@ Oop values:  2(sI 0) 20  20  20
 
 
 =============
+# STEP 6
 set session 2
 run
 RcIndexTest continueTransactionTest3_3.
 ^true
 %
+--
+This is the point where zero length deplist (765320961) found
+--
 20.133753.0  continueTran session: 9 beginId:(554 14)
 

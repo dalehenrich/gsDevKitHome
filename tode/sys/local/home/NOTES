@@ -1,5 +1,12 @@
-45180  P2  assertion failure in validateBucketCache from IdxShiftIndexBucketCacheAt
-  k_:  showed up again ... tranlog analysis needed 
+45266  P2  Divergence between PositionalStream installed and PositionableStreamPortable
+  k_: just doit
+     [] installStreamHierarchy.topaz comments in ALL positionable stream files, 
+     [] new comment methods for all positionable stream guys
+     [] test that comments match for ALL positionable streams
+     [] expand tests to cover all of the positionable Stream classes, 
+
+     battery (include upgrade tests), checkin
+       smkconvtst failures ...
 
 44545  P2  GsQuery>>reversedReadStream exists but not really implemented
 44079  P2  GsQuery>> readStream produces diffrent result from queryResult for some special Objects
@@ -7,33 +14,38 @@
   k_: take a serious look at 44545 and fix the other two along the way ...
       ??
 ---
-44751  R3  SetValued term should be disallowed as first term
-  l_:  work in progress
----
-45237  R2  inst var modification tracking cannot be used for non-index based updates
-  m_: fix for 3.3
-      smoke_index ERRORS, address become issues ...
+44429  P3  Similar index incorrect operation, different errors of different severity
+  l_: proposed fix 
+      battery  ... checkin ... bounce to Alex for test coverage
 
+44425  G3  Improve error when add wrong class of obj to indexed collection
+  l_: related to 44429
+---
+m_ ... build
+---
 44035  P2  my selector path term example doesn't work
-  m_: adapt Lisa's example to use modification tracking.
+  n_: adapt Lisa's example to use modification tracking.
       consider additional more complicated examples of modification tracking scenario's
       some of these examples should be added to the selector based path term tests
+      this example needs to be folded into Ernie ....
+      ... building
 ---
 
 ==========================================
-45266  P2  Divergence between PositionalStream installed and PositionableStreamPortable
+45180  P2  assertion failure in validateBucketCache from IdxShiftIndexBucketCacheAt
 44805  P2  seasidetst and friends failing in 3.3
 44650  P2  glasstst failures
 44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
 44282  P3  readme.txt points to location with text that seems out of date
 44185  R2  "Licensed cpuAffinity has been exceeded." running 3.2 on travis-c
+43681  P2  SharedDependencyLists is a DepList black hole (automatic gc of orphaned deplists)
 ------------------------------------------
 44669  P2  index audit does not detect entries with equal keys but out of order oops
 44495  R3  Indexed query performance
 44429  P3  Similar index incorrect operation, different errors of different severity
+44425  G3  Improve error when add wrong class of obj to indexed collection
 44072  P3  Why isn't requirePathTerms in GsQueryOptions ?
 44069  M3  Verify handling index enumeration methods that modify the collection
 44026  P3  Nit on error for (disallowed) set-valued query
 44012  P2  New indexing classes do not have class comments
 43851  F2  Concurrent index creation
-43541  G3  Integrate Pragmas in the base system
