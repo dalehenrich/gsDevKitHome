@@ -1,16 +1,14 @@
-  k_: ????
----
-44545  P2  GsQuery>>reversedReadStream exists but not really implemented
 44079  P2  GsQuery>> readStream produces diffrent result from queryResult for some special Objects
 44061  P2  GsQuery block-based operations may not be correct for ~=
-  k_: take a serious look at 44545 and fix the other two along the way ...
-      ??
+  k_: ????
+
 ---
 44669  P2  index audit does not detect entries with equal keys but out of order oops
   l_: take a crack at modifying btree to create out of order oops and see if audit detects them
       [] - add code to detect out of order oop values ... 
       [] - need new test ...
       battery ... ernie/smoke with new test ... checkin
+      smktst failure
 
 ---
 m_ ... built
@@ -27,15 +25,13 @@ m_ ... built
 45180  P2  assertion failure in validateBucketCache from IdxShiftIndexBucketCacheAt
 44805  P2  seasidetst and friends failing in 3.3
 44650  P2  glasstst failures
+44545  P2  GsQuery>>reversedReadStream exists but not really implemented
 44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
 44282  P3  readme.txt points to location with text that seems out of date
 44185  R2  "Licensed cpuAffinity has been exceeded." running 3.2 on travis-c
 43681  P2  SharedDependencyLists is a DepList black hole (automatic gc of orphaned deplists)
 ------------------------------------------
 44669  P2  index audit does not detect entries with equal keys but out of order oops
-44495  R3  Indexed query performance
-44429  P3  Similar index incorrect operation, different errors of different severity
-44425  G3  Improve error when add wrong class of obj to indexed collection
 44072  P3  Why isn't requirePathTerms in GsQueryOptions ?
 44069  M3  Verify handling index enumeration methods that modify the collection
 44026  P3  Nit on error for (disallowed) set-valued query
