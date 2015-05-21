@@ -1,0 +1,51 @@
+TDScriptLeafNode{#name:'monticello',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./monticello -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'prep\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | findTool |
+      findTool := topez toolInstanceFor: \'find\'.
+      opts
+        at: \'prep\'
+        ifPresent: [ :ignored | 
+          | methodsPackage globalsPackage |
+          methodsPackage := GsPackageLibrary packageNamed: #\'Monticello_Methods\'.
+          globalsPackage := GsPackageLibrary packageNamed: #\'Monticello_Globals\'.
+          GsPackagePolicy current
+            externalSymbolList: {(globalsPackage symbolDict)}.
+          (GsSession currentSession symbolList includes: globalsPackage)
+            ifFalse: [ 
+              GsSession currentSession symbolList
+                add: globalsPackage symbolDict
+                after: GsSession currentSession symbolList first.
+              ClassOrganizer clearCachedOrganizer ] ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  monticello - monticello sript utility template
+SYNOPSIS
+  monticello [-h|--help]
+        [--prep]
+DESCRIPTION
+OPTIONS
+  --prep
+    Install Monticello SymbolDictionaries right after my UserGlobals, so that UserGlobals
+    lookup preserved while making Monticello UserGlobal classes and methods available for 
+    compilation. 
+
+    This is a NON-PERSISTENT change and should be run after each login.
+
+EXAMPLES
+  ./monticello --help
+  ./monticello --prep
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-20T15:43:31.3259999752044-07:00'],#modificationTime:DateAndTime['2015-05-20T16:20:04.3155059814453-07:00']}

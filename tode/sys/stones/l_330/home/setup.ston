@@ -1,7 +1,6 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
-/home/gs/ernie --prep
-#/home/gs/ernie --find=^ix
-/home/go
+/home/gs/monticello --prep
+#/home/gs/ernie --prep
+#/home/go
 limit protocol false
-browse method --spec IXQueryExpressionParseErrorTestCase>>testNoSetValueInFirstPosition GsQueryGrammar>>queryPath
-',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-05-01T14:24:17.4350879192352-07:00']}
+',#creationTime:DateAndTime['2015-04-21T11:06:32.9690799713134-07:00'],#modificationTime:DateAndTime['2015-05-20T16:09:58.2565729618072-07:00']}

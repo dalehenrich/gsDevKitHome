@@ -1,6 +1,6 @@
-TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+TDScriptLeafNode{#name:'tst',#contents:'[ :topez :objIn :tokens :command | 
   | opts args |
-  \"for help: ./bug -h\"
+  \"for help: ./tst -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -35,7 +35,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       opts
         at: \'boom\'
         ifPresent: [ :ignored | 
-          | nsc stream readStreamResult selectResult aKP doResult selectBlockResult selectBlockAsStreamResult detectResult detectBlockResult |
+          | nsc stream readStreamResult selectResult aKP doResult selectBlockResult selectBlockAsStreamResult |
           nsc := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
           aKP := QuadByteString new.
           query := (GsQuery fromString: \'each = aKP\' on: nsc)
@@ -43,27 +43,14 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             to: aKP.
           readStreamResult := IdentityBag new.
           stream := query readStream.
+          true
+            ifTrue: [ stream streamQuerySpec: (BtreeComparisonQuerySpec key: aKP selector: #\'=\') ].
           [ stream atEnd ] whileFalse: [ readStreamResult add: stream next ].
-          doResult := IdentityBag new.
-          query do: [ :each | doResult add: each ].
-          selectResult := nsc select: [ :each | each = aKP ].
-          detectResult := nsc detect: [ :each | each = aKP ].
-          selectBlockResult := nsc select: { :each | each = aKP }.
-          detectBlockResult := nsc detect: { :each | each = aKP }.
-          selectBlockAsStreamResult := IdentityBag new.
-          stream := nsc selectAsStream: { :each | each = aKP }.
-          [ stream atEnd ]
-            whileFalse: [ selectBlockAsStreamResult add: stream next ].
           analysis
             at: \'query\' put: query;
+            at: \'stream\' put: stream;
             at: \'query result\' put: query queryResult;
             at: \'query readStream\' put: readStreamResult;
-            at: \'query do\' put: doResult;
-            at: \'select\' put: selectResult;
-            at: \'detect\' put: detectResult;
-            at: \'selectAsStream: {}\' put: selectBlockAsStreamResult;
-            at: \'select: {}\' put: selectBlockResult;
-            at: \'detect: {}\' put: detectBlockResult;
             yourself ].
       theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
       analysis
@@ -75,14 +62,14 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       TDManPage
         viewManPage:
           \'NAME
-  bug - bug sript utility template
+  tst - tst sript utility template
 SYNOPSIS
-  bug [-h|--help]
-  bug [--install][--clean][--create][--boom]
+  tst [-h|--help]
+  tst [--install][--clean][--create][--boom]
 DESCRIPTION
   Reproduce bug.
 EXAMPLES
-  ./bug --help
-  ./bug --clean --create --boom; edit
+  ./tst --help
+  ./tst --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-18T11:18:58.6124770641326-07:00'],#modificationTime:DateAndTime['2015-05-19T21:10:26.5904879570007-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-19T15:27:21.6577360630035-07:00'],#modificationTime:DateAndTime['2015-05-19T16:32:18.5358309745788-07:00']}

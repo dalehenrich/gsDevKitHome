@@ -86,6 +86,7 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'CollectionTestCase\' put: #(\'Collection.gs\');
     at: #\'CollisionBucketTestCase\' put: #(\'CollisionBucket.gs\');
     at: #\'CommitPerfTest\' put: #(\'CommitPerfTest.gs\');
+    at: #\'CommitProhibitingDepMapUnitTest\' put: #(\'DepMapUnitTest.gs\');
     at: #\'ConfigFile\' put: #(\'ConfigFile.gs\');
     at: #\'ContextTestCase\' put: #(\'Context.gs\');
     at: #\'ContinuationTestCase\' put: #(\'Continuation.gs\');
@@ -451,4 +452,4 @@ TDSmalltalkLeafNode{#name:'classToErnieFilenameMap',#contents:'Dictionary new
     at: #\'WriteStreamTestCase\' put: #(\'WriteStream.gs\');
     at: #\'XCharStringTest\' put: #(\'XCharStringTest.gs\');
     at: #\'ZeroDivideTestCase\' put: #(\'ANSIExceptionTests.gs\');
-    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-05-15T15:59:53.6029629707336-07:00']}
+    yourself',#creationTime:DateAndTime['2014-08-28T05:28:59.3130989074707-07:00'],#modificationTime:DateAndTime['2015-05-19T14:35:41.1397891044616-07:00']}

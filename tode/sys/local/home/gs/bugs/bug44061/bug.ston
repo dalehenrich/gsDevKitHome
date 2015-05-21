@@ -38,22 +38,29 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
           | nsc stream readStreamResult selectResult aKP doResult selectBlockResult selectBlockAsStreamResult detectResult detectBlockResult |
           nsc := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
           aKP := QuadByteString new.
-          query := (GsQuery fromString: \'each = aKP\' on: nsc)
+          query := (GsQuery fromString: \'each ~= aKP\' on: nsc)
             bind: \'aKP\'
             to: aKP.
-          readStreamResult := IdentityBag new.
-          stream := query readStream.
-          [ stream atEnd ] whileFalse: [ readStreamResult add: stream next ].
+          false
+            ifTrue: [ 
+              \"`= is not a streamable query\"
+              readStreamResult := IdentityBag new.
+              stream := query readStream.
+              [ stream atEnd ] whileFalse: [ readStreamResult add: stream next ] ].
           doResult := IdentityBag new.
           query do: [ :each | doResult add: each ].
-          selectResult := nsc select: [ :each | each = aKP ].
-          detectResult := nsc detect: [ :each | each = aKP ].
-          selectBlockResult := nsc select: { :each | each = aKP }.
-          detectBlockResult := nsc detect: { :each | each = aKP }.
+          selectResult := nsc select: [ :each | each ~= aKP ].
+          detectResult := nsc detect: [ :each | each ~= aKP ] ifNone: [ #() ].
+          selectBlockResult := nsc select: { :each | each ~= aKP }.
+          detectBlockResult := nsc
+            detect: { :each | each ~= aKP }
+            ifNone: [ #() ].
           selectBlockAsStreamResult := IdentityBag new.
-          stream := nsc selectAsStream: { :each | each = aKP }.
-          [ stream atEnd ]
-            whileFalse: [ selectBlockAsStreamResult add: stream next ].
+          true
+            ifTrue: [ 
+              stream := nsc selectAsStream: { :each | each ~= aKP }.
+              [ stream atEnd ]
+                whileFalse: [ selectBlockAsStreamResult add: stream next ] ].
           analysis
             at: \'query\' put: query;
             at: \'query result\' put: query queryResult;
@@ -85,4 +92,4 @@ EXAMPLES
   ./bug --help
   ./bug --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-18T11:18:58.6124770641326-07:00'],#modificationTime:DateAndTime['2015-05-19T21:10:26.5904879570007-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-20T16:47:34.3946878910064-07:00'],#modificationTime:DateAndTime['2015-05-20T17:26:04.612242937088-07:00']}

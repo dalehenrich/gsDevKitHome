@@ -1,0 +1,30 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+| nsc |
+nsc := IdentityBag new.
+      GsIndexSpec new 
+  identityIndex: \'each.firstName\' options: GsIndexOptions reducedConflict;
+  createIndexesOn: nsc. 
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-19T12:46:05.7880749702453-07:00'],#modificationTime:DateAndTime['2015-05-19T12:46:41.2798540592193-07:00']}

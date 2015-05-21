@@ -1,9 +1,5 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
 /home/gs/ernie --prep
-#/home/gs/ernie --find=IXQueryLifeCycleTestCase
-browse category Selector-PathTerm-Example
-browse class IdentityBag DepMapUnitTest TestDepMapTracker
-browse method --spec RangeEqualityIndex>>_removeBtreeEntriesForKey: Object>>_addObjectToBtreesWithValues:
 /home/go
 limit protocol false
-',#creationTime:DateAndTime['2015-04-25T09:10:25.2174680233001-07:00'],#modificationTime:DateAndTime['2015-04-30T16:26:15.8799400329589-07:00']}
+',#creationTime:DateAndTime['2015-04-25T09:10:25.2174680233001-07:00'],#modificationTime:DateAndTime['2015-05-19T14:11:25.8457679748535-07:00']}

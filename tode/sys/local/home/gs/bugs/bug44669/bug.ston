@@ -1,0 +1,75 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl preBoomAudit |
+      analysis := Dictionary new.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'coll\' put: nsc.
+          1 to: 2 do: [ :index | nsc add: index -> \'1\' copy ].
+          nsc
+            createEqualityIndexOn: \'value\' withLastElementClass: String;
+            yourself ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      preBoomAudit := theColl auditIndexes.
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | nsc btree a b c d |
+          nsc := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+          btree := (nsc _indexedPaths at: 1) btreeRoot.
+          a := btree _at: 1.
+          b := btree _at: 5.
+          c := btree _at: 2.
+          d := btree _at: 6.
+          btree _at: 1 put: b.
+          btree _at: 5 put: a.
+btree _at: 2 put: d.
+          btree _at: 6 put: c ].
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'audit (pre-boom)\' put: preBoomAudit;
+        at: \'depMap keys\' put: DependencyList depMapKeys;
+        at: \'depMap values\' put: DependencyList depMapValues;
+        at: \'nsc\' put: theColl;
+        at: \'shared dependency lists\'
+          put: SharedDependencyLists allEntries asArray;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--install][--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --install
+  ./bug --clean --create --boom; edit
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-18T15:08:51.9433159828186-07:00'],#modificationTime:DateAndTime['2015-05-18T17:21:52.5092849731445-07:00']}
