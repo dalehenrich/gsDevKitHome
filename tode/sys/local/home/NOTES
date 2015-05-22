@@ -1,68 +1,66 @@
-44061  P2  GsQuery block-based operations may not be correct for ~=
-  k_: 
-      development
+  k_:  
 
 ---
-45297  F3  GsPackageLibrary class>>userSymbolList should use `GsCurrentSession currentSession symbolList`
 44969  P3  seaside failures on lithium
 44805  P2  seasidetst and friends failing in 3.3
- l_:  
+  l_:   Need to create GLASS 1.0-beta.9.2.1 for 3.3 ... notch below 1.0-beta.9.3 (no metacello preview
+
+       battery ... evaluate:
+           glassMonticellotst-0521-151800
+             MCDictionaryRepositoryTest>>#testAddAndLoad
+         MonticelloGs.v33-dkh.2 needs to be included in bootstrap build ...
+
        battery test situation
        ----------------------
-==> test_results/battery_1/oneliner0520-152704.txt <==
- seasidetst-0520-152704          F  errors: 1 test/0 outfile/0 rescheck          3687
+==> test_results/battery_1/oneliner0521-151800.txt <==
+ seasidetst-0521-151800          F  errors: 1 test/0 outfile/0 rescheck          3833
 
-==> test_results/battery_2/oneliner0520-152704.txt <==
- glass1tst-0520-152704           F  errors: 1 test/0 outfile/0 rescheck          1999
+==> test_results/battery_2/oneliner0521-151800.txt <==
+ glass1tst-0521-151800           F  errors: 1 test/0 outfile/0 rescheck          2017
 
-==> test_results/battery_3/oneliner0520-152704.txt <==
- glassBug38177tst-0520-152704    P                                               1093
+==> test_results/battery_3/oneliner0521-151800.txt <==
+ glassBug38177tst-0521-151800    P                                               1048
 
-==> test_results/battery_4/oneliner0520-152704.txt <==
- glassMonticellotst-0520-152704  F  errors: 1 test/0 outfile/0 rescheck          1034
+==> test_results/battery_4/oneliner0521-151800.txt <==
+ glassMonticellotst-0521-151800  F  errors: 1 test/0 outfile/0 rescheck          1110
 
-==> test_results/battery_5/oneliner0520-152704.txt <==
- glassOBtst-0520-152704          F  errors: 1 test/0 outfile/0 rescheck          1276
+==> test_results/battery_5/oneliner0521-151800.txt <==
+ glassOBtst-0521-151800          F  errors: 1 test/0 outfile/0 rescheck          1229
 
-==> test_results/battery_6/oneliner0520-152704.txt <==
- glasstst-0520-152704            F  errors: 1 test/0 outfile/0 rescheck          1518
+==> test_results/battery_6/oneliner0521-151800.txt <==
+????????
 
-==> test_results/battery_7/oneliner0520-170044.txt <==
- monticellotst-0520-170044       P                                               189
+==> test_results/battery_7/oneliner0521-151800.txt <==
+ monticellotst-0521-151800       P                                               185
 
-==> test_results/battery_8/oneliner0520-152704.txt <==
- seasideconvtst-0520-152704      F  errors: 5 test/52 outfile/51 rescheck        4715
+==> test_results/battery_8/oneliner0521-151800.txt <==
+ seasideconvtst-0521-151800      F  errors: 25 test/44 outfile/43 rescheck       747
 
-==> test_results/battery_9/oneliner0520-152704.txt <==
- smkconvtst-0520-152704          P                                               801
+==> test_results/battery_9/oneliner0521-151800.txt <==
+ smkconvtst-0521-151800          F  errors: 30 test/15 outfile/26 rescheck       870
+
 
 ---
-45180  P2  assertion failure in validateBucketCache from IdxShiftIndexBucketCacheAt
-       --> verify that a corrupted indexDictionary can be removed from the collection itself then 
-           reduce priority 
+45304  P2  smkconvtst failing
   m_:  
-       ready
+       
+       fix error, battery (smkconvtst) ... checkin
+
+Error 2031 , a ArgumentTypeError occurred (error 2031), reason:markWritten.b, Attempt to modify invariant object, aSymbolAssociation (ArgumentTypeError)
+/export/lithium8/users/dhenrich/3.0/m_gss64bit/battery/smkconvtst-0521-173918/3.0.1UpgradepgradeImage.out
+  :129744
+        
 
 ---
 44545  P2  GsQuery>>reversedReadStream exists but not really implemented
  n_: 
-       build
 
+       wait for 44079 to be fixed before resuming
+
+       update and rebuild first
 ---
 
 ==========================================
-44805  P2  seasidetst and friends failing in 3.3
-44650  P2  glasstst failures
-44545  P2  GsQuery>>reversedReadStream exists but not really implemented
-44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
-44282  P3  readme.txt points to location with text that seems out of date
-44185  R2  "Licensed cpuAffinity has been exceeded." running 3.2 on travis-c
-43681  P2  SharedDependencyLists is a DepList black hole (automatic gc of orphaned deplists)
-------------------------------------------
-44072  P3  Why isn't requirePathTerms in GsQueryOptions ?
-44069  M3  Verify handling index enumeration methods that modify the collection
-44012  P2  New indexing classes do not have class comments
-43851  F2  Concurrent index creation
 
 44035  P2  my selector path term example doesn't work
       ---> adapt Lisa's example to use modification tracking.

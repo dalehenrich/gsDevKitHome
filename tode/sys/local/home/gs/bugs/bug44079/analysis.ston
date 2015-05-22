@@ -1,1 +1,18 @@
-TDStringLeafNode{#name:'analysis',#contents:'',#creationTime:DateAndTime['2014-09-18T13:21:04.160325050354-07:00'],#modificationTime:DateAndTime['2014-09-18T16:25:21.4912509918212-07:00']}
+TDStringLeafNode{#name:'analysis',#contents:'  stream
+    streamQuerySpec:
+      (BtreeRangeComparisonQuerySpec
+        key: val1
+        selector:
+          (bool1
+            ifTrue: [ #\'>=\' ]
+            ifFalse: [ #\'>\' ])
+        and: val2
+        selector:
+          (bool2
+            ifTrue: [ #\'<=\' ]
+            ifFalse: [ #\'<\' ])).
+
+stream
+        streamQuerySpec:
+          (BtreeRangeComparisonQuerySpec key: theConstant selector: theOperator).
+',#creationTime:DateAndTime['2014-09-18T13:21:04.160325050354-07:00'],#modificationTime:DateAndTime['2015-05-21T15:33:52.6192700862884-07:00']}

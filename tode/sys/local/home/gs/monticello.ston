@@ -21,7 +21,7 @@ TDScriptLeafNode{#name:'monticello',#contents:'[ :topez :objIn :tokens :command 
           globalsPackage := GsPackageLibrary packageNamed: #\'Monticello_Globals\'.
           GsPackagePolicy current
             externalSymbolList: {(globalsPackage symbolDict)}.
-          (GsSession currentSession symbolList includes: globalsPackage)
+          (GsSession currentSession symbolList includes: globalsPackage symbolDict)
             ifFalse: [ 
               GsSession currentSession symbolList
                 add: globalsPackage symbolDict
@@ -48,4 +48,4 @@ EXAMPLES
   ./monticello --help
   ./monticello --prep
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-05-20T15:43:31.3259999752044-07:00'],#modificationTime:DateAndTime['2015-05-20T16:20:04.3155059814453-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-20T15:43:31.3259999752044-07:00'],#modificationTime:DateAndTime['2015-05-20T19:46:28.0643899440765-07:00']}

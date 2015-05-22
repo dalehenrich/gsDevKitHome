@@ -1,6 +1,6 @@
-TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+TDScriptLeafNode{#name:'bug_2',#contents:'[ :topez :objIn :tokens :command | 
   | opts args |
-  \"for help: ./bug -h\"
+  \"for help: ./bug_2 -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
@@ -13,7 +13,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
   opts
     at: \'help\'
     ifAbsent: [ 
-      | analysis theColl query  stream streamResult |
+      | analysis theColl query stream streamResult selectAsStreamResult |
       analysis := Dictionary new.
       Smalltalk
         at: #\'SampleIndexObject\'
@@ -49,8 +49,11 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
       theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
       query := \'each.value1 <= 1\' asQueryOn: theColl.
       stream := query readStream.
-streamResult := IdentitySet new.
-[stream atEnd] whileFalse: [ streamResult add: stream next].
+      streamResult := IdentitySet new.
+      [ stream atEnd ] whileFalse: [ streamResult add: stream next ].
+stream := theColl selectAsStream: {:each | each.value1 <= 1}.
+selectAsStreamResult := IdentitySet new.
+      [ stream atEnd ] whileFalse: [ selectAsStreamResult add: stream next ].
       analysis
         at: \'audit\' put: theColl auditIndexes;
         at: \'depMap keys\' put: DependencyList depMapKeys;
@@ -58,7 +61,9 @@ streamResult := IdentitySet new.
         at: \'nsc\' put: theColl;
         at: \'query\' put: query;
         at: \'query result\' put: query queryResult;
+        at: \'stream result\' put: streamResult;
         at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
+at: \'select asStream result\' put: selectAsStreamResult;
         at: \'shared dependency lists\'
           put: SharedDependencyLists allEntries asArray;
         yourself.
@@ -67,15 +72,15 @@ streamResult := IdentitySet new.
       TDManPage
         viewManPage:
           \'NAME
-  bug - bug sript utility template
+  bug_2 - bug_2 sript utility template
 SYNOPSIS
-  bug [-h|--help]
-  bug [--install][--clean][--create]
+  bug_2 [-h|--help]
+  bug_2 [--install][--clean][--create]
 DESCRIPTION
   Reproduce bug.
 EXAMPLES
-  ./bug --help
-  ./bug --install
-  ./bug --clean --create ; edit
+  ./bug_2 --help
+  ./bug_2 --install
+  ./bug_2 --clean --create ; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-29T16:51:07.2434558868408-07:00'],#modificationTime:DateAndTime['2015-05-21T10:21:37.0290660858154-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-21T14:30:21.208466053009-07:00'],#modificationTime:DateAndTime['2015-05-21T15:58:15.0025060176849-07:00']}

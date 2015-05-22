@@ -56,7 +56,7 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
             detect: { :each | each ~= aKP }
             ifNone: [ #() ].
           selectBlockAsStreamResult := IdentityBag new.
-          true
+          false
             ifTrue: [ 
               stream := nsc selectAsStream: { :each | each ~= aKP }.
               [ stream atEnd ]
@@ -92,4 +92,4 @@ EXAMPLES
   ./bug --help
   ./bug --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-05-20T16:47:34.3946878910064-07:00'],#modificationTime:DateAndTime['2015-05-20T17:26:04.612242937088-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-20T16:47:34.3946878910064-07:00'],#modificationTime:DateAndTime['2015-05-21T10:00:15.5737030506134-07:00']}
