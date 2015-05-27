@@ -1,23 +1,24 @@
-TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+TDScriptLeafNode{#name:'bug_3',#contents:'[ :topez :objIn :tokens :command | 
   | opts args |
-  \"for help: ./bug -h\"
+  \"for help: ./bug_3 -h\"
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
       #(\'clean\' nil #\'none\').
       #(\'create\' nil #\'none\').
-      #(\'install\' nil #\'none\').
-      #(\'samples\' nil #\'required\')}
+      #(\'install\' nil #\'none\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
       args := operands ].
   opts
     at: \'help\'
     ifAbsent: [ 
-      | samples analysis theColl query stream streamResult streamReversedResult fStream rStream |
+      | analysis theColl query stream streamResult  |
       analysis := Dictionary new.
-      samples := 5.
-      opts at: \'samples\' ifPresent: [ :arg | samples := arg asNumber ].
+      Smalltalk
+        at: #\'SampleIndexObject\'
+        ifAbsent: [ opts at: \'install\' put: nil ].
       opts
         at: \'install\'
         ifPresent: [ :ignored | 
@@ -36,51 +37,37 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
           nsc := IdentityBag new.
           UserGlobals at: #\'coll\' put: nsc.
           cls := Smalltalk at: #\'SampleIndexObject\'.
-          1 to: samples do: [ :index | 
+          1 to: 5 do: [ :index | 
             | sample |
             sample := cls new.
             sample
               value1: index;
               yourself.
-            nsc add: sample.
-            index \\\\ 1000 == 0
-              ifTrue: [ topez commitTransaction ] ].
-topez commitTransaction.
-          MCPlatformSupport
-            commitOnAlmostOutOfMemoryDuring: [ 
-              nsc
-                createEqualityIndexOn: \'value1\'
-                  withLastElementClass: SmallInteger;
-                yourself ].
-topez commitTransaction ].
+            nsc add: sample ].
+          nsc
+            createEqualityIndexOn: \'value1\' withLastElementClass: SmallInteger;
+            yourself ].
       theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
-      self halt.
-      query := (\'each.value1 <= limit\' asQueryOn: theColl)
-        bind: \'limit\' to: samples;
-        yourself.
+      query := \'each.value1 <= 1\' asQueryOn: theColl.
       stream := query readStream.
-      streamResult := OrderedCollection new.
+      streamResult := IdentitySet new.
       [ stream atEnd ] whileFalse: [ streamResult add: stream next ].
-      true
-        ifTrue: [ 
-          stream := query reversedReadStream.
-          streamReversedResult := OrderedCollection new.
-          [ stream atEnd ] whileFalse: [ streamReversedResult add: stream next ] ].
-      fStream := query readStream.
-      rStream := fStream reversed.
+      stream := theColl selectAsStream: { :each | each.value1 <= 1 }.
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | oc |
+          oc := OrderedCollection new.
+          1 to: 10 do: [ :each | oc add: stream next ] ].
       analysis
         at: \'audit\' put: theColl auditIndexes;
-        at: \'compare\'
-          put:
-            {fStream.
-              rStream};
         at: \'depMap keys\' put: DependencyList depMapKeys;
         at: \'depMap values\' put: DependencyList depMapValues;
         at: \'nsc\' put: theColl;
         at: \'query\' put: query;
         at: \'query result\' put: query queryResult;
         at: \'stream result\' put: streamResult;
-        at: \'stream reversed result\' put: streamReversedResult;
+        at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
         at: \'shared dependency lists\'
           put: SharedDependencyLists allEntries asArray;
         yourself.
@@ -89,16 +76,15 @@ topez commitTransaction ].
       TDManPage
         viewManPage:
           \'NAME
-  bug - bug sript utility template
+  bug_3 - bug_3 sript utility template
 SYNOPSIS
-  bug [-h|--help]
-  bug [--install][--clean][--create][--samples=<sample-count>]
+  bug_3 [-h|--help]
+  bug_3 [--install][--clean][--create][--boom]
 DESCRIPTION
   Reproduce bug.
 EXAMPLES
-  ./bug --help
-  ./bug --install
-  ./bug --clean --create ; edit
-  ./bug --clean --create --samples=2000; edit
+  ./bug_3 --help
+  ./bug_3 --install
+  ./bug_3 --clean --create --boom; edit #expect past end error
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-29T16:51:07.2434558868408-07:00'],#modificationTime:DateAndTime['2015-05-22T20:14:50.75420904159546-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-05-22T11:25:56.61451601982117-07:00'],#modificationTime:DateAndTime['2015-05-22T11:36:02.869040966033936-07:00']}

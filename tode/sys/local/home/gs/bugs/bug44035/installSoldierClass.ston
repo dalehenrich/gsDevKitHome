@@ -64,7 +64,7 @@ rank := newRank\';
       cls2 compileMissingAccessingMethods.
       cls2
         compile:
-            \'modifiedObject: anObject data: ar
+            \'modifiedObject: anObject userData: ar
   | newKey indexObj vals |
   newKey := anObject rankOrder.
   indexObj := ar at: 1.
@@ -146,4 +146,4 @@ EXAMPLES
   ./installSoldierClass --help
   ./installSoldierClass -h
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-05-15T14:55:05.6473569869995-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:08:20.3978600502014-07:00'],#modificationTime:DateAndTime['2015-05-27T11:21:58.69412088394165-07:00']}

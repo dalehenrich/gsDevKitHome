@@ -1,5 +1,6 @@
 TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
-#/home/gs/ernie --prep
+/home/gs/ernie --prep
+/home/gs/dev --ernie # set the GsQuery queryOptions for ernie tests
 /home/go
 limit protocol false
-',#creationTime:DateAndTime['2015-04-20T17:30:31.3597249984741-07:00'],#modificationTime:DateAndTime['2015-05-21T09:34:26.4711470603942-07:00']}
+',#creationTime:DateAndTime['2015-04-20T17:30:31.3597249984741-07:00'],#modificationTime:DateAndTime['2015-05-26T10:46:52.52507996559143-07:00']}

@@ -136,6 +136,7 @@ DESCRIPTION
 EXAMPLES
   ./bug --help
   ./bug --clean --reset
+  ./bug --clean --create; edit
   ./bug --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:05:31.9967539310455-07:00'],#modificationTime:DateAndTime['2015-04-30T20:43:26.7667949199676-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:05:31.9967539310455-07:00'],#modificationTime:DateAndTime['2015-05-27T11:15:45.02080702781677-07:00']}

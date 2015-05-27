@@ -1,7 +1,8 @@
-! ------------------- Class definition for SelectorPathTermModificationTracker
+! ------------------- Class definition for SoldierModificationTracker
+expectvalue /Class
 doit
-Object subclass: 'SelectorPathTermModificationTracker'
-	instVarNames: #( trackedOffset selectorPathTerm selector)
+Object subclass: 'SoldierModificationTracker'
+	instVarNames: #( trackedOffset selectorPathTerm)
 	classVars: #()
 	classInstVars: #()
 	poolDictionaries: #()
@@ -10,34 +11,26 @@ Object subclass: 'SelectorPathTermModificationTracker'
 	options: #()
 
 %
-
+expectvalue /Class
 doit
-SelectorPathTermModificationTracker comment: 
+SoldierModificationTracker comment: 
 ''
 %
+expectvalue /Class
 doit
-SelectorPathTermModificationTracker category: 'Selector-PathTerm-Example'
+SoldierModificationTracker category: 'Selector-PathTerm-Example'
 %
-! ------------------- Remove existing behavior from SelectorPathTermModificationTracker
+! ------------------- Remove existing behavior from SoldierModificationTracker
 doit
-SelectorPathTermModificationTracker removeAllMethods.
-SelectorPathTermModificationTracker class removeAllMethods.
+SoldierModificationTracker removeAllMethods.
+SoldierModificationTracker class removeAllMethods.
 %
 set compile_env: 0
-! ------------------- Class methods for SelectorPathTermModificationTracker
-! ------------------- Instance methods for SelectorPathTermModificationTracker
+! ------------------- Class methods for SoldierModificationTracker
+! ------------------- Instance methods for SoldierModificationTracker
 category: 'as yet unclassified'
-method: SelectorPathTermModificationTracker
-btreeAt: anObject put: ar
-  | newKey indexObj vals |
-  newKey := anObject perform: self selector.
-  indexObj := ar at: 1.
-  vals := ar at: 2.
-  vals do: [ :val | indexObj btreeAt: newKey put: anObject ]
-%
-category: 'as yet unclassified'
-method: SelectorPathTermModificationTracker
-modifyingObject: anObject atOffset: anOffset to: newKey
+method: SoldierModificationTracker
+aboutToModifyObject: anObject atOffset: anOffset to: newKey
   | pathTerm vals |
   anOffset == self trackedOffset
     ifFalse: [ ^ self ].
@@ -53,54 +46,50 @@ modifyingObject: anObject atOffset: anOffset to: newKey
         (self updateIndex: indexObj forKeysWithValue: anObject toNewKey: newKey)} ].
   ^ vals
 %
-category: 'accessing'
-method: SelectorPathTermModificationTracker
-selector
-  selector
-    ifNil: [ 
-      selector := (selectorPathTerm name copyFrom: 2 to: selectorPathTerm name size)
-        asSymbol ].
-  ^ selector
-%
-category: 'accessing'
-method: SelectorPathTermModificationTracker
-selector: anObject
-
-   selector := anObject
+category: 'as yet unclassified'
+method: SoldierModificationTracker
+modifiedObject: anObject userData: ar
+  | newKey indexObj vals |
+  newKey := anObject rankOrder.
+  indexObj := ar at: 1.
+  vals := ar at: 2.
+  vals do: [ :val | indexObj btreeAt: newKey put: anObject ]
 %
 category: 'Accessing'
-method: SelectorPathTermModificationTracker
+method: SoldierModificationTracker
 selectorPathTerm
 	^selectorPathTerm
 %
 category: 'Updating'
-method: SelectorPathTermModificationTracker
+method: SoldierModificationTracker
 selectorPathTerm: newValue
 	selectorPathTerm := newValue
 %
 category: 'Accessing'
-method: SelectorPathTermModificationTracker
+method: SoldierModificationTracker
 trackedOffset
 	^trackedOffset
 %
 category: 'Updating'
-method: SelectorPathTermModificationTracker
+method: SoldierModificationTracker
 trackedOffset: newValue
 	trackedOffset := newValue
 %
 category: 'as yet unclassified'
-method: SelectorPathTermModificationTracker
+method: SoldierModificationTracker
 updateIndex: indexObj forKeysWithValue: anObject toNewKey: newValue
   | aKey stream vals spec |
   " first we need to find all values that have aKey as the key "
-  aKey := anObject perform: self selector.
+  aKey := anObject
+    perform:
+      (selectorPathTerm name copyFrom: 2 to: selectorPathTerm name size) asSymbol.
   stream := indexObj asQueryEvaluator
     _findAllValuesGreaterThanKey: aKey
     andEquals: true.
   vals := {}.
   [ stream _btreeAtEnd not and: [ stream _peekKey _idxForSortEqualTo: aKey ] ]
     whileTrue: [ 
-      aKey == stream _peekKey
+      aKey == stream _peekKey 
         ifTrue: [ 
           | peeked |
           "pick out the values at the given key that are identical to anObject"

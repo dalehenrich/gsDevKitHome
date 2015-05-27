@@ -4,10 +4,11 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
   command
     getOptsMixedLongShort:
       {#(\'help\' $h #\'none\').
-#(\'j\' nil #\'none\').
-#(\'k\' nil #\'none\').
-#(\'l\' nil #\'none\').
-#(\'m\' nil #\'none\').
+      #(\'j\' nil #\'none\').
+      #(\'k\' nil #\'none\').
+      #(\'l\' nil #\'none\').
+      #(\'m\' nil #\'none\').
+      #(\'n\' nil #\'none\').
       #(\'path\' $p #\'required\')}
     optionsAndArguments: [ :options :operands | 
       opts := options.
@@ -37,7 +38,10 @@ TDScriptLeafNode{#name:'fileout',#contents:'[ :topez :objIn :tokens :command |
                       opts
                         at: \'m\'
                         ifPresent: [ :ignored | path := \'/export/foos2/users/dhenrich/3.0/m_gss64bit\' ]
-                        ifAbsent: [ nil error: \'Must specify --path option\' ] ] ] ] ].
+                        ifAbsent: [opts
+                        at: \'n\'
+                        ifPresent: [ :ignored | path := \'/export/foos2/users/dhenrich/3.0/n_gss64bit\' ]
+                        ifAbsent: [ nil error: \'Must specify --path option\' ]] ] ] ] ].
       classToFilenameMap := topez
         evaluateCommandString: \'/home/gs/classToFilenameMap/\'.
       externalMethodMap := IdentityDictionary new.
@@ -95,4 +99,4 @@ EXAMPLES
   ./fileout --l # /export/foos2/users/dhenrich/3.0/l_gss64bit
   ./fileout --m # /export/foos2/users/dhenrich/3.0/m_gss64bit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-04-30T10:48:19.1554470062255-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-08-28T05:45:25.5274369716644-07:00'],#modificationTime:DateAndTime['2015-05-22T15:09:52.20308208465576-07:00']}

@@ -33,17 +33,8 @@ System commit\' ].
 System commit\' ].
   opts
     at: \'ernie\'
-    ifPresent: [ :ignored | 
-      topez evaluateCommandString: \'/home/ernie/dev --prep\'.
-      expression := \'GsQuery defaultQueryOptions: (GsQueryOptions new
-    setApplyDeMorgansLaws;
-    setConsolidateEnumerablePredicates;
-    setConsolidateRangePredicates;
-    setConsolidateUnaryConstantPredicates;
-    setNormalizePredicates;
-    setRemoveRedundantPredicates;
-    setReorderPredicates;
-    setTransformCommonPaths)\' ].
+    ifPresent: [ :ignored | expression := \'GsQuery defaultQueryOptions: (GsQueryOptions default - GsQueryOptions autoOptimize).
+System commit\' ].
   opts at: \'netldi\' ifPresent: [ :optValue | netldiName := optValue ].
   verbose
     ifTrue: [ 
@@ -169,7 +160,7 @@ System commit\' ].
         ifTrue: [ ^ true ] ].
   ^ (aBehavior canWriteMethodsEnv: 0) not\'.
           System commit.
-ClassOrganizer clearCachedOrganizer.
+          ClassOrganizer clearCachedOrganizer.
           topez evaluateCommandString: \'/home/gs/installLooseChanges --prep\' ] ]
     ifPresent: [ :ignored | 
       TDManPage
@@ -205,4 +196,4 @@ EXAMPLES
   ./dev --legacyCompareMode
   ./dev --unicodeCompareMode
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-05-01T13:57:13.2781629562377-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-09-16T14:17:15.4448640346527-07:00'],#modificationTime:DateAndTime['2015-05-26T10:57:42.608393907547-07:00']}
