@@ -6,8 +6,7 @@ Object subclass: 'SoldierModificationTracker'
 	classVars: #()
 	classInstVars: #()
 	poolDictionaries: #()
-	inDictionary: ''
-	category: 'Selector-PathTerm-Example'
+	inDictionary: UserGlobals
 	options: #()
 
 %
@@ -28,7 +27,7 @@ SoldierModificationTracker class removeAllMethods.
 set compile_env: 0
 ! ------------------- Class methods for SoldierModificationTracker
 ! ------------------- Instance methods for SoldierModificationTracker
-category: 'as yet unclassified'
+category: 'Modification Tracking'
 method: SoldierModificationTracker
 aboutToModifyObject: anObject atOffset: anOffset to: newKey
   | pathTerm vals |
@@ -46,7 +45,7 @@ aboutToModifyObject: anObject atOffset: anOffset to: newKey
         (self updateIndex: indexObj forKeysWithValue: anObject toNewKey: newKey)} ].
   ^ vals
 %
-category: 'as yet unclassified'
+category: 'Modification Tracking'
 method: SoldierModificationTracker
 modifiedObject: anObject userData: ar
   | newKey indexObj vals |
@@ -75,7 +74,7 @@ method: SoldierModificationTracker
 trackedOffset: newValue
 	trackedOffset := newValue
 %
-category: 'as yet unclassified'
+category: 'Private'
 method: SoldierModificationTracker
 updateIndex: indexObj forKeysWithValue: anObject toNewKey: newValue
   | aKey stream vals spec |

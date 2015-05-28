@@ -1,0 +1,30 @@
+TDSmalltalkLeafNode{#name:'bug44140',#contents:'true
+    ifTrue: [ 
+      | eca ecb mbstr |
+      eca := Array new: 256.
+      eca
+        at: $A codePoint + 1 put: $a;
+        at: $B codePoint + 1 put: $b;
+        at: $C codePoint + 1 put: $3.
+      ecb := eca copy.
+      ecb at: $c codePoint + 1 put: (Character codePoint: 256).
+      (mbstr := String new) add: (Character codePoint: 256).
+      Smalltalk
+        at: #\'ECA\' put: eca;
+        at: #\'ECB\' put: ecb;
+        at: #\'MBSTR\' put: mbstr ].
+  true
+    ifTrue: [ \'ABC\' encodeUsing: (String new: 256) ]
+    ifFalse: [ 
+      true
+        ifTrue: [ (\'ABC\' encodeUsing: ECA) = \'ab3\' ]
+        ifFalse: [ 
+          true
+            ifTrue: [ (\'ABc\' encodeUsing: ECA) = nil ]
+            ifFalse: [ 
+              true
+                ifTrue: [ \'ABc\' encodeUsing: ECB ]
+                ifFalse: [ 
+                  true
+                    ifTrue: [ \'ABC\' encodeUsing: 55 ]
+                    ifFalse: [ MBSTR encodeUsing: ECA = nil ] ] ] ] ]',#creationTime:DateAndTime['2015-05-27T19:01:36.00320601463318-07:00'],#modificationTime:DateAndTime['2015-05-27T20:35:04.87037205696106-07:00']}

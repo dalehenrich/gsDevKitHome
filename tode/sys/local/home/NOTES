@@ -1,17 +1,11 @@
-44072  P3  Why isn't requirePathTerms in GsQueryOptions ?
   k_:  
 
-       release note ... yes
-
-      battery, commit ... test coverage to Alex
-        ERROR: IXQueryOptionalNamedPathTermTestCase #testQuery1b
-
 ---
-44140  P2  better prim failure code needed for String>>encodeUsing: and MultiByteString>>encodeUsing: (primitive 654)
-
 44805  P2  seasidetst and friends failing in 3.3
 44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
   l_:  removing tests a scaling back on expectations: 
+       - copy mcz file to mcz repos when done ...
+       - release a version of Seaside3 that works for GemStone 3.3
 
      /ernie/glassBug38177tst.pl - build test only anyway
      /ernie/glass1tst.pl        - full glass1 install (GsUpgrader run) ... run all unit tests
@@ -19,47 +13,32 @@
      /ernie/monticellotst.pl    = monticello bootstrap tests 
      /ernie/seasidetst.pl       - full glass1 and seaside install ... run all unit tests
 
-     rerun ... 
-       - legitimate glass1tst bug related to ReadStream work (probably) 
-       - 100+ failures in seasidetst
-     - Grease, GLASS1, and Seaside31 updated for GemStone 3.3
-     - add zinc, gsdevkithome, ??? test runs
 
-     build, battery, ..... (checkin 44140 changes need ernie/smk) ... conversion tests ... copy mcz files to http repos (44474) ... add zinc tests?
-       
        battery test situation
        ----------------------
-==> test_results/battery_1/oneliner0526-164653.txt <==
- seasidetst-0526-164653          F  errors: 1 test/0 outfile/0 rescheck          4230
+==> test_results/battery_1/oneliner0528-070438.txt <==
+ seasidetst-0528-070438          F  errors: 4 test/0 outfile/0 rescheck          2031
 
-==> test_results/battery_2/oneliner0526-164653.txt <==
- glass1tst-0526-164653           P                                               2302
+==> test_results/battery_2/oneliner0528-070438.txt <==
+ glass1tst-0528-070438           P                                               2395
 
-==> test_results/battery_3/oneliner0522-134225.txt <==
- glasstst-0522-134225            P                                               1050
+==> test_results/battery_3/oneliner0528-070438.txt <==
+ glassBug38177tst-0528-070438    P                                               1367
 
-==> test_results/battery_4/oneliner0522-134225.txt <==
- monticellotst-0522-134225       P                                               193
+==> test_results/battery_4/oneliner0528-070438.txt <==
+ monticellotst-0528-070438       P                                               187
 
-==> test_results/battery_5/oneliner0522-134225.txt <==
- glassBug38177tst-0522-134225    P                                               1532
+==> test_results/battery_5/oneliner0528-070438.txt <==
+ seasideconvtst-0528-070438      F  errors: 4 test/47 outfile/45 rescheck        2152
 
+==> test_results/battery_6/oneliner0528-070438.txt <==
+ smkconvtst-0528-070438          P                                               748
 
 ---
   m_:  
 
 ---
-44035  P2  my selector path term example doesn't work
-      ---> adapt Lisa's example to use modification tracking.
-           consider additional more complicated examples of modification tracking scenario's
-           some of these examples should be added to the selector based path term tests
-           this example needs to be folded into Ernie ....
-
   n_:  
-      1. update SolderNscModificationTracker to add/remove ojbect to/from index
-      2. attach smalltalk to bug
-      3. but code in examples directory
-      4. pass to Alex for test creation and example development
 
 ---
 

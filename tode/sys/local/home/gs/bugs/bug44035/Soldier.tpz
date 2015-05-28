@@ -1,0 +1,84 @@
+set user DataCurator p swordfish
+
+login
+
+input Soldier.gs
+input SoldierNscModificationTracker.gs
+input SoldierModificationTracker.gs
+
+run
+  | nsc selectorTracker nscTracker indexList selectorPathTerm terms 
+    indexedQueryResults selectQueryResults |
+  "Create nsc with index"
+  nsc := IdentityBag new.
+  GsIndexSpec new
+    equalityIndex: 'each.#rankOrder' lastElementClass: SmallInteger;
+    createIndexesOn: nsc.
+  "Create modification tracking objects"
+  indexList := nsc _indexedPaths.
+  terms := {}.
+  indexList
+    _putAllCommonPathTermsForPathArray: '#rankOrder' asArrayOfPathTerms
+    into: terms.
+  selectorPathTerm := terms first.
+  selectorTracker := SoldierModificationTracker new
+    selectorPathTerm: selectorPathTerm;
+    trackedOffset: 2;
+    yourself.
+  nscTracker := SoldierNscModificationTracker new
+    selectorModificationTracker: selectorTracker;
+    yourself.
+  nsc _setModificationTrackingTo: nscTracker.
+  "Create collection of soliders"
+  nsc
+    add:
+        (Soldier new
+            name: 'Patton';
+            rank: #'General';
+            yourself);
+    add:
+        (Soldier new
+            name: 'Sanders';
+            rank: #'Colonel';
+            yourself);
+    add:
+        (Soldier new
+            name: 'Houlihan';
+            rank: #'Major';
+            yourself);
+    add:
+        (Soldier new
+            name: 'Vimes';
+            rank: #'Captain';
+            yourself);
+    add:
+        (Soldier new
+            name: 'Dan';
+            rank: #'Lieutenant';
+            yourself);
+    add:
+        (Soldier new
+            name: 'Pyle';
+            rank: #'Private';
+            yourself);
+    yourself.
+  "Modify a Soldier"
+  (nsc detect: [ :each | each name = 'Dan' ] ifNone: [ nil ])
+    promoteTo: #'General'. 
+  "Add a new Soldier"
+  nsc
+    add:
+      (Soldier new
+        name: 'Problem';
+        rank: #'Major';
+        yourself).
+  "Remove a Soldier"
+  nsc remove: (nsc detect: [ :each | each name = 'Houlihan' ] ifNone: [ nil ]).
+  indexedQueryResults := ((GsQuery fromString: 'each.#rankOrder > rank')
+    bind: 'rank' to: (Soldier rankOrderForRank: #'Captain');
+    on: nsc;
+    yourself) asArray.
+  selectQueryResults := nsc
+    select: [ :ea | ea rankOrder > (Soldier rankOrderForRank: #'Captain') ].
+  ^{indexedQueryResults. selectQueryResults asArray}
+%

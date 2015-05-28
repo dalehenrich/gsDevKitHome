@@ -6,8 +6,7 @@ Object subclass: 'Soldier'
 	classVars: #( Ranks)
 	classInstVars: #()
 	poolDictionaries: #()
-	inDictionary: ''
-	category: 'Selector-PathTerm-Example'
+	inDictionary: UserGlobals
 	options: #()
 
 %
@@ -88,4 +87,9 @@ category: 'as yet unclassified'
 method: Soldier
 rankOrder
 ^self class rankOrderForRank: rank.
+%
+
+doit
+Soldier initialize.
+true
 %

@@ -101,7 +101,14 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command |
           | nsc |
           nsc := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
           (nsc detect: [ :each | each name = \'Dan\' ] ifNone: [ nil ])
-            promoteTo: #\'General\' ].
+            promoteTo: #\'General\'.
+          nsc
+            add:
+              ((Smalltalk at: #\'Soldier\') new
+                name: \'Problem\';
+                rank: #\'Major\';
+                yourself) .
+nsc remove: ((nsc detect: [ :each | each name = \'Houlihan\' ] ifNone: [ nil ])).].
       postBoomQuery := ((GsQuery fromString: \'each.#rankOrder > rank\')
         bind: \'rank\'
           to: ((Smalltalk at: #\'Soldier\') rankOrderForRank: #\'Captain\');
@@ -139,4 +146,4 @@ EXAMPLES
   ./bug --clean --create; edit
   ./bug --clean --create --boom; edit
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:05:31.9967539310455-07:00'],#modificationTime:DateAndTime['2015-05-27T11:15:45.02080702781677-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-04-30T11:05:31.9967539310455-07:00'],#modificationTime:DateAndTime['2015-05-27T14:14:42.96042203903198-07:00']}

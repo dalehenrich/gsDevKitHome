@@ -6,8 +6,7 @@ Object subclass: 'SoldierNscModificationTracker'
 	classVars: #()
 	classInstVars: #()
 	poolDictionaries: #()
-	inDictionary: ''
-	category: 'Selector-PathTerm-Example'
+	inDictionary: UserGlobals
 	options: #()
 
 %
