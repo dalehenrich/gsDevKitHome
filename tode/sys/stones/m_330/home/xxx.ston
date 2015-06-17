@@ -1,0 +1,12 @@
+TDStringLeafNode{#name:'xxx',#contents:'.        -> \' \u00C3\u0083\u00C2\u00BF\u00C3\u0084 \'
+..       -> anAnsiReadWriteStream
+(class)@ -> String
+(oop)@   -> 252827905
+(size)@  -> 5
+(utf8)@  -> #[ 0 195 131 194 191 195 132 194 128]
+1@       -> $ 
+2@       -> $\u00C3\u0083
+3@       -> $\u00C2\u00BF
+4@       -> $\u00C3\u0084
+5@       -> $ 
+',#creationTime:DateAndTime['2015-06-12T13:41:38.50798106193542-07:00'],#modificationTime:DateAndTime['2015-06-12T13:41:44.79146790504456-07:00']}

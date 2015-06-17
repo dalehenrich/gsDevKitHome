@@ -1,0 +1,115 @@
+TDStringLeafNode{#name:'analysis',#contents:'
+
+Utf8>>printString ... look at ByteArray>>printNonRecursiveRepresentationOn:recursionSet: because that is the method added by tODE .... and that changed ... Utf8 and ByteArray cannot reference themselves and shouldn\'t use printNonRecursiveRepresentationOn:recursionSet: anyway, but ByteArray is presumably subject to the same bug as Utf8 in this case ....
+
+GRUtf8CodecTest>>testCodecUtf8BorderLineString
+GRCountingStreamTest>>#testNextPut
+
+
+==> test_results/battery_1/oneliner0612-133158.txt <==
+ ernie0tst-0612-133158           F  errors: 2 test/0 outfile/0 rescheck          5780
+
+==> test_results/battery_2/oneliner0612-133158.txt <==
+ gsdevkittst-0612-133158         F                                               259
+
+==> test_results/battery_3/oneliner0612-133158.txt <==
+ seasidebintst-0612-133158       F                                               61
+
+dkh 6/15/2015 09:40
+-------------------
+3.2
+---
+.        -> \' \u00C3\u0083\u00C2\u00BF\u00C3\u0084 \'
+..       -> anAnsiReadWriteStream
+(class)@ -> String
+(oop)@   -> 295678721
+(size)@  -> 5
+(utf8)@  -> #[ 0 195 131 194 191 195 132 194 128]
+1@       -> $ 
+2@       -> $\u00C3\u0083
+3@       -> $\u00C2\u00BF
+4@       -> $\u00C3\u0084
+5@       -> $ 
+
+3.3
+---
+.        -> \' \u00C3\u00BF\u00C3\u0084 \'
+..       -> anAnsiReadWriteStream
+(class)@ -> String
+(oop)@   -> 213473281
+(size)@  -> 4
+(utf8)@  -> #[ 0 195 191 195 132 194 128]
+1@       -> $ 
+2@       -> $\u00C3\u00BF
+3@       -> $\u00C3\u0084
+4@       -> $ 
+
+
+dkh 6/15/2015 10:04
+-------------------
+Need to implement asUtf8EncodedString to replace Utf8>>asString ... deprecate Utf8>>asString as the base implementation is correct ... can we get something better than changeClassTo:? 
+
+/tmp/*.zip need to be cleaned up for all of the glass/gsdevkit tests ...
+
+dkh 6/15/2015 13:37
+-------------------
+asUtf8EncodedString needs to be backported to GLASS so that Grease can be loaded/initialized without a problem:
+
+  Core322x (Core322x-dkh.1) --> Core322x-dkh.2
+  Core24x  (Core24x-dkh.2)  --> Core24x-dkh.2
+  Core300  (Core300-dkh.3)  --> Core300-dkh.2
+  Core31x  (Core31x-dkh.5)  --> Core31x-dkh.2
+
+
+322x
+--------------------
+CharacterCollection>>encodeAsUTF8intoString
+Issue4Test
+Issue4Test>>issue4CategoryName
+Issue4Test>>issue4ClassName
+Issue4Test>>issue4Definition
+Issue4Test>>tearDown
+Issue4Test>>testByteSubclassOfByteClass
+SystemOrganizer class>>initialize
+SystemOrganizer class>>resetSystemOrganization
+Utf8>>asString
+
+24x
+--------------------
+Object>>_primitiveFailed:args:
+ CharacterCollection>>encodeAsUTF8intoString
+
+300
+--------------------
+CharacterCollection>>encodeAsUTF8intoString
+SystemOrganizer class>>initialize
+SystemOrganizer class>>resetSystemOrganization
+
+31x
+--------------------
+CharacterCollection>>encodeAsUTF8intoString
+Issue4Test
+Issue4Test>>issue4CategoryName
+Issue4Test>>issue4ClassName
+Issue4Test>>issue4Definition
+Issue4Test>>tearDown
+Issue4Test>>testByteSubclassOfByteClass
+SystemOrganizer class>>initialize
+SystemOrganizer class>>resetSystemOrganization
+Utf8>>asString
+
+dkh 6/16/2015 11:19
+-------------------
+break method MetacelloFetchingMCSpecLoader scheduleFetchFor:externalReference:
+run
+  Metacello registry
+   baseline: \'GLASS1\';
+   get.
+ Metacello registry
+   baseline: \'GLASS1\';
+   ignoreImage;
+   load: \'Core\'.
+%
+
+
+',#creationTime:DateAndTime['2015-06-12T15:21:19.44896006584167-07:00'],#modificationTime:DateAndTime['2015-06-16T12:37:18.58832097053528-07:00']}

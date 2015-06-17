@@ -1,47 +1,81 @@
-  k_:  
-
+  k_, gs_3106:
+      testing GsUpgrader>>upgradeGLASS1 failures (MNU from Grease initializer)
 ---
-44805  P2  seasidetst and friends failing in 3.3
-44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
-  l_:  removing tests a scaling back on expectations: 
-       - copy mcz file to mcz repos when done ...
-       - release a version of Seaside3 that works for GemStone 3.3
-
-     /ernie/glassBug38177tst.pl - build test only anyway
-     /ernie/glass1tst.pl        - full glass1 install (GsUpgrader run) ... run all unit tests
-     /ernie/glasstst.pl         - install master run only 
-     /ernie/monticellotst.pl    = monticello bootstrap tests 
-     /ernie/seasidetst.pl       - full glass1 and seaside install ... run all unit tests
-
-
-       battery test situation
-       ----------------------
-==> test_results/battery_1/oneliner0528-070438.txt <==
- seasidetst-0528-070438          F  errors: 4 test/0 outfile/0 rescheck          2031
-
-==> test_results/battery_2/oneliner0528-070438.txt <==
- glass1tst-0528-070438           P                                               2395
-
-==> test_results/battery_3/oneliner0528-070438.txt <==
- glassBug38177tst-0528-070438    P                                               1367
-
-==> test_results/battery_4/oneliner0528-070438.txt <==
- monticellotst-0528-070438       P                                               187
-
-==> test_results/battery_5/oneliner0528-070438.txt <==
- seasideconvtst-0528-070438      F  errors: 4 test/47 outfile/45 rescheck        2152
-
-==> test_results/battery_6/oneliner0528-070438.txt <==
- smkconvtst-0528-070438          P                                               748
-
+  l_:  
+      testing build slaved to the mcz files from m_
 ---
   m_:  
+     45383  P2  fastseaside build failure
+       - Coordinate Grease, GLASS1 and GsUpgrader fixes ...
+
+       - Grease changes made ... and rerun tests
+         - smk, ernie, seasidetst, glass*, gsdevkit* (failures listed below) and retesting 
+
+       - GsUpgrader testing: testGsUpgrader in gs_3106 fails as expected for 3.1.0.6 and 3.3.
+         Need to create local directory with GLASS configs where new version of GLASS and GSCore
+         can be swapped in and out
+
+       - /tmp/*.zip need to be cleaned up for all of the glass/gsdevkit tests ...
+       - tODE printString handling for Utf8
+       - Utf8 printing
+---
+  n_:
+      1. compressed backup
+      2. validate backup/snapshot
+      3. upgrade script from web*
+      4. enhanced profiling options (44560) for 3.3 (45378 fixed ... ready for testing)
+      5. `ol` smalltalk api
+      6. cache stats command/api
+      7. GemStone version in console label
+
+      44560  F2  profiling of latency sources
+      45378  P2  profiling object creation should be controlled by ProfMonitor>>setOptions: 
+                 like other alternate tally schemes
 
 ---
-  n_:  
 
----
+----------
+LITHIUM_m:
+
+==> test_results/battery_1/oneliner0616-152915.txt <==
+ gsdevkittst-0616-152915         F                                               770
+
+==> test_results/battery_2/oneliner0616-152915.txt <==
+ seasidebintst-0616-152915       F                                               60
+
+==> test_results/battery_3/oneliner0616-152915.txt <==
+ seasidetst-0616-152915          F  errors: 2 test/0 outfile/0 rescheck          4665
+
+  #1 [139426561 sz:39  String] SqueakTests>>#testDateAndTimeFromString
+  #2 [139427329 sz:34  String] SqueakTests>>#testUnescapePercents
+  #3 [139442945 sz:51  String] GsSqueakCommonTests>>#testEncodeAndUnescapePercents
+  #4 [139446785 sz:53  String] SentButNotImplementedTest>>#testSentButNotImplemented
+'Sent but not implemented: #''_decompressZipArchive'''
+'Sent but not implemented: #''@-'''
+'Sent but not implemented: #''_stepPointForIp:level:isNative:'''
+  #5 [139450881 sz:39  String] GsSqueakCommonTests>>#testEncodeForHTTP
+  #6 [139451137 sz:55  String] GsSqueakCommonTests>>#testEncodeForHTTPWithTextEncoding
+
+==> test_results/battery_4/oneliner0616-152915.txt <==
+ glass1tst-0616-152915           P                                               3635
+
+==> test_results/battery_5/oneliner0616-152915.txt <==
+ glasstst-0616-152915            P                                               1381
+
+==> test_results/battery_6/oneliner0616-152915.txt <==
+ monticellotst-0616-152915       P                                               198
+
+==> test_results/battery_7/oneliner0616-152915.txt <==
+ glassBug38177tst-0616-152915    P                                               2168
+----------
 
 ==========================================
 
- 
+44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
+       - copy mcz files to GemSource when things stabilize a bit ...
+45390  P2  FileTree uses `endodeAsUtf8 asString` combo which should be replaced with encodeAsUTF8intoString
+       - FileTree needs work for 3.3 as it is sending encodeAsUtf8 ... should be using 
+         encodeAsUTF8intoString but that has dependency implications ... and bootstrap implications
+       - battery tests needed
+45391  P2  STON needs to be ported to 3.3
+       - battery tests needed

@@ -1,0 +1,11 @@
+TDStringLeafNode{#name:'profiling',#contents:'from 44560:
+
+Note that profiling of page faults and object faults will detect
+the change in the number of faults at start of a method.
+Thus a sample at the start of a method will be seeing deltas
+from execution of the previous method.
+Total faults will be correctly attributed to the caller of the method being entered.
+
+[]This implies that the caller methods should be displaying their total ... instead of tally since the total is correct and the tally is misleading...
+
+[]Also need to worry about clientList being stored in object and object state (total vs list), when cloning the window state doesn\'t match the object state',#creationTime:DateAndTime['2015-06-11T13:12:33.32827210426331-07:00'],#modificationTime:DateAndTime['2015-06-12T11:30:40.8841290473938-07:00']}

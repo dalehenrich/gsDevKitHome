@@ -7,6 +7,12 @@ GsUpgrader batchErrorHandlingDo: [
 
   Transcript
     cr;
+    show: '-----Upgrade GLASS using gsUpgrader ... before locking'.
+
+  GsUpgrader upgradeMetacello.
+
+  Transcript
+    cr;
     show: 'Lock GLASS1: filetree:///opt/git/glass/repository'.
   GsDeployer
     bulkMigrate: [ 
@@ -26,17 +32,17 @@ GsUpgrader batchErrorHandlingDo: [
 
   Transcript
     cr;
-    show: '-----Upgrade GLASS1 using gsUpgrader'.
-
-  GsUpgrader upgradeGLASS1.
-
-  Transcript
-    cr;
-    show: '-----Lock and Load Grease: filetree:///opt/git/Grease/repository'.
-
+    show: 'Lock Grease: filetree:///opt/git/Grease/repository'.
   GsDeployer bulkMigrate: [
+    Metacello image
+      configuration: 'Grease';
+      unregister.
     Metacello new
       baseline: 'Grease';
       repository: 'filetree:///opt/git/Grease/repository';
-      onLock: [:ex | ex break ];
-      load: 'Grease-Core' ] ].
+      lock ].
+  Transcript
+    cr;
+    show: '-----Upgrade GLASS1 using gsUpgrader'.
+  GsUpgrader upgradeGLASS1.
+].
