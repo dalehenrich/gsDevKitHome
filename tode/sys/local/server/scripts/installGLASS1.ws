@@ -29,7 +29,7 @@ GsUpgrader batchErrorHandlingDo: [
       baseline: 'FileTree';
       repository: 'filetree:///opt/git/filetree/repository';
       lock ].
-
+false ifTrue: [ 
   Transcript
     cr;
     show: 'Lock Grease: filetree:///opt/git/Grease/repository'.
@@ -40,7 +40,7 @@ GsUpgrader batchErrorHandlingDo: [
     Metacello new
       baseline: 'Grease';
       repository: 'filetree:///opt/git/Grease/repository';
-      lock ].
+      lock ] ].
   Transcript
     cr;
     show: '-----Upgrade GLASS1 using gsUpgrader'.

@@ -1,7 +1,6 @@
 TDObjectGatewayNode{#name:'ston',#contents:'^ TDProjectSpecEntryDefinition new
     baseline: \'Ston\'
-      repository:
-        \'github://GsDevKit/ston:gemstone/repository\'
+      repository: \'github://GsDevKit/ston:v0.9.?/repository\'
       loads: #(\'Core\');
     status: #(#\'inactive\');
     locked: false;

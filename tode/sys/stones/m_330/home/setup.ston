@@ -2,4 +2,8 @@ TDTopezLeafNode{#name:'setup',#contents:'/home/gs/dev --prep
 #/home/gs/ernie --prep
 /home/go
 limit protocol false
-browse class GRUtf8CodecTest GRCountingStreamTest',#creationTime:DateAndTime['2015-04-25T09:10:25.2174680233001-07:00'],#modificationTime:DateAndTime['2015-06-15T13:18:40.77333998680115-07:00']}
+#browse class GRUtf8CodecTest GRCountingStreamTest
+project list
+browse project GsUpgrader
+
+',#creationTime:DateAndTime['2015-04-25T09:10:25.2174680233001-07:00'],#modificationTime:DateAndTime['2015-06-18T09:42:42.52573704719543-07:00']}

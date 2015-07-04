@@ -1,0 +1,16 @@
+TDSmalltalkLeafNode{#name:'tz',#contents:'| month1 month2 month3 month4 start |
+  Month starting: (Date fromString: \'04.01.2015\').
+  start := DateAndTime secondsUTC: 449564400 offset: 3600 seconds.
+  start := DateAndTime fromString: \'2015-04-01T00:00:00+01:00\'.
+  month1 := Month starting: start.
+  month2 := (Month starting: start) end.
+  month3 := DateAndTime secondsUTC: 452127599 offset: 3600 seconds.
+  month4 := DateAndTime secondsUTC: 452127599 offset: 7200 seconds.
+  Dictionary new
+    at: \'month1 start\' put: month1 start;
+    at: \'month1 end\' put: month2;
+    at: \'month3\' put: month3;
+    at: \'month4\' put: month4;
+    at: \'seconds\' put: month1 asSeconds;
+    at: \'seconds end\' put: month2 asSeconds;
+    yourself',#creationTime:DateAndTime['2015-06-30T10:55:30.74281692504883-07:00'],#modificationTime:DateAndTime['2015-06-30T13:09:00.001146078109741211-07:00']}
