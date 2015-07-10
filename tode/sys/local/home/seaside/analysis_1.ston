@@ -1,0 +1,47 @@
+TDStringLeafNode{#name:'analysis_1',#contents:'Notice that the WAToolDecoration is tranlogged and it\'s `next` iv is nottranlogged ... puzzling at first, but then it turns out that this is happening because of the snapshot mechanism ... 
+
+The snapshot **copy** is stored in the session state which is not-tranlogged. then when the snapshot is restored, the not-tranlogged copy is restored to the tranlogged parent object ... another copy might be required on restore?
+ 
+------------------------
+Internal server malfunction
+
+a ImproperOperation occurred (error 2424), Commits are disabled until after the next abort because: \'object with id 64812545 references not-tranlogged obj with id 79171329\' The session must abort.
+
+tode 1 > gs objectFor 64812545
+[64812545 sz:4 WAToolDecoration] aWAToolDecoration
+tode 1 > gs objectFor 79171329
+[79171329 sz:1 WAValueHolder] aWAValueHolder contents: aWACounter
+tode 1 > 
+
+.           -> aWACounter
+..          -> aWAValueHolder contents: aWACounter
+(class)@    -> WACounter
+(oop)@      -> 79174145
+count@      -> 0
+decoration@ -> aWAValueHolder contents: aWAToolDecoration
+
+2.125473.0  Data session: 5 beginId:(1486 0) recordSize:17264 
+objId 79174145 isNewObj=1  class 188566017 segId:2 len 2 gcSz 2 psize 40 bits 0x201 page 1484
+Oop values:  49970945  2(sI 0)
+
+2.125507.0  Data session: 5 beginId:(1486 0) recordSize:4656 
+objId 64812545 isNewObj=1  class 192116481 segId:2 len 4 gcSz 4 psize 56 bits 0x201 page 1483
+Oop values:  79171329  88968961  79171585  79171073 
+
+(class)@ -> Array
+(oop)@   -> 79108097
+(size)@  -> 4
+1@       -> aWAValueHolder contents: aWACounter
+2@       -> anArray( aWANewSessionToolPlugin, aWAConfigureToolPlugin, aWAToggleHalosToolPlugin, aWATerminateToolPlugin, aWADeprecationToolPlugin, aWAVal...
+3@       -> aWAValueHolder contents: false
+4@       -> anIdentityDictionary( )
+
+.          -> aWAToolDecoration
+..         -> anArray( aWAToolDecoration, aWAValueHolder contents: aWACounter, anArray( aWANewSessionToolPlugin, aWAConfigureToolPlugin, aWAToggleHalosToo...
+(class)@   -> WAToolDecoration
+(oop)@     -> 64812545
+halos@     -> anIdentityDictionary( )
+next@      -> aWAValueHolder contents: aWACounter
+plugins@   -> anArray( aWANewSessionToolPlugin, aWAConfigureToolPlugin, aWAToggleHalosToolPlugin, aWATerminateToolPlugin, aWADeprecationToolPlugin, aWAVal...
+showHalos@ -> aWAValueHolder contents: false
+',#creationTime:DateAndTime['2015-07-04T14:03:37.65763401985168-07:00'],#modificationTime:@2}

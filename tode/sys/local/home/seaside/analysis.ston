@@ -1,0 +1,10 @@
+TDStringLeafNode{#name:'analysis',#contents:'a ImproperOperation occurred (error 2424), Commits are disabled until after the next abort because: \'object with id 121588481 references not-tranlogged obj with id 49560065\'  The session must abort.
+
+---
+
+(class)@     -> Dictionary
+(oop)@       -> 132928001
+(committed)@ -> false
+1@           -> aWAToolDecoration
+2@           -> aWAValueHolder contents: aWADispatcherBrowser->anArray( aWAValueHolder contents: aWADispatcherBrowser->aWAValueHolder contents: aWADispatche...
+',#creationTime:DateAndTime['2015-07-04T14:03:54.08919095993042-07:00'],#modificationTime:DateAndTime['2015-07-05T14:00:18.82836508750916-07:00']}
