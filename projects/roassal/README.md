@@ -1,5 +1,5 @@
 # Roassal Visualization
-Right now, the support for [Roassal][2] visualization is based running client-side (Pharo) workspaces that use [server blocks][1].
+Right now, the support for [Roassal][2] visualization is based running client-side (Pharo) workspaces that use [GsDevKit server blocks][1].
 Over time server-side tODE commands that use [Roassal][2] for visualization will be implemented.
 
 ## Installation
@@ -25,7 +25,7 @@ The `Tools` menu gives you access to the full tODE development environment:
 ![tode tools menu][5]
 
 ### `onServerDo:`
-The following simple expressions should give you a feel for how to use the workspace and [server blocks][1]:
+The following simple expressions should give you a feel for how to use the workspace and [GsDevKit server blocks][1]:
 
 ```Smalltalk
 "Evaulate a simple expression"
@@ -35,10 +35,7 @@ shell onServerDo: [ 3 + 4 ].
 shell onServerDo: [ 3 foo ].
 
 "Bring up the tODE inspector"
-shell onServerDo: [ (System stoneVersionReport at: 'gsVersion') inspect ].
-
-"Bring up the Pharo inspector"
-(shell onServerDo: [ System stoneVersionReport at: 'gsVersion' ]) inspect
+shell onServerDo: [ 3 inspect ].
 
 "local temp variables referenced from block are passed to server"
 | x y z |
@@ -47,6 +44,33 @@ y := 4.
 z := shell onServerDo: [ x + y ].
 z + 3
 ```
+
+###Caveats
+When using `doIt`, `printIt`, etc. the workspace code is initially compiled in Pharo.
+Consequently if you have an expression like:
+
+```Smalltalk
+shell onServerDo: [ System stoneVersionReport inspect ].
+```
+
+The Pharo compiler will complain about the fact that the `System` global is not present in Pharo.
+In this case, declare `System` as a global.
+
+Pharo will also complain that the method `#stoneVersionReport` doesn't exist.
+In this case, tell Pharo to ignore about the *missing method*.
+
+
+If you try to execute this expression:
+
+```Smalltalk
+(shell onServerDo: [ System stoneVersionReport ]) inspect.
+```
+
+You will get an error when STON tries to reify the instance **StringKeyValueDictionary**, since there is no class by that name.
+There are a number of solutions that **could** be applied, but in the short term, you should avoid tring to pass instances of classes that only exist in GemStone.
+The easiest solution is to write more server code, that pre-proceses the returned objects so that common classes are used ...
+
+A similar problem exists if you try send Pharo-only class instances to the server via tempoary values.
 
 ##Example Roassal Visualization
 
@@ -115,7 +139,7 @@ z + 3
   builder open
 ```
 
-[1]: ../../docs/articles/todeServerBlocks.md
+[1]: ../../docs/articles/gsDevKitServerBlocks.md
 [2]: http://objectprofile.com/Roassal.html
 [3]: ../../docs/images/roassalMenu.png
 [4]: ../../docs/images/roassalWorkspace.png

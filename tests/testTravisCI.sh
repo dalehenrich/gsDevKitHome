@@ -1,21 +1,34 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # Copyright (c) 2015 GemTalk Systems, LLC. All Rights Reserved <dhenrich@gemtalksystems.com>.
 #
 
 set -e  # exit on error
 
+uname -a   #gather info for bug 44185
+
 # Uncomment to use alternate version of tODE for tests
-cp $GS_HOME/tests/tode/sys/local/server/scripts/installTode.ws $GS_HOME/tode/sys/local/server/scripts
-cp $GS_HOME/tests/tode/sys/local/projects/*.ston $GS_HOME/tode/sys/local/projects
-cp $GS_HOME/tests/tode/sys/local/pharo/todeLoad.st $GS_HOME/tode/sys/local/pharo
-cp $GS_HOME/tests/projects/magritte3/install.ston $GS_HOME/projects/magritte3
-cp $GS_HOME/tests/projects/pier3/install300.ston $GS_HOME/projects/pier3
-cp $GS_HOME/tests/projects/seaside31/install.ston $GS_HOME/projects/seaside31
-cp $GS_HOME/tests/projects/zinc/install.ston $GS_HOME/projects/zinc
+$GS_HOME/tests/todeDevBranch.sh
+
+if [ "${STONENAME1}x" = "x" ] ; then
+  export STONENAME1="travis1"
+fi
+if [ "${STONENAME2}x" = "x" ] ; then
+  export STONENAME2="travis2"
+fi
+if [ "${STONENAME3}x" = "x" ] ; then
+  export STONENAME3="travis3"
+fi
+if [ "${STONENAME4}x" = "x" ] ; then
+  export STONENAME4="travis4"
+fi
 
 case $TEST in
   Basic)
+    $GS_HOME/tests/basicInstallServer.sh
+    export todeHomeSnapshot=$GS_HOME/gemstone/stones/${STONENAME1}/snapshots/extent0.home.dbf
+    export baseSnapshot=$GS_HOME/gemstone/stones/${STONENAME1}/product/bin/extent0.dbf
+    export seasideSnapshot=$GS_HOME/gemstone/stones/${STONENAME1}/product/bin/extent0.seaside.dbf
     $GS_HOME/tests/basicTests.sh
     ;;
   BasicTodeClient)
