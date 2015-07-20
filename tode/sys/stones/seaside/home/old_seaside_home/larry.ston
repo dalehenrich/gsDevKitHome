@@ -1,0 +1,17 @@
+TDSmalltalkLeafNode{#name:'larry',#contents:'| dps cache |
+  dps := OrderedCollection with: WADispatcher default.
+  [ dps isEmpty ]
+    whileFalse: [ 
+      | dp |
+      dp := dps removeFirst.
+      dp isApplication
+        ifTrue: [ 
+          cache := dp cache.
+          cache initializeCollections.
+          cache expiryPolicy initializeCollections.
+          System commitTransaction ]
+        ifFalse: [ 
+          dp handlers
+            valuesDo: [ :ep | 
+              (ep isDispatcher or: [ ep isApplication ])
+                ifTrue: [ dps add: ep ] ] ] ]',#creationTime:DateAndTime['2015-04-06T15:29:21.7136991024017-07:00'],#modificationTime:DateAndTime['2015-04-10T11:20:58.8306620121002-07:00']}

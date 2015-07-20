@@ -1,0 +1,2 @@
+TDTopezLeafNode{#name:'setup',#contents:'./gemServer --errorHandler=interactiveHandler
+./gemServer --register=seaside --type=zinc --port=1750 --log=all --logTo=objectLog',#creationTime:DateAndTime['2015-07-17T16:35:26.59877610206604-07:00'],#modificationTime:DateAndTime['2015-07-20T10:15:12.33893609046936-07:00']}

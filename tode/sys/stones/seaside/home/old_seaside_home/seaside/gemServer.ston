@@ -37,13 +37,13 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
                     at: \'type\'
                     ifPresent: [ :adaptor | 
                       adaptor = \'zinc\'
-                        ifTrue: [ gemServerClass := Smalltalk at: #\'ZnSeasideNewGemServer\' ]
+                        ifTrue: [ gemServerClass := ZnSeasideNewGemServer ]
                         ifFalse: [ 
                           adaptor = \'fastcgi\'
-                            ifTrue: [ gemServerClass := Smalltalk at: #\'FastCGISeasideGemServer\' ]
+                            ifTrue: [ gemServerClass := FastCGISeasideGemServer ]
                             ifFalse: [ 
                               adaptor = \'swazoo\'
-                                ifTrue: [ gemServerClass := Smalltalk at: #\'SwazooSeasideGemServer\' ]
+                                ifTrue: [ gemServerClass := SwazooSeasideGemServer ]
                                 ifFalse: [ self error: \'unknown  adaptor type: \' , adaptor printString ] ] ] ]
                     ifAbsent: [ gemServerClass := ZnSeasideGemServer ].
                   gemServer := (gemServerClass register: serverName) yourself ].
@@ -76,9 +76,7 @@ TDScriptLeafNode{#name:'gemServer',#contents:'[ :topez :objIn :tokens :command :
         ifPresent: [ :serverName | 
           \"WABasicDevelopment setBreakPoints.\"
           gemServer := GemServer gemServerNamed: serverName.
-          gemServer
-            interactiveStartServiceOn: gemServer ports first
-            transactionMode: #\'manualBegin\'\t\"does not return\" ].
+          gemServer interactiveStartServiceOn: gemServer ports first\t\"does not return\" ].
       opts
         at: \'stop\'
         ifPresent: [ :serverName | result := (GemServer gemServerNamed: serverName) stopGems ].
@@ -157,4 +155,4 @@ EXAMPLES
   ./gemServer --restart=seaside
 
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-07-04T10:13:37.01851511001587-07:00'],#modificationTime:DateAndTime['2015-07-20T10:27:33.727294921875-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2014-12-17T12:11:42.2836089134216-08:00'],#modificationTime:DateAndTime['2015-01-15T16:28:00.2030050754547-08:00']}

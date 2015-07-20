@@ -1,0 +1,6 @@
+TDStringLeafNode{#name:'todo',#contents:'1. still curious about this message when using WARemoteDebuggingWalkbackErrorHandler:
+  --transcript--\'Error creating WAWalkback: WAGsInvalidCallbackContext: You can only #call: and #answer: from within a callback or a Task.\'
+2. probably should look at what gets returned to the server although it\'s probably okay ...
+3. How should the WAGemStoneWalkbackErrorHandler test be handled ... I would be really happy if the zinc stack handled the error correctly ....
+
+',#creationTime:DateAndTime['2014-12-10T21:17:22.2040131092071-08:00'],#modificationTime:DateAndTime['2014-12-10T21:19:23.5962679386138-08:00']}

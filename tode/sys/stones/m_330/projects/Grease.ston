@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'Grease',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Grease\'
+      repository:
+        \'filetree://$GS_HOME/gemstone/stones/m_330/git/Grease/repository\'
+      loads: #(\'default\' \'Tests\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}

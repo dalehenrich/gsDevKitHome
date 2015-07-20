@@ -1,22 +1,55 @@
 ---
-  k_:
-      45452  R4  GsPackagePolicy includes sessionMethodDictionary in upgraded repository
-      45450  P2  Wrong positionableStreams installed after 3106->33 upgrade
-
-      port the upgrade script from webEditionHome: https://github.com/glassdb/webEditionHome/blob/master/docs/upgrade/upgradeToGemStone3.2.md#upgrade-to-gemstone-32 to gsDevKitHome.
+  k_: 
 
 ---
-  l_: (nolog) 
-     - not tranlogged objects have not debug logging? Would be useful to be able to know when they were created and committed without official tranlog records
-     - Is there a prim call that can be used to determine if an object is not-tranlogged or not?
-     - if the keys for NotTranloggedGlobals were tranlogged and the values were not-tranlogged it would make using these puppies much easier
-       - `beTranlogged`, forces an object to be a tranlogged object use this on the "keys".
-What happens during migration with GsDeployer?
-     - example of migration (become:) causing a problem.
+  l_: (nolog & seaside) using Seaside3.2
+     45454  F2  notTranlogged support methods needed
+      - take a cut at this using the new notTranlogged methods and adapt to new WASession state structure
 
 ---
-  [building]
-  m_: [45430  P3  Utf8 API changes for 3.3 --- fixed time to rumba] 
+  m_: (seaside3.2:3.2.7, m_330:3.3.0) 
+      - looks good
+
+---
+  n_: 
+      1. compressed backup
+      2. validate backup/snapshot
+      3. upgrade script from web*
+      4. `mc compare` fix space
+      5. `ol` smalltalk api
+      6. cache stats command/api
+      7. hook roassal in via an option for object references
+      8. tODE override ByteArray>>printOn: and Utf8>>printOn:
+      9. direct list of windows in main menu?
+     10. compound windows, yeah?
+     11. `restore` command that restores windows from backup or last login
+         (yes that means we cache the element instances somewhere)
+
+---
+
+----------
+LITHIUM_m:
+
+
+==========================================
+
+44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
+       - New version of Grease released before 3.3 released ...
+       - New Grease release (1.1.13 ... for backward compat OR 1.2.0 for 3.3 and moving
+         forward?) 
+         - before Grease is published to master:
+           1. publish new GsUpgrader
+           2. [] publish new GLASS1
+           3. publish ConfigurationOfGsCore and ConfigurationOfGLASS
+           4. publish new Grease
+45390  P2  FileTree uses `endodeAsUtf8 asString` combo which should be replaced with encodeAsUTF8intoString
+       - FileTree needs work for 3.3 as it is sending encodeAsUtf8 ... should be using 
+         encodeAsUTF8intoString but that has dependency implications ... and bootstrap implications
+       - battery tests needed
+41153  P3  classes missing a comment method
+44012  P2  New indexing classes do not have class comments
+
+45430  P3  Utf8 API changes for 3.3 --- fixed time to rumba ... make changes in Seaside, Grease, etc.
        - Utf8 at:put:
        - System class>>performOnServer: returns Utf8?
          There's code that decodes this is tODE not needed once change is made
@@ -29,38 +62,6 @@ What happens during migration with GsDeployer?
            decodeFromUtf8ToString
            decodeFromUtf8ToUnicode
          the decode* messages should replace decodeFromUTF8 in all cases ...
----
-  [building]
-  n_:
-      1. compressed backup
-      2. validate backup/snapshot
-      3. upgrade script from web*
-      4. 
-      5. `ol` smalltalk api
-      6. cache stats command/api
-      7. 
-      8. tODE override ByteArray>>printOn: and Utf8>>printOn:
 
----
-
-----------
-LITHIUM_m:
-
-
-==========================================
-
-44474  P2  GsCore and GsMisc GLASS configurations need to be updated for GemStone3.3
-       - New version of Grease released before 3.3 released ...
-         - before Grease is published to master:
-           1. publish new GsUpgrader
-           2. [] publish new GLASS1
-           3. publish ConfigurationOfGsCore and ConfigurationOfGLASS
-           4. publish new Grease
-45390  P2  FileTree uses `endodeAsUtf8 asString` combo which should be replaced with encodeAsUTF8intoString
-       - FileTree needs work for 3.3 as it is sending encodeAsUtf8 ... should be using 
-         encodeAsUTF8intoString but that has dependency implications ... and bootstrap implications
-       - battery tests needed
-45391  P2  STON needs to be ported to 3.3
-       - battery tests needed
-41153  P3  classes missing a comment method
-44012  P2  New indexing classes do not have class comments
+-----
+Main Grease repo is now https://github.com/SeasideSt/Grease ,,, convert all references to use that one ... as you touch things ...

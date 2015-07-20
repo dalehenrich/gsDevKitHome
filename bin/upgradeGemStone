@@ -39,7 +39,6 @@ if [ "${GS_HOME}x" = "x" ] ; then
 fi
 
 forceArg=""
-snapshotFileArg="-s $GS_HOME/gemstone/stones/$sourceStoneName/extents/extent0.dbf"
 createStone="true"
 runUpgrade="true"
 hasSnapshotFile="false"
@@ -50,7 +49,7 @@ while getopts "cfhl:s:u" OPT ; do
     f) forceArg="-f";; 
     l) postUpgradeLoadScriptPath="${OPTARG}";;
     s) 
-       snapshotFileArg=" -s ${OPTARG} "
+       snapshotFile="${OPTARG}"
        hasSnapshotFile="true"
        ;;
     u) createStone="false";;
@@ -70,12 +69,31 @@ gsvers="$3"
 sourceStonePath=$GS_HOME/gemstone/stones/$sourceStoneName
 targetStonePath=$GS_HOME/gemstone/stones/$targetStoneName
 
+sourceStoneVersion="$(sed -n '2{p;q;}' $sourceStonePath/product/version.txt| awk '{print $1;}')"
+majorMinorVersion="${sourceStoneVersion:0:3}"
+
+if [ "${hasSnapshotFile}" = "false" ] ; then
+  snapshotFile="$GS_HOME/gemstone/stones/$sourceStoneName/extents/extent0.dbf"
+fi
+
 cat <<EOF
 
-Performing the GsDevKitHome upgrade for the stone $targetStoneName.
+Performing the GsDevKitHome upgrade from the stone "$sourceStoneName" to the
+stone "$targetStoneName":
+
+  1. executes the $GS_HOME/bin/installGemStone to install GemStone $gsvers
+  2. executes the $GS_HOME/bin/createStone to create the $targetStoneName stone
+  3. copy the extent0.dbf file from "$sourceStoneName to $targetStoneName
+  4. create $targetStonePath/upgradeLog
+  5. executes the $GEMSTONE/bin/upgradeImage script
+  6. executes the $GEMSTONE/seaside/bin/upgradeSeasideImage script
+  7. exeuctes the $GS_HOME/bin/installTodeStone in $targetStoneName stone
+     to complete the upgrade process
 
 If an error occurs during execution of this script, the details of the error are
-available in the topazerrors.log file.
+available in the topazerrors.log file in the 
+"$targetStonePath/upgradeLog"
+directory or on stdout.
 
 Press the return key to continue...
 EOF
@@ -84,23 +102,24 @@ read prompt
 $GS_HOME/bin/stopStone $sourceStoneName
 if [ "${createStone}" = "true" ] ; then
   $GS_HOME/bin/installGemStone $gsvers
-  $GS_HOME/bin/createStone $forceArg -n $snapshotFileArg $targetStoneName $gsvers
-  $GS_HOME/bin/installGemStone $gsvers
-  cp -r $GS_HOME/tode/sys/stones/$sourceStoneName/projects/* \
-        $GS_HOME/tode/sys/stones/$targetStoneName/projects
-  cp -r $GS_HOME/tode/sys/stones/$sourceStoneName/home/* \
-        $GS_HOME/tode/sys/stones/$targetStoneName/home
-else
-  if [ ${hasSnapshotFile} = "true" ] ; then
-    $GS_HOME/bin/stoneNewExtent -n $snapshotFileArg $targetStoneName
-  fi
+  $GS_HOME/bin/createStone $forceArg $targetStoneName $gsvers
+  $GS_HOME/bin/stopStone $targetStoneName
 fi
+
+if [ "$majorMinorVersion" = "2.4" ]  ; then
+  #Cannot use copydbf to copy a 2.4 extent to 3.x
+  cp $snapshotFile $targetStonePath/extents/extent0.dbf
+  chmod +w $targetStonePath/extents/extent0.dbf
+else
+  $GS_HOME/bin/stoneNewExtent -n -s $snapshotFile $targetStoneName
+fi
+rm $targetStonePath/tranlogs/tranlog*.dbf
 
 pushd $targetStonePath >& /dev/null
   if [ "${createStone}" = "true" ] ; then
     mkdir upgradeLog
   fi
-  cd upgradeLogDir
+  cd upgradeLog
   export upgradeLogDir="$(pwd)"
 popd >& /dev/null
 
@@ -110,9 +129,9 @@ if [ "$runUpgrade" = "false" ] ; then
 fi
 
 
-source $targetStonePath/stone.env
+source $GS_HOME/bin/defStone.env $targetStoneName
 startStoneArg=""
-if [ $sourceStoneName is 2.4.x ]  ; then
+if [ "$majorMinorVersion" = "2.4" ]  ; then
   startStoneArg="-C"
 fi
 
@@ -124,15 +143,99 @@ $GEMSTONE/bin/upgradeImage -s $GEMSTONE_NAME << EOF
 
 EOF
 
-# Use default Bootstrap globals for Seaside upgrade
+# Clear SystemLoginNotification #Subscriptions class variable
+echo "STARTING clear SystemLoginNotification #Subscriptions class variable"
+$GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+output pushnew $upgradeLogDir/topazClearSystemLoginNotification.out only
+set gemstone $targetStoneName
+
+display resultcheck
+level 0
+
+set user DataCurator pass swordfish
+login
+
+display oops
+iferr 1 stk
+iferr 2 stack
+iferr 3 input pop
+iferr 4 exit 1
+
+run
+(SystemLoginNotification _classVars at: #'Subscriptions') removeAll: (SystemLoginNotification _classVars at: #'Subscriptions').
+true
+%
+commit
+
+logout
+output pop
+exit 0
+EOF
+
+# use default Bootstrap globals for Seaside upgrade
 # start "seaside" upgrade to upgrade GLASS to 1.0-beta.9.1
 echo "STARTING upgradeSeasideImage"
 $GEMSTONE/seaside/bin/upgradeSeasideImage -s $targetStoneName << EOF
 
 EOF
 
+# Remove all BaselineOf* classes ... so that they will be reloaded during tODE installation
+echo "STARTING remove BaselineOf* classes"
+$GEMSTONE/bin/topaz -l -T50000 > $upgradeLogDir/topaz.out << EOF
+output pushnew $upgradeLogDir/topazRemoveBaselines.out only
+set gemstone $targetStoneName
+
+display resultcheck
+level 0
+
+set user DataCurator pass swordfish
+login
+
+display oops
+iferr 1 stk
+iferr 2 stack
+iferr 3 input pop
+iferr 4 exit 1
+
+run
+UserGlobals associations do: [:assoc |
+  assoc value isBehavior
+    ifTrue: [
+      | globalName |
+      globalName := assoc key asString.
+      (globalName ~= 'BaselineOf' and: [
+           (globalName _findString: 'BaselineOf' startingAt: 1 ignoreCase: false) == 1 ])
+         ifTrue: [
+           GsFile gciLogServer: '  removing the baseline ', globalName printString.
+           assoc value removeFromSystem ] ] ].
+true
+%
+
+run
+MCWorkingCopy allManagers do: [ :wc | wc packageName = 'Grease' ifTrue: [ wc unregister ] ].
+true
+%
+
+commit
+logout
+output pop
+exit 0
+EOF
+
+
 echo "Installing tODE"
 $GS_HOME/bin/installTodeStone $targetStoneName
+if [ "${createStone}" = "true" ] ; then
+  if [ -d  $GS_HOME/tode/sys/stones/$sourceStoneName/projects ] ; then
+    cp -r $GS_HOME/tode/sys/stones/$sourceStoneName/projects/. \
+          $GS_HOME/tode/sys/stones/$targetStoneName/projects/
+  fi
+  if [ -d  $GS_HOME/tode/sys/stones/$sourceStoneName/home ] ; then
+    cp -r $GS_HOME/tode/sys/stones/$sourceStoneName/home/. \
+          $GS_HOME/tode/sys/stones/$targetStoneName/home/
+  fi
+fi
+
 
 if [ "${postUpgradeLoadScriptPath}x" != "x" ] ;  then
   #install application code

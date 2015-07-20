@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'RB',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'RB\'
+      repository: \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/seaside/git/rb/repository\'
+      loads: #( \'default\' );
+    status: #( );
+    locked: false;
+    yourself.
+'}

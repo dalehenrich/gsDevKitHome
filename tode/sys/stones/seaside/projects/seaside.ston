@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'seaside',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Seaside3\'
+      repository:
+        \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/seaside/git/Seaside31/repository\'
+      loads: #(\'ALL\');
+    status: #(#\'active\');
+    locked: true;
+    yourself'}

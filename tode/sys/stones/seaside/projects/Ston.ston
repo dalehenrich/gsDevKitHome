@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'Ston',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'Ston\'
+      repository:
+        \'filetree://$GS_HOME/gemstone/stones/seaside/git/ston/repository\'
+      loads: #(\'Core\' \'Tests\');
+    status: #();
+    locked: false;
+    yourself'}

@@ -1,2 +1,6 @@
-TDTopezLeafNode{#name:'boom',#contents:'limit autoCommit false
-./gemServer --interactiveStart=seaside',#creationTime:DateAndTime['2015-07-05T13:51:12.6584939956665-07:00'],#modificationTime:DateAndTime['2015-07-05T13:51:32.34275007247925-07:00']}
+TDTopezLeafNode{#name:'boom',#contents:'ol clear
+commit
+limit autoCommit false
+ps terminate
+ps  yield
+./gemServer --interactiveStart=seaside',#creationTime:DateAndTime['2015-07-05T13:51:12.6584939956665-07:00'],#modificationTime:DateAndTime['2015-07-20T10:41:24.55290007591248-07:00']}
