@@ -38,8 +38,11 @@
         ifTrue: [ ex useIncoming] 
         ifFalse: [ex pass] ];
     load: #('Core' 'Visualize')  ]
-      on: Warning
+      on: Warning, MetacelloSkipDirtyPackageLoad
       do: [:ex | 
-        Transcript cr; show: ex description.
-        ex resume ].
+        (ex isKindOf: MetacelloSkipDirtyPackageLoad)
+          ifTrue: [ ex resume: false ]
+          ifFalse: [ 
+            Transcript cr; show: ex description.
+            ex resume: true ] ].
 

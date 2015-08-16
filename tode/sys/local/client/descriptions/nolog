@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'nolog',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : 'nolog_ldi',
+	#netLDI : '51356',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
@@ -13,7 +13,7 @@ TDSessionDescription {
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/nolog/backups/',
 	#snapshotDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/nolog/snapshots/',
 	#gemstoneVersion : '3.3.0_l',
-        #gciLibraryName : 'libgcirpc-3.3.0-32',
+	#gciLibraryName : 'libgcirpc-3.3.0-32',
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/nolog/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'

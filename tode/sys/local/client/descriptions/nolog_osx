@@ -1,0 +1,20 @@
+TDSessionDescription {
+	#name : 'nolog_osx',
+	#stoneHost : 'localhost',
+	#stoneName : 'nolog_osx',
+	#gemHost : 'localhost',
+	#netLDI : 'nolog_osx_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/nolog_osx/backups/',
+	#snapshotDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/nolog_osx/snapshots/',
+	#gemstoneVersion : '3.3.0',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/Users/daleh/gsDevKitHome/gemstone/stones/nolog_osx/git',
+	#serverTodeRoot : '/Users/daleh/gsDevKitHome/tode'
+}

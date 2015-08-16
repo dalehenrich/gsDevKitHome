@@ -1,0 +1,20 @@
+TDSessionDescription {
+	#name : 'seaside_osx',
+	#stoneHost : 'localhost',
+	#stoneName : 'seaside_osx',
+	#gemHost : 'localhost',
+	#netLDI : 'seaside_osx_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#osUserId : nil,
+	#osPassword : nil,
+	#dataDirectory : nil,
+	#backupDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/seaside_osx/backups/',
+	#snapshotDirectory : '/Users/daleh/gsDevKitHome/gemstone/stones/seaside_osx/snapshots/',
+	#gemstoneVersion : '3.2.7',
+	#gciLibraryName : nil,
+	#adornmentColor : nil,
+	#serverGitRoot : '/Users/daleh/gsDevKitHome/gemstone/stones/seaside_osx/git',
+	#serverTodeRoot : '/Users/daleh/gsDevKitHome/tode'
+}
