@@ -24,6 +24,7 @@
      10. compound windows, yeah?
      11. `restore` command that restores windows from backup or last login
          (yes that means we cache the element instances somewhere)
+     12. `options` instead of `limit` ... auto load of options
 
 ---
 

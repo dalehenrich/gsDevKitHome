@@ -1,0 +1,30 @@
+TDScriptLeafNode{#name:'transcript',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./transcript -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | skipLoggingDict symbolList |
+      skipLoggingDict := SymbolDictionary new.
+      skipLoggingDict at: #\'SkipLogging\' put: Object new.
+      symbolList := GsSession currentSession symbolList.
+      symbolList add: skipLoggingDict before: UserGlobals.
+       ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  transcript - transcript sript utility template
+SYNOPSIS
+  transcript [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./transcript --help
+  ./transcript -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-08-07T13:42:11.56178307533264-07:00'],#modificationTime:DateAndTime['2015-08-07T13:49:12.05249691009521-07:00']}

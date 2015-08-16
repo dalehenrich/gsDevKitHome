@@ -13,7 +13,6 @@ TDSessionDescription {
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_246/backups/',
 	#snapshotDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_246/snapshots/',
 	#gemstoneVersion : '2.4.6',
-	#gciLibraryName : nil,
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_246/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'

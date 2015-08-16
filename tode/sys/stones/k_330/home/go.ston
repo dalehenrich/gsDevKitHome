@@ -1,1 +1,5 @@
-TDTopezLeafNode{#name:'go',#contents:'cd /home/gs/bugs/bug44072',#creationTime:DateAndTime['2015-05-19T11:13:04.1212909221649-07:00'],#modificationTime:DateAndTime['2015-05-26T10:17:17.6228768825531-07:00']}
+TDTopezLeafNode{#name:'go',#contents:'/home/gs/dev --prep
+# /home/gs/ernie --prep
+# cd /home/gs/bugs/bug45526
+limit protocol false
+',#creationTime:DateAndTime['2015-05-19T11:13:04.1212909221649-07:00'],#modificationTime:DateAndTime['2015-08-07T14:49:37.55068492889404-07:00']}
