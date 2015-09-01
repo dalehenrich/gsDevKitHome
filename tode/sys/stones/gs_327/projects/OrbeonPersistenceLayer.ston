@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'OrbeonPersistenceLayer',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'OrbeonPersistenceLayer\'
+      repository: \'filetree://$GS_HOME/tode/sys/local/git/OrbeonPersistenceLayer/repository\'
+      loads: #( \'default\' );
+    status: #( #\'active\' );
+    locked: false;
+    yourself.
+'}

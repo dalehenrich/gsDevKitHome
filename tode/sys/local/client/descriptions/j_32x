@@ -3,7 +3,7 @@ TDSessionDescription {
 	#stoneHost : 'foos.gemtalksystems.com',
 	#stoneName : 'j_32x',
 	#gemHost : 'foos.gemtalksystems.com',
-	#netLDI : '48319',
+	#netLDI : '35528',
 	#gemTask : 'gemnetobject',
 	#userId : 'DataCurator',
 	#password : 'swordfish',
@@ -12,7 +12,7 @@ TDSessionDescription {
 	#dataDirectory : nil,
 	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_32x/backups/',
 	#gemstoneVersion : '3.2.x_j',
-	#gciLibraryName : 'libgcirpc-3.2.5-32',
+	#gciLibraryName : 'libgcirpc-3.2.8.1-32',
 	#adornmentColor : nil,
 	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/j_32x/git',
 	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
