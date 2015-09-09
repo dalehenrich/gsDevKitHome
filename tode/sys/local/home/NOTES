@@ -1,5 +1,6 @@
 ---
   k_: 
+     45368  G2  _cacheName for startSeaside30_Adaptor and friends should include more info
 
 ---
   l_: (nolog & seaside) using Seaside3.2
@@ -7,8 +8,8 @@
       - take a cut at this using the new notTranlogged methods and adapt to new WASession state structure
 
 ---
-  m_: (seaside3.2:3.2.7, m_330:3.3.0) 
-      - looks good
+  m_: 
+      reference 3.3.0 build for k_330 GemTools work
 
 ---
   n_: 
