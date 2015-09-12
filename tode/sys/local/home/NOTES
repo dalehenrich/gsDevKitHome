@@ -9,8 +9,7 @@
 
 ---
   m_: 
-      reference 3.3.0 build for k_330 GemTools work
-
+     GLASS bugfix sweep
 ---
   n_: 
       1. compressed backup

@@ -1,0 +1,13 @@
+TDStringLeafNode{#name:'fix',#contents:'https://github.com/GsDevKit/GsDevKit/issues/74#issuecomment-139800164
+---------------------------------------------------------------------
+The root cause of this bug is in GsDeployer>>doBulkMigrate, where we are removing classes from the version history for a class. In Class>>removeFromSystem we clean up the version history with MethodVersionHistory uniqueInstance removeVersionsForClass: self. and we should do something similar when we remove the class form the version history in other places (don\'t forget TDShellTool>>clsRemoveClassFromClassHistory:) ... should also take a look at cleaning up the cached definitions in MCMethodDefinition
+
+dkh 9/12/2015 12:37
+-------------------
+packages updated:
+   Change-Notification
+   Change-Notification.v300
+[] Change-Notification.v310
+   GemStone-Deployment
+[] GemStone-Deployment.v310
+',#creationTime:DateAndTime['2015-09-12T10:54:45.83584809303284-07:00'],#modificationTime:DateAndTime['2015-09-12T12:41:28.23172211647034-07:00']}

@@ -1,0 +1,8 @@
+TDSmalltalkLeafNode{#name:'ws',#contents:'| cls beh |
+  System commit.
+  cls := Object _objectForOop: 222728449.
+  beh := cls class.
+  SystemRepository
+    listInstances:
+      {cls.
+      beh}',#creationTime:DateAndTime['2015-09-12T08:53:01.04676389694214-07:00'],#modificationTime:DateAndTime['2015-09-12T09:25:59.0133171081543-07:00']}

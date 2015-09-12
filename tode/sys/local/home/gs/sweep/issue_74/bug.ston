@@ -1,0 +1,188 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'browse\' nil #\'required\').
+      #(\'clean\' nil #\'none\').
+      #(\'confirm\' nil #\'none\').
+      #(\'gc\' nil #\'none\').
+      #(\'inspect\' nil #\'none\').
+      #(\'instances\' nil #\'required\').
+      #(\'references\' nil #\'required\').
+      #(\'history\' nil #\'none\').
+      #(\'load\' nil #\'required\').
+      #(\'populate\' nil #\'none\').
+      #(\'reclaim\' nil #\'none\').
+      #(\'reset\' nil #\'none\').
+      #(\'resetCachedDefs\' nil #\'none\').
+      #(\'sample\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | ans repoSpec tool repo |
+      repoSpec := \'http://smalltalkhub.com/mc/marianopeck/MarianoPublic/main\'.
+      tool := topez toolInstanceFor: \'mc\'.
+      repo := tool resolveRepositoryReference: repoSpec.
+      opts
+        at: \'browse\'
+        ifPresent: [ :packageName | 
+          tool
+            mcbrowseSnapshot: (tool snapshotFor: packageName in: repoSpec)
+            label: packageName , \' definitions\' ].
+      opts
+        at: \'gc\'
+        ifPresent: [ :ignored | 
+          (topez toolInstanceFor: \'gs\')
+            gsMfc: 1
+            wait: 60
+            buffer: 128
+            cpu: 90 ].
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | ClassOrganizer clearCachedOrganizer ].
+      opts
+        at: \'resetCachedDefs\'
+        ifPresent: [ :ignored | MCMethodDefinition resetCachedDefinitions . MethodVersionHistory reset].
+      opts
+        at: \'instances\'
+        ifPresent: [ :oopArg | 
+          | cls beh |
+          System commit.
+          cls := Object _objectForOop: oopArg asNumber.
+          beh := cls class.
+          ans := SystemRepository
+            listInstances:
+              {cls.
+              beh} ].
+      opts
+        at: \'references\'
+        ifPresent: [ :oopArg | 
+          | cls beh |
+          System commit.
+          cls := Object _objectForOop: oopArg asNumber.
+          beh := cls class.
+          ans := SystemRepository
+            findAllReferencePathsToObjects:
+              {cls.
+              beh} ].
+      opts
+        at: \'reclaim\'
+        ifPresent: [ :ignored | 
+          System commit.
+          SystemRepository reclaimAll ].
+      opts
+        at: \'load\'
+        ifPresent: [ :packageName | ans := tool mcload: packageName from: repo ].
+      opts
+        at: \'sample\'
+        ifPresent: [ :key | 
+          | dict |
+          ans := dict := UserGlobals
+            at: #\'issue_74\'
+            ifAbsent: [ UserGlobals at: #\'issue_74\' put: Dictionary new ].
+          dict
+            at: key
+            ifPresent: [ :value | ans := value ]
+            ifAbsent: [ 
+              Smalltalk
+                at: #\'ClosingRecord\'
+                ifPresent: [ :cls | 
+                  | oops |
+                  oops := {}.
+                  cls classHistory
+                    do: [ :hist | 
+                      oops
+                        add:
+                          {(hist asOop).
+                          (hist class asOop)} ].
+                  dict at: key put: oops ] ] ].
+      opts
+        at: \'reset\'
+        ifPresent: [ :ignored | 
+          UserGlobals removeKey: #\'ClosingRecord2Instances\' ifAbsent: [  ].
+          UserGlobals removeKey: #\'FSCPR2AInstances\' ifAbsent: [  ].
+          UserGlobals removeKey: #\'FSCPR2BInstances\' ifAbsent: [  ] ].
+      opts
+        at: \'populate\'
+        ifPresent: [ :ignored | ans := (Smalltalk at: #\'InstancesPopulator\') createAndStoreTestingInstances ].
+      opts
+        at: \'confirm\'
+        ifPresent: [ :ignored | ans := (Smalltalk at: #\'BugConfirmer\') confirmBug ].
+      opts
+        at: \'history\'
+        ifPresent: [ :ignored | 
+          | hTool block |
+          hTool := topez toolInstanceFor: \'cls\'.
+          block := [ 
+          | classes classDefs |
+          classes := IdentitySet new.
+          #(\'ClosingRecord\' \'InstancesPopulator\' \'SpecialSuperclass\' \'FSCPR2A\' \'FSCPR2B\')
+            do: [ :className | 
+              | class |
+              class := Smalltalk at: className.
+              classes addAll: class classHistory ].
+          classes copy
+            do: [ :cl | classes addAll: (TDClassDefinition fullHierarchyOf: cl) ].
+          classDefs := classes
+            collect: [ :each | TDClassDefinition fromClassWithHistory: each ].
+          TDClassDefinition classHierarchyOrder: classDefs ].
+          ans := hTool
+            browseClassesBlock: block
+            label: \'Issue #74: class history\' ].
+      opts
+        at: \'inspect\'
+        ifPresent: [ :ignored | 
+          ans := {(UserGlobals at: #\'ClosingRecord2Instances\').
+          (UserGlobals at: #\'FSCPR2AInstances\').
+          (UserGlobals at: #\'FSCPR2BInstances\')}.
+          ans inspect ].
+      ans ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bug --help
+  ./bug -h
+
+  ./bug --browse=GemStoneClassMigration-MarianoMartinezPeck.1
+  ./bug --browse=GemStoneClassMigration-MarianoMartinezPeck.2
+  ./bug --browse=GemStoneClassMigration-MarianoMartinezPeck.3
+
+  ./bug --inspect
+  ./bug --history
+  ./bug --clean
+  ./bug --reset
+
+  ./bug --load=GemStoneClassMigration-MarianoMartinezPeck.1
+  ./bug --populate 
+  ./bug --history
+  ./bug --sample=1; inspect
+  ./bug --load=GemStoneClassMigration-MarianoMartinezPeck.2
+  ./bug --history
+  ./bug --sample=2; inspect
+  ./bug --load=GemStoneClassMigration-MarianoMartinezPeck.3
+  ./bug --history
+  ./bug --gc
+  ./bug --reclaim
+  ./bug --sample=3; inspect
+  ./bug --confirm
+
+  ./bug --instances=201240833; edit  # find instances of class (oop) and meta class 
+  ./bug --references=201240833; edit # find reference paths to class (oop) and meta class
+
+  ./bug --clean --resetCachedDefs  #this should do the trick
+  ./bug --gc
+  ./bug --reclaim
+  ./bug --confirm
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-09-11T15:46:10.96955490112305-07:00'],#modificationTime:DateAndTime['2015-09-12T10:20:31.86766695976257-07:00']}

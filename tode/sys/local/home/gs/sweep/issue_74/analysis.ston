@@ -1,0 +1,221 @@
+TDStringLeafNode{#name:'analysis',#contents:'  gs version; edit   # stone version information
+--------------------
+5@               -> \'gsBuildSerialNum\'->\'64bit-37456-PRIVATE\'
+6@               -> \'gsBuildType\'->\'FAST\'
+7@               -> \'gsRelease\'->\'3.3.0\'
+
+  ./bug --load=GemStoneClassMigration-MarianoMartinezPeck.1
+  ./bug --populate 
+  ./bug --history
+--------------------
+Object
+ ClosingRecord
+ InstancesPopulator
+ SpecialSuperclass
+  ClosingRecord2
+   FSCPR2A
+   FSCPR2B
+  ./bug --sample=1; inspect
+--------------------
+1@               -> \'1\'->anArray( anArray( 201240833, 201241089))
+
+  ./bug --load=GemStoneClassMigration-MarianoMartinezPeck.2
+  ./bug --history
+--------------------
+ClosingRecord2
+Object
+ ClosingRecord[1]
+ InstancesPopulator
+ SpecialSuperclass
+  ClosingRecord[2]
+   FSCPR2A[2]
+   FSCPR2B[2]
+  FSCPR2A[1]
+  FSCPR2B[1]
+  ./bug --sample=2; inspect
+
+--------------------
+1@               -> \'1\'->anArray( anArray( 201240833, 201241089))
+2@               -> \'2\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+
+  ./bug --load=GemStoneClassMigration-MarianoMartinezPeck.3
+  ./bug --history
+--------------------
+ClosingRecord2
+Object
+ ClosingRecord[1]
+ InstancesPopulator
+ SpecialSuperclass
+  ClosingRecord[2]
+   FSCPR2A[2]
+   FSCPR2B[2]
+  FSCPR2A[1]
+  FSCPR2B[1]
+  ./bug --sample=3; inspect
+--------------------
+1@               -> \'1\'->anArray( anArray( 201240833, 201241089))
+2@               -> \'2\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+3@               -> \'3\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+
+  ./bug --clean
+  ./bug --gc
+  ./bug --reclaim
+  ./bug --sample=4; inspect
+--------------------
+1@               -> \'1\'->anArray( anArray( 201240833, 201241089))
+2@               -> \'2\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+3@               -> \'3\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+4@               -> \'4\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+
+  ./bug --confirm      # removes old class from class history
+--------------------
+none meta:200784897    - current class
+meta: 200785153
+none meta:201240833    - old class (but no longer in the class history)
+meta: 201241089
+
+  ./bug --history
+--------------------
+Object
+ InstancesPopulator
+ SpecialSuperclass
+  ClosingRecord
+   FSCPR2A
+   FSCPR2B
+
+  ./bug --clean
+  commit
+
+  logout
+
+  ./go
+  edit analysis
+  edit bug
+
+  ./bug --gc
+  ./bug --reclaim
+  ./bug --sample=5; inspect # sample in 5 confirms no longer in class history
+--------------------
+1@               -> \'1\'->anArray( anArray( 201240833, 201241089))
+2@               -> \'2\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+3@               -> \'3\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+4@               -> \'4\'->anArray( anArray( 201240833, 201241089), anArray( 200784897, 200785153))
+5@               -> \'5\'->anArray( anArray( 200784897, 200785153))
+
+  ./bug --instances=201240833; edit  # find instances of old class (oop) and old meta class 
+--------------------
+1@       -> anArray( )
+2@       -> anArray( ClosingRecord)
+
+  ./bug --references=201240833; edit  # find reference paths to old class (oop) and old meta class
+--------------------
+1@       -> anArray( ClosingRecord, true, anArray( anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedColle...
+2@       -> anArray( ClosingRecord class, false, anArray( ))
+
+
+
+1@       -> anArray( ClosingRecord, true, anArray( anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedColle...
+--------------------
+.        -> anArray( anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosi...
+..       -> anArray( ClosingRecord, true, anArray( anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedColle...
+(class)@ -> Array
+(oop)@   -> 49941249
+(size)@  -> 27
+1@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+2@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+3@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+4@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+5@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+6@       -> anArray( MCMethodDefinition class, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(Metacell...
+7@       -> anArray( MCMethodDefinition class, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(Metacell...
+8@       -> anArray( MCMethodDefinition class, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(Metacell...
+9@       -> anArray( MCMethodDefinition class, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(Metacell...
+10@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+11@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+12@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+13@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+14@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+15@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+16@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+17@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+18@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+19@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+20@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+21@      -> anArray( MCMethodDefinition class, aGsMethodDictionary( #\'forMethodReference:\'->aGsNMethod, #\'resetCachedDefinitions\'->aGsNMethod, #\'classNa...
+22@      -> anArray( MCMethodDefinition, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGener...
+23@      -> anArray( MCMethodDefinition, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGener...
+24@      -> anArray( MCMethodDefinition, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGener...
+25@      -> anArray( MCMethodDefinition, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGener...
+26@      -> anArray( ClosingRecord)
+27@      -> anArray( ClosingRecord class, ClosingRecord)
+
+25@      -> anArray( MCMethodDefinition, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGener...
+--------------------
+.        -> anArray( MCMethodDefinition, aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGener...
+..       -> anArray( anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosi...
+(class)@ -> Array
+(oop)@   -> 50283009
+(size)@  -> 8
+1@       -> MCMethodDefinition
+2@       -> aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:use...
+3@       -> anIdentityCollisionBucket
+4@       -> #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:username:password:), a...
+5@       -> anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:username:password:), aGsNMethod->aMCMe...
+6@       -> anIdentityCollisionBucket
+7@       -> aGsNMethod
+8@       -> ClosingRecord
+
+2@       -> aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:use...
+--------------------
+.            -> #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:username:password:), a...
+..           -> aSymbolDictionary( #\'Definitions\'->anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:use...
+(class)@     -> SymbolAssociation
+(oop)@       -> 36295681
+(committed)@ -> true
+key@         -> #\'Definitions\'
+value@       -> anIdentityKeyValueDictionary( aGsNMethod->aMCMethodDefinition(MetacelloGenericProjectSpec>>repository:username:password:), aGsNMethod->aMCMe...
+
+  ./bug --clean --resetCachedDefs  #this should do the trick
+
+  logout
+
+  ./go
+  edit analysis
+  edit bug
+
+  ./bug --gc
+  ./bug --reclaim
+  ./bug --confirm
+--------------------
+one meta:200784897
+meta: 200785153
+none meta:201240833
+meta: 201241089
+
+  ./bug --references=201240833; edit # find reference paths to class (oop) and meta class
+--------------------
+1@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+2@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+3@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+4@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+5@       -> anArray( aSymbolDictionary( #\'BugConfirmer\'->BugConfirmer, #\'ClosingRecord2Instances\'->anOrderedCollection( aClosingRecord2, aClosingRecord2...
+6@       -> anArray( ClosingRecord)
+7@       -> anArray( ClosingRecord class, ClosingRecord)
+
+  ./bug --clean --resetCachedDefs  #this should do the trick
+  commit
+
+  logout
+
+  ./go
+  edit analysis
+  edit bug
+
+  ./bug --gc
+  ./bug --reclaim
+  ./bug --confirm
+--------------------
+none meta:200784897
+meta: 200785153
+
+SUCCESS!!!',#creationTime:DateAndTime['2015-09-11T16:35:43.82957696914673-07:00'],#modificationTime:DateAndTime['2015-09-12T10:24:47.6366400718689-07:00']}
