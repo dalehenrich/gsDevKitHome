@@ -1,0 +1,28 @@
+TDTopezLeafNode{#name:'bruno',#contents:'    mc copy Orbeon_Persistence_API-BrunoBB-0.039  http://ss3.gemtalksystems.com/ss/OrbeonPersistenceAPI filetree://$GS_HOME/tode/sys/local/git/OrbeonPersistenceLayer/repository          
+    mc copy Orbeon_Persistence-BrunoBB-0.019 http://ss3.gemtalksystems.com/ss/OrbeonPersistenceAPI filetree://$GS_HOME/tode/sys/local/git/OrbeonPersistenceLayer/repository
+    cls create BaselineOfOrbeonPersistenceLayer BaselineOf BaselineOfOrbeonPersistenceLayer
+    cls protocol --add=BaselineOfOrbeonPersistenceLayer baseline
+    browse class BaselineOfOrbeonPersistenceLayer
+#####
+    baseline: spec
+      <baseline>
+      spec
+        for: #\'common\'
+        do: [
+          spec
+            package: \'Orbeon_Persistence\';
+            package: \'Orbeon_Persistence_API\' with: [ spec requires: \'Orbeon_Persistence\' ];
+            yourself.
+          spec
+            group: \'default\' with: #(\'Core\');
+            group: \'Core\' with: #(\'Orbeon_Persistence_API\');
+            yourself ].
+#####
+
+    mc create BaselineOfOrbeonPersistenceLayer
+    mr add filetree://$GS_HOME/tode/sys/local/git/OrbeonPersistenceLayer/repository BaselineOfOrbeonPersistenceLayer
+    mc commit BaselineOfOrbeonPersistenceLayer `initial baseline and packages`
+    project entry --baseline=OrbeonPersistenceLayer --repo=filetree://$GS_HOME/tode/sys/local/git/OrbeonPersistenceLayer/repository /sys/stone/projects
+    project load OrbeonPersistenceLayer
+    project commit --git --message=`initial commit for project packages and baseline` OrbeonPersistenceLayer
+',#creationTime:DateAndTime['2015-08-25T12:53:36.7150099277496-07:00'],#modificationTime:DateAndTime['2015-08-25T16:59:31.5855550765991-07:00']}

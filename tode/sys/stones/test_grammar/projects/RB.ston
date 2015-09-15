@@ -1,0 +1,8 @@
+TDObjectGatewayNode{#name:'RB',#contents:'^ TDProjectSpecEntryDefinition new
+    baseline: \'RB\'
+      repository: \'filetree://$GS_HOME/gemstone/stones/gs_327/git/rb/repository\'
+      loads: #( \'AST-Core\' );
+    status: #( );
+    locked: false;
+    yourself.
+'}

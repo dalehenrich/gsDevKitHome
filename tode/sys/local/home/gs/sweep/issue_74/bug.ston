@@ -47,7 +47,9 @@ TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command :comman
         ifPresent: [ :ignored | ClassOrganizer clearCachedOrganizer ].
       opts
         at: \'resetCachedDefs\'
-        ifPresent: [ :ignored | MCMethodDefinition resetCachedDefinitions . MethodVersionHistory reset].
+        ifPresent: [ :ignored | 
+          MCMethodDefinition resetCachedDefinitions.
+          MethodVersionHistory reset ].
       opts
         at: \'instances\'
         ifPresent: [ :oopArg | 
@@ -185,4 +187,4 @@ EXAMPLES
   ./bug --reclaim
   ./bug --confirm
 \'
-        topez: topez ] ]',#creationTime:DateAndTime['2015-09-11T15:46:10.96955490112305-07:00'],#modificationTime:DateAndTime['2015-09-12T10:20:31.86766695976257-07:00']}
+        topez: topez ] ]',#creationTime:DateAndTime['2015-09-11T15:46:10.96955490112305-07:00'],#modificationTime:DateAndTime['2015-09-13T13:25:12.8883318901062-07:00']}

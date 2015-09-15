@@ -1,0 +1,56 @@
+TDScriptLeafNode{#name:'bb',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./bb -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'register\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      opts
+        at: \'register\'
+        ifPresent: [ :ignored | 
+          TDTopezServer
+            registerEditorClass: TDClientButtonBarElementBuilder
+            for: Array
+            aspect: #\'buttonBar\' ]
+        ifAbsent: [ 
+          {nil.
+          {{false.
+          #\'foo\'.
+          \'instance\'.
+          \'click me\'}.
+          {false.
+          #\'foo\'.
+          \'?\'.
+          \'click me\'}.
+          {false.
+          #\'foo\'.
+          \'class\'.
+          \'click me 2\'}}}
+            editUsing:
+              ((TDEditorSpec topez: topez editorAspect: #\'buttonBar\')
+                windowName: #\'hierarchy\';
+                windowLocation: #\'classDef\';
+                windowLabel: \'button bar\';
+                yourself) ] ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bb - bb sript utility template
+SYNOPSIS
+  bb [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./bb --help
+  ./bb -h
+
+  ./bb --register
+  ./bb
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-08-19T14:50:35.1488919258117-07:00'],#modificationTime:DateAndTime['2015-08-19T16:44:11.9989340305328-07:00']}
