@@ -1,0 +1,29 @@
+TDScriptLeafNode{#name:'resetSHOUTGlobals',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./resetSHOUTGlobals -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ topez resetAllGlobalNames ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME 
+  resetSHOUTGlobals - resetSHOUTGlobals sript utility template
+SYNOPSIS
+  resetSHOUTGlobals [-h|--help]
+
+DESCRIPTION
+  Force a reset the cached Global names on the client. 
+  Use this command when new globals are added outside the scope
+  of the current tODE environment.
+
+EXAMPLES
+  ./resetSHOUTGlobals -h
+  ./resetSHOUTGlobals
+\'
+        topez: topez ] ] ',#creationTime:DateAndTime['2015-09-22T10:15:26.94311094284058-07:00'],#modificationTime:DateAndTime['2015-09-22T10:28:03.102013111114502-07:00']}

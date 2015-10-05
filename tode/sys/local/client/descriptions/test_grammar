@@ -1,1 +1,15 @@
-TDSessionDescription{#name:'test_grammar',#stoneHost:'foos.gemtalksystems.com',#stoneName:'test_grammar',#gemHost:'foos.gemtalksystems.com',#netLDI:'test_grammar_ldi',#gemTask:'gemnetobject',#userId:'DataCurator',#password:'swordfish',#backupDirectory:'/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/test_grammar/backups/',#snapshotDirectory:'/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/test_grammar/snapshots/',#gemstoneVersion:'3.3.0_m',#serverGitRoot:'/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/test_grammar/git',#serverTodeRoot:'/export/foos1/users/dhenrich/gsDevKitHome/tode'}
+TDSessionDescription {
+	#name : 'test_grammar',
+	#stoneHost : 'foos.gemtalksystems.com',
+	#stoneName : 'test_grammar',
+	#gemHost : 'foos.gemtalksystems.com',
+	#netLDI : 'test_grammar_ldi',
+	#gemTask : 'gemnetobject',
+	#userId : 'DataCurator',
+	#password : 'swordfish',
+	#backupDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/test_grammar/backups/',
+	#snapshotDirectory : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/test_grammar/snapshots/',
+	#gemstoneVersion : '3.3.0_m',
+	#serverGitRoot : '/export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/test_grammar/git',
+	#serverTodeRoot : '/export/foos1/users/dhenrich/gsDevKitHome/tode'
+}

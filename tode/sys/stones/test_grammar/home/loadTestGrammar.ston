@@ -1,1 +1,29 @@
-TDScriptLeafNode{#name:'loadTestGrammar',#contents:nil,#creationTime:DateAndTime['2015-09-14T19:31:56.205449104309-07:00'],#modificationTime:@2}
+TDScriptLeafNode{#name:'loadTestGrammar',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./loadTestGrammar -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ | repoSpec tool repo |
+      repoSpec := \'filetree:///export/foos1/users/dhenrich/gsDevKitHome/gemstone/stones/gs_327/filetree/bug\'.
+      tool := topez toolInstanceFor: \'mc\'.
+      repo := tool resolveRepositoryReference: repoSpec.
+tool mcload: \'Test-Grammar\' from: repo
+]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  loadTestGrammar - loadTestGrammar sript utility template
+SYNOPSIS
+  loadTestGrammar [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./loadTestGrammar --help
+  ./loadTestGrammar -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-09-14T19:31:56.205449104309-07:00'],#modificationTime:DateAndTime['2015-09-15T15:01:34.98353600502014-07:00']}
