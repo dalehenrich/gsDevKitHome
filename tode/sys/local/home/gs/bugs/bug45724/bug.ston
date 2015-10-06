@@ -1,0 +1,96 @@
+TDScriptLeafNode{#name:'bug',#contents:'[ :topez :objIn :tokens :command | 
+  | opts args |
+  \"for help: ./bug -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'boom\' nil #\'none\').
+      #(\'clean\' nil #\'none\').
+      #(\'create\' nil #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | analysis theColl query |
+      analysis := Dictionary new.
+      opts
+        at: \'clean\'
+        ifPresent: [ :ignored | 
+          \"clean up indexes here\"
+          UserGlobals removeKey: #\'coll\' ifAbsent: [  ].
+          IndexManager removeAllIndexes ].
+      opts
+        at: \'create\'
+        ifPresent: [ :ignored | 
+          | nsc |
+          nsc := IdentityBag new.
+          UserGlobals at: #\'col\' put: nsc.
+          1 to: 10000 do: [ :i | nsc add: i asString -> i ].
+          nsc createEqualityIndexOn: \'value\' withLastElementClass: SmallInteger ].
+      opts
+        at: \'forward\'
+        ifPresent: [ :ignored | 
+          | aStream nsc result next |
+          nsc := UserGlobals at: #\'col\'.
+          aStream := (GsQuery fromString: \'each.value = x\' on: nsc)
+            bind: \'x\' to: 1000;
+            readStream.\t\"expect single result\"
+          aStream halt.
+          result := aStream next.
+          result ifNil: [ nil error: \'Expected single result\' ].
+          aStream atEnd
+            ifFalse: [ 
+              next := aStream next.
+              nil error: \'Unexpected continuation of stream\' ] ].
+      opts
+        at: \'boom\'
+        ifPresent: [ :ignored | 
+          | stream reverseStream nsc result next reverseResult |
+          nsc := UserGlobals at: #\'col\'.
+          query := (GsQuery fromString: \'each.value = x\' on: nsc)
+            bind: \'x\' to: 1000;
+            yourself.
+          stream := query readStream.
+          reverseStream := query reversedReadStream.
+self halt.
+          result := stream next.
+          reverseResult := reverseStream next.
+          false
+            ifTrue: [ 
+              reverseResult == result
+                ifFalse: [ nil error: \'Expected same result\' ] ].
+          stream atEnd
+            ifFalse: [ nil error: \'Unexpected continuation of stream\' ].
+          reverseStream atEnd
+            ifFalse: [ nil error: \'Unexpected continuation of reverse stream\' ] ].
+      theColl := UserGlobals at: #\'coll\' ifAbsent: [ Set new ].
+      query := \'each.value1 <= 1\' asQueryOn: theColl.
+      analysis
+        at: \'audit\' put: theColl auditIndexes;
+        at: \'depMap keys\' put: DependencyList depMapKeys;
+        at: \'depMap values\' put: DependencyList depMapValues;
+        at: \'nsc\' put: theColl;
+        at: \'query\' put: query;
+        at: \'query result\' put: query queryResult;
+        at: \'select result\' put: (theColl select: [ :each | each.value1 <= 1 ]);
+        at: \'shared dependency lists\'
+          put: SharedDependencyLists allEntries asArray;
+        yourself.
+      analysis ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  bug - bug sript utility template
+SYNOPSIS
+  bug [-h|--help]
+  bug [--clean][--create][--boom]
+DESCRIPTION
+  Reproduce bug.
+EXAMPLES
+  ./bug --help
+  ./bug --clean --create --boom
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2015-10-05T14:00:56.93121409416199-07:00'],#modificationTime:DateAndTime['2015-10-05T15:06:07.385310888290405-07:00']}
