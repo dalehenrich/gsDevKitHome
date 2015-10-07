@@ -6,19 +6,9 @@
   l_: (nolog & seaside) using Seaside3.2
 ---
   m_: 
-     45724  P2  reversedReadStream rolls off the end.
-       - fix pending lithium smoke_index.conf ...
 ---
   n_: 
-      4. `mc compare` fix space
-      5. `ol` smalltalk api
-      6. cache stats command/api
-      7. hook roassal in via an option for object references
-      8. tODE override ByteArray>>printOn: and Utf8>>printOn:
-      9. direct list of windows in main menu?
-     10. compound windows, yeah?
-     12. `options` instead of `limit` ... auto load of options
-
+      45383 -- need new Grease?
 ---
 
 ----------
@@ -32,9 +22,13 @@ LITHIUM_m:
        - New Grease release (1.1.13 ... for backward compat OR 1.2.0 for 3.3 and moving
          forward?) 
          - before Grease is published to master:
-           1. publish new GsUpgrader
-           2. [] publish new GLASS1
-           3. publish ConfigurationOfGsCore and ConfigurationOfGLASS
+---->      1. publish new GsUpgrader
+---->      2. publish new GLASS1 --> waiting for clean travis runs
+---->      3. publish ConfigurationOfGsCore and ConfigurationOfGLASS (plus others? ... test first)
+              - ConfigurationOfGsMonticello-dkh.174.mcz
+              - ConfigurationOfGsMisc-dkh.117.mcz
+              - ConfigurationOfGLASS-dkh.255.mcz
+              - ConfigurationOfGsCore-dkh.301.mcz
            4. publish new Grease
 45390  P2  FileTree uses `endodeAsUtf8 asString` combo which should be replaced with encodeAsUTF8intoString
        - FileTree needs work for 3.3 as it is sending encodeAsUtf8 ... should be using 
@@ -60,63 +54,16 @@ LITHIUM_m:
 -----
 Main Grease repo is now https://github.com/SeasideSt/Grease ,,, convert all references to use that one ... as you touch things ...
 
+----
+Tode todo/nice to have:
+      4. `mc compare` fix space
+      5. `ol` smalltalk api
+      6. cache stats command/api
+      7. hook roassal in via an option for object references
+      8. tODE override ByteArray>>printOn: and Utf8>>printOn:
+      9. direct list of windows in main menu?
+     10. compound windows, yeah?
+     12. `options` instead of `limit` ... auto load of options
 
-Obsoletions for 3.3:
-
-____________________ GLASS1 ____________________
-==================== Bootstrap (-) --> image (+)  ====================
-Item was removed:
-- ----- Method: ObsoleteMetaclass>>category (in category '*bootstrap') -----category
--   ^ self theNonMetaClass category!
-
-Item was removed:
-- ----- Method: ObsoleteMetaclass>>subclasses (in category '*bootstrap') -----subclasses
--   "Answer the receiver's subclasses."
-- 
--   thisClass == nil
--     ifTrue: [ ^ #() ].
--   ^ thisClass subclasses
--     select: [ :aSubclass | aSubclass isMeta not ]
--     thenCollect: [ :aSubclass | aSubclass class ]!
-
-
-
-==================== Announcements (-) --> image (+)  ====================
-Item was removed:
-- ----- Method: ComplexBlock>>receiver (in category '*announcements') -----receiver
--   ^ selfValue!
-
-Item was removed:
-- ----- Method: SimpleBlock>>receiver (in category '*announcements') -----receiver
--   ^ nil!
-
-
-
-==================== OB-Standard (-) --> image (+)  ====================
-Item was removed:
-- ----- Method: ObsoleteMetaclass classSide>>isScarySelector: (in category '*ob-standard') -----isScarySelector: newbieSelector
--   "Return true if newbieSelector is already a part of Metaclass protocol."
-- 
--   (Metaclass3 includesSelector: newbieSelector)
--     ifTrue: [ ^ true ].
--   (Class includesSelector: newbieSelector)
--     ifTrue: [ ^ true ].
--   (Behavior includesSelector: newbieSelector)
--     ifTrue: [ ^ true ].
--   ^ false!
-
-Item was removed:
-- ----- Method: ObsoleteMetaclass>>asClassSideNode (in category '*ob-standard-converting') -----asClassSideNode
--   ^ OBMetaclassNode on: self theNonMetaClass!
-
-Item was removed:
-- ----- Method: ObsoleteMetaclass>>asNode (in category '*ob-standard-converting') -----asNode
--   ^ OBMetaclassNode on: self!
-
-Item was removed:
-- ----- Method: ObsoleteMetaclass>>definition (in category '*ob-standard') -----definition
--   ^ self theNonMetaClass definition!
-
-
-
+----
 
